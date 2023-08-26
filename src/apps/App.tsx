@@ -1,13 +1,12 @@
 import React from 'react';
 import { Typography } from '@mui/material'
 import './App.css';
+import LoginComponent from '../pages/LoginComponent';
 
 function App() {
   return (
     <div className="App">
-      <Typography align='left'>
-        LopxeisMinhTri
-      </Typography>
+      <LoginComponent />
     </div>
   );
 }
