@@ -77,17 +77,18 @@ const LoginComponent = () => {
                 </Button>
               </Stack>
             </form>
+            <div className='forgot-password-text'>
+              <Link to="/forgot-password" className='signup-link-text'>
+                <Typography>Quên Mật Khẩu</Typography>
+              </Link>
+            </div>
             <div className='no-account-text'>
               <Typography>Bạn chưa có tài khoản? </Typography>
               <Link to="/sign-up" className='signup-link-text'>
                 <Typography>Đăng Ký Ngay</Typography>
               </Link>
             </div>
-            <div className='forgot-password-text'>
-              <Link to="/forgot-password" className='signup-link-text'>
-                <Typography>Quên Mật Khẩu</Typography>
-              </Link>
-            </div>
+
           </Stack>
         </Grid>
       </Grid>
