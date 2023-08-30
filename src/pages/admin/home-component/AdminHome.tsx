@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import AdminMenu from "../../common-components/menu-component/AdminMenu";
-import Footer from "../../common-components/footer-component/Footer";
+import AdminMenu from "../../../common-components/menu-component/AdminMenu";
+import Footer from "../../../common-components/footer-component/Footer";
 
 const AdminHome = () => {
   return (

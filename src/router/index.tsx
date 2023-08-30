@@ -3,7 +3,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import Register from "../pages/register-components/Register";
 import LoginComponent from "../pages/login-component/LoginComponent";
 import ForgotPasswordComponent from "../pages/forgot-password-component/ForgotPasswordComponent";
-import AdminHome from "../pages/home-component/AdminHome";
+import AdminHome from "../pages/admin/home-component/AdminHome";
 const AppRoutes = () => {
   return (
     <Routes>
