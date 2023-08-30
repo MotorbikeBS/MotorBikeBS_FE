@@ -12,8 +12,12 @@ const AppRoutes = () => {
       <Route path="/sign-up" element={<Register />} />
       <Route path="/login" element={<LoginComponent />} />
       <Route path="/forgot-password" element={<ForgotPasswordComponent />} />
-
+      //Admin Router
       <Route path="/admin-home" element={<AdminHome />} />
+
+      //BuyerRouter
+      <Route path="/customer-home" element={<AdminHome />} />
+
     </Routes>
   );
 };
