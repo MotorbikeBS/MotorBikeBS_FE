@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import AdminMenu from "../../../common-components/menu-component/AdminMenu";
 import Footer from "../../../common-components/footer-component/Footer";
-
+import './style/style.scss'
 
 const CustomerHome = () => {
     return (
@@ -16,11 +16,11 @@ const CustomerHome = () => {
                 </Typography>
 
             </Box>
-            <Box flexGrow={8} sx={{ background: 'yellow' }}>
+            <Box flexGrow={9} sx={{ background: 'yellow' }}>
                 <Typography variant="h5">Admin Home</Typography>
             </Box>
 
-            <Box flexGrow={2} sx={{ background: 'red' }}>
+            <Box flexGrow={1} className='footer-style'>
                 <Footer />
             </Box>
         </Box>
