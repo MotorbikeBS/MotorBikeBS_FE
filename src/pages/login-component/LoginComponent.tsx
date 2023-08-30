@@ -31,7 +31,7 @@ const LoginComponent = () => {
   }
 
   const onSubmit = (data: FormValues) => {
-    navigave("/admin-home")
+    navigave("/customer-home")
     console.log(data);
   };
 
