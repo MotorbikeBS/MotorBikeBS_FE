@@ -4,6 +4,7 @@ import Register from "../pages/register-components/Register";
 import LoginComponent from "../pages/login-component/LoginComponent";
 import ForgotPasswordComponent from "../pages/forgot-password-component/ForgotPasswordComponent";
 import AdminHome from "../pages/admin/home-component/AdminHome";
+import CustomerHome from "../pages/buyer/home-component/HomeComponent";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -16,7 +17,7 @@ const AppRoutes = () => {
       <Route path="/admin-home" element={<AdminHome />} />
 
       //BuyerRouter
-      <Route path="/customer-home" element={<AdminHome />} />
+      <Route path="/customer-home" element={<CustomerHome />} />
 
     </Routes>
   );

@@ -69,7 +69,7 @@ const AdminMenu = () => {
             <SearchIcon />
           </SearchIconWrapper>
           <StyledInputBase
-            placeholder="Search…"
+            placeholder="Tìm Kiếm…"
             inputProps={{ "aria-label": "search" }}
           />
         </Search>
