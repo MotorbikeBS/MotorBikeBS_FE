@@ -2,6 +2,7 @@ import { styled, alpha } from "@mui/material/styles";
 import { AppBar, Toolbar, Typography, InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTheme } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -28,7 +29,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "20ch"
+      width: "10ch"
     }
   }
 }));
@@ -48,17 +49,21 @@ const AdminMenu = () => {
   return (
     <AppBar
       position="static"
-      sx={{ background: "#899c93", paddingLeft: theme.spacing(3) }}
+      sx={{
+        background: " #04618f", paddingLeft: theme.spacing(3)
+      }}
     >
       <Toolbar>
-        <Typography
-          variant="h4"
-          noWrap
-          component="div"
-          sx={{ color: "#1a0902" }}
-        >
-          Motorbike BS
-        </Typography>
+        <Link to='/admin-home' style={{ textDecoration: 'none' }}>
+          <Typography
+            variant="h4"
+            noWrap
+            component="div"
+            sx={{ color: "white", fontWeight: '700', fontStyle: 'italic' }}
+          >
+            Motorbike BS
+          </Typography>
+        </Link>
         <Search>
           <SearchIconWrapper>
             <SearchIcon />
