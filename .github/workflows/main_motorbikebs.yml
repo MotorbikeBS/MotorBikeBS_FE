@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'motorbikebs'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6F26325C1F544985A9DD2D389BDFDD7A }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1158F6A8E285417DBAF2668F77715E3E }}
           package: .
