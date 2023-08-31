@@ -1,0 +1,49 @@
+.appbar-btn-store {
+  background: "white";
+  width: "17%";
+  margin-left: "auto";
+  // align-items: "center";
+  gap: 1;
+}
+
+.menu-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1.5rem;
+  .menu-link {
+    text-decoration: none;
+    .menu-link-text {
+      font-size: 20px;
+      font-weight: 400;
+      color: white;
+    }
+  }
+}
+
+.menu-btn {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  gap: 16px;
+
+  .menu-btn-icons {
+    display: flex;
+
+    align-items: center;
+  }
+  .menu-btn-post {
+    background-color: orange;
+    :nth-child(1) {
+      color: white;
+    }
+    :nth-child(2) {
+      color: white;
+      font-weight: 500;
+      font-size: 18px;
+    }
+  }
+  .menu-btn-post:hover {
+    background-color: #cf9025;
+  }
+}

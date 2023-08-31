@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import AdminMenu from "../../../common-components/menu-component/AdminMenu";
+import AdminMenu from "../../../common-components/menu-component/MenuComponent";
 import Footer from "../../../common-components/footer-component/Footer";
 import './style/style.scss'
 
