@@ -86,7 +86,7 @@ const AdminMenu = () => {
       <Button
         sx={{
           background: "white",
-          width: "17%",
+          width: "16%",
           marginLeft: "auto",
           alignItems: "center",
           gap: 1,
@@ -96,7 +96,7 @@ const AdminMenu = () => {
         }}
       >
         <BusinessCenter />
-        <Typography variant="subtitle1">Dành cho chủ cửa hàng </Typography>
+        <Typography variant="subtitle2">Dành cho chủ cửa hàng </Typography>
       </Button>
       <Toolbar>
         <Link to="/admin-home" style={{ textDecoration: "none" }}>
