@@ -12,7 +12,7 @@ const CustomerHome = () => {
             <Box flexGrow={2}>
 
                 <Typography>
-                    Đây là Slide
+                    Đây là Slide nè
                 </Typography>
 
             </Box>
