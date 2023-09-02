@@ -45,6 +45,10 @@ const settings = [
     name: "Hồ sơ"
   },
   {
+    to: "/user/wallet",
+    name: "Ví"
+  },
+  {
     to: "/user/account",
     name: "Tài khoản"
   },
@@ -193,13 +197,13 @@ const MenuComponent = () => {
                 }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page.to} onClick={handleCloseNavMenu}>
-                    <Link to={page.to} style={{ textDecoration: "none" }}>
+                  <Link to={page.to} style={{ textDecoration: "none" }}>
+                    <MenuItem key={page.to} onClick={handleCloseNavMenu}>
                       <Typography textAlign="center" sx={{ color: "black" }}>
                         {page.name}
                       </Typography>
-                    </Link>
-                  </MenuItem>
+                    </MenuItem>
+                  </Link>
                 ))}
               </Menu>
               <IconButton
@@ -290,13 +294,13 @@ const MenuComponent = () => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting.to} onClick={handleCloseUserMenu}>
-                    <Link to={setting.to} style={{ textDecoration: "none" }}>
+                  <Link to={setting.to} style={{ textDecoration: "none" }}>
+                    <MenuItem key={setting.to} onClick={handleCloseUserMenu}>
                       <Typography textAlign="center" sx={{ color: "black" }}>
                         {setting.name}
                       </Typography>
-                    </Link>
-                  </MenuItem>
+                    </MenuItem>
+                  </Link>
                 ))}
               </Menu>
               <Button
