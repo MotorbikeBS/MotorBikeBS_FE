@@ -1,0 +1,14 @@
+.page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    .text-404 {
+        font-size: 8rem;
+        font-weight: bold;
+    }
+    .text-not-found {
+        font-size: 1.5rem;
+    }
+}
