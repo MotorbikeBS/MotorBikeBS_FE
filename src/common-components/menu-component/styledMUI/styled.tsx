@@ -7,8 +7,8 @@ export const Search = styled("div")(({ theme }) => ({
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25)
   },
-  marginRight: theme.spacing(2),
-  marginLeft: 1,
+  // marginRight: theme.spacing(1),
+  // marginLeft: theme.spacing(1),
   width: "100%",
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(4),
