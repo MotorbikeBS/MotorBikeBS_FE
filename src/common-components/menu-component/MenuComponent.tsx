@@ -1,16 +1,22 @@
-import { styled, alpha } from "@mui/material/styles";
+import * as React from "react";
+import { Search, StyledInputBase, SearchIconWrapper } from "./styledMUI/styled";
 import {
   AppBar,
+  Box,
   Toolbar,
-  Typography,
-  InputBase,
-  Button,
   IconButton,
+  Typography,
   Menu,
-  MenuItem
+  Container,
+  Button,
+  Tooltip,
+  MenuItem,
+  useTheme
 } from "@mui/material";
-import { useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
+import MenuIcon from "@mui/icons-material/Menu";
+import "./style/style.scss";
+
 import {
   AccountCircle,
   DriveFileRenameOutline,
@@ -18,174 +24,326 @@ import {
   SearchOutlined,
   BusinessCenter
 } from "@mui/icons-material";
-import "./style/style.scss";
-import React from "react";
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25)
+const pages = [
+  {
+    to: "/store-list",
+    name: "DS. Cửa hàng"
   },
-  marginRight: theme.spacing(2),
-  marginLeft: 1,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(4),
-    width: "auto"
+  {
+    to: "/post-list",
+    name: "Qlí. Tin"
+  },
+  {
+    to: "/account-list",
+    name: "Qlí. Tài khoản"
   }
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "white",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 35, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "10ch"
-    }
+];
+const settings = [
+  {
+    to: "/user/profile",
+    name: "Hồ sơ"
+  },
+  {
+    to: "/user/wallet",
+    name: "Ví"
+  },
+  {
+    to: "/user/account",
+    name: "Tài khoản"
+  },
+  {
+    to: "/user/dashboard",
+    name: "Bảng điều khiển"
+  },
+  {
+    to: "/logout",
+    name: "Đăng xuất"
   }
-}));
+];
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center"
-}));
-
-const AdminMenu = () => {
+const MenuComponent = () => {
   const theme = useTheme();
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null
+  );
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
 
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  const [searchOpen, setSearchOpen] = React.useState(false);
+
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const toggleSearch = () => {
+    setSearchOpen(!searchOpen);
   };
 
   return (
-    <AppBar
-      position="static"
-      sx={{
-        display: "flex",
-        background: " #04618f",
-        paddingLeft: theme.spacing(3)
-      }}
-    >
-      <Button
+    <>
+      <AppBar
+        position="static"
         sx={{
-          background: "white",
-          width: "16%",
-          marginLeft: "auto",
-          alignItems: "center",
-          gap: 1,
-          "&:hover": {
-            background: "#ccd6e6"
-          }
+          display: "flex",
+          background: "#04618f",
+          paddingLeft: theme.spacing(3)
         }}
       >
-        <BusinessCenter />
-        <Typography variant="subtitle2">Dành cho chủ cửa hàng </Typography>
-      </Button>
-      <Toolbar>
-        <Link to="/admin-home" style={{ textDecoration: "none" }}>
-          <Typography
-            variant="h4"
-            noWrap
-            component="div"
-            sx={{ color: "white", fontWeight: "700" }}
-          >
-            Motorbike BS
-          </Typography>
-        </Link>
-        <Search>
-          <SearchIconWrapper>
-            <SearchOutlined />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Tìm Kiếm…"
-            inputProps={{ "aria-label": "search" }}
-          />
-        </Search>
-        <div className="menu-content">
-          <Link to="/store-list" className="menu-link">
-            <Typography className="menu-link-text">DS. Cửa hàng</Typography>
-          </Link>
-          <Link to="/post-list" className="menu-link">
-            <Typography className="menu-link-text">Qlí. Tin</Typography>
-          </Link>
-          <Link to="/account-list" className="menu-link">
-            <Typography className="menu-link-text">Qlí. Tài khoản</Typography>
-          </Link>
-        </div>
-        <div className="menu-btn">
-          <div className="menu-btn-icons">
-            <Notifications fontSize="large" />
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              color="inherit"
-            >
-              <AccountCircle fontSize="large" />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right"
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "center"
-              }}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <Link
-                to="/account/profile"
-                style={{ textDecoration: "none", color: "black" }}
-              >
-                <MenuItem>Profile</MenuItem>
-              </Link>
-              <Link
-                to="/account/dashboard"
-                style={{ textDecoration: "none", color: "black" }}
-              >
-                <MenuItem>Dashboard</MenuItem>
-              </Link>
-              <Link
-                to="/logout"
-                style={{ textDecoration: "none", color: "black" }}
-              >
-                <MenuItem>Logout</MenuItem>
-              </Link>
-            </Menu>
-          </div>
+        <Button
+          sx={{
+            display: { xs: "none", md: "flex" },
+            background: "white",
+            width: "16%",
+            marginLeft: "auto",
+            alignItems: "center",
+            gap: 1,
+            "&:hover": {
+              background: "#ccd6e6"
+            }
+          }}
+        >
+          <BusinessCenter />
+          <Typography variant="subtitle2">Dành cho chủ cửa hàng </Typography>
+        </Button>
 
-          <Button className="menu-btn-post">
-            <DriveFileRenameOutline />
-            <Typography>Đăng Tin</Typography>
+        <Tooltip title="Dành cho chủ cửa hàng">
+          <Button
+            sx={{
+              display: { xs: "flex", md: "none" },
+              background: "white",
+              marginLeft: "auto",
+              alignItems: "center",
+              gap: 1,
+              "&:hover": {
+                background: "#ccd6e6"
+              }
+            }}
+          >
+            <BusinessCenter />
           </Button>
-        </div>
-      </Toolbar>
-    </AppBar>
+        </Tooltip>
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <Link to="/admin-home" style={{ textDecoration: "none" }}>
+              <Typography
+                variant="h4"
+                noWrap
+                component="div"
+                sx={{
+                  mr: 2,
+                  display: { xs: "none", md: "flex" },
+                  fontWeight: 700,
+                  color: "white"
+                }}
+              >
+                Motorbike BS
+              </Typography>
+            </Link>
+            <Search
+              sx={{
+                display: { xs: "none", md: "flex" }
+              }}
+            >
+              <SearchIconWrapper>
+                <SearchOutlined />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Tìm Kiếm…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
+
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left"
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left"
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: "block", md: "none" }
+                }}
+              >
+                {pages.map((page) => (
+                  <Link to={page.to} style={{ textDecoration: "none" }}>
+                    <MenuItem key={page.to} onClick={handleCloseNavMenu}>
+                      <Typography textAlign="center" sx={{ color: "black" }}>
+                        {page.name}
+                      </Typography>
+                    </MenuItem>
+                  </Link>
+                ))}
+              </Menu>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={toggleSearch}
+                color="inherit"
+              >
+                <SearchOutlined />
+              </IconButton>
+            </Box>
+
+            <Link
+              to="/admin-home"
+              style={{
+                textDecoration: "none",
+                flexGrow: 1
+              }}
+            >
+              <Typography
+                variant="h5"
+                noWrap
+                component="div"
+                sx={{
+                  mr: 2,
+                  display: { xs: "flex", md: "none" },
+                  fontWeight: 700,
+                  color: "white"
+                }}
+              >
+                Motorbike BS
+              </Typography>
+            </Link>
+
+            <Box
+              sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, gap: 2 }}
+            >
+              {pages.map((page) => (
+                <Link
+                  key={page.to}
+                  to={page.to}
+                  style={{
+                    textDecoration: "none",
+                    fontSize: "1.1rem",
+                    fontWeight: "700",
+                    color: "white"
+                  }}
+                >
+                  {page.name}
+                </Link>
+              ))}
+            </Box>
+
+            <Box sx={{ display: "flex", flexGrow: 0 }}>
+              <Tooltip title="Thông báo">
+                <IconButton size="large" color="inherit">
+                  <Notifications />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Tài khoản">
+                <IconButton
+                  onClick={handleOpenUserMenu}
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right"
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right"
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <Link to={setting.to} style={{ textDecoration: "none" }}>
+                    <MenuItem key={setting.to} onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center" sx={{ color: "black" }}>
+                        {setting.name}
+                      </Typography>
+                    </MenuItem>
+                  </Link>
+                ))}
+              </Menu>
+              <Button
+                sx={{
+                  display: { xs: "none", md: "flex" },
+                  color: "white",
+                  backgroundColor: "orange",
+                  "&:hover": {
+                    background: "#cf9025"
+                  }
+                }}
+              >
+                <DriveFileRenameOutline />
+                <Typography>Đăng Tin</Typography>
+              </Button>
+
+              <Tooltip
+                title="Đăng tin"
+                sx={{ display: { xs: "flex", md: "none" } }}
+              >
+                <IconButton size="large" color="inherit">
+                  <DriveFileRenameOutline />
+                </IconButton>
+              </Tooltip>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      {searchOpen && (
+        <Box sx={{ flexGrow: 1, display: "flex", backgroundColor: "#04618f" }}>
+          <Search sx={{ display: "flex", flexGrow: 1 }}>
+            <SearchIconWrapper>
+              <SearchOutlined />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Tìm Kiếm…"
+              inputProps={{ "aria-label": "search" }}
+            />
+          </Search>
+        </Box>
+      )}
+    </>
   );
 };
 
-export default AdminMenu;
+export default MenuComponent;
