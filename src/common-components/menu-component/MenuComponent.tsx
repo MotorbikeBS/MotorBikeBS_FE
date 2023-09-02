@@ -22,13 +22,22 @@ import {
   DriveFileRenameOutline,
   Notifications,
   SearchOutlined,
-  BusinessCenter
+  BusinessCenter,
+  FavoriteBorderOutlined
 } from "@mui/icons-material";
 
 const pages = [
   {
+    to: '/trang-chu',
+    name: "Trang chủ"
+  },
+  {
     to: "/store-list",
     name: "DS. Cửa hàng"
+  },
+  {
+    to: "/bike-list",
+    name: "DS.Xe"
   },
   {
     to: "/post-list",
@@ -47,10 +56,6 @@ const settings = [
   {
     to: "/user/wallet",
     name: "Ví"
-  },
-  {
-    to: "/user/account",
-    name: "Tài khoản"
   },
   {
     to: "/user/dashboard",
@@ -260,6 +265,11 @@ const MenuComponent = () => {
             </Box>
 
             <Box sx={{ display: "flex", flexGrow: 0 }}>
+              <Tooltip title="Yêu Thích">
+                <IconButton size="large" color="inherit">
+                  <FavoriteBorderOutlined />
+                </IconButton>
+              </Tooltip>
               <Tooltip title="Thông báo">
                 <IconButton size="large" color="inherit">
                   <Notifications />
