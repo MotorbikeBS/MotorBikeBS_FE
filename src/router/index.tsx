@@ -4,8 +4,10 @@ import Register from "../pages/register-components/Register";
 import LoginComponent from "../pages/login-component/LoginComponent";
 import ForgotPasswordComponent from "../pages/forgot-password-component/ForgotPasswordComponent";
 import AdminHome from "../pages/admin/admin-home-component/AdminHome";
-import CustomerHome from "../pages/customer/customer-home-component/CustomerHomeComponent";
+import CustomerHome from "../pages/customer/customer-home-component/CustomerHome";
 import PageNotFound from "../pages/page-notfound-component/PageNotFound";
+import StoreHome from "../pages/store-owner/store-home-component/StoreHome";
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -26,7 +28,7 @@ const AppRoutes = () => {
       <Route path="/customer-home" element={<CustomerHome />} />
 
       {/* Store Owner */}
-
+      <Route path="/store-home" element={<StoreHome />} />
     </Routes>
   );
 };
