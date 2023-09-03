@@ -131,7 +131,7 @@ const MenuComponentCustomer = () => {
                 </Tooltip>
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
-                        <Link to="/admin-home" style={{ textDecoration: "none" }}>
+                        <Link to="/customer-home" style={{ textDecoration: "none" }}>
                             <Typography
                                 variant="h4"
                                 noWrap
