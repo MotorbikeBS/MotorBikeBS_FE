@@ -6,9 +6,7 @@ import MenuComponent from '../../common-components/menu-component/MenuComponent'
 const PageNotFound = () => {
     return (
         <div>
-            <div>
-                <MenuComponent />
-            </div>
+
             <Box className="page-container">
                 <Typography variant="h1" className='text-404'>
                     404
