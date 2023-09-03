@@ -36,10 +36,7 @@ const pages = [
         to: "/account-management",
         name: "Qlí. Tài khoản"
     },
-    {
-        to: "/request-account-store",
-        name: "Store Đợi Duyệt"
-    }
+
 ];
 const settings = [
     {
