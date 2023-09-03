@@ -22,10 +22,8 @@ const AppRoutes = () => {
       {/* Admin Router */}
       <Route path="/admin-home" element={<AdminHome />} />
 
-      {/* BuyerRouter */}
-      <Route path="/customer-home" element={<CustomerHome />} />
-
       {/* Owner Router & Customer Router  */}
+      <Route path="/customer-home" element={<CustomerHome />} />
 
       {/* Store Owner */}
 
