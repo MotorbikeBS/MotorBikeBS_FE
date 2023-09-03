@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Search, StyledInputBase, SearchIconWrapper } from "./styledMUI/style";
+import { Search, StyledInputBase, SearchIconWrapper } from "./styledMUI/styled";
 import {
     AppBar,
     Box,
@@ -8,6 +8,7 @@ import {
     Typography,
     Menu,
     Container,
+    Button,
     Tooltip,
     MenuItem,
     useTheme
@@ -17,26 +18,30 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 import {
     AccountCircle,
-
+    DriveFileRenameOutline,
     Notifications,
     SearchOutlined,
+
 } from "@mui/icons-material";
 
 const pages = [
     {
-        to: '/admin-dashboard',
-        name: "Thống Kê"
+        to: "/store-dashboard",
+        name: "Thống kê"
+    },
+    {
+        to: "/bike-list",
+        name: "DS.Xe"
     },
 
     {
-        to: "/post-management",
-        name: "Qlí. Tin"
+        to: "/request-list",
+        name: "DS. Yêu cầu"
     },
     {
-        to: "/account-management",
-        name: "Qlí. Tài khoản"
-    },
-
+        to: "/booking-list",
+        name: "DS. Lịch hẹn"
+    }
 ];
 const settings = [
     {
@@ -53,7 +58,7 @@ const settings = [
     }
 ];
 
-const AdminMenuComponent = () => {
+const StoreMenuComponent = () => {
     const theme = useTheme();
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -96,7 +101,7 @@ const AdminMenuComponent = () => {
             >
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
-                        <Link to="/admin-home" style={{ textDecoration: "none" }}>
+                        <Link to="/store-home" style={{ textDecoration: "none" }}>
                             <Typography
                                 variant="h4"
                                 noWrap
@@ -177,7 +182,7 @@ const AdminMenuComponent = () => {
                         </Box>
 
                         <Link
-                            to="/admin-home"
+                            to="/store-home"
                             style={{
                                 textDecoration: "none",
                                 flexGrow: 1
@@ -262,8 +267,28 @@ const AdminMenuComponent = () => {
                                     </Link>
                                 ))}
                             </Menu>
+                            <Button
+                                sx={{
+                                    display: { xs: "none", md: "flex" },
+                                    color: "white",
+                                    backgroundColor: "orange",
+                                    "&:hover": {
+                                        background: "#cf9025"
+                                    }
+                                }}
+                            >
+                                <DriveFileRenameOutline />
+                                <Typography>Đăng Tin</Typography>
+                            </Button>
 
-
+                            <Tooltip
+                                title="Đăng tin"
+                                sx={{ display: { xs: "flex", md: "none" } }}
+                            >
+                                <IconButton size="large" color="inherit">
+                                    <DriveFileRenameOutline />
+                                </IconButton>
+                            </Tooltip>
                         </Box>
                     </Toolbar>
                 </Container>
@@ -285,4 +310,4 @@ const AdminMenuComponent = () => {
     );
 };
 
-export default AdminMenuComponent;
+export default StoreMenuComponent;

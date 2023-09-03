@@ -5,15 +5,15 @@ export const Search = styled("div")(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25)
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   // marginRight: theme.spacing(1),
   // marginLeft: theme.spacing(1),
   width: "100%",
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(4),
-    width: "auto"
-  }
+    width: "auto",
+  },
 }));
 
 export const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -25,9 +25,9 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "10ch"
-    }
-  }
+      width: "10ch",
+    },
+  },
 }));
 
 export const SearchIconWrapper = styled("div")(({ theme }) => ({
@@ -37,5 +37,5 @@ export const SearchIconWrapper = styled("div")(({ theme }) => ({
   pointerEvents: "none",
   display: "flex",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 }));

@@ -35,7 +35,7 @@ const pages = [
         name: "DS. Cửa hàng"
     },
     {
-        to: '/date-booked',
+        to: '/my-booking',
         name: 'Lịch hẹn'
     }
 
@@ -46,16 +46,12 @@ const settings = [
         name: "Hồ sơ"
     },
     {
-        to: "/user/wallet",
-        name: "Ví"
-    },
-    {
         to: "/logout",
         name: "Đăng xuất"
     }
 ];
 
-const MenuComponentCustomer = () => {
+const CustomerMenuComponent = () => {
     const theme = useTheme();
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -131,7 +127,7 @@ const MenuComponentCustomer = () => {
                 </Tooltip>
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
-                        <Link to="/admin-home" style={{ textDecoration: "none" }}>
+                        <Link to="/customer-home" style={{ textDecoration: "none" }}>
                             <Typography
                                 variant="h4"
                                 noWrap
@@ -212,7 +208,7 @@ const MenuComponentCustomer = () => {
                         </Box>
 
                         <Link
-                            to="/admin-home"
+                            to="/customer-home"
                             style={{
                                 textDecoration: "none",
                                 flexGrow: 1
@@ -322,4 +318,4 @@ const MenuComponentCustomer = () => {
     );
 };
 
-export default MenuComponentCustomer;
+export default CustomerMenuComponent;
