@@ -8,6 +8,7 @@ import CustomerHome from "../pages/customer/customer-home-component/CustomerHome
 import PageNotFound from "../pages/page-notfound-component/PageNotFound";
 import StoreHome from "../pages/store-owner/store-home-component/StoreHome";
 import UserProfile from "../pages/user-profile-component/UserProfile";
+import EditUserProfile from "../pages/user-profile-component/EditUserProfile";
 
 const AppRoutes = () => {
   return (
@@ -18,7 +19,9 @@ const AppRoutes = () => {
       <Route path="/sign-up" element={<Register />} />
       <Route path="/login" element={<LoginComponent />} />
       <Route path="/forgot-password" element={<ForgotPasswordComponent />} />
+      
       <Route path="/user/profile" element={<UserProfile />} />
+      <Route path="/user/edit-profile" element={<EditUserProfile />} />
 
       {/* Page Not Found  */}
       <Route path="*" element={<PageNotFound />} />

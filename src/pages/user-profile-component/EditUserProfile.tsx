@@ -7,19 +7,64 @@ import {
   TextField,
   Typography,
   Radio,
-  FormLabel
+  FormLabel,
+  Snackbar,
+  Alert,
+  Dialog,
+  DialogTitle,
+  DialogActions
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import DoneIcon from "@mui/icons-material/Done";
+import ClearIcon from "@mui/icons-material/Clear";
 import "./style/style.scss";
 import { useNavigate } from "react-router-dom";
 
-const UserProfile = () => {
+const EditUserProfile = () => {
   const navigate = useNavigate();
-
   const [selectedValue, setSelectedValue] = React.useState("male");
+  const [openSave, setOpenSave] = React.useState(false);
+  const [openCancel, setOpenCancel] = React.useState(false);
+
+  const handleClickSave = () => {
+    setOpenSave(true);
+  };
+
+  const handleClickCancel = () => {
+    setOpenCancel(true);
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenSave(false);
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedValue(event.target.value);
+  };
+
+  const handleSave = () => {
+    handleClickSave();
+    setTimeout(() => {
+      navigate("/user/profile");
+    }, 2000);
+  };
+
+  const handleCancel = () => {
+    handleClickCancel();
+  };
+
+  const handleCancelCan = () => {
+    setOpenCancel(false);
+  };
+
+  const handleCancelSuc = () => {
+    navigate("/user/profile");
   };
 
   return (
@@ -32,10 +77,6 @@ const UserProfile = () => {
             </Avatar>
             <div>
               <Typography className="edit-profile-name">Minh Tri</Typography>
-              <Button className="edit-profile-btn" onClick={()=> navigate('/user/edit-profile')}>
-                <EditIcon />
-                Sửa hồ sơ
-              </Button>
             </div>
           </div>
           <hr />
@@ -44,7 +85,7 @@ const UserProfile = () => {
         <Grid item xs={6} md={9}>
           <div className="profile-input-container">
             <Typography className="profile-input-heading">
-              Hồ Sơ Của Tôi
+              Chỉnh sửa hồ sơ
             </Typography>
             <Stack spacing={3} className="profile-input-fields">
               <TextField
@@ -52,14 +93,12 @@ const UserProfile = () => {
                 value="phanminhtri269@gmail.com"
                 type="email"
                 variant="outlined"
-                disabled
               />
               <TextField
                 label="Tên"
                 value="Minh Tri"
                 type="text"
                 variant="outlined"
-                disabled
               />
               <div>
                 <FormLabel>Giới tính:</FormLabel>
@@ -69,7 +108,6 @@ const UserProfile = () => {
                   value="male"
                   name="radio-buttons"
                   inputProps={{ "aria-label": "male" }}
-                  disabled
                 />
                 Nam
                 <Radio
@@ -78,7 +116,6 @@ const UserProfile = () => {
                   value="female"
                   name="radio-buttons"
                   inputProps={{ "aria-label": "Female" }}
-                  disabled
                 />
                 Nữ
                 <Radio
@@ -87,7 +124,6 @@ const UserProfile = () => {
                   value="other"
                   name="radio-buttons"
                   inputProps={{ "aria-label": "other" }}
-                  disabled
                 />
                 Khác
               </div>
@@ -96,35 +132,66 @@ const UserProfile = () => {
                 value="0908660977"
                 type="text"
                 variant="outlined"
-                disabled
               />
               <TextField
                 label="Địa chỉ"
                 value="Quận 4, Tp.HCM"
                 type="text"
                 variant="outlined"
-                disabled
               />
               <TextField
                 label="Ngày sinh"
                 value="11/01/2001"
                 type="date"
                 variant="outlined"
-                disabled
               />
               <TextField
                 label="Card"
                 value="10"
                 type="text"
                 variant="outlined"
-                disabled
               />
             </Stack>
+            <div className="edit-profile-btn">
+              <Button variant="outlined" color="success" onClick={handleSave}>
+                <DoneIcon />
+                Lưu
+              </Button>
+              <Button variant="outlined" color="error" onClick={handleCancel}>
+                <ClearIcon />
+                Hủy bỏ
+              </Button>
+            </div>
           </div>
         </Grid>
       </Grid>
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={openSave}
+        autoHideDuration={1500}
+        onClose={handleClose}
+      >
+        <Alert severity="success" sx={{ width: "100%" }}>
+          Chỉnh sửa thành công.
+        </Alert>
+      </Snackbar>
+      <Dialog
+        open={openCancel}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle>Bạn có chắc hủy không?</DialogTitle>
+        <DialogActions>
+          <Button color="error" onClick={handleCancelCan}>
+            Từ chối
+          </Button>
+          <Button color="success" onClick={handleCancelSuc}>
+            Đồng ý
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
 
-export default UserProfile;
+export default EditUserProfile;

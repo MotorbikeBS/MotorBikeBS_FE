@@ -23,6 +23,7 @@
   .profile-input-container {
     background-color: #f7f6f6;
     border-radius: 5px;
+
     .profile-input-heading {
       font-size: 22px;
       padding-left: 1.4rem;
@@ -30,6 +31,14 @@
     }
     .profile-input-fields {
       padding: 1rem 4rem 2rem 4rem;
+    }
+
+    .edit-profile-btn {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 1rem;
     }
   }
 }
