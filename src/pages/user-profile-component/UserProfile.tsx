@@ -32,7 +32,7 @@ const UserProfile = () => {
             </Avatar>
             <div>
               <Typography className="edit-profile-name">Minh Tri</Typography>
-              <Button className="edit-profile-btn" onClick={()=> navigate('/user/edit-profile')}>
+              <Button className="edit-profile-btn" onClick={() => navigate('/user/edit-profile')}>
                 <EditIcon />
                 Sửa hồ sơ
               </Button>
