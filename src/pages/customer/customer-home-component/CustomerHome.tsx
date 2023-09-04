@@ -3,7 +3,6 @@ import { Box, Typography } from "@mui/material";
 import Footer from "../../../common-components/footer-component/Footer";
 import "./style/style.scss";
 import CustomerMenuComponent from "../customer-menu-component/CustomerMenuComponent";
-import UserProfile from "../../user-profile-component/UserProfile";
 
 const CustomerHome = () => {
   return (
