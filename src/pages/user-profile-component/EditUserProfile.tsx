@@ -172,7 +172,7 @@ const EditUserProfile = () => {
         onClose={handleClose}
       >
         <Alert severity="success" sx={{ width: "100%" }}>
-          Chỉnh sửa thành công.
+          Chỉnh sửa thành công
         </Alert>
       </Snackbar>
       <Dialog
