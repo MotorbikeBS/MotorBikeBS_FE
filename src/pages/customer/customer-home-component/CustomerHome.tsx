@@ -9,7 +9,6 @@ const CustomerHome = () => {
   return (
     <Box display="flex" flexDirection="column" height="100vh" width="100%">
       <CustomerMenuComponent />
-      <UserProfile />
       <Box flexGrow={2}>
         <Typography>Đây là Slide nè</Typography>
       </Box>
