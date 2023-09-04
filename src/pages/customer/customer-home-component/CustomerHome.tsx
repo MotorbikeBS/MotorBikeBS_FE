@@ -3,11 +3,13 @@ import { Box, Typography } from "@mui/material";
 import Footer from "../../../common-components/footer-component/Footer";
 import "./style/style.scss";
 import CustomerMenuComponent from "../customer-menu-component/CustomerMenuComponent";
+import UserProfile from "../../user-profile-component/UserProfile";
 
 const CustomerHome = () => {
   return (
     <Box display="flex" flexDirection="column" height="100vh" width="100%">
       <CustomerMenuComponent />
+      <UserProfile />
       <Box flexGrow={2}>
         <Typography>Đây là Slide nè</Typography>
       </Box>
