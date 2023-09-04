@@ -180,7 +180,7 @@ const EditUserProfile = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle>Bạn có chắc chắn?</DialogTitle>
+        <DialogTitle>Bạn có chắc chắn không?</DialogTitle>
         <DialogActions>
           <Button color="error" onClick={handleCancelCan}>
             Từ chối
