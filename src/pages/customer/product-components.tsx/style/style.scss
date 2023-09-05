@@ -1,0 +1,32 @@
+    $primary-border: #04618f;
+    $primary-favorite:#f76157;
+    .product-grid {
+        padding: 20px;
+        .product-item {
+            margin-bottom: 20px;
+            border: 2px solid $primary-border;
+            .product-image img {
+                max-width: 100%;
+                height: auto;
+            }
+            .product-information {
+                flex-grow: 2;
+            }
+            .product-information h6 {
+                margin: 6px;
+                color: #333;
+                font-weight: 700;
+            }
+            .btn-style {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 10px;
+                margin: 4px;
+            }
+            .btn-favorite {
+                color: $primary-favorite;
+                margin-left: 4px;
+            }
+        }
+    }

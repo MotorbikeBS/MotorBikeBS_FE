@@ -1,0 +1,120 @@
+import React from 'react'
+import { Box, Button, Typography } from '@mui/material'
+import Grid from "@mui/material/Unstable_Grid2";
+import { FavoriteBorderOutlined } from '@mui/icons-material';
+import { Item } from './style/style-root'
+import { IMotobike } from './model/Motorbike';
+import './style/style.scss'
+
+const items: IMotobike[] = [
+    {
+        id: 1,
+        image: 'https://xevespa.vn/wp-content/uploads/2022/04/honda-vario-2017-2.jpg',
+        images: [
+            'https://cdn.xehoiviet.com/images/car/cropthumb/1200x752/2020/03/10/0832662233/vario-150-mau-cu-2o18-den-nham-mam-dong-bstp-9-chu-2ke038j7fae.jpg',
+            'https://sb.nhattao.com/2018/12/11677460_D699A5EF-1D85-446E-9DD9-0ED8DF23F02F.jpeg'
+        ],
+        name: 'Vario 150',
+        price: 20000000,
+        yearRegister: new Date('2017-01-31'),
+        postDate: new Date('2023-09-05'),
+        motorType: 'Tay Ga',
+        odo: 30000,
+        description: 'Xe Zin chính chủ, sang tên nhanh chóng, chưa làm máy, odo thấp, chủ xe cũ là nữ nên đi xe giữ rất kỹ'
+    },
+    {
+        id: 2,
+        image: 'https://cdn-img.thethao247.vn/storage/files/linhseo/2022/11/23/gia-xe-air-blade-cu-cap-nhat-moi-nhat-2022-221662.jpg',
+        images: [
+            '',
+            ''
+        ],
+        name: 'Air Blade 150',
+        price: 35000000,
+        yearRegister: new Date('2022-05-25'),
+        postDate: new Date('2023-09-05'),
+        motorType: 'Tay Ga',
+        odo: 26000,
+        description: 'Xe Zin chính chủ, sang tên nhanh chóng, chưa làm máy, odo thấp, chủ xe cũ là nữ nên đi xe giữ rất kỹ'
+    },
+    {
+        id: 3,
+        image: 'https://litteritcostsyou.org/wp-content/uploads/2020/05/co-nen-mua-wave-cu-duoi-2-trieu-min.jpg',
+        images: [
+            '',
+            ''
+        ],
+        name: 'Xe Wave RSX',
+        price: 5000000,
+        yearRegister: new Date('2016-01-31'),
+        postDate: new Date('2023-09-05'),
+        motorType: 'Xe Số',
+        odo: 80000,
+        description: 'Xe Zin chính chủ, sang tên nhanh chóng, chưa làm máy, odo thấp, chủ xe cũ là nữ nên đi xe giữ rất kỹ'
+    },
+    {
+        id: 4,
+        image: 'https://www.speeryamaha.com/wp-content/uploads/2020/09/gia-xe-Sirius-cu.jpg',
+        images: [
+
+        ],
+        name: 'Xe Sirus',
+        price: 8000000,
+        yearRegister: new Date('2019-08-31'),
+        postDate: new Date('2023-09-05'),
+        motorType: 'Xe số ',
+        odo: 50000,
+        description: 'Xe Zin chính chủ, sang tên nhanh chóng, chưa làm máy, odo thấp, chủ xe cũ là nữ nên đi xe giữ rất kỹ'
+    },
+
+]
+
+const ProductComponent = () => {
+    return (
+        <Box sx={{ flexGrow: 1 }}>
+            <Grid
+                container
+                spacing={{ xs: 2, md: 1 }}
+                columns={{ xs: 4, sm: 6, md: 12 }}
+                className='product-grid'
+            >
+                {items.map((item) => (
+                    <Grid xs={2} sm={8} md={3} key={item.id}>
+                        <Item className='product-item'>
+                            <div className='product-image'>
+                                <img src={item.image} alt='Đây là ảnh sản phẩm' />
+                            </div>
+                            <div className='product-information'>
+                                <Typography variant='h6'>{item.name}</Typography>
+                                <Typography
+                                    color='red'
+                                    fontWeight='700'
+                                    fontSize='18px'
+                                >
+                                    Giá: {item.price}</Typography>
+                                <Typography>Loại Xe: {item.motorType}</Typography>
+                                <Typography>Odo: {item.odo} Km</Typography>
+
+                                <Typography>Đăng ký mới: {item.yearRegister.toLocaleDateString()}</Typography>
+                                <Typography>Ngày đăng bài: {item.postDate.toLocaleDateString()}</Typography>
+
+                            </div>
+
+                            <div className='btn-style'>
+                                <Button variant="outlined">
+                                    Đặt lịch xem xe
+                                </Button>
+                                <Button className='btn-favorite' >
+                                    <FavoriteBorderOutlined />
+                                </Button>
+                            </div>
+
+                        </Item>
+                    </Grid>
+                ))}
+            </Grid>
+        </Box>
+    );
+}
+
+export default ProductComponent

@@ -1,9 +1,10 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import Footer from "../../../common-components/footer-component/Footer";
 import "./style/style.scss";
 import CustomerMenuComponent from "../customer-menu-component/CustomerMenuComponent";
 import BannerComponent from "../../../common-components/banner-component/BannerComponent";
+import ProductComponent from "../product-components.tsx/ProductComponent";
 
 const CustomerHome = () => {
   return (
@@ -16,8 +17,8 @@ const CustomerHome = () => {
         <BannerComponent />
       </Box>
 
-      <Box flexGrow={9} sx={{ background: "yellow" }}>
-        <Typography variant="h5">Customer Home</Typography>
+      <Box flexGrow={9}>
+        <ProductComponent />
       </Box>
 
       <Box flexGrow={1} className="footer-style">
