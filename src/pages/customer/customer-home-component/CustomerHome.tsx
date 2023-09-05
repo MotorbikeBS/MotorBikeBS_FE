@@ -16,7 +16,7 @@ const CustomerHome = () => {
         <BannerComponent />
       </Box>
 
-      <Box flexGrow={6} sx={{ background: "yellow" }}>
+      <Box flexGrow={9} sx={{ background: "yellow" }}>
         <Typography variant="h5">Customer Home</Typography>
       </Box>
 
