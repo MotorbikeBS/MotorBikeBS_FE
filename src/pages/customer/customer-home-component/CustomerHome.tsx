@@ -3,15 +3,20 @@ import { Box, Typography } from "@mui/material";
 import Footer from "../../../common-components/footer-component/Footer";
 import "./style/style.scss";
 import CustomerMenuComponent from "../customer-menu-component/CustomerMenuComponent";
+import BannerComponent from "../../../common-components/banner-component/BannerComponent";
 
 const CustomerHome = () => {
   return (
     <Box display="flex" flexDirection="column" height="100vh" width="100%">
-      <CustomerMenuComponent />
-      <Box flexGrow={2}>
-        <Typography>Đây là Slide nè</Typography>
+      <Box flexGrow={1} zIndex={2}>
+        <CustomerMenuComponent />
       </Box>
-      <Box flexGrow={9} sx={{ background: "yellow" }}>
+
+      <Box flexGrow={1} zIndex={1}>
+        <BannerComponent />
+      </Box>
+
+      <Box flexGrow={6} sx={{ background: "yellow" }}>
         <Typography variant="h5">Customer Home</Typography>
       </Box>
 

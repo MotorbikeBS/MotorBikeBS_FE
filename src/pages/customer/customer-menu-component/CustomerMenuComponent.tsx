@@ -27,7 +27,7 @@ import {
 
 const pages = [
     {
-        to: '/trang-chu',
+        to: '/customer-home',
         name: "Trang chủ"
     },
     {
