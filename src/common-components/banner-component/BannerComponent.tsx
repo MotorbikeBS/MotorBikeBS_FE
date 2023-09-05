@@ -12,7 +12,7 @@ interface ItemData {
 const items: ItemData[] = [
     {
         id: 1,
-        image: process.env.PUBLIC_URL + '/banner1.png',
+        image: 'https://allimages.sgp1.digitaloceanspaces.com/toplisteduvn/2023/03/Top-19-Cua-Hang-Xe-May-Cu-Ha-Noi-Uy.png',
     },
     {
         id: 2,
