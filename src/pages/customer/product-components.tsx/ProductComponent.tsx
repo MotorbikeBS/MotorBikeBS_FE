@@ -113,6 +113,7 @@ const ProductComponent = () => {
                                     <Typography><strong>Cửa Hàng:</strong> {item.storeName}</Typography>
                                     <Typography><strong>Loại Xe: </strong>{item.motorType}</Typography>
                                     <Typography><strong>Odo: </strong>{item.odo} Km</Typography>
+                                    <Typography><strong>Tình trạng: </strong>{item.status}</Typography>
                                     <Typography><strong>Đăng ký mới:</strong> {item.yearRegister.toLocaleDateString()}</Typography>
                                     <Typography><strong>Ngày đăng bài:</strong> {item.postDate.toLocaleDateString()}</Typography>
 
