@@ -9,6 +9,7 @@ import PageNotFound from "../pages/page-notfound-component/PageNotFound";
 import StoreHome from "../pages/store-owner/store-home-component/StoreHome";
 import UserProfile from "../pages/user-profile-component/UserProfile";
 import EditUserProfile from "../pages/user-profile-component/EditUserProfile";
+import StoreListComponent from "../pages/customer/store-list-component/StoreListComponent";
 
 const AppRoutes = () => {
   return (
@@ -19,7 +20,8 @@ const AppRoutes = () => {
       <Route path="/sign-up" element={<Register />} />
       <Route path="/login" element={<LoginComponent />} />
       <Route path="/forgot-password" element={<ForgotPasswordComponent />} />
-      
+      <Route path="/store-list" element={<StoreListComponent />} />
+
       <Route path="/user/profile" element={<UserProfile />} />
       <Route path="/user/edit-profile" element={<EditUserProfile />} />
 
