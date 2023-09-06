@@ -54,9 +54,10 @@ const items: IMotobike[] = [
     },
     {
         id: 4,
-        image: 'https://www.speeryamaha.com/wp-content/uploads/2020/09/gia-xe-Sirius-cu.jpg',
+        image: 'https://www.speeryamaha.com/wp-content/uploads/2020/09/Sirius-cu.jpg',
         images: [
-
+            '',
+            ''
         ],
         name: 'Xe Sirus',
         price: 8000000,
@@ -71,7 +72,7 @@ const items: IMotobike[] = [
 
 const ProductComponent = () => {
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, margin: "0 48px 0 48px" }}>
             <Grid
                 container
                 spacing={{ xs: 2, md: 1 }}
