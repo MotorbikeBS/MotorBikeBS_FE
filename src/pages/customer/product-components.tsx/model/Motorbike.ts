@@ -3,7 +3,11 @@ export interface IMotobike {
   image: string;
   images: Object;
   name: string;
+  brand: string;
+  model: string;
   price: number;
+  status: string;
+  storeName: string;
   yearRegister: Date;
   postDate: Date;
   motorType: string;

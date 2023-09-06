@@ -14,8 +14,12 @@ const items: IMotobike[] = [
             'https://cdn.xehoiviet.com/images/car/cropthumb/1200x752/2020/03/10/0832662233/vario-150-mau-cu-2o18-den-nham-mam-dong-bstp-9-chu-2ke038j7fae.jpg',
             'https://sb.nhattao.com/2018/12/11677460_D699A5EF-1D85-446E-9DD9-0ED8DF23F02F.jpeg'
         ],
-        name: 'Vario 150',
+        name: 'Vario',
+        brand: 'Honda',
+        model: 'Vario 150cc',
         price: 20000000,
+        status: 'Đã sử dụng',
+        storeName: 'Lê Vũ Store',
         yearRegister: new Date('2017-01-31'),
         postDate: new Date('2023-09-05'),
         motorType: 'Tay Ga',
@@ -29,8 +33,12 @@ const items: IMotobike[] = [
             '',
             ''
         ],
-        name: 'Air Blade 150',
+        name: 'Air Blade',
+        brand: 'Honda',
+        model: 'Air Blade 150cc',
         price: 35000000,
+        status: 'Đã sử dụng',
+        storeName: 'Lê Vũ Store',
         yearRegister: new Date('2022-05-25'),
         postDate: new Date('2023-09-05'),
         motorType: 'Tay Ga',
@@ -45,7 +53,11 @@ const items: IMotobike[] = [
             ''
         ],
         name: 'Xe Wave RSX',
+        brand: 'Honda',
+        model: 'Wave RSX 110cc',
         price: 5000000,
+        status: 'Đã sử dụng',
+        storeName: 'Lê Vũ Store',
         yearRegister: new Date('2016-01-31'),
         postDate: new Date('2023-09-05'),
         motorType: 'Xe Số',
@@ -60,7 +72,11 @@ const items: IMotobike[] = [
             ''
         ],
         name: 'Xe Sirus',
+        brand: 'Yamaha',
+        model: 'Yamaha Sirus 110cc',
         price: 8000000,
+        status: 'Đã sử dụng',
+        storeName: 'Lê Vũ Store',
         yearRegister: new Date('2019-08-31'),
         postDate: new Date('2023-09-05'),
         motorType: 'Xe số ',
@@ -93,12 +109,14 @@ const ProductComponent = () => {
                                     fontSize='18px'
                                 >
                                     Giá: {item.price}</Typography>
-                                <Typography>Loại Xe: {item.motorType}</Typography>
-                                <Typography>Odo: {item.odo} Km</Typography>
+                                <div className='product-info-content'>
+                                    <Typography><strong>Cửa Hàng:</strong> {item.storeName}</Typography>
+                                    <Typography><strong>Loại Xe: </strong>{item.motorType}</Typography>
+                                    <Typography><strong>Odo: </strong>{item.odo} Km</Typography>
+                                    <Typography><strong>Đăng ký mới:</strong> {item.yearRegister.toLocaleDateString()}</Typography>
+                                    <Typography><strong>Ngày đăng bài:</strong> {item.postDate.toLocaleDateString()}</Typography>
 
-                                <Typography>Đăng ký mới: {item.yearRegister.toLocaleDateString()}</Typography>
-                                <Typography>Ngày đăng bài: {item.postDate.toLocaleDateString()}</Typography>
-
+                                </div>
                             </div>
 
                             <div className='btn-style'>
