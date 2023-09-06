@@ -1,19 +1,24 @@
     $primary-border: #04618f;
-    $primary-favorite:#f76157;
-    .product-grid {
+    .store-grid {
         padding: 20px;
-        .product-item {
+        .store-item {
             margin-bottom: 20px;
             border: 2px solid $primary-border;
-            .product-image img {
+            border-radius: 10%;
+            .store-image img {
                 width: 100%;
                 height: 200px;
                 object-fit: contain;
             }
-            .product-information {
+            .store-information {
                 flex-grow: 2;
+                .store-info-content {
+                    display: flex;
+                    align-items: flex-start;
+                    flex-direction: column;
+                }
             }
-            .product-information h6 {
+            .store-information h6 {
                 margin: 6px;
                 color: #333;
                 font-weight: 700;
@@ -21,14 +26,7 @@
             .btn-style {
                 flex-direction: row;
                 align-items: center;
-                justify-content: space-between;
                 margin-top: 10px;
-                margin: 4px;
-            }
-            .btn-favorite {
-                color: $primary-favorite;
-                margin-left: 4px;
             }
         }
     }
-    

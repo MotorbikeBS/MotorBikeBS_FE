@@ -1,8 +1,8 @@
 import React from 'react';
 import './style-background.scss';
 
-const Background = () => {
+const BackgroundComponent = () => {
     return <div className='background-image'></div>;
 };
 
-export default Background;
+export default BackgroundComponent;

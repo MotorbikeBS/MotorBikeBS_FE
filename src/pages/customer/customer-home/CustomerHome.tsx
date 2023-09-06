@@ -1,10 +1,10 @@
 import React from "react";
 import { Box } from "@mui/material";
-import Footer from "../../../common-components/footer-component/Footer";
 import "./style/style.scss";
 import CustomerMenuComponent from "../customer-menu-component/CustomerMenuComponent";
 import BannerComponent from "../../../common-components/banner-component/BannerComponent";
-import ProductComponent from "../product-components.tsx/ProductComponent";
+import ProductComponent from "../product-components/ProductComponent";
+import FooterComponent from "../../../common-components/footer-component/FooterComponent";
 
 const CustomerHome = () => {
   return (
@@ -22,7 +22,7 @@ const CustomerHome = () => {
       </Box>
 
       <Box flexGrow={1} className="footer-style">
-        <Footer />
+        <FooterComponent />
       </Box>
     </Box>
   );

@@ -1,15 +1,15 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import Register from "../pages/register-components/Register";
-import LoginComponent from "../pages/login-component/LoginComponent";
-import ForgotPasswordComponent from "../pages/forgot-password-component/ForgotPasswordComponent";
-import AdminHome from "../pages/admin/admin-home-component/AdminHome";
-import CustomerHome from "../pages/customer/customer-home-component/CustomerHome";
-import PageNotFound from "../pages/page-notfound-component/PageNotFound";
-import StoreHome from "../pages/store-owner/store-home-component/StoreHome";
-import UserProfile from "../pages/user-profile-component/UserProfile";
-import EditUserProfile from "../pages/user-profile-component/EditUserProfile";
-import StoreListComponent from "../pages/customer/store-list-component/StoreListComponent";
+import Register from "../pages/register/Register";
+import Login from "../pages/login/Login";
+import PageNotFound from "../pages/page-notfound/PageNotFound";
+import UserProfile from "../pages/user-profile/UserProfile";
+import EditUserProfile from "../pages/user-profile/EditUserProfile";
+import ForgotPassword from "../pages/forgot-password/ForgotPassword";
+import StoreList from "../pages/customer/store-list/StoreList";
+import AdminHome from "../pages/admin/admin-home/AdminHome";
+import CustomerHome from "../pages/customer/customer-home/CustomerHome";
+import StoreHome from "../pages/store/store-home-component/StoreHome";
 
 const AppRoutes = () => {
   return (
@@ -18,10 +18,8 @@ const AppRoutes = () => {
       <Route path="/" element={<Navigate to="/login" replace />} />
 
       <Route path="/sign-up" element={<Register />} />
-      <Route path="/login" element={<LoginComponent />} />
-      <Route path="/forgot-password" element={<ForgotPasswordComponent />} />
-      <Route path="/store-list" element={<StoreListComponent />} />
-
+      <Route path="/login" element={<Login />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/user/profile" element={<UserProfile />} />
       <Route path="/user/edit-profile" element={<EditUserProfile />} />
 
@@ -33,6 +31,7 @@ const AppRoutes = () => {
 
       {/* Owner Router & Customer Router  */}
       <Route path="/customer-home" element={<CustomerHome />} />
+      <Route path="/store-list" element={<StoreList />} />
 
       {/* Store Owner */}
       <Route path="/store-home" element={<StoreHome />} />

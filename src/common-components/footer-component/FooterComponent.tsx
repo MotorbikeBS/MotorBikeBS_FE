@@ -3,7 +3,7 @@ import React from 'react';
 import './style/style.scss';
 import { Facebook, Twitter, YouTube } from '@mui/icons-material'
 
-const Footer = () => {
+const FooterComponent = () => {
     const supportItems = [
         "Trung Tâm mua bán",
         "An toàn mua bán",
@@ -64,4 +64,4 @@ const Footer = () => {
     );
 };
 
-export default Footer;
+export default FooterComponent;
