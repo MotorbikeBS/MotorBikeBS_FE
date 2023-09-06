@@ -5,8 +5,7 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Item } from "./style/style-root";
 import CustomerMenuComponent from "../customer-menu-component/CustomerMenuComponent";
 import "./style/style.scss";
-import Footer from "../../../common-components/footer-component/Footer";
-import { FavoriteBorderOutlined } from "@mui/icons-material";
+import FooterComponent from "../../../common-components/footer-component/FooterComponent";
 
 const items: IStore[] = [
   {
@@ -47,7 +46,7 @@ const items: IStore[] = [
   }
 ];
 
-const StoreListComponent = () => {
+const StoreList = () => {
   return (
     <>
       <CustomerMenuComponent />
@@ -57,38 +56,38 @@ const StoreListComponent = () => {
           container
           spacing={{ xs: 2, md: 1 }}
           columns={{ xs: 4, sm: 6, md: 12 }}
-          className="product-grid"
+          className="store-grid"
         >
           {items.map((item) => (
             <Grid xs={2} sm={8} md={3} key={item.id}>
-              <Item className="product-item">
-                <div className="product-image">
+              <Item className="store-item">
+                <div className="store-image">
                   <img src={item.image} alt="Đây là ảnh sản phẩm" />
                 </div>
-                <div className="product-information">
+                <div className="store-information">
                   <Typography variant="h6">
                     <strong>Cửa hàng: </strong>
                     {item.store_name}
                   </Typography>
-                  <Typography>
-                    <strong>Điện thoại: </strong>
-                    {item.store_phone}
-                  </Typography>
-                  <Typography>
-                    <strong>Địa chỉ: </strong>
-                    {item.address}
-                  </Typography>
-                  <Typography>
-                    <strong>Email: </strong>
-                    {item.store_email}
-                  </Typography>
+                  <div className="store-info-content">
+                    <Typography>
+                      <strong>Điện thoại: </strong>
+                      {item.store_phone}
+                    </Typography>
+                    <Typography>
+                      <strong>Địa chỉ: </strong>
+                      {item.address}
+                    </Typography>
+                    <Typography>
+                      <strong>Email: </strong>
+                      {item.store_email}
+                    </Typography>
+                  </div>
                 </div>
 
                 <div className="btn-style">
                   <Button variant="outlined">Chi tiết</Button>
-                  <Button className="btn-favorite">
-                    <FavoriteBorderOutlined />
-                  </Button>
+
                 </div>
               </Item>
             </Grid>
@@ -97,10 +96,10 @@ const StoreListComponent = () => {
       </Box>
 
       <Box flexGrow={1} className="footer-style">
-        <Footer />
+        <FooterComponent />
       </Box>
     </>
   );
 };
 
-export default StoreListComponent;
+export default StoreList;

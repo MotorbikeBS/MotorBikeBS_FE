@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Button, Grid, Stack, TextField, Typography } from '@mui/material';
 
 
-import Background from '../../common-components/bgr/Background';
+import Background from '../../common-components/background-component/BackgroundComponent';
 
 import './style/style.scss';
 
@@ -12,7 +12,7 @@ type FormValues = {
     email: string;
 };
 
-const ForgotPasswordComponent = () => {
+const ForgotPassword = () => {
     const form = useForm<FormValues>({
         defaultValues: {
             email: '',
@@ -65,4 +65,4 @@ const ForgotPasswordComponent = () => {
     );
 };
 
-export default ForgotPasswordComponent;
+export default ForgotPassword;

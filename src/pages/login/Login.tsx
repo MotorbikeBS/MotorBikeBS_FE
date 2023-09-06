@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Button, Grid, Stack, TextField, Typography, InputAdornment, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
-import Background from '../../common-components/bgr/Background';
+import Background from '../../common-components/background-component/BackgroundComponent';
 
 import './login-style/login-style.scss';
 
