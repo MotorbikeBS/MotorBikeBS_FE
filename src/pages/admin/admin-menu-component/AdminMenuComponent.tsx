@@ -22,31 +22,13 @@ import {
     SearchOutlined,
 } from "@mui/icons-material";
 
-const pages = [
-    {
-        to: '/admin-dashboard',
-        name: "Thống Kê"
-    },
 
-    {
-        to: "/post-management",
-        name: "Qlí. Tin"
-    },
-    {
-        to: "/account-management",
-        name: "Qlí. Tài khoản"
-    },
-
-];
 const settings = [
     {
         to: "/user/profile",
         name: "Hồ sơ"
     },
-    {
-        to: "/user/wallet",
-        name: "Ví"
-    },
+
     {
         to: "/logout",
         name: "Đăng xuất"
@@ -56,25 +38,18 @@ const settings = [
 const AdminMenuComponent = () => {
     const theme = useTheme();
 
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-        null
-    );
+
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
         null
     );
 
     const [searchOpen, setSearchOpen] = React.useState(false);
 
-    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElNav(event.currentTarget);
-    };
+
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
@@ -131,39 +106,11 @@ const AdminMenuComponent = () => {
                                 aria-label="account of current user"
                                 aria-controls="menu-appbar"
                                 aria-haspopup="true"
-                                onClick={handleOpenNavMenu}
                                 color="inherit"
                             >
                                 <MenuIcon />
                             </IconButton>
-                            <Menu
-                                id="menu-appbar"
-                                anchorEl={anchorElNav}
-                                anchorOrigin={{
-                                    vertical: "bottom",
-                                    horizontal: "left"
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: "top",
-                                    horizontal: "left"
-                                }}
-                                open={Boolean(anchorElNav)}
-                                onClose={handleCloseNavMenu}
-                                sx={{
-                                    display: { xs: "block", md: "none" }
-                                }}
-                            >
-                                {pages.map((page) => (
-                                    <Link to={page.to} style={{ textDecoration: "none" }}>
-                                        <MenuItem key={page.to} onClick={handleCloseNavMenu}>
-                                            <Typography textAlign="center" sx={{ color: "black" }}>
-                                                {page.name}
-                                            </Typography>
-                                        </MenuItem>
-                                    </Link>
-                                ))}
-                            </Menu>
+
                             <IconButton
                                 size="large"
                                 aria-label="account of current user"
@@ -198,27 +145,8 @@ const AdminMenuComponent = () => {
                             </Typography>
                         </Link>
 
-                        <Box
-                            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, gap: 2 }}
-                        >
-                            {pages.map((page) => (
-                                <Link
-                                    key={page.to}
-                                    to={page.to}
-                                    style={{
-                                        textDecoration: "none",
-                                        fontSize: "1.1rem",
-                                        fontWeight: "700",
-                                        color: "white"
-                                    }}
-                                >
-                                    {page.name}
-                                </Link>
-                            ))}
-                        </Box>
 
                         <Box sx={{ display: "flex", flexGrow: 0 }}>
-
                             <Tooltip title="Thông báo">
                                 <IconButton size="large" color="inherit">
                                     <Notifications />
