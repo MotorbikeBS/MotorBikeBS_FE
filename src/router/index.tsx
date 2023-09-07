@@ -10,6 +10,7 @@ import StoreList from "../pages/customer/store-list/StoreList";
 import AdminHome from "../pages/admin/admin-home/AdminHome";
 import CustomerHome from "../pages/customer/customer-home/CustomerHome";
 import StoreHome from "../pages/store/store-home-component/StoreHome";
+import OwnerHome from "../pages/owner/owner-home/OwnerHome";
 
 const AppRoutes = () => {
   return (
@@ -29,9 +30,12 @@ const AppRoutes = () => {
       {/* Admin Router */}
       <Route path="/admin-home" element={<AdminHome />} />
 
-      {/* Owner Router & Customer Router  */}
+      {/*Customer Router  */}
       <Route path="/customer-home" element={<CustomerHome />} />
       <Route path="/store-list" element={<StoreList />} />
+
+      {/* Owner Router  */}
+      <Route path="/owner-home" element={<OwnerHome />} /> {/* Store list */}
 
       {/* Store Owner */}
       <Route path="/store-home" element={<StoreHome />} />
