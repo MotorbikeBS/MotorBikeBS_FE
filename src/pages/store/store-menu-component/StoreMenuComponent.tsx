@@ -23,6 +23,7 @@ import {
     SearchOutlined,
 
 } from "@mui/icons-material";
+import './style/style.scss'
 
 const pages = [
     {
@@ -30,7 +31,7 @@ const pages = [
         name: "Thống kê"
     },
     {
-        to: "/bike-list",
+        to: "/motorbike-list",
         name: "DS.Xe"
     },
 
@@ -101,7 +102,7 @@ const StoreMenuComponent = () => {
             >
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
-                        <Link to="/store-home" style={{ textDecoration: "none" }}>
+                        <Link to="/store-dashboard" style={{ textDecoration: "none" }}>
                             <Typography
                                 variant="h4"
                                 noWrap
@@ -210,12 +211,7 @@ const StoreMenuComponent = () => {
                                 <Link
                                     key={page.to}
                                     to={page.to}
-                                    style={{
-                                        textDecoration: "none",
-                                        fontSize: "1.1rem",
-                                        fontWeight: "700",
-                                        color: "white"
-                                    }}
+                                    className="link-store"
                                 >
                                     {page.name}
                                 </Link>
@@ -278,7 +274,7 @@ const StoreMenuComponent = () => {
                                 }}
                             >
                                 <DriveFileRenameOutline />
-                                <Typography>Đăng Tin</Typography>
+                                <Typography>Đẩy Bài</Typography>
                             </Button>
 
                             <Tooltip

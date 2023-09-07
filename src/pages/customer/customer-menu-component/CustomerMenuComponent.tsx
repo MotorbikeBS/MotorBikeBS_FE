@@ -24,6 +24,7 @@ import {
     BusinessCenter,
     FavoriteBorderOutlined
 } from "@mui/icons-material";
+import './style/style.scss'
 
 const pages = [
     {
@@ -37,6 +38,10 @@ const pages = [
     {
         to: '/my-booking',
         name: 'Lịch hẹn'
+    },
+    {
+        to: '/buy-history',
+        name: 'Lịch sử mua hàng'
     }
 
 ];
@@ -92,24 +97,54 @@ const CustomerMenuComponent = () => {
                     paddingLeft: theme.spacing(3)
                 }}
             >
-                <Button
-                    sx={{
-                        display: { xs: "none", md: "flex" },
-                        background: "white",
-                        width: "16%",
-                        marginLeft: "auto",
-                        alignItems: "center",
-                        gap: 1,
-                        "&:hover": {
-                            background: "#ccd6e6"
-                        }
-                    }}
-                >
-                    <BusinessCenter />
-                    <Typography variant="subtitle2">Dành cho chủ cửa hàng </Typography>
-                </Button>
-
+                <div style={{ display: 'flex', alignContent: 'flex-end', justifyContent: 'flex-end' }}>
+                    <Button
+                        sx={{
+                            display: { xs: "none", md: "flex" },
+                            background: "white",
+                            width: "16%",
+                            marginLeft: "auto",
+                            gap: 1,
+                            "&:hover": {
+                                background: "#ccd6e6"
+                            }
+                        }}
+                    >
+                        <BusinessCenter />
+                        <Typography variant="subtitle2">Dành cho chủ cửa hàng </Typography>
+                    </Button>
+                    <Button
+                        sx={{
+                            display: { xs: "none", md: "flex" },
+                            background: "white",
+                            width: "16%",
+                            gap: 1,
+                            "&:hover": {
+                                background: "#ccd6e6"
+                            }
+                        }}
+                    >
+                        <BusinessCenter />
+                        <Typography variant="subtitle2">Tôi là chủ xe </Typography>
+                    </Button>
+                </div>
                 <Tooltip title="Dành cho chủ cửa hàng">
+                    <Button
+                        sx={{
+                            display: { xs: "flex", md: "none" },
+                            background: "white",
+                            marginLeft: "auto",
+                            alignItems: "center",
+                            gap: 1,
+                            "&:hover": {
+                                background: "#ccd6e6"
+                            }
+                        }}
+                    >
+                        <BusinessCenter />
+                    </Button>
+                </Tooltip>
+                <Tooltip title="Tôi là chủ xe">
                     <Button
                         sx={{
                             display: { xs: "flex", md: "none" },
@@ -236,12 +271,7 @@ const CustomerMenuComponent = () => {
                                 <Link
                                     key={page.to}
                                     to={page.to}
-                                    style={{
-                                        textDecoration: "none",
-                                        fontSize: "1.1rem",
-                                        fontWeight: "700",
-                                        color: "white"
-                                    }}
+                                    className="link-customer"
                                 >
                                     {page.name}
                                 </Link>
