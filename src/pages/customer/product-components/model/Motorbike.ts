@@ -1,7 +1,7 @@
 export interface IMotobike {
   id: number;
   image: string;
-  images: Object;
+  images: string[];
   name: string;
   brand: string;
   model: string;

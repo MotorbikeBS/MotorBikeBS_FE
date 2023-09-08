@@ -11,6 +11,7 @@ import AdminHome from "../pages/admin/admin-home/AdminHome";
 import CustomerHome from "../pages/customer/customer-home/CustomerHome";
 import StoreHome from "../pages/store/store-home-component/StoreHome";
 import OwnerHome from "../pages/owner/owner-home/OwnerHome";
+import MotorBikeDetail from "../pages/customer/MotobikeDetail/MotorBikeDetail";
 
 const AppRoutes = () => {
   return (
@@ -33,6 +34,7 @@ const AppRoutes = () => {
       {/*Customer Router  */}
       <Route path="/customer-home" element={<CustomerHome />} />
       <Route path="/store-list" element={<StoreList />} />
+      <Route path="/motorbike/:motorbikeId" element={<MotorBikeDetail />} />
 
       {/* Owner Router  */}
       <Route path="/owner-home" element={<OwnerHome />} /> {/* Store list */}

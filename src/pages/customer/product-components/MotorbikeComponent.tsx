@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router';
 import { Box, Button, Typography } from '@mui/material'
 import Grid from "@mui/material/Unstable_Grid2";
 import { FavoriteBorderOutlined } from '@mui/icons-material';
@@ -86,7 +87,14 @@ const items: IMotobike[] = [
 
 ]
 
+
 const ProductComponent = () => {
+    const navigate = useNavigate();
+
+    const handleNavigateDetail = (motorbikeId: number) => {
+        navigate(`/motorbike/${motorbikeId}`);
+    }
+
     return (
         <Box sx={{ flexGrow: 1, margin: "0 48px 0 48px" }}>
             <Grid
@@ -97,7 +105,10 @@ const ProductComponent = () => {
             >
                 {items.map((item) => (
                     <Grid xs={2} sm={8} md={3} key={item.id}>
-                        <Item className='product-item'>
+                        <Item
+                            className='product-item'
+                            onClick={() => handleNavigateDetail(item.id)}
+                        >
                             <div className='product-image'>
                                 <img src={item.image} alt='Đây là ảnh sản phẩm' />
                             </div>
@@ -133,7 +144,7 @@ const ProductComponent = () => {
                     </Grid>
                 ))}
             </Grid>
-        </Box>
+        </Box >
     );
 }
 
