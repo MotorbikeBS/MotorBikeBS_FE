@@ -88,7 +88,7 @@ const items: IMotobike[] = [
 ]
 
 
-const ProductComponent = () => {
+const MotorbikeComponent = () => {
     const navigate = useNavigate();
 
     const handleNavigateDetail = (motorbikeId: number) => {
@@ -148,4 +148,4 @@ const ProductComponent = () => {
     );
 }
 
-export default ProductComponent
+export default MotorbikeComponent;

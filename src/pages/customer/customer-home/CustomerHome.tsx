@@ -3,8 +3,8 @@ import { Box } from "@mui/material";
 import "./style/style.scss";
 import CustomerMenuComponent from "../customer-menu-component/CustomerMenuComponent";
 import BannerComponent from "../../../common-components/banner-component/BannerComponent";
-import ProductComponent from "../product-components/MotorbikeComponent";
 import FooterComponent from "../../../common-components/footer-component/FooterComponent";
+import MotorbikeComponent from "../Motorbike-components/MotorbikeComponent";
 
 const CustomerHome = () => {
   return (
@@ -18,7 +18,7 @@ const CustomerHome = () => {
       </Box>
 
       <Box flexGrow={9}>
-        <ProductComponent />
+        <MotorbikeComponent />
       </Box>
 
       <Box flexGrow={1} className="footer-style">
