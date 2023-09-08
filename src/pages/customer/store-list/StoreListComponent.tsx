@@ -83,6 +83,7 @@ const StoreListComponent = () => {
 
                 <div className="btn-style">
                   <Button variant="outlined">Chi tiết</Button>
+                  <Button variant="outlined" color="warning">Bán xe</Button>
                 </div>
               </Item>
             </Grid>
