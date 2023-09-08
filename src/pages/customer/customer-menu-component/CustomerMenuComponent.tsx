@@ -22,7 +22,8 @@ import {
     Notifications,
     SearchOutlined,
     BusinessCenter,
-    FavoriteBorderOutlined
+    FavoriteBorderOutlined,
+    DirectionsBike
 } from "@mui/icons-material";
 import './style/style.scss'
 
@@ -124,7 +125,7 @@ const CustomerMenuComponent = () => {
                             }
                         }}
                     >
-                        <BusinessCenter />
+                        <DirectionsBike />
                         <Typography variant="subtitle2">Tôi là chủ xe </Typography>
                     </Button>
                 </div>
@@ -157,7 +158,7 @@ const CustomerMenuComponent = () => {
                             }
                         }}
                     >
-                        <BusinessCenter />
+                        <DirectionsBike />
                     </Button>
                 </Tooltip>
                 <Container maxWidth="xl">
