@@ -12,6 +12,7 @@ import CustomerHome from "../pages/customer/customer-home/CustomerHome";
 import StoreHome from "../pages/store/store-home-component/StoreHome";
 import OwnerHome from "../pages/owner/owner-home/OwnerHome";
 import MotorBikeDetail from "../pages/customer/MotobikeDetail/MotorBikeDetail";
+import StoreDetail from "../pages/customer/store-detail/StoreDetail";
 
 const AppRoutes = () => {
   return (
@@ -34,6 +35,7 @@ const AppRoutes = () => {
       {/*Customer Router  */}
       <Route path="/customer-home" element={<CustomerHome />} />
       <Route path="/store-list" element={<StoreList />} />
+      <Route path="/store/:storeId" element={<StoreDetail />} />
       <Route path="/motorbike/:motorbikeId" element={<MotorBikeDetail />} />
 
       {/* Owner Router  */}

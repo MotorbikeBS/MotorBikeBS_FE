@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { IStore } from "./model/Store";
 import { Box, Button, Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
@@ -45,6 +46,12 @@ const items: IStore[] = [
 ];
 
 const StoreListComponent = () => {
+  const navigate = useNavigate();
+
+  const handleNavigateDetail = (storeId: number) => {
+    navigate(`/store/${storeId}`);
+  };
+
   return (
     <>
       <Box sx={{ flexGrow: 1, margin: "0 48px 0 48px" }}>
@@ -56,7 +63,10 @@ const StoreListComponent = () => {
         >
           {items.map((item) => (
             <Grid xs={2} sm={8} md={3} key={item.id}>
-              <Item className="store-item">
+              <Item
+                className="store-item"
+                onClick={() => handleNavigateDetail(item.id)}
+              >
                 <div className="store-image">
                   <img src={item.image} alt="Đây là ảnh sản phẩm" />
                 </div>
@@ -74,16 +84,18 @@ const StoreListComponent = () => {
                       <strong>Địa chỉ: </strong>
                       {item.address}
                     </Typography>
-                    <Typography>
+                    {/* <Typography>
                       <strong>Email: </strong>
                       {item.store_email}
-                    </Typography>
+                    </Typography> */}
                   </div>
                 </div>
 
                 <div className="btn-style">
                   <Button variant="outlined">Chi tiết</Button>
-                  <Button variant="outlined" color="warning">Bán xe</Button>
+                  <Button variant="outlined" color="warning">
+                    Bán xe
+                  </Button>
                 </div>
               </Item>
             </Grid>
