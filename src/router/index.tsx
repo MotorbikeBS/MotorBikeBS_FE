@@ -11,7 +11,7 @@ import AdminHome from "../pages/admin/admin-home/AdminHome";
 import CustomerHome from "../pages/customer/customer-home/CustomerHome";
 import StoreHome from "../pages/store/store-home-component/StoreHome";
 import OwnerHome from "../pages/owner/owner-home/OwnerHome";
-import MotorBikeDetail from "../pages/customer/MotobikeDetail/MotorBikeDetail";
+import MotorBikeDetail from "../pages/customer/motorbike-detail/MotorBikeDetail";
 import StoreDetail from "../pages/customer/store-detail/StoreDetail";
 
 const AppRoutes = () => {

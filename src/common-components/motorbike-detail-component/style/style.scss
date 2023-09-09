@@ -1,0 +1,30 @@
+.motorbike-detail-image {
+    max-width: 100%;
+    max-height: 400px
+}
+
+.information-detail-motorbike {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    align-items: flex-start;
+    margin-top: 20px;
+    border: 1px solid gray;
+    max-width: 100%;
+    background-color: rgba(156, 158, 161, 0.3);
+    border-radius: 10px;
+    padding: 0 0 10px 10px;
+    .icon-infomation {
+        display: flex;
+        margin: 0px 0px 10px 0px;
+         :nth-child(1) {
+            margin-right: 10px;
+        }
+    }
+}
+
+table {
+    .header-table {
+        font-weight: bold;
+    }
+}
