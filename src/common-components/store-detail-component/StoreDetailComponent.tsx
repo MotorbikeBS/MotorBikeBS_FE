@@ -10,10 +10,13 @@ const StoreDetailComponent = () => {
         <Grid container spacing={2}>
           <Grid xs={4} md={4}>
             <div className="store-info-header">
-              <Avatar sx={{ width: 52, height: 52, bgcolor: "orange" }}>
+              <Avatar sx={{ width: 60, height: 60, bgcolor: "orange" }}>
                 Hi
               </Avatar>
-              <Typography variant="h5">Vũ Phụng Hoàng</Typography>
+              <div>
+                <Typography variant="h5">Vũ Phụng Hoàng</Typography>
+                <Typography>Ngày tham gia: <strong>05/08/2023</strong></Typography>
+              </div>
             </div>
           </Grid>
           <Grid xs={5} md={4}>
@@ -37,7 +40,7 @@ const StoreDetailComponent = () => {
           </Grid>
           <Grid xs={3} md={4}>
             <div className="sell-btn-container">
-              <Button variant="outlined">Bán xe</Button>
+              <Button variant="outlined">Đặt lịch bán xe</Button>
             </div>
           </Grid>
         </Grid>

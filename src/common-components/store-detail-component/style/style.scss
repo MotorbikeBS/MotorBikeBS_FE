@@ -4,7 +4,8 @@
     margin-right: 88px;
     .store-info-header {
         display: flex;
-        gap: 4px;
+        gap: 1rem;
+        margin-left: 1rem;
         align-items: center;
     }
     .store-info {
@@ -16,13 +17,15 @@
     }
     .sell-btn-container {
         display: flex;
-        // align-items: center;
         justify-content: flex-end;
+        :nth-child(1) {
+            font-size: 16px;
+        }
     }
 }
 
 @media (max-width: 960px) {
     .store-detail-container {
-        margin: 24px;
+        margin: 12px;
     }
 }
