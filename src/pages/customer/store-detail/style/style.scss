@@ -1,0 +1,30 @@
+.store-detail-container {
+  flex-grow: 1;
+  margin-left: 88px;
+  margin-right: 88px;
+  .store-info-header {
+    display: flex;
+    gap:4px;
+    // justify-content: space-around;
+    align-items: center;
+  }
+  .store-info {
+    display: flex;
+    margin-bottom: 10px;
+    .store-info-txt {
+      font-size: 18px;
+    }
+  }
+
+  .sell-btn-container {
+    display: flex;
+    // align-items: center;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 960px) {
+  .store-detail-container {
+    margin: 24px;
+  }
+}
