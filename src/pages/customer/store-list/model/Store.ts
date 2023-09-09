@@ -1,6 +1,6 @@
 export interface IStore {
   id: number;
-  image:string;
+  image: string;
   store_name: string;
   description?: string;
   store_phone: string;

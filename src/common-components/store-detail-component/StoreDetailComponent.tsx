@@ -1,7 +1,7 @@
 import React from "react";
 import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
 import "./style/style.scss";
-// import MotorbikeComponent from "../Motorbike-components/MotorbikeComponent";
+import MotorbikeComponent from "../../pages/customer/Motorbike-components/MotorbikeComponent";
 
 const StoreDetailComponent = () => {
   return (
@@ -10,9 +10,9 @@ const StoreDetailComponent = () => {
         <Grid container spacing={2}>
           <Grid xs={4} md={4}>
             <div className="store-info-header">
-            <Avatar sx={{ width: 52, height: 52, bgcolor: "orange" }}>
-              Hi
-            </Avatar>
+              <Avatar sx={{ width: 52, height: 52, bgcolor: "orange" }}>
+                Hi
+              </Avatar>
               <Typography variant="h5">Vũ Phụng Hoàng</Typography>
             </div>
           </Grid>
@@ -46,7 +46,7 @@ const StoreDetailComponent = () => {
       <hr />
 
       <Box>
-        {/* <MotorbikeComponent /> */}
+        <MotorbikeComponent />
       </Box>
     </Box>
   );
