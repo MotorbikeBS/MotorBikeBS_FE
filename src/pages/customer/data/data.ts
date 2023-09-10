@@ -27,7 +27,7 @@ const items: IMotorbike[] = [
     id: 2,
     image:
       "https://cdn-img.thethao247.vn/storage/files/linhseo/2022/11/23/gia-xe-air-blade-cu-cap-nhat-moi-nhat-2022-221662.jpg",
-    images: ["", ""],
+    images: [],
     name: "Xe Honda Air Blade",
     brand: "Honda",
     model: "Air Blade 150cc",
@@ -65,7 +65,7 @@ const items: IMotorbike[] = [
     id: 4,
     image:
       "https://litteritcostsyou.org/wp-content/uploads/2020/09/gia-xe-sirius.jpg",
-    images: ["", ""],
+    images: [],
     name: "Xe Sirus",
     brand: "Yamaha",
     model: "Yamaha Sirus 110cc",
