@@ -46,7 +46,7 @@ const items: IMotorbike[] = [
     id: 3,
     image:
       "https://autobikes.vn/stores/photo_data/huutho/102016/17/14/144608_Honda-Wave-RSX-2017-22.jpg",
-    images: ["", ""],
+    images: [],
     name: "Xe Wave RSX",
     brand: "Honda",
     model: "Wave RSX 110cc",
