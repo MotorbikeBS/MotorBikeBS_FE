@@ -6,7 +6,9 @@ import MotorbikeComponent from "../../pages/customer/Motorbike-components/Motorb
 const StoreDetailComponent = () => {
   return (
     <Box className="store-detail-container">
-      <Box my={5}>
+      <Box
+        className="store-detail-header"
+      >
         <Grid container spacing={2}>
           <Grid xs={4} md={4}>
             <div className="store-info-header">
@@ -15,7 +17,9 @@ const StoreDetailComponent = () => {
               </Avatar>
               <div>
                 <Typography variant="h5">Vũ Phụng Hoàng</Typography>
-                <Typography>Ngày tham gia: <strong>05/08/2023</strong></Typography>
+                <Typography>
+                  Ngày tham gia: <strong>05/08/2023</strong>
+                </Typography>
               </div>
             </div>
           </Grid>
