@@ -11,10 +11,12 @@ import {
     TableBody,
     TableCell,
     TableContainer,
-    TableRow
+    TableRow,
+    Button
 } from '@mui/material';
 import { MonetizationOnOutlined, StoreOutlined, FmdGoodOutlined } from '@mui/icons-material';
 import './style/style.scss';
+import Carousel from 'react-material-ui-carousel';
 
 type motorbikeParams = {
     motorbikeId: number;
@@ -58,11 +60,20 @@ const MotorBikeDetailComponent = () => {
                     marginRight='40px'
                 >
                     <Box flexGrow={4} marginBottom='30px'>
-                        <img src={motorbike.image}
-                            alt='Đây là hình ảnh'
-                            className='motorbike-detail-image' />
-                        <div className='information-detail-motorbike'
-                        >
+
+
+                        <Carousel>
+                            {[
+                                motorbike.image,
+                                ...motorbike.images
+                            ].map((image, index) => (
+                                <div className='motorbike-detail-images' key={index}>
+                                    <img src={image} alt={`Hình ảnh thêm ${index + 1}`} />
+                                </div>
+                            ))}
+                        </Carousel>
+
+                        <div className='information-detail-motorbike'>
                             <Typography
                                 variant='h5'
                                 fontWeight='bold'
@@ -110,53 +121,73 @@ const MotorBikeDetailComponent = () => {
                 </Box>
 
                 <Box flexGrow={4}>
-                    <Typography
-                        variant='h5'
-                        fontWeight='bold'
-                        marginBottom='10px'
-                        alignContent='center'
-                        className='nn'
+                    <Box flexGrow={10}>
+                        <Typography
+                            variant='h5'
+                            fontWeight='bold'
+                            marginBottom='10px'
+                            alignContent='center'
+                            className='nn'
+                        >
+                            Thông số kỹ thuật:
+                        </Typography>
+                        <TableContainer component={Paper}>
+                            <Table>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell className='header-table'>Hãng xe</TableCell>
+                                        <TableCell>{motorbike.brand}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell style={{ fontWeight: 'bold' }}>Năm đăng ký</TableCell>
+                                        <TableCell>{motorbike.yearRegister.toLocaleDateString()}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell className='header-table'>Tình trạng</TableCell>
+                                        <TableCell>{motorbike.status}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell className='header-table'>Dung tích</TableCell>
+                                        <TableCell>{motorbike.vehicleCapacity} cc</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell className='header-table'>Model</TableCell>
+                                        <TableCell>{motorbike.model}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell className='header-table'>Số Km đã đi</TableCell>
+                                        <TableCell>{motorbike.odo}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell className='header-table'>Loại Xe</TableCell>
+                                        <TableCell>{motorbike.motorType}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell className='header-table'>Xuất Xứ</TableCell>
+                                        <TableCell>Việt Nam</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Box>
+                    <Box
+                        flexGrow={2}
+                        marginTop='10%'
+                        maxWidth='50%'
+                        marginLeft='26%'
                     >
-                        Thông số kỹ thuật:
-                    </Typography>
-                    <TableContainer component={Paper}>
-                        <Table>
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell className='header-table'>Hãng xe</TableCell>
-                                    <TableCell>{motorbike.brand}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell style={{ fontWeight: 'bold' }}>Năm đăng ký</TableCell>
-                                    <TableCell>{motorbike.yearRegister.toLocaleDateString()}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell className='header-table'>Tình trạng</TableCell>
-                                    <TableCell>{motorbike.status}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell className='header-table'>Dung tích</TableCell>
-                                    <TableCell>{motorbike.vehicleCapacity} cc</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell className='header-table'>Model</TableCell>
-                                    <TableCell>{motorbike.model}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell className='header-table'>Số Km đã đi</TableCell>
-                                    <TableCell>{motorbike.odo}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell className='header-table'>Loại Xe</TableCell>
-                                    <TableCell>{motorbike.motorType}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell className='header-table'>Xuất Xứ</TableCell>
-                                    <TableCell>Việt Nam</TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                        <Button
+                            variant="outlined"
+                            sx={{
+                                "&:hover": {
+                                    background: "#ccd6e6",
+                                    color: '#fff'
+                                }
+                            }}
+                        >
+                            Đặt lịch xem xe
+                        </Button>
+                    </Box>
                 </Box>
 
             </Box>
