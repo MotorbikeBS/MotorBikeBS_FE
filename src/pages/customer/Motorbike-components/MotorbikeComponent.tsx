@@ -1,14 +1,12 @@
-import React from 'react'
+import React from 'react';
 import { useNavigate } from 'react-router';
-import { Box, Button, Typography } from '@mui/material'
-import Grid from "@mui/material/Unstable_Grid2";
+import { Box, Button, Typography } from '@mui/material';
+import Grid from "@mui/material/Grid";
 import { FavoriteBorderOutlined } from '@mui/icons-material';
-import { Item } from './style/style-root'
+import { Item } from './style/style-root';
 import { IMotorbike } from './model/Motorbike';
-import './style/style.scss'
+import './style/style.scss';
 import items from '../data/data';
-
-
 
 const MotorbikeComponent = () => {
     const navigate = useNavigate();
@@ -21,27 +19,20 @@ const MotorbikeComponent = () => {
         <Box sx={{ flexGrow: 1, margin: "0 48px 0 48px" }}>
             <Grid
                 container
-                spacing={{ xs: 2, md: 1 }}
-                columns={{ xs: 4, sm: 6, md: 12 }}
+                spacing={2}
                 className='product-grid'
             >
                 {items.map((item: IMotorbike) => (
-                    <Grid xs={2} sm={8} md={3} key={item.id}>
-                        <Item
-                            className='product-item'
-                        >
-                            <div className='product-image' onClick={() => handleNavigateDetail(item.id)}
-                            >
+                    <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
+                        <Item className='product-item'>
+                            <div className='product-image' onClick={() => handleNavigateDetail(item.id)}>
                                 <img src={item.image} alt='Đây là ảnh sản phẩm' />
                             </div>
                             <div className='product-information'>
                                 <Typography variant='h6'>{item.name}</Typography>
-                                <Typography
-                                    color='red'
-                                    fontWeight='700'
-                                    fontSize='18px'
-                                >
-                                    Giá: {item.price}</Typography>
+                                <Typography color='red' fontWeight='700' fontSize='18px'>
+                                    Giá: {item.price}
+                                </Typography>
                                 <div className='product-info-content'>
                                     <Typography><strong>Cửa Hàng:</strong> {item.storeName}</Typography>
                                     <Typography><strong>Loại Xe: </strong>{item.motorType}</Typography>
@@ -57,16 +48,15 @@ const MotorbikeComponent = () => {
                                 <Button variant="outlined">
                                     Đặt lịch xem xe
                                 </Button>
-                                <Button className='btn-favorite' >
+                                <Button className='btn-favorite'>
                                     <FavoriteBorderOutlined />
                                 </Button>
                             </div>
-
                         </Item>
                     </Grid>
                 ))}
             </Grid>
-        </Box >
+        </Box>
     );
 }
 

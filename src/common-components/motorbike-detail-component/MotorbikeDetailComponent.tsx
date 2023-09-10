@@ -61,16 +61,18 @@ const MotorBikeDetailComponent = () => {
                 >
                     <Box flexGrow={4} marginBottom='30px'>
 
-
                         <Carousel>
-                            {[
-                                motorbike.image,
-                                ...motorbike.images
-                            ].map((image, index) => (
-                                <div className='motorbike-detail-images' key={index}>
-                                    <img src={image} alt={`Hình ảnh thêm ${index + 1}`} />
+                            {motorbike.images && motorbike.images.length > 0 ? (
+                                [motorbike.image, ...motorbike.images].map((image, index) => (
+                                    <div className='motorbike-detail-images' key={index}>
+                                        <img src={image} alt={`Hình ảnh thêm ${index + 1}`} />
+                                    </div>
+                                ))
+                            ) : motorbike.image ? (
+                                <div className='motorbike-detail-images'>
+                                    <img src={motorbike.image} alt={`Hình ảnh`} />
                                 </div>
-                            ))}
+                            ) : null}
                         </Carousel>
 
                         <div className='information-detail-motorbike'>
