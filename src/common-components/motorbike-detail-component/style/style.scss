@@ -1,6 +1,20 @@
 .motorbike-detail-image {
     max-width: 100%;
-    max-height: 400px
+    max-height: 420px;
+}
+
+.motorbike-detail-images {
+    max-width: 100%;
+    max-height: 400px;
+    border: 1px solid #ddd;
+    margin: 0 auto;
+}
+
+.motorbike-detail-images img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
 }
 
 .information-detail-motorbike {
