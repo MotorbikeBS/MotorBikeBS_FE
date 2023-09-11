@@ -99,38 +99,48 @@ const CustomerMenuComponent = () => {
                 }}
             >
                 <div style={{ display: 'flex', alignContent: 'flex-end', justifyContent: 'flex-end' }}>
-                    <Button
+                    <Box sx={{
+                        display: { xs: "none", md: "flex" },
+                        background: "white",
+                        width: "16%",
+                        marginRight: '10px',
+                        gap: 2,
+                        borderRadius: '5%',
+                        "&:hover": {
+                            background: "#ccd6e6"
+                        }
+                    }}>
+                        <Link to='/customer/store-owner-signup'>
+                            <Button>
+                                <BusinessCenter />
+                                <Typography variant="subtitle2">Dành cho chủ cửa hàng </Typography>
+                            </Button>
+                        </Link>
+                    </Box>
+
+                    <Box
                         sx={{
                             display: { xs: "none", md: "flex" },
                             background: "white",
-                            width: "16%",
-                            marginLeft: "auto",
-                            gap: 1,
+                            borderRadius: '5%',
+                            width: "10%",
+                            gap: 2,
                             "&:hover": {
                                 background: "#ccd6e6"
                             }
                         }}
                     >
-                        <BusinessCenter />
-                        <Typography variant="subtitle2">Dành cho chủ cửa hàng </Typography>
-                    </Button>
-                    <Button
-                        sx={{
-                            display: { xs: "none", md: "flex" },
-                            background: "white",
-                            width: "16%",
-                            gap: 1,
-                            "&:hover": {
-                                background: "#ccd6e6"
-                            }
-                        }}
-                    >
-                        <DirectionsBike />
-                        <Typography variant="subtitle2">Tôi là chủ xe </Typography>
-                    </Button>
+                        <Link to='/customer/bike-owner-signup'>
+                            <Button>
+                                <DirectionsBike />
+                                <Typography variant="subtitle2">Tôi là chủ xe </Typography>
+                            </Button>
+                        </Link>
+                    </Box>
+
                 </div>
                 <Tooltip title="Dành cho chủ cửa hàng">
-                    <Button
+                    <Box
                         sx={{
                             display: { xs: "flex", md: "none" },
                             background: "white",
@@ -142,11 +152,16 @@ const CustomerMenuComponent = () => {
                             }
                         }}
                     >
-                        <BusinessCenter />
-                    </Button>
+                        <Link to='/customer/store-owner-signup'>
+                            <Button>
+                                <BusinessCenter />
+                            </Button>
+                        </Link>
+
+                    </Box>
                 </Tooltip>
                 <Tooltip title="Tôi là chủ xe">
-                    <Button
+                    <Box
                         sx={{
                             display: { xs: "flex", md: "none" },
                             background: "white",
@@ -158,8 +173,12 @@ const CustomerMenuComponent = () => {
                             }
                         }}
                     >
-                        <DirectionsBike />
-                    </Button>
+                        <Link to='/customer/bike-owner-signup'>
+                            <Button>
+                                <DirectionsBike />
+                            </Button>
+                        </Link>
+                    </Box>
                 </Tooltip>
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
