@@ -16,12 +16,13 @@ const MotorbikeComponent = () => {
     }
 
     return (
-        <Box sx={{ flexGrow: 1, margin: "0 48px 0 48px" }}>
-            <Grid
-                container
-                spacing={2}
-                className='product-grid'
-            >
+        <Box
+            sx={{
+                flexGrow: 1,
+                margin: "0 48px 0 48px"
+            }}
+        >
+            <Grid container spacing={2} className='product-grid'>
                 {items.map((item: IMotorbike) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
                         <Item className='product-item'>
