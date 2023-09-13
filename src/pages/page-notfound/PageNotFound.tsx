@@ -1,8 +1,10 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import * as React from 'react';
 import './style/style.scss';
+import { useNavigate } from 'react-router';
 
 const PageNotFound = () => {
+    const navigate = useNavigate()
     return (
         <div>
 
@@ -13,6 +15,7 @@ const PageNotFound = () => {
                 <Typography variant="h4" className='text-not-found'>
                     PAGE NOT FOUND
                 </Typography>
+                <Button variant='outlined' color='secondary' onClick={()=> navigate('/customer-home')}>Quay về trang chủ</Button>
             </Box>
         </div>
     )

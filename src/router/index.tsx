@@ -15,6 +15,7 @@ import MotorBikeDetail from "../pages/customer/motorbike-detail/MotorBikeDetail"
 import StoreDetail from "../pages/customer/store-detail/StoreDetail";
 import SignUpStoreOwner from "../pages/customer/signup-store-owner/SignUpStoreOwner";
 import SignUpMotorbikeOwner from "../pages/customer/signup-motorbike-owner/SignUpMotorbikeOwner";
+import FauvoriteList from "../pages/customer/favourite-list/FauvoriteList";
 
 const AppRoutes = () => {
   return (
@@ -41,6 +42,7 @@ const AppRoutes = () => {
       <Route path="/motorbike/:motorbikeId" element={<MotorBikeDetail />} />
       <Route path="/customer/store-owner-signup" element={<SignUpStoreOwner />} />
       <Route path="/customer/bike-owner-signup" element={<SignUpMotorbikeOwner />} />
+      <Route path="/favourite-list" element={<FauvoriteList />} />
 
       {/* Owner Router  */}
       <Route path="/owner-home" element={<OwnerHome />} /> {/* Store list */}
