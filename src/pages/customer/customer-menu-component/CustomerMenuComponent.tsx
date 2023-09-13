@@ -13,7 +13,7 @@ import {
   MenuItem,
   useTheme
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import "./style/style.scss";
 
@@ -58,6 +58,7 @@ const settings = [
 
 const CustomerMenuComponent = () => {
   const theme = useTheme();
+  const navigate = useNavigate()
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -299,7 +300,7 @@ const CustomerMenuComponent = () => {
             </Box>
 
             <Box sx={{ display: "flex", flexGrow: 0 }}>
-              <Tooltip title="Yêu Thích">
+              <Tooltip title="Yêu Thích" onClick={()=>navigate('/favourite-list')}>
                 <IconButton size="large" color="inherit">
                   <FavoriteBorderOutlined />
                 </IconButton>
