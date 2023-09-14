@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { IMotorbike } from '../../pages/customer/Motorbike-components/model/Motorbike';
 import motorbikes from '../../pages/customer/data/data';
@@ -17,6 +17,7 @@ import {
 import { MonetizationOnOutlined, StoreOutlined, FmdGoodOutlined } from '@mui/icons-material';
 import './style/style.scss';
 import Carousel from 'react-material-ui-carousel';
+import BookingDialog from '../../pages/customer/BookingDialogComponent/BookingDialog';
 
 type motorbikeParams = {
     motorbikeId: number;
@@ -24,7 +25,14 @@ type motorbikeParams = {
 
 const MotorBikeDetailComponent = () => {
     const { motorbikeId } = useParams<motorbikeParams | any>();
+    const [isOpenDialog, setOpenDialog] = useState(false)
 
+    const handleOpenDialog = () => {
+        setOpenDialog(true)
+    }
+    const handleCloseDialog = () => {
+        setOpenDialog(false)
+    }
     if (!motorbikeId) {
         return (
             <Container>
@@ -179,6 +187,7 @@ const MotorBikeDetailComponent = () => {
                         marginLeft='26%'
                     >
                         <Button
+                            onClick={handleOpenDialog}
                             variant="outlined"
                             sx={{
                                 "&:hover": {
@@ -193,6 +202,7 @@ const MotorBikeDetailComponent = () => {
                 </Box>
 
             </Box>
+            <BookingDialog open={isOpenDialog} onClose={handleCloseDialog} />
         </Container >
     );
 };

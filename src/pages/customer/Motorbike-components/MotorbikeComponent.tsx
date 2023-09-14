@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Box, Button, Typography } from '@mui/material';
 import Grid from "@mui/material/Grid";
@@ -7,14 +7,22 @@ import { Item } from './style/style-root';
 import { IMotorbike } from './model/Motorbike';
 import './style/style.scss';
 import items from '../data/data';
+import BookingDialog from '../BookingDialogComponent/BookingDialog';
 
 const MotorbikeComponent = () => {
     const navigate = useNavigate();
+    const [isOpenDialog, setOpenDialog] = useState(false)
 
     const handleNavigateDetail = (motorbikeId: number) => {
         navigate(`/motorbike/${motorbikeId}`);
     }
 
+    const handleOpenDialog = () => {
+        setOpenDialog(true)
+    }
+    const handleCloseDialog = () => {
+        setOpenDialog(false)
+    }
     return (
         <Box
             sx={{
@@ -46,7 +54,7 @@ const MotorbikeComponent = () => {
                             </div>
 
                             <div className='btn-style'>
-                                <Button variant="outlined">
+                                <Button variant="outlined" onClick={handleOpenDialog}>
                                     Đặt lịch xem xe
                                 </Button>
                                 <Button className='btn-favorite'>
@@ -57,7 +65,9 @@ const MotorbikeComponent = () => {
                     </Grid>
                 ))}
             </Grid>
+            <BookingDialog open={isOpenDialog} onClose={handleCloseDialog} />
         </Box>
+
     );
 }
 
