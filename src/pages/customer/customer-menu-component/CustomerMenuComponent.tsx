@@ -248,13 +248,13 @@ const CustomerMenuComponent = () => {
                                 }}
                             >
                                 {pages.map((page) => (
-                                    <Link to={page.to} style={{ textDecoration: 'none' }}>
-                                        <MenuItem key={page.to} onClick={handleCloseNavMenu}>
+                                    <MenuItem key={page.to} onClick={handleCloseNavMenu}>
+                                        <Link to={page.to} style={{ textDecoration: 'none' }}>
                                             <Typography textAlign="center" sx={{ color: 'black' }}>
                                                 {page.name}
                                             </Typography>
-                                        </MenuItem>
-                                    </Link>
+                                        </Link>
+                                    </MenuItem>
                                 ))}
                             </Menu>
                             <IconButton
@@ -339,9 +339,9 @@ const CustomerMenuComponent = () => {
                                     Thông báo
                                 </Typography>
 
-                                <Tabs>
-                                    <Tab value="1" label="Tất cả" />
-                                    <Tab value="2" label="Chưa đọc" />
+                                <Tabs value={1}>
+                                    <Tab label="Tất cả" value={1} />
+                                    <Tab label="Chưa đọc" value={2} />
                                 </Tabs>
 
                                 <Link to="" style={{ textDecoration: 'none' }}>
@@ -408,8 +408,8 @@ const CustomerMenuComponent = () => {
                                 onClose={handleCloseUserMenu}
                             >
                                 {settings.map((setting) => (
-                                    <Link to={setting.to} style={{ textDecoration: 'none' }}>
-                                        <MenuItem key={setting.to} onClick={handleCloseUserMenu}>
+                                    <Link key={setting.to} to={setting.to} style={{ textDecoration: 'none' }}>
+                                        <MenuItem onClick={handleCloseUserMenu}>
                                             <Typography textAlign="center" sx={{ color: 'black' }}>
                                                 {setting.name}
                                             </Typography>
