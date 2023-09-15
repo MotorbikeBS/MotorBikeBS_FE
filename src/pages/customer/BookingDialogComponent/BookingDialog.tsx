@@ -1,11 +1,29 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { format } from 'date-fns';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack, TextField, TextareaAutosize, Typography } from '@mui/material';
-import './style/style.scss'
+import {
+    Box,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Stack,
+    TextField,
+    TextareaAutosize,
+    Typography,
+} from '@mui/material';
+import './style/style.scss';
 
 interface BookingDialogProps {
     open: boolean;
+    openSubmit: boolean;
+    openCancel: boolean;
+    onOpenSubmitDialog: () => void;
+    onCloseSubmitDialog: () => void;
+    onOpenCancelDialog: () => void;
+    onCloseCancelDialog: () => void;
     onClose: () => void;
 }
 
@@ -15,18 +33,33 @@ interface IBookingViewMotorbike {
     note: string;
 }
 
-const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose }) => {
+const BookingDialog: React.FC<BookingDialogProps> = ({
+    open,
+    openSubmit,
+    openCancel,
+    onOpenCancelDialog,
+    onOpenSubmitDialog,
+    onCloseSubmitDialog,
+    onCloseCancelDialog,
+    onClose,
+}) => {
     const form = useForm<IBookingViewMotorbike>({
         defaultValues: {
             bookingDate: new Date(),
-            note: ''
+            note: '',
         },
     });
     const { control, handleSubmit, register } = form;
 
-
     const handleCloseDialog = () => {
-        onClose()
+        onClose();
+    };
+    const handleOpenSubmitDialog = () => {
+        onOpenSubmitDialog();
+    };
+
+    const handleOpenCancelDialog = () => {
+        onOpenCancelDialog();
     };
 
     const onSubmit = (data: IBookingViewMotorbike) => {
@@ -35,7 +68,7 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose }) => {
 
     return (
         <div>
-            <Dialog open={open} onClose={handleCloseDialog}>
+            <Dialog open={open} onClose={handleOpenCancelDialog}>
                 <DialogTitle>
                     <Typography variant="h4">Đặt Lịch Xem Xe</Typography>
                 </DialogTitle>
@@ -48,59 +81,91 @@ const BookingDialog: React.FC<BookingDialogProps> = ({ open, onClose }) => {
                             </Typography>
                         </div>
                     </DialogContentText>
-                    <Box textAlign='center'>
+                    <Box textAlign="center">
                         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                            <Stack
-                                spacing={2}
-                                className='booking-form-style'
-                            >
+                            <Stack spacing={2} className="booking-form-style">
                                 <Controller
                                     name="bookingDate"
                                     control={control}
                                     render={({ field }) => (
                                         <TextField
-                                            label='Lịch hẹn'
+                                            label="Lịch hẹn"
                                             type="datetime-local"
                                             {...field}
                                             inputProps={{
-                                                min: format(new Date(), "yyyy-MM-dd'T'HH:mm")
+                                                min: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
                                             }}
                                         />
                                     )}
                                 />
                                 <TextareaAutosize
-                                    className='aria-note custom-textarea'
+                                    className="aria-note custom-textarea"
                                     aria-label="Lưu ý của bạn"
                                     {...register('note')}
                                     style={{
                                         width: '345px',
-                                        height: '50px'
+                                        height: '50px',
                                     }}
                                 />
                             </Stack>
                             <Button
                                 type="submit"
-                                variant='contained'
-                                color='primary'
-                                className='btn-booking'
-                                onClick={handleCloseDialog}
+                                variant="contained"
+                                color="primary"
+                                className="btn-booking"
+                                onClick={handleOpenSubmitDialog}
                             >
-                                Submit
+                                Đặt lịch
                             </Button>
                         </form>
                     </Box>
                     <DialogActions>
-                        <Button
-                            onClick={handleCloseDialog}
-                            color='error'
-                            variant='outlined'
-                        >
-                            Cancel
+                        <Button onClick={handleOpenCancelDialog} color="error" variant="outlined">
+                            Hủy bỏ
                         </Button>
                     </DialogActions>
                 </DialogContent>
             </Dialog>
-        </div >
+
+            {/* Dialog Đặt lịch */}
+            <Dialog open={openSubmit}>
+                <DialogTitle>
+                    <Typography variant="h5">Xác nhận Đặt lịch</Typography>
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        <Typography>Bạn có chắc chắn muốn đặt lịch xem xe không ?</Typography>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button color="error" variant="outlined" onClick={onCloseSubmitDialog}>
+                        Hủy bỏ
+                    </Button>
+                    <Button color="success" variant="outlined" onClick={handleSubmit(onSubmit)}>
+                        Đồng ý
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            {/* Dialog Hủy */}
+            <Dialog open={openCancel}>
+                <DialogTitle>
+                    <Typography variant="h5">Xác nhận hủy bỏ</Typography>
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        <Typography>Bạn có chắc chắn muốn hủy bỏ đặt lịch xem xe không ?</Typography>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button color="error" variant="outlined" onClick={onCloseCancelDialog}>
+                        Hủy bỏ
+                    </Button>
+                    <Button color="success" variant="outlined" onClick={handleCloseDialog}>
+                        Đồng ý
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </div>
     );
 };
 

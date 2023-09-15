@@ -1,5 +1,15 @@
 import React from 'react';
-import { Box, Button, Dialog, DialogActions, DialogTitle, Grid, Typography } from '@mui/material';
+import {
+    Box,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Grid,
+    Typography,
+} from '@mui/material';
 import { useNavigate } from 'react-router';
 import { IMotorbike } from '../../Motorbike-components/model/Motorbike';
 import items from '../../data/data';
@@ -43,7 +53,7 @@ const MotobikeFavouriteList = () => {
                     display: 'flex',
                     justifyContent: 'flex-end',
                     padding: '6px 6px',
-                    backgroundColor: '#ccc'
+                    // backgroundColor: '#ccc',
                 }}
             >
                 <Button variant="outlined" color="error" className="btn-delete" onClick={handleDelete}>
@@ -100,12 +110,17 @@ const MotobikeFavouriteList = () => {
                 ))}
             </Grid>
             <Dialog open={openDelete} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
-                <DialogTitle>Bạn có chắc chắn muốn xóa hết danh sách yêu thích không?</DialogTitle>
+                <DialogTitle>Xác nhận</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Bạn có chắc chắn muốn xóa hết danh sách yêu thích không?
+                        </DialogContentText>
+                </DialogContent>
                 <DialogActions>
-                    <Button color="error" onClick={handleDeleteCan}>
+                    <Button color="error" variant='outlined' onClick={handleDeleteCan}>
                         Từ chối
                     </Button>
-                    <Button color="success" onClick={handleDeleteSuc}>
+                    <Button color="success" variant='outlined' onClick={handleDeleteSuc}>
                         Đồng ý
                     </Button>
                 </DialogActions>
