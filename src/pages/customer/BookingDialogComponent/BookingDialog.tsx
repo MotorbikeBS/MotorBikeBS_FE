@@ -64,6 +64,7 @@ const BookingDialog: React.FC<BookingDialogProps> = ({
 
     const onSubmit = (data: IBookingViewMotorbike) => {
         console.log(data);
+        handleCloseDialog()  
     };
 
     return (
@@ -82,7 +83,7 @@ const BookingDialog: React.FC<BookingDialogProps> = ({
                         </div>
                     </DialogContentText>
                     <Box textAlign="center">
-                        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                        <form noValidate>
                             <Stack spacing={2} className="booking-form-style">
                                 <Controller
                                     name="bookingDate"
@@ -109,7 +110,6 @@ const BookingDialog: React.FC<BookingDialogProps> = ({
                                 />
                             </Stack>
                             <Button
-                                type="submit"
                                 variant="contained"
                                 color="primary"
                                 className="btn-booking"
@@ -141,7 +141,7 @@ const BookingDialog: React.FC<BookingDialogProps> = ({
                     <Button color="error" variant="outlined" onClick={onCloseSubmitDialog}>
                         Hủy bỏ
                     </Button>
-                    <Button color="success" variant="outlined" onClick={handleSubmit(onSubmit)}>
+                    <Button type="submit" color="success" variant="outlined" onClick={handleSubmit(onSubmit)}>
                         Đồng ý
                     </Button>
                 </DialogActions>
