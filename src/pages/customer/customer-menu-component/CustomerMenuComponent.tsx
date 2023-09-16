@@ -12,9 +12,6 @@ import {
     Tooltip,
     MenuItem,
     useTheme,
-    Avatar,
-    Tab,
-    Tabs,
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -29,6 +26,7 @@ import {
     DirectionsBike,
 } from '@mui/icons-material';
 import './style/style.scss';
+import MenuComponent from '../../../common-components/notify-component/NotifyComponent';
 
 const pages = [
     {
@@ -305,8 +303,6 @@ const CustomerMenuComponent = () => {
                                     <FavoriteBorderOutlined />
                                 </IconButton>
                             </Tooltip>
-
-                            {/* Icon Thông báo */}
                             <Tooltip title="Thông báo">
                                 <IconButton
                                     onClick={handleOpenNotifyMenu}
@@ -319,66 +315,10 @@ const CustomerMenuComponent = () => {
                                     <Notifications />
                                 </IconButton>
                             </Tooltip>
-                            <Menu
-                                sx={{ mt: '45px' }}
-                                id="menu-notify"
-                                anchorEl={anchorElNotify}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorElNotify)}
-                                onClose={handleCloseNotifyMenu}
-                            >
-                                <Typography variant="h5" sx={{ mr: 'auto', paddingLeft: '6px', fontWeight: '600' }}>
-                                    Thông báo
-                                </Typography>
-
-                                <Tabs value={1}>
-                                    <Tab label="Tất cả" value={1} />
-                                    <Tab label="Chưa đọc" value={2} />
-                                </Tabs>
-
-                                <Link to="" style={{ textDecoration: 'none' }}>
-                                    <MenuItem sx={{ display: 'flex', justifyContent: 'center', gap: '6px' }}>
-                                        <Avatar alt="store" sx={{ width: 30, height: 30, bgcolor: 'orange' }}></Avatar>
-                                        <Typography textAlign="center" sx={{ color: 'black' }}>
-                                            Store K
-                                        </Typography>
-                                        <Typography textAlign="center" sx={{ color: 'black' }}>
-                                            đã xác nhận lịch hẹn của bạn.
-                                        </Typography>
-                                    </MenuItem>
-                                    <MenuItem sx={{ display: 'flex', justifyContent: 'center', gap: '6px' }}>
-                                        <Avatar alt="store" sx={{ width: 30, height: 30, bgcolor: 'orange' }}></Avatar>
-                                        <Typography textAlign="center" sx={{ color: 'black' }}>
-                                            Store K
-                                        </Typography>
-                                        <Typography textAlign="center" sx={{ color: 'black' }}>
-                                            đã xác nhận lịch hẹn của bạn.
-                                        </Typography>
-                                    </MenuItem>
-                                    <MenuItem sx={{ display: 'flex', justifyContent: 'center', gap: '6px' }}>
-                                        <Avatar alt="store" sx={{ width: 30, height: 30, bgcolor: 'orange' }}></Avatar>
-                                        <Typography textAlign="center" sx={{ color: 'black' }}>
-                                            Store K đã xác nhận lịch hẹn của bạn.
-                                        </Typography>
-                                    </MenuItem>
-                                    <MenuItem sx={{ display: 'flex', justifyContent: 'center', gap: '6px' }}>
-                                        <Avatar alt="store" sx={{ width: 30, height: 30, bgcolor: 'orange' }}></Avatar>
-                                        <Typography textAlign="center" sx={{ color: 'black' }}>
-                                            Store K đã xác nhận lịch hẹn của bạn.
-                                        </Typography>
-                                    </MenuItem>
-                                </Link>
-                            </Menu>
-
-                            {/* Icon Tài khoản */}
+                            <MenuComponent
+                                anchorElNotify={anchorElNotify}
+                                handleCloseNotifyMenu={handleCloseNotifyMenu}
+                            />
                             <Tooltip title="Tài khoản">
                                 <IconButton
                                     onClick={handleOpenUserMenu}
