@@ -16,6 +16,7 @@ import StoreDetail from "../pages/customer/store-detail/StoreDetail";
 import SignUpStoreOwner from "../pages/customer/signup-store-owner/SignUpStoreOwner";
 import SignUpMotorbikeOwner from "../pages/customer/signup-motorbike-owner/SignUpMotorbikeOwner";
 import FauvoriteList from "../pages/customer/favourite-list/FauvoriteList";
+import DateBooking from "../pages/customer/date-booking/DateBooking";
 
 const AppRoutes = () => {
   return (
@@ -43,6 +44,7 @@ const AppRoutes = () => {
       <Route path="/customer/store-owner-signup" element={<SignUpStoreOwner />} />
       <Route path="/customer/bike-owner-signup" element={<SignUpMotorbikeOwner />} />
       <Route path="/favourite-list" element={<FauvoriteList />} />
+      <Route path="/date-booking" element={<DateBooking />} />
 
       {/* Owner Router  */}
       <Route path="/owner-home" element={<OwnerHome />} /> {/* Store list */}
