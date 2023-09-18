@@ -38,7 +38,7 @@ const pages = [
         name: 'DS. Cửa hàng',
     },
     {
-        to: '/my-booking',
+        to: '/date-booking',
         name: 'Lịch hẹn',
     },
     {
