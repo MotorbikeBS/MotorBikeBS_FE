@@ -1,4 +1,4 @@
-import { IMotorbike } from '../Motorbike-components/model/Motorbike';
+import { IMotorbike } from '../motorbike-component/model/Motorbike';
 
 const items: IMotorbike[] = [
     {

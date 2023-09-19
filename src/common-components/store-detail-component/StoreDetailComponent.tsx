@@ -1,7 +1,7 @@
 import React from "react";
 import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
 import "./style/style.scss";
-import MotorbikeComponent from "../../pages/customer/Motorbike-components/MotorbikeComponent";
+import MotorbikeComponent from "../../pages/customer/motorbike-component/MotorbikeComponent";
 
 const StoreDetailComponent = () => {
   return (

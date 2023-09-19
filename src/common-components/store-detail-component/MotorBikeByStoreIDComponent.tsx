@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router';
 import { Item } from '../../pages/customer/store-list/style/style-root';
 import { FavoriteBorderOutlined } from '@mui/icons-material';
 import items from '../../pages/customer/data/data';
-import { IMotorbike } from '../../pages/customer/Motorbike-components/model/Motorbike';
+import { IMotorbike } from '../../pages/customer/motorbike-component/model/Motorbike';
 
 
 const MotorbikeByStoreIdComponent = () => {
-  
+
     const navigate = useNavigate();
 
     const handleNavigateDetail = (motorbikeId: number) => {

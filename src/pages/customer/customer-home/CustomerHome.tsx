@@ -4,7 +4,7 @@ import "./style/style.scss";
 import CustomerMenuComponent from "../customer-menu-component/CustomerMenuComponent";
 import BannerComponent from "../../../common-components/banner-component/BannerComponent";
 import FooterComponent from "../../../common-components/footer-component/FooterComponent";
-import MotorbikeComponent from "../Motorbike-components/MotorbikeComponent";
+import MotorbikeComponent from "../motorbike-component/MotorbikeComponent";
 
 const CustomerHome = () => {
   return (

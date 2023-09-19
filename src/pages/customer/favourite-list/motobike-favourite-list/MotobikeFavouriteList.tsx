@@ -11,7 +11,7 @@ import {
     Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router';
-import { IMotorbike } from '../../Motorbike-components/model/Motorbike';
+import { IMotorbike } from '../../motorbike-component/model/Motorbike';
 import items from '../../data/data';
 import { Item } from './style/style-root';
 import { Favorite, DeleteOutline } from '@mui/icons-material';
@@ -114,7 +114,7 @@ const MotobikeFavouriteList = () => {
                 <DialogContent>
                     <DialogContentText>
                         Bạn có chắc chắn muốn xóa hết danh sách yêu thích không?
-                        </DialogContentText>
+                    </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button color="error" variant='outlined' onClick={handleDeleteCan}>

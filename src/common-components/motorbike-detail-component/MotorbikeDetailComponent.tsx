@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { IMotorbike } from '../../pages/customer/Motorbike-components/model/Motorbike';
+import { IMotorbike } from '../../pages/customer/motorbike-component/model/Motorbike';
 import motorbikes from '../../pages/customer/data/data';
 import {
     Box,
@@ -17,7 +17,8 @@ import {
 import { MonetizationOnOutlined, StoreOutlined, FmdGoodOutlined } from '@mui/icons-material';
 import './style/style.scss';
 import Carousel from 'react-material-ui-carousel';
-import BookingDialog from '../../pages/customer/BookingDialogComponent/BookingDialog';
+import BookingDialog from '../../pages/customer/booking-dialog-component/BookingDialog';
+import useFormatCurrency from '../../hooks/useFormatCurrency';
 
 type motorbikeParams = {
     motorbikeId: number;
@@ -28,6 +29,8 @@ const MotorBikeDetailComponent = () => {
     const [isOpenDialog, setOpenDialog] = useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = useState(false);
+
+    const formatPrice = useFormatCurrency()
 
     const handleOpenDialog = () => {
         setOpenDialog(true);
@@ -97,7 +100,7 @@ const MotorBikeDetailComponent = () => {
                             <div className="icon-infomation">
                                 <MonetizationOnOutlined />
                                 <Typography variant="h6" textAlign="left" color="red" fontWeight="bold">
-                                    {motorbike.price} VND
+                                    {formatPrice(motorbike.price)}
                                 </Typography>
                             </div>
                             <div className="icon-infomation">

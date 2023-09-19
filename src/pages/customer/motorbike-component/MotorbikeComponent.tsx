@@ -1,19 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router';
-import { Box, Button, Typography } from '@mui/material';
+import {
+    Box,
+    Button,
+    Typography
+} from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { FavoriteBorderOutlined } from '@mui/icons-material';
 import { Item } from './style/style-root';
 import { IMotorbike } from './model/Motorbike';
 import './style/style.scss';
 import items from '../data/data';
-import BookingDialog from '../BookingDialogComponent/BookingDialog';
+import BookingDialog from '../booking-dialog-component/BookingDialog';
+import useFormatCurrency from '../../../hooks/useFormatCurrency';
 
 const MotorbikeComponent = () => {
     const navigate = useNavigate();
-    const [isOpenDialog, setOpenDialog] = useState(false);
-    const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false);
-    const [isOpenCancelDialog, setIsOpenCancelDialog] = useState(false);
+    const [isOpenDialog, setOpenDialog] = React.useState(false);
+    const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
+    const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
+
+    const formatCurrency = useFormatCurrency();;
 
     const handleNavigateDetail = (motorbikeId: number) => {
         navigate(`/motorbike/${motorbikeId}`);
@@ -59,7 +66,7 @@ const MotorbikeComponent = () => {
                             <div className="product-information">
                                 <Typography variant="h6">{item.name}</Typography>
                                 <Typography color="red" fontWeight="700" fontSize="18px">
-                                    Giá: {item.price}
+                                    Giá: {formatCurrency(item.price)}
                                 </Typography>
                                 <div className="product-info-content">
                                     <Typography>
