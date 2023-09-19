@@ -15,7 +15,6 @@ const PageNotFound = () => {
                 <Typography variant="h4" className='text-not-found'>
                     PAGE NOT FOUND
                 </Typography>
-                <Button variant='outlined' color='secondary' onClick={()=> navigate('/customer-home')}>Quay về trang chủ</Button>
             </Box>
         </div>
     )
