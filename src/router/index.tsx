@@ -17,6 +17,7 @@ import SignUpStoreOwner from "../pages/customer/signup-store-owner/SignUpStoreOw
 import SignUpMotorbikeOwner from "../pages/customer/signup-motorbike-owner/SignUpMotorbikeOwner";
 import FauvoriteList from "../pages/customer/favourite-list/FauvoriteList";
 import DateBooking from "../pages/customer/date-booking/DateBooking";
+import VerifyAccount from "../pages/register/verify-account/VerifyAccount";
 
 const AppRoutes = () => {
   return (
@@ -24,7 +25,10 @@ const AppRoutes = () => {
       {/* Common Router  */}
       <Route path="/" element={<Navigate to="/login" replace />} />
 
+      {/* Signup  */}
       <Route path="/sign-up" element={<Register />} />
+      <Route path='/user/:id/verify/:token' element={<VerifyAccount />} />
+
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/user/profile" element={<UserProfile />} />
