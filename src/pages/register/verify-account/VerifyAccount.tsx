@@ -5,6 +5,7 @@ import PageNotFound from '../../page-notfound/PageNotFound'
 import { Link } from 'react-router-dom'
 const VerifyAccount = () => {
     const [validUrl, setValidUrl] = useState(false)
+
     return (
         <div>
             {validUrl ? (
