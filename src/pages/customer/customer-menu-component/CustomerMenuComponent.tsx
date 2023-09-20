@@ -13,7 +13,7 @@ import {
     MenuItem,
     useTheme,
 } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import './style/style.scss';
 
@@ -60,6 +60,7 @@ const settings = [
 const CustomerMenuComponent = () => {
     const theme = useTheme();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -91,6 +92,10 @@ const CustomerMenuComponent = () => {
 
     const toggleSearch = () => {
         setSearchOpen(!searchOpen);
+    };
+
+    const isMenuItemActive = (to: string) => {
+        return location.pathname === to;
     };
 
     return (
@@ -291,7 +296,11 @@ const CustomerMenuComponent = () => {
 
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 2 }}>
                             {pages.map((page) => (
-                                <Link key={page.to} to={page.to} className="link-customer">
+                                <Link
+                                    key={page.to}
+                                    to={page.to}
+                                    className={`link-customer ${isMenuItemActive(page.to) ? 'active' : ''}`}
+                                >
                                     {page.name}
                                 </Link>
                             ))}

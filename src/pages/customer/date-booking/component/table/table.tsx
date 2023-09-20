@@ -1,5 +1,16 @@
-import { Typography } from "@mui/material";
-import { GridColDef } from "@mui/x-data-grid"
+import { Typography } from '@mui/material';
+import { GridColDef, GridColTypeDef } from '@mui/x-data-grid';
+import '../../style/style.scss'
+
+const currencyFormatter = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+});
+
+const vndPrice: GridColTypeDef = {
+    valueFormatter: ({ value }) => currencyFormatter.format(value),
+    cellClassName: 'price_row',
+};
 
 export const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 100 },
@@ -12,13 +23,13 @@ export const columns: GridColDef[] = [
         field: 'bookingDate',
         headerName: 'Ngày xem xe',
         width: 200,
-        editable: true,
+        editable: false,
     },
     {
         field: 'dateCreated',
         headerName: 'Ngày tạo lịch',
         width: 200,
-        editable: true,
+        editable: false,
     },
     {
         field: 'nameStore',
@@ -34,12 +45,9 @@ export const columns: GridColDef[] = [
     {
         field: 'price',
         headerName: 'Giá xe',
-        headerAlign: 'left',
-        align: 'left',
-        type: 'number',
         width: 200,
-        editable: true,
-        renderCell: (params) => <p style={{ fontWeight: '600' }}>{params.row.price}</p>,
+        editable: false,
+        ...vndPrice,
     },
     {
         field: 'status',

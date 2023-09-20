@@ -9,3 +9,7 @@
 .link-customer:hover {
     background: gray;
 }
+.link-customer.active {
+    color: #ee9b1e;
+    font-weight: bold;
+  }
