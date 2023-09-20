@@ -24,12 +24,12 @@ const AppRoutes = () => {
     <Routes>
       {/* Common Router  */}
       <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/login" element={<Login />} />
 
       {/* Signup  */}
       <Route path="/sign-up" element={<Register />} />
       <Route path='/user/:id/verify/:token' element={<VerifyAccount />} />
 
-      <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/user/profile" element={<UserProfile />} />
       <Route path="/user/edit-profile" element={<EditUserProfile />} />
