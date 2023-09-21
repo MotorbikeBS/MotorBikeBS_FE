@@ -10,6 +10,7 @@ const currencyFormatter = new Intl.NumberFormat('vi-VN', {
 const vndPrice: GridColTypeDef = {
     valueFormatter: ({ value }) => currencyFormatter.format(value),
     cellClassName: 'price_row',
+    editable: false,
 };
 
 export const columns: GridColDef[] = [
@@ -35,12 +36,13 @@ export const columns: GridColDef[] = [
         field: 'nameStore',
         headerName: 'Tên cửa hàng',
         width: 240,
+        editable: false
     },
     {
         field: 'phone',
         headerName: 'Số điện thoại',
         width: 200,
-        editable: true,
+        editable: false,
     },
     {
         field: 'price',
@@ -53,6 +55,7 @@ export const columns: GridColDef[] = [
         field: 'status',
         headerName: 'Trạng thái',
         width: 200,
+        editable: false,
         renderCell: (params) =>
             params.row.status === 'isCancel' ? (
                 <Typography color="error">Từ chối</Typography>
