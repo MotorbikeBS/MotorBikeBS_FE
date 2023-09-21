@@ -18,6 +18,7 @@ import SignUpMotorbikeOwner from "../pages/customer/signup-motorbike-owner/SignU
 import FauvoriteList from "../pages/customer/favourite-list/FauvoriteList";
 import DateBooking from "../pages/customer/date-booking/DateBooking";
 import VerifyAccount from "../pages/register/verify-account/VerifyAccount";
+import BuyHistory from "../pages/customer/buy-history/date-booking/BuyHistory";
 
 const AppRoutes = () => {
   return (
@@ -49,6 +50,7 @@ const AppRoutes = () => {
       <Route path="/customer/bike-owner-signup" element={<SignUpMotorbikeOwner />} />
       <Route path="/favourite-list" element={<FauvoriteList />} />
       <Route path="/date-booking" element={<DateBooking />} />
+      <Route path="/buy-history" element={<BuyHistory />} />
 
       {/* Owner Router  */}
       <Route path="/owner-home" element={<OwnerHome />} /> {/* Store list */}
