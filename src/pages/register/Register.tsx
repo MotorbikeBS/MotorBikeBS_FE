@@ -6,25 +6,28 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Background from '../../common-components/background-component/BackgroundComponent';
 
 import './styles/style.scss';
+import { useAppDispatch, useAppSelector } from '../../services/store/store';
+import { registerUser } from '../../services/features/accountSlice';
 
 type FormValues = {
     username: string;
-    address: string;
-    phone: string;
     email: string;
     password: string;
-    passwordConfirm: string;
+    passwordConfirmed: string;
 };
 
 const Register = () => {
+
+    const dispath = useAppDispatch()
+    const { user, error, loading } = useAppSelector((state) => state.account);
+
+
     const form = useForm<FormValues>({
         defaultValues: {
             username: "",
-            address: "",
-            phone: '',
             email: "",
             password: '',
-            passwordConfirm: ''
+            passwordConfirmed: ''
         },
     });
     const { register, handleSubmit, formState } = form;
@@ -41,7 +44,7 @@ const Register = () => {
     }
 
     const onSubmit = (data: FormValues) => {
-        console.log(data);
+        dispath(registerUser(data))
     };
 
     return (
@@ -64,19 +67,6 @@ const Register = () => {
                                     {...register('username', { required: 'Bạn Chưa Nhập Tên' })}
                                     error={!!errors.username}
                                     helperText={errors.username?.message}
-                                    variant='outlined'
-                                />
-                                <TextField
-                                    label='Địa Chỉ'
-                                    type='text'
-                                    {...register('address')}
-                                    variant='outlined'
-                                />
-                                <TextField
-                                    label='Số Điện Thoại'
-                                    {...register('phone', { required: 'Bạn Chưa Nhập Số Điện Thoại' })}
-                                    error={!!errors.phone}
-                                    helperText={errors.phone?.message}
                                     variant='outlined'
                                 />
                                 <TextField
@@ -107,9 +97,9 @@ const Register = () => {
                                 <TextField
                                     label='Nhập Lại Mật Khẩu'
                                     type={showConfirmPass ? 'text' : 'password'}
-                                    {...register('passwordConfirm', { required: 'Bạn Chưa Xác Nhận Mật Khẩu' })}
-                                    error={!!errors.passwordConfirm}
-                                    helperText={errors.passwordConfirm?.message}
+                                    {...register('passwordConfirmed', { required: 'Bạn Chưa Xác Nhận Mật Khẩu' })}
+                                    error={!!errors.passwordConfirmed}
+                                    helperText={errors.passwordConfirmed?.message}
                                     variant='outlined'
                                     InputProps={{
                                         endAdornment: (
@@ -126,7 +116,6 @@ const Register = () => {
                                 </Button>
                             </Stack>
                         </form>
-
                         <div className='account-text'>
                             <Typography>Bạn đã có tài khoản? </Typography>
                             <Link to="/login" className='login-link-text'>

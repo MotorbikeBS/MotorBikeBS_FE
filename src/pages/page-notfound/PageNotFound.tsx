@@ -1,10 +1,8 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import * as React from 'react';
 import './style/style.scss';
-import { useNavigate } from 'react-router';
 
 const PageNotFound = () => {
-    const navigate = useNavigate()
     return (
         <div>
 

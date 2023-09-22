@@ -4,6 +4,7 @@ import './apps/index.css';
 import App from './apps/App';
 import { Provider } from 'react-redux';
 import { store } from './services/store/store';
+import { ToastContainer } from 'react-toastify';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
