@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom'
 import { Button, Grid, Stack, TextField, Typography, InputAdornment, IconButton } from '@mui/material';
@@ -46,6 +46,12 @@ const Register = () => {
     const onSubmit = (data: FormValues) => {
         dispatch(registerUser(data))
     };
+
+    useEffect(() => {
+        return () => {
+          dispatch(setError(null));
+        };
+      }, [dispatch]);
 
     return (
         <div className='signup-container'>
