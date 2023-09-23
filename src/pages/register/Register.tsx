@@ -49,9 +49,9 @@ const Register = () => {
 
     useEffect(() => {
         return () => {
-          dispatch(setError(null));
+            dispatch(setError(null));
         };
-      }, [dispatch]);
+    }, [dispatch]);
 
     return (
         <div className='signup-container'>

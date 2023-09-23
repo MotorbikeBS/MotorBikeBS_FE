@@ -1,6 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { loginEndpoint, signupEndpoint } from '../config/api-config';
+import {
+    loginEndpoint,
+    signupEndpoint,
+    verifyEndpoit,
+} from '../config/api-config';
 import { toast } from 'react-toastify';
 import { IUser } from '../../models/Account/UserInterface';
 
@@ -32,6 +36,7 @@ export const registerUser = createAsyncThunk<IUser, Object>(
         }
     },
 );
+
 export const loginUser = createAsyncThunk<IUser, string | Object>(
     'auth/login-user',
     async (data, thunkAPI) => {
@@ -49,6 +54,24 @@ export const loginUser = createAsyncThunk<IUser, string | Object>(
         }
     },
 );
+export const verifyEmail = createAsyncThunk<
+    IUser,
+    { id: number; token: string }
+>('auth/verify-email', async (data, thunkAPI) => {
+    const { id, token } = data;
+    try {
+        const response = await axios.get(
+            `${verifyEndpoit}?id=${id}&token=${token}`,
+        );
+        toast.success('Xác minh email thành công !');
+        return response.data;
+    } catch (error: any) {
+        toast.error('Xác minh email không thành công !');
+        return thunkAPI.rejectWithValue({
+            error: error.response?.data?.errorMessages,
+        });
+    }
+});
 
 export const accountSlice = createSlice({
     name: 'account',
@@ -81,6 +104,18 @@ export const accountSlice = createSlice({
             state.error = null;
         });
         builder.addCase(loginUser.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(verifyEmail.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(verifyEmail.fulfilled, (state, action) => {
+            state.loading = false;
+            state.user = action.payload;
+            state.error = null;
+        });
+        builder.addCase(verifyEmail.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });
