@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Button, Grid, Stack, TextField, Typography, InputAdornment, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 import Background from '../../common-components/background-component/BackgroundComponent';
 
 import './login-style/login-style.scss';
+import { useAppDispatch, useAppSelector } from '../../services/store/store';
+import { loginUser, setError } from '../../services/features/accountSlice';
+import { toast } from 'react-toastify';
 
 type FormValues = {
   email: string;
@@ -15,6 +18,11 @@ type FormValues = {
 
 const LoginComponent = () => {
   const navigave = useNavigate()
+  const location = useLocation()
+  const dispatch = useAppDispatch()
+
+  const { loading, error, user } = useAppSelector((state) => state.account)
+  const errorData: any = error;
 
   const form = useForm<FormValues>({
     defaultValues: {
@@ -31,8 +39,16 @@ const LoginComponent = () => {
   }
 
   const onSubmit = (data: FormValues) => {
-    navigave("/customer-home")
-    console.log(data);
+    dispatch(loginUser(data))
+      .unwrap()
+      .then((user) => {
+        navigave("/customer-home");
+        dispatch(setError(null))
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
   };
 
   return (
@@ -46,6 +62,15 @@ const LoginComponent = () => {
             <Typography variant='h4' className='txt-heading' align='center'>
               Đăng Nhập
             </Typography>
+            {errorData?.error && (
+              <div className="error-message">
+                {Object.keys(errorData?.error).map((key) => (
+                  <Typography key={key} color='red'>
+                    {errorData.error[key]}
+                  </Typography>
+                ))}
+              </div>
+            )}
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
 
               <Stack spacing={4} sx={{ width: 350, marginLeft: 'auto', marginRight: 'auto' }}>

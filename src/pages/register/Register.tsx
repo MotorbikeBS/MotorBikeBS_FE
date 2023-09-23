@@ -7,7 +7,7 @@ import Background from '../../common-components/background-component/BackgroundC
 
 import './styles/style.scss';
 import { useAppDispatch, useAppSelector } from '../../services/store/store';
-import { registerUser } from '../../services/features/accountSlice';
+import { registerUser, setError } from '../../services/features/accountSlice';
 
 type FormValues = {
     username: string;
@@ -18,9 +18,9 @@ type FormValues = {
 
 const Register = () => {
 
-    const dispath = useAppDispatch()
+    const dispatch = useAppDispatch()
     const { user, error, loading } = useAppSelector((state) => state.account);
-
+    const errorData: any = error;
 
     const form = useForm<FormValues>({
         defaultValues: {
@@ -44,7 +44,7 @@ const Register = () => {
     }
 
     const onSubmit = (data: FormValues) => {
-        dispath(registerUser(data))
+        dispatch(registerUser(data))
     };
 
     return (
@@ -58,6 +58,15 @@ const Register = () => {
                         <Typography variant='h4' className='txt-heading' align='center'>
                             Đăng Ký
                         </Typography>
+                        {errorData?.error && (
+                            <div className="error-message">
+                                {Object.keys(errorData?.error).map((key) => (
+                                    <Typography key={key} color='red'>
+                                        {errorData.error[key]}
+                                    </Typography>
+                                ))}
+                            </div>
+                        )}
                         <form onSubmit={handleSubmit(onSubmit)} noValidate>
 
                             <Stack spacing={2} sx={{ width: 350, marginLeft: 'auto', marginRight: 'auto' }}>
@@ -66,8 +75,6 @@ const Register = () => {
                                     type='text'
                                     {...register('username', { required: 'Bạn Chưa Nhập Tên' })}
                                     error={!!errors.username}
-                                    helperText={errors.username?.message}
-                                    variant='outlined'
                                 />
                                 <TextField
                                     label='Email'
