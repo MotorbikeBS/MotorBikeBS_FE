@@ -60,12 +60,13 @@ export const verifyEmail = createAsyncThunk<
 >('auth/verify-email', async (data, thunkAPI) => {
     const { id, token } = data;
     try {
-        const response = await axios.get(
+        const response = await axios.post(
             `${verifyEndpoit}?id=${id}&token=${token}`,
         );
         toast.success('Xác minh email thành công !');
         return response.data;
     } catch (error: any) {
+        console.log(error);
         toast.error('Xác minh email không thành công !');
         return thunkAPI.rejectWithValue({
             error: error.response?.data?.errorMessages,
