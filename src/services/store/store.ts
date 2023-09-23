@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux';
-import accountReducer from '../features/accountSlice';
+import accountSlice from '../features/accountSlice';
 
 export const store = configureStore({
     reducer: {
-        account: accountReducer,
+        account: accountSlice,
     },
 });
 export type RootState = ReturnType<typeof store.getState>;
