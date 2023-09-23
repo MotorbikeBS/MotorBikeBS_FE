@@ -29,7 +29,7 @@ const AppRoutes = () => {
 
       {/* Signup  */}
       <Route path="/sign-up" element={<Register />} />
-      <Route path='/user/:id/verify/:token' element={<VerifyAccount />} />
+      <Route path='/users/:id/verify/:token' element={<VerifyAccount />} />
 
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/user/profile" element={<UserProfile />} />

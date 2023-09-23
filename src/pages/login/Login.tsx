@@ -62,6 +62,7 @@ const LoginComponent = () => {
             dispatch(setError(null));
         };
     }, [dispatch]);
+
     return (
         <div className="login-container">
             <Grid container>
