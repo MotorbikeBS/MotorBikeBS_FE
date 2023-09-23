@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Container, Typography } from '@mui/material'
-import './style/style.scss'
-import PageNotFound from '../../page-notfound/PageNotFound'
-import { Link, useParams } from 'react-router-dom'
-import { useAppDispatch } from '../../../services/store/store'
-import { verifyEmail } from '../../../services/features/accountSlice'
+import React, { useEffect, useState } from 'react';
+import './style/style.scss';
+import { Button, Container, Typography } from '@mui/material';
+import { Link, useParams } from 'react-router-dom';
+import PageNotFound from '../../page-notfound/PageNotFound';
+import { useAppDispatch } from '../../../services/store/store';
+import { verifyEmail } from '../../../services/features/accountSlice';
+
+// Import hình ảnh
+
 const VerifyAccount = () => {
-    const [validUrl, setValidUrl] = useState(false)
+    const [validUrl, setValidUrl] = useState(false);
     const { id, token } = useParams<{ id?: string; token?: string }>();
     const dispatch = useAppDispatch();
 
@@ -23,17 +26,20 @@ const VerifyAccount = () => {
     }, [dispatch, id, token]);
 
     return (
-        <div>
+        <div className="container">
             {validUrl ? (
                 <Container>
-                    <div>
-                        <Typography>Verify Successfully</Typography>
+                    <div className="success-message">
+                        <Typography variant='h4'>Verify Successfully</Typography>
+                        <img
+                            src={`${process.env.PUBLIC_URL}/Successfully.png`}
+                            alt="Success_Verify"
+                            className="verify-image"
+                        />
+
                     </div>
-                    <img src='../../../../public/Successfully.png' alt='Success_Verify' />
-                    <Link to='/login'>
-                        <Button>
-                            Login
-                        </Button>
+                    <Link to="/login" className='btn-container'>
+                        <Button className="login-button">Login</Button>
                     </Link>
                 </Container>
             ) : (
@@ -42,6 +48,8 @@ const VerifyAccount = () => {
                 </Typography>
             )}
         </div>
+
     )
 }
-export default VerifyAccount
+
+export default VerifyAccount;
