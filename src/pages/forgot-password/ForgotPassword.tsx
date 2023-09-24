@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom'
 import { Button, Grid, Stack, TextField, Typography } from '@mui/material';
@@ -7,6 +7,8 @@ import { Button, Grid, Stack, TextField, Typography } from '@mui/material';
 import Background from '../../common-components/background-component/BackgroundComponent';
 
 import './style/style.scss';
+import { useAppDispatch, useAppSelector } from '../../services/store/store';
+import { forgotPassword, setError } from '../../services/features/accountSlice';
 
 type FormValues = {
     email: string;
@@ -21,9 +23,19 @@ const ForgotPassword = () => {
     const { register, handleSubmit, formState } = form;
     const { errors } = formState;
 
+    const dispatch = useAppDispatch()
+    const { error } = useAppSelector((state) => state.account)
+    const errorData: any = error;
+
     const onSubmit = (data: FormValues) => {
-        console.log(data);
+        dispatch(forgotPassword(data))
     };
+
+    useEffect(() => {
+        return () => {
+            dispatch(setError(null));
+        };
+    }, [dispatch]);
 
     return (
         <div className='forgot-password-container'>
@@ -36,6 +48,15 @@ const ForgotPassword = () => {
                         <Typography variant='h4' className='txt-heading' align='center'>
                             Khôi Phục Mật Khẩu
                         </Typography>
+                        {errorData?.error && (
+                            <div className="error-message">
+                                {Object.keys(errorData?.error).map((key) => (
+                                    <Typography key={key} color='red' marginBottom='20px'>
+                                        {errorData.error[key]}
+                                    </Typography>
+                                ))}
+                            </div>
+                        )}
                         <form onSubmit={handleSubmit(onSubmit)} noValidate>
                             <Stack spacing={4} sx={{ width: 350, marginLeft: 'auto', marginRight: 'auto' }}>
 

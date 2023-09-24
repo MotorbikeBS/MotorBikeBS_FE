@@ -19,6 +19,7 @@ import FauvoriteList from "../pages/customer/favourite-list/FauvoriteList";
 import DateBooking from "../pages/customer/date-booking/DateBooking";
 import VerifyAccount from "../pages/register/verify-account/VerifyAccount";
 import BuyHistory from "../pages/customer/buy-history/date-booking/BuyHistory";
+import ResetPassword from "../pages/forgot-password/reset-password/ResetPassword";
 
 const AppRoutes = () => {
   return (
@@ -31,7 +32,10 @@ const AppRoutes = () => {
       <Route path="/sign-up" element={<Register />} />
       <Route path='/users/:id/verify/:token' element={<VerifyAccount />} />
 
+      {/* forgot-passworrd */}
       <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/user/:id/reset-password/:token" element={<ResetPassword />} />
+
       <Route path="/user/profile" element={<UserProfile />} />
       <Route path="/user/edit-profile" element={<EditUserProfile />} />
 
