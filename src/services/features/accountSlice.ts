@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import {
+    forgotPasswordEndPoint,
     loginEndpoint,
+    resetPasswordEndPoint,
     signupEndpoint,
     verifyEndpoit,
 } from '../config/api-config';
@@ -48,7 +50,6 @@ export const verifyEmail = createAsyncThunk<
         toast.success('Xác minh email thành công !');
         return response.data;
     } catch (error: any) {
-        console.log(error);
         toast.error(
             'Xác minh email không thành công ! Token không hợp lệ hoặc đã hết hạn !',
         );
@@ -75,6 +76,45 @@ export const loginUser = createAsyncThunk<IUser, string | Object>(
         }
     },
 );
+
+export const forgotPassword = createAsyncThunk<IUser, { email: string }>(
+    'auth/forgot-pasword',
+    async (data, thunkAPI) => {
+        const { email } = data;
+        try {
+            const response = await axios.post(
+                `${forgotPasswordEndPoint}?email=${email}`,
+            );
+            toast.success('Mã xác minh đã được gửi đến email của bạn !');
+            return response.data;
+        } catch (error: any) {
+            console.log(error);
+            toast.error('Có lỗi xảy ra! Hãy kiểm tra lại thông tin');
+            return thunkAPI.rejectWithValue({
+                error: error.response?.data?.errorMessages,
+            });
+        }
+    },
+);
+export const resetPassword = createAsyncThunk<
+    IUser,
+    { token: string; password: string; passwordConfirmed: string }
+>('auth/reset-password', async (data, thunkAPI) => {
+    const { token, password, passwordConfirmed } = data;
+    try {
+        const response = await axios.post(
+            `${resetPasswordEndPoint}?token=${token}`,
+            { password, passwordConfirmed },
+        );
+        toast.success('Đổi mật khẩu thành công! Bạn có thể đăng nhập !');
+        return response.data;
+    } catch (error: any) {
+        toast.error('Xác minh không thành công !');
+        return thunkAPI.rejectWithValue({
+            error: error.response?.data?.errorMessages,
+        });
+    }
+});
 
 export const accountSlice = createSlice({
     name: 'account',
@@ -119,6 +159,30 @@ export const accountSlice = createSlice({
             state.error = null;
         });
         builder.addCase(verifyEmail.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(forgotPassword.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(forgotPassword.fulfilled, (state, action) => {
+            state.loading = false;
+            state.user = action.payload;
+            state.error = null;
+        });
+        builder.addCase(forgotPassword.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(resetPassword.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(resetPassword.fulfilled, (state, action) => {
+            state.loading = false;
+            state.user = action.payload;
+            state.error = null;
+        });
+        builder.addCase(resetPassword.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });

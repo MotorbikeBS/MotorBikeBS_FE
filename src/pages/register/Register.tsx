@@ -19,7 +19,7 @@ type FormValues = {
 const Register = () => {
 
     const dispatch = useAppDispatch()
-    const { user, error, loading } = useAppSelector((state) => state.account);
+    const { error } = useAppSelector((state) => state.account);
     const errorData: any = error;
 
     const form = useForm<FormValues>({
@@ -67,7 +67,7 @@ const Register = () => {
                         {errorData?.error && (
                             <div className="error-message">
                                 {Object.keys(errorData?.error).map((key) => (
-                                    <Typography key={key} color='red'>
+                                    <Typography key={key} color='red' marginBottom='20px'>
                                         {errorData.error[key]}
                                     </Typography>
                                 ))}

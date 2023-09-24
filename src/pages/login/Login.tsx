@@ -81,7 +81,7 @@ const LoginComponent = () => {
                         {errorData?.error && (
                             <div className="error-message">
                                 {Object.keys(errorData?.error).map((key) => (
-                                    <Typography key={key} color="red">
+                                    <Typography key={key} color='red' marginBottom='20px'>
                                         {errorData.error[key]}
                                     </Typography>
                                 ))}
