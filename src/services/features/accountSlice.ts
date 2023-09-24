@@ -36,6 +36,27 @@ export const registerUser = createAsyncThunk<IUser, Object>(
         }
     },
 );
+export const verifyEmail = createAsyncThunk<
+    IUser,
+    { id: number; token: string }
+>('auth/verify-email', async (data, thunkAPI) => {
+    const { id, token } = data;
+    try {
+        const response = await axios.post(
+            `${verifyEndpoit}?id=${id}&token=${token}`,
+        );
+        toast.success('Xác minh email thành công !');
+        return response.data;
+    } catch (error: any) {
+        console.log(error);
+        toast.error(
+            'Xác minh email không thành công ! Token không hợp lệ hoặc đã hết hạn !',
+        );
+        return thunkAPI.rejectWithValue({
+            error: error.response?.data?.errorMessages,
+        });
+    }
+});
 
 export const loginUser = createAsyncThunk<IUser, string | Object>(
     'auth/login-user',
@@ -54,25 +75,6 @@ export const loginUser = createAsyncThunk<IUser, string | Object>(
         }
     },
 );
-export const verifyEmail = createAsyncThunk<
-    IUser,
-    { id: number; token: string }
->('auth/verify-email', async (data, thunkAPI) => {
-    const { id, token } = data;
-    try {
-        const response = await axios.post(
-            `${verifyEndpoit}?id=${id}&token=${token}`,
-        );
-        toast.success('Xác minh email thành công !');
-        return response.data;
-    } catch (error: any) {
-        console.log(error);
-        toast.error('Xác minh email không thành công !');
-        return thunkAPI.rejectWithValue({
-            error: error.response?.data?.errorMessages,
-        });
-    }
-});
 
 export const accountSlice = createSlice({
     name: 'account',
