@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     Button,
     Grid,
@@ -17,7 +17,6 @@ import Background from '../../common-components/background-component/BackgroundC
 import './login-style/login-style.scss';
 import { useAppDispatch, useAppSelector } from '../../services/store/store';
 import { loginUser, setError } from '../../services/features/accountSlice';
-import { toast } from 'react-toastify';
 
 type FormValues = {
     email: string;
@@ -26,10 +25,9 @@ type FormValues = {
 
 const LoginComponent = () => {
     const navigave = useNavigate();
-    const location = useLocation();
     const dispatch = useAppDispatch();
 
-    const { loading, error, user } = useAppSelector((state) => state.account);
+    const { error } = useAppSelector((state) => state.account);
     const errorData: any = error;
 
     const form = useForm<FormValues>({
@@ -51,7 +49,6 @@ const LoginComponent = () => {
             .unwrap()
             .then((user) => {
                 navigave('/customer-home');
-                // dispatch(setError(null));
             })
             .catch((err) => {
                 console.log(err);
