@@ -8,11 +8,11 @@ import {
     verifyEndpoit,
 } from '../config/api-config';
 import { toast } from 'react-toastify';
-import { IUser } from '../../models/Account/UserInterface';
+import { IAccount } from '../../models/Account/AccountInterface';
 
 interface AccountState {
     loading: boolean;
-    user: IUser | null;
+    user: IAccount | null;
     error: string[] | unknown;
 }
 
@@ -22,7 +22,7 @@ const initialState: AccountState = {
     error: null,
 };
 
-export const registerUser = createAsyncThunk<IUser, Object>(
+export const registerUser = createAsyncThunk<IAccount, Object>(
     'auth/register-user',
     async (data, thunkAPI) => {
         try {
@@ -39,7 +39,7 @@ export const registerUser = createAsyncThunk<IUser, Object>(
     },
 );
 export const verifyEmail = createAsyncThunk<
-    IUser,
+    IAccount,
     { id: number; token: string }
 >('auth/verify-email', async (data, thunkAPI) => {
     const { id, token } = data;
@@ -59,7 +59,7 @@ export const verifyEmail = createAsyncThunk<
     }
 });
 
-export const loginUser = createAsyncThunk<IUser, string | Object>(
+export const loginUser = createAsyncThunk<IAccount, string | Object>(
     'auth/login-user',
     async (data, thunkAPI) => {
         try {
@@ -67,7 +67,7 @@ export const loginUser = createAsyncThunk<IUser, string | Object>(
             const token = response.data.result.token;
             localStorage.setItem('motorbike_bs', token);
             toast.success('Đăng nhập thành công !');
-            return response.data;
+            return response.data.result;
         } catch (error: any) {
             toast.error('Đăng nhập không thành công !');
             return thunkAPI.rejectWithValue({
@@ -76,7 +76,7 @@ export const loginUser = createAsyncThunk<IUser, string | Object>(
         }
     },
 );
-export const logoutUser = createAsyncThunk<IUser | null, string | Object>(
+export const logoutUser = createAsyncThunk<IAccount | null, string | Object>(
     'auth/logout-user',
     async (data, thunkAPI) => {
         try {
@@ -93,7 +93,7 @@ export const logoutUser = createAsyncThunk<IUser | null, string | Object>(
     },
 );
 
-export const forgotPassword = createAsyncThunk<IUser, { email: string }>(
+export const forgotPassword = createAsyncThunk<IAccount, { email: string }>(
     'auth/forgot-pasword',
     async (data, thunkAPI) => {
         const { email } = data;
@@ -113,7 +113,7 @@ export const forgotPassword = createAsyncThunk<IUser, { email: string }>(
     },
 );
 export const resetPassword = createAsyncThunk<
-    IUser,
+    IAccount,
     { token: string; password: string; passwordConfirmed: string }
 >('auth/reset-password', async (data, thunkAPI) => {
     const { token, password, passwordConfirmed } = data;
