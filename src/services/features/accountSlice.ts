@@ -76,6 +76,22 @@ export const loginUser = createAsyncThunk<IUser, string | Object>(
         }
     },
 );
+export const logoutUser = createAsyncThunk<IUser | null, string | Object>(
+    'auth/logout-user',
+    async (data, thunkAPI) => {
+        try {
+            localStorage.removeItem('motorbike_bs');
+            toast.success('Đăng xuất thành công !');
+
+            return null;
+        } catch (error: any) {
+            toast.error('Đăng xuất không thành công !');
+            return thunkAPI.rejectWithValue({
+                error: error.response?.data?.errorMessages,
+            });
+        }
+    },
+);
 
 export const forgotPassword = createAsyncThunk<IUser, { email: string }>(
     'auth/forgot-pasword',
@@ -183,6 +199,18 @@ export const accountSlice = createSlice({
             state.error = null;
         });
         builder.addCase(resetPassword.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(logoutUser.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(logoutUser.fulfilled, (state, action) => {
+            state.loading = false;
+            state.user = action.payload;
+            state.error = null;
+        });
+        builder.addCase(logoutUser.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });

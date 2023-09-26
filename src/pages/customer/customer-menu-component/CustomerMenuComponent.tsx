@@ -27,6 +27,8 @@ import {
 } from '@mui/icons-material';
 import './style/style.scss';
 import MenuComponent from '../../../common-components/notify-component/NotifyComponent';
+import { useAppDispatch } from '../../../services/store/store';
+import { logoutUser } from '../../../services/features/accountSlice';
 
 const pages = [
     {
@@ -46,21 +48,12 @@ const pages = [
         name: 'Lịch sử mua hàng',
     },
 ];
-const settings = [
-    {
-        to: '/user/profile',
-        name: 'Hồ sơ',
-    },
-    {
-        to: '/logout',
-        name: 'Đăng xuất',
-    },
-];
 
 const CustomerMenuComponent = () => {
     const theme = useTheme();
     const navigate = useNavigate();
     const location = useLocation();
+    const dispatch = useAppDispatch()
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -98,6 +91,10 @@ const CustomerMenuComponent = () => {
         return location.pathname === to;
     };
 
+    const handleLogout = (data: any | undefined) => {
+        dispatch(logoutUser(data));
+        navigate('/login')
+    };
     return (
         <>
             <AppBar
@@ -356,15 +353,17 @@ const CustomerMenuComponent = () => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {settings.map((setting) => (
-                                    <Link key={setting.to} to={setting.to} style={{ textDecoration: 'none' }}>
-                                        <MenuItem onClick={handleCloseUserMenu}>
-                                            <Typography textAlign="center" sx={{ color: 'black' }}>
-                                                {setting.name}
-                                            </Typography>
-                                        </MenuItem>
+
+                                <MenuItem onClick={handleCloseUserMenu}>
+                                    <Link to="/" style={{ textDecoration: 'none' }} onClick={handleLogout}>
+                                        <Typography>Đăng xuất</Typography>
                                     </Link>
-                                ))}
+                                </MenuItem>
+                                <MenuItem onClick={handleCloseUserMenu}>
+                                    <Link to="/user/profile" style={{ textDecoration: 'none' }}>
+                                        <Typography>Hồ Sơ</Typography>
+                                    </Link>
+                                </MenuItem>
                             </Menu>
                         </Box>
                     </Toolbar>
