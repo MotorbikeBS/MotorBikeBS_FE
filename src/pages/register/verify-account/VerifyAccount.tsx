@@ -43,7 +43,7 @@ const VerifyAccount = () => {
                                 </Typography>
 
                             ))}
-                            <Link to="/login" className="btn-container">
+                            <Link to="/sign-up" className="btn-container">
                                 <Button className="login-button">Quay lại trang đăng ký </Button>
                             </Link>
 
