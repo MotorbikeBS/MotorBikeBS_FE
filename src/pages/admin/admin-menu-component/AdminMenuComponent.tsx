@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Search, StyledInputBase, SearchIconWrapper } from "./styledMUI/style";
+import * as React from 'react';
+import { Search, StyledInputBase, SearchIconWrapper } from './styledMUI/style';
 import {
     AppBar,
     Box,
@@ -10,46 +10,34 @@ import {
     Container,
     Tooltip,
     MenuItem,
-    useTheme
-} from "@mui/material";
-import { Link } from "react-router-dom";
-import MenuIcon from "@mui/icons-material/Menu";
+    useTheme,
+} from '@mui/material';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import MenuIcon from '@mui/icons-material/Menu';
 
 import {
     AccountCircle,
-
     Notifications,
     SearchOutlined,
-} from "@mui/icons-material";
-
-
-const settings = [
-    {
-        to: "/user/profile",
-        name: "Hồ sơ"
-    },
-
-    {
-        to: "/logout",
-        name: "Đăng xuất"
-    }
-];
+} from '@mui/icons-material';
+import { useAppDispatch } from '../../../services/store/store';
+import { logoutUser } from '../../../services/features/accountSlice';
 
 const AdminMenuComponent = () => {
     const theme = useTheme();
-
+    const navigate = useNavigate();
+    const location = useLocation();
+    const dispatch = useAppDispatch();
 
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-        null
+        null,
     );
 
     const [searchOpen, setSearchOpen] = React.useState(false);
 
-
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
-
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
@@ -58,29 +46,35 @@ const AdminMenuComponent = () => {
     const toggleSearch = () => {
         setSearchOpen(!searchOpen);
     };
-
+    const handleLogout = (data: any | undefined) => {
+        dispatch(logoutUser(data));
+        navigate('/login');
+    };
     return (
         <>
             <AppBar
                 position="static"
                 sx={{
-                    display: "flex",
-                    background: "#04618f",
-                    paddingLeft: theme.spacing(3)
+                    display: 'flex',
+                    background: '#04618f',
+                    paddingLeft: theme.spacing(3),
                 }}
             >
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
-                        <Link to="/admin-home" style={{ textDecoration: "none" }}>
+                        <Link
+                            to="/admin-home"
+                            style={{ textDecoration: 'none' }}
+                        >
                             <Typography
                                 variant="h4"
                                 noWrap
                                 component="div"
                                 sx={{
                                     mr: 2,
-                                    display: { xs: "none", md: "flex" },
+                                    display: { xs: 'none', md: 'flex' },
                                     fontWeight: 700,
-                                    color: "white"
+                                    color: 'white',
                                 }}
                             >
                                 Motorbike BS
@@ -88,7 +82,7 @@ const AdminMenuComponent = () => {
                         </Link>
                         <Search
                             sx={{
-                                display: { xs: "none", md: "flex" }
+                                display: { xs: 'none', md: 'flex' },
                             }}
                         >
                             <SearchIconWrapper>
@@ -96,11 +90,16 @@ const AdminMenuComponent = () => {
                             </SearchIconWrapper>
                             <StyledInputBase
                                 placeholder="Tìm Kiếm…"
-                                inputProps={{ "aria-label": "search" }}
+                                inputProps={{ 'aria-label': 'search' }}
                             />
                         </Search>
 
-                        <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                display: { xs: 'flex', md: 'none' },
+                            }}
+                        >
                             <IconButton
                                 size="large"
                                 aria-label="account of current user"
@@ -126,8 +125,8 @@ const AdminMenuComponent = () => {
                         <Link
                             to="/admin-home"
                             style={{
-                                textDecoration: "none",
-                                flexGrow: 1
+                                textDecoration: 'none',
+                                flexGrow: 1,
                             }}
                         >
                             <Typography
@@ -136,17 +135,16 @@ const AdminMenuComponent = () => {
                                 component="div"
                                 sx={{
                                     mr: 2,
-                                    display: { xs: "flex", md: "none" },
+                                    display: { xs: 'flex', md: 'none' },
                                     fontWeight: 700,
-                                    color: "white"
+                                    color: 'white',
                                 }}
                             >
                                 Motorbike BS
                             </Typography>
                         </Link>
 
-
-                        <Box sx={{ display: "flex", flexGrow: 0 }}>
+                        <Box sx={{ display: 'flex', flexGrow: 0 }}>
                             <Tooltip title="Thông báo">
                                 <IconButton size="large" color="inherit">
                                     <Notifications />
@@ -165,46 +163,59 @@ const AdminMenuComponent = () => {
                                 </IconButton>
                             </Tooltip>
                             <Menu
-                                sx={{ mt: "45px" }}
+                                sx={{ mt: '45px' }}
                                 id="menu-appbar"
                                 anchorEl={anchorElUser}
                                 anchorOrigin={{
-                                    vertical: "top",
-                                    horizontal: "right"
+                                    vertical: 'top',
+                                    horizontal: 'right',
                                 }}
                                 keepMounted
                                 transformOrigin={{
-                                    vertical: "top",
-                                    horizontal: "right"
+                                    vertical: 'top',
+                                    horizontal: 'right',
                                 }}
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {settings.map((setting) => (
-                                    <Link to={setting.to} style={{ textDecoration: "none" }}>
-                                        <MenuItem key={setting.to} onClick={handleCloseUserMenu}>
-                                            <Typography textAlign="center" sx={{ color: "black" }}>
-                                                {setting.name}
-                                            </Typography>
-                                        </MenuItem>
+                                {' '}
+                                <MenuItem onClick={handleCloseUserMenu}>
+                                    <Link
+                                        to="/user/profile"
+                                        style={{ textDecoration: 'none' }}
+                                    >
+                                        <Typography>Hồ Sơ</Typography>
                                     </Link>
-                                ))}
+                                </MenuItem>
+                                <MenuItem onClick={handleCloseUserMenu}>
+                                    <Link
+                                        to="/"
+                                        style={{ textDecoration: 'none' }}
+                                        onClick={handleLogout}
+                                    >
+                                        <Typography>Đăng xuất</Typography>
+                                    </Link>
+                                </MenuItem>
                             </Menu>
-
-
                         </Box>
                     </Toolbar>
                 </Container>
             </AppBar>
             {searchOpen && (
-                <Box sx={{ flexGrow: 1, display: "flex", backgroundColor: "#04618f" }}>
-                    <Search sx={{ display: "flex", flexGrow: 1 }}>
+                <Box
+                    sx={{
+                        flexGrow: 1,
+                        display: 'flex',
+                        backgroundColor: '#04618f',
+                    }}
+                >
+                    <Search sx={{ display: 'flex', flexGrow: 1 }}>
                         <SearchIconWrapper>
                             <SearchOutlined />
                         </SearchIconWrapper>
                         <StyledInputBase
                             placeholder="Tìm Kiếm…"
-                            inputProps={{ "aria-label": "search" }}
+                            inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
                 </Box>

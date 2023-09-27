@@ -15,9 +15,14 @@ import './style/style.scss';
 import { useNavigate } from 'react-router-dom';
 import FooterComponent from '../../common-components/footer-component/FooterComponent';
 import CustomerMenuComponent from '../customer/customer-menu-component/CustomerMenuComponent';
+import StoreMenuComponent from '../store/store-menu-component/StoreMenuComponent';
+import OwnerMenuComponent from '../owner/owner-menu-component/OwnerMenuComponent';
+import AdminMenuComponent from '../admin/admin-menu-component/AdminMenuComponent';
+import { useAppSelector } from '../../services/store/store';
 
 const UserProfile = () => {
     const navigate = useNavigate();
+    const { user } = useAppSelector((state) => state.account);
 
     const [selectedValue, setSelectedValue] = React.useState('male');
 
@@ -27,7 +32,10 @@ const UserProfile = () => {
 
     return (
         <>
-            <CustomerMenuComponent />
+            {user?.roleId === 1 && <AdminMenuComponent />}
+            {user?.roleId === 2 && <StoreMenuComponent />}
+            {user?.roleId === 3 && <OwnerMenuComponent />}
+            {user?.roleId === 4 && <CustomerMenuComponent />}
 
             <div className="profile-container">
                 <Grid container spacing={2}>
@@ -44,7 +52,7 @@ const UserProfile = () => {
                             </Avatar>
                             <div>
                                 <Typography className="edit-profile-name">
-                                    Minh Tri
+                                    {user?.userName}
                                 </Typography>
                                 <Button
                                     className="edit-profile-btn"
@@ -73,14 +81,14 @@ const UserProfile = () => {
                             <Stack spacing={3} className="profile-input-fields">
                                 <TextField
                                     label="Email"
-                                    value="phanminhtri269@gmail.com"
+                                    value={user?.email}
                                     type="email"
                                     variant="outlined"
                                     disabled
                                 />
                                 <TextField
                                     label="Tên"
-                                    value="Minh Tri"
+                                    value={user?.userName}
                                     type="text"
                                     variant="outlined"
                                     disabled
@@ -117,28 +125,32 @@ const UserProfile = () => {
                                 </div>
                                 <TextField
                                     label="Điện thoại"
-                                    value="0908660977"
+                                    value={
+                                        user?.phone
+                                            ? user?.phone
+                                            : 'Bạn chưa có số điện thoại.'
+                                    }
                                     type="text"
                                     variant="outlined"
                                     disabled
                                 />
                                 <TextField
                                     label="Địa chỉ"
-                                    value="Quận 4, Tp.HCM"
+                                    value={user?.address ? (user?.address) : ('Bạn chưa có địa chỉ.')}
                                     type="text"
                                     variant="outlined"
                                     disabled
                                 />
                                 <TextField
                                     label="Ngày sinh"
-                                    value="11/01/2001"
+                                    value={user?.dob ? (user?.dob) : "01/01/2022"}
                                     type="date"
                                     variant="outlined"
                                     disabled
                                 />
                                 <TextField
                                     label="Card"
-                                    value="10"
+                                    value={user?.idCard ? (user?.idCard): ("Bạn chưa có card.")}
                                     type="text"
                                     variant="outlined"
                                     disabled

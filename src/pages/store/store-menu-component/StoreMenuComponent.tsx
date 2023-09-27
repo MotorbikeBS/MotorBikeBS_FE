@@ -13,11 +13,13 @@ import {
     MenuItem,
     useTheme,
 } from '@mui/material';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import { AccountCircle, DriveFileRenameOutline, Notifications, SearchOutlined } from '@mui/icons-material';
 import './style/style.scss';
+import { useAppDispatch } from '../../../services/store/store';
+import { logoutUser } from '../../../services/features/accountSlice';
 
 const pages = [
     {
@@ -38,24 +40,14 @@ const pages = [
         name: 'DS. Lịch hẹn',
     },
 ];
-const settings = [
-    {
-        to: '/user/profile',
-        name: 'Hồ sơ',
-    },
-    {
-        to: '/user/wallet',
-        name: 'Ví',
-    },
-    {
-        to: '/logout',
-        name: 'Đăng xuất',
-    },
-];
 
 const StoreMenuComponent = () => {
     const theme = useTheme();
     const location = useLocation();
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch()
+
+
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -84,6 +76,11 @@ const StoreMenuComponent = () => {
         return location.pathname === to;
     };
 
+    
+    const handleLogout = (data: any | undefined) => {
+        dispatch(logoutUser(data));
+        navigate('/login')
+    };
     return (
         <>
             <AppBar
@@ -241,15 +238,16 @@ const StoreMenuComponent = () => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {settings.map((setting) => (
-                                    <Link to={setting.to} style={{ textDecoration: 'none' }}>
-                                        <MenuItem key={setting.to} onClick={handleCloseUserMenu}>
-                                            <Typography textAlign="center" sx={{ color: 'black' }}>
-                                                {setting.name}
-                                            </Typography>
-                                        </MenuItem>
+                                 <MenuItem onClick={handleCloseUserMenu}>
+                                    <Link to="/user/profile" style={{ textDecoration: 'none' }}>
+                                        <Typography>Hồ Sơ</Typography>
                                     </Link>
-                                ))}
+                                </MenuItem>
+                                <MenuItem onClick={handleCloseUserMenu}>
+                                    <Link to="/" style={{ textDecoration: 'none' }} onClick={handleLogout}>
+                                        <Typography>Đăng xuất</Typography>
+                                    </Link>
+                                </MenuItem>
                             </Menu>
                             <Button
                                 sx={{

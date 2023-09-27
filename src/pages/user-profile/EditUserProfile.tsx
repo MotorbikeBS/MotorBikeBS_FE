@@ -21,9 +21,15 @@ import './style/style.scss';
 import { useNavigate } from 'react-router-dom';
 import FooterComponent from '../../common-components/footer-component/FooterComponent';
 import CustomerMenuComponent from '../customer/customer-menu-component/CustomerMenuComponent';
+import { useAppSelector } from '../../services/store/store';
+import AdminMenuComponent from '../admin/admin-menu-component/AdminMenuComponent';
+import StoreMenuComponent from '../store/store-menu-component/StoreMenuComponent';
+import OwnerMenuComponent from '../owner/owner-menu-component/OwnerMenuComponent';
 
 const EditUserProfile = () => {
     const navigate = useNavigate();
+    const { user } = useAppSelector((state) => state.account);
+
     const [selectedValue, setSelectedValue] = React.useState('male');
     const [openSave, setOpenSave] = React.useState(false);
     const [openCancel, setOpenCancel] = React.useState(false);
@@ -72,7 +78,10 @@ const EditUserProfile = () => {
 
     return (
         <>
-            <CustomerMenuComponent />
+            {user?.roleId === 1 && <AdminMenuComponent />}
+            {user?.roleId === 2 && <StoreMenuComponent />}
+            {user?.roleId === 3 && <OwnerMenuComponent />}
+            {user?.roleId === 4 && <CustomerMenuComponent />}
 
             <div className="profile-container">
                 <Grid container spacing={2}>

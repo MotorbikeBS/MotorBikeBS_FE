@@ -16,6 +16,10 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CustomerMenuComponent from '../customer/customer-menu-component/CustomerMenuComponent';
 import EditIcon from '@mui/icons-material/Edit';
 import FooterComponent from '../../common-components/footer-component/FooterComponent';
+import { useAppSelector } from '../../services/store/store';
+import OwnerMenuComponent from '../owner/owner-menu-component/OwnerMenuComponent';
+import StoreMenuComponent from '../store/store-menu-component/StoreMenuComponent';
+import AdminMenuComponent from '../admin/admin-menu-component/AdminMenuComponent';
 
 type FormValues = {
     oldPassword: string;
@@ -25,6 +29,8 @@ type FormValues = {
 
 const ChangePassword = () => {
     const navigate = useNavigate();
+    const { user } = useAppSelector((state) => state.account);
+
     const form = useForm<FormValues>({
         defaultValues: {
             oldPassword: '',
@@ -47,7 +53,11 @@ const ChangePassword = () => {
 
     return (
         <>
-            <CustomerMenuComponent />
+            {user?.roleId === 1 && <AdminMenuComponent />}
+            {user?.roleId === 2 && <StoreMenuComponent />}
+            {user?.roleId === 3 && <OwnerMenuComponent />}
+            {user?.roleId === 4 && <CustomerMenuComponent />}
+
             <div className="profile-container">
                 <Grid container spacing={2}>
                     <Grid item xs={6} md={3}>
