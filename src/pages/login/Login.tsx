@@ -54,6 +54,7 @@ const LoginComponent = () => {
                 console.log(err);
             });
     };
+
     useEffect(() => {
         return () => {
             dispatch(setError(null));
