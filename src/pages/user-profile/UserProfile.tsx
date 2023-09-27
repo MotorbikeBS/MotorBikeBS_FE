@@ -150,7 +150,21 @@ const UserProfile = () => {
                                 />
                                 <TextField
                                     label="Card"
-                                    value={user?.idCard ? (user?.idCard): ("Bạn chưa có card.")}
+                                    value={user?.idCard ? (user?.idCard) : ("Bạn chưa có card.")}
+                                    type="text"
+                                    variant="outlined"
+                                    disabled
+                                />
+                                <TextField
+                                    label="Ngày tạo tài khoản"
+                                    value={user?.userVerifyAt ? (user?.userVerifyAt) : ("mm-dd-yyyy")}
+                                    type="text"
+                                    variant="outlined"
+                                    disabled
+                                />
+                                <TextField
+                                    label="Cập nhật lần cuối"
+                                    value={user?.userUpdatedAt ? (user?.userUpdatedAt) : ("mm-dd-yyyy")}
                                     type="text"
                                     variant="outlined"
                                     disabled
