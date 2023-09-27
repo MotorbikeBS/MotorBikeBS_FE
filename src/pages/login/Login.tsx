@@ -48,7 +48,18 @@ const LoginComponent = () => {
         dispatch(loginUser(data))
             .unwrap()
             .then((user) => {
-                navigave('/customer-home');
+                if (user?.roleId === 1) {
+                    navigave('/admin-home');
+                } else if (user?.roleId === 2) {
+                    navigave('/store-home')
+                } else if (user?.roleId === 3) {
+                    navigave('/owener-home')
+                }
+                else if (user?.roleId === 4) {
+                    navigave('/customer-home')
+                } else if (user === null) {
+                    navigave('/login')
+                }
             })
             .catch((err) => {
                 console.log(err);

@@ -21,48 +21,73 @@ import VerifyAccount from "../pages/register/verify-account/VerifyAccount";
 import BuyHistory from "../pages/customer/buy-history/date-booking/BuyHistory";
 import ResetPassword from "../pages/forgot-password/reset-password/ResetPassword";
 import ChangePassword from "../pages/user-profile/ChangePassword";
+import { useAppSelector } from "../services/store/store";
 
 const AppRoutes = () => {
+  const { user } = useAppSelector(state => state.account)
+
   return (
+
     <Routes>
-      {/* Common Router  */}
-      <Route path="/" element={<Navigate to="/login" replace />} />
-      <Route path="/login" element={<Login />} />
+      {user === null && (
+        <>
+          {/* Common Router  */}
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<PageNotFound />} />
+          {/* Signup  */}
+          <Route path="/sign-up" element={<Register />} />
+          <Route path='/users/:id/verify/:token' element={<VerifyAccount />} />
 
-      {/* Signup  */}
-      <Route path="/sign-up" element={<Register />} />
-      <Route path='/users/:id/verify/:token' element={<VerifyAccount />} />
+          {/* forgot-passworrd */}
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/user/:id/reset-password/:token" element={<ResetPassword />} />
+        </>
 
-      {/* forgot-passworrd */}
-      <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/user/:id/reset-password/:token" element={<ResetPassword />} />
-      <Route path="/change-password" element={<ChangePassword />} />
+      )}
+      {user?.roleId === 1 && (
+        <>
+          {/* Admin Router */}
+          <Route path="/admin-home" element={<AdminHome />} />
 
-      <Route path="/user/profile" element={<UserProfile />} />
-      <Route path="/user/edit-profile" element={<EditUserProfile />} />
+        </>
+      )}
+      {user?.roleId === 2 && (
+        <>
+          {/* Store Owner */}
+          <Route path="/store-home" element={<StoreHome />} />
+        </>
+      )}  {user?.roleId === 3 && (
+        <>
+          {/* Owner Router  */}
+          <Route path="/owner-home" element={<OwnerHome />} /> {/* Store list */}
+        </>
+      )}  {user?.roleId === 4 && (
+        <>
+          {/*Customer Router  */}
+          <Route path="/customer-home" element={<CustomerHome />} />
+          <Route path="/store-list" element={<StoreList />} />
+          <Route path="/store/:storeId" element={<StoreDetail />} />
+          <Route path="/motorbike/:motorbikeId" element={<MotorBikeDetail />} />
+          <Route path="/customer/store-owner-signup" element={<SignUpStoreOwner />} />
+          <Route path="/customer/bike-owner-signup" element={<SignUpMotorbikeOwner />} />
+          <Route path="/favourite-list" element={<FauvoriteList />} />
+          <Route path="/date-booking" element={<DateBooking />} />
+          <Route path="/buy-history" element={<BuyHistory />} />
+        </>
+      )}
+      {user !== null && (
+        <>
+          <Route path="/change-password" element={<ChangePassword />} />
+
+          <Route path="/user/profile" element={<UserProfile />} />
+          <Route path="/user/edit-profile" element={<EditUserProfile />} />
+        </>
+      )}
+
 
       {/* Page Not Found  */}
-      <Route path="*" element={<PageNotFound />} />
 
-      {/* Admin Router */}
-      <Route path="/admin-home" element={<AdminHome />} />
-
-      {/*Customer Router  */}
-      <Route path="/customer-home" element={<CustomerHome />} />
-      <Route path="/store-list" element={<StoreList />} />
-      <Route path="/store/:storeId" element={<StoreDetail />} />
-      <Route path="/motorbike/:motorbikeId" element={<MotorBikeDetail />} />
-      <Route path="/customer/store-owner-signup" element={<SignUpStoreOwner />} />
-      <Route path="/customer/bike-owner-signup" element={<SignUpMotorbikeOwner />} />
-      <Route path="/favourite-list" element={<FauvoriteList />} />
-      <Route path="/date-booking" element={<DateBooking />} />
-      <Route path="/buy-history" element={<BuyHistory />} />
-
-      {/* Owner Router  */}
-      <Route path="/owner-home" element={<OwnerHome />} /> {/* Store list */}
-
-      {/* Store Owner */}
-      <Route path="/store-home" element={<StoreHome />} />
     </Routes>
   );
 };
