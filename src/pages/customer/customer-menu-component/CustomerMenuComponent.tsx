@@ -354,14 +354,15 @@ const CustomerMenuComponent = () => {
                                 onClose={handleCloseUserMenu}
                             >
 
-                                <MenuItem onClick={handleCloseUserMenu}>
-                                    <Link to="/" style={{ textDecoration: 'none' }} onClick={handleLogout}>
-                                        <Typography>Đăng xuất</Typography>
-                                    </Link>
-                                </MenuItem>
+                                
                                 <MenuItem onClick={handleCloseUserMenu}>
                                     <Link to="/user/profile" style={{ textDecoration: 'none' }}>
                                         <Typography>Hồ Sơ</Typography>
+                                    </Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleCloseUserMenu}>
+                                    <Link to="/" style={{ textDecoration: 'none' }} onClick={handleLogout}>
+                                        <Typography>Đăng xuất</Typography>
                                     </Link>
                                 </MenuItem>
                             </Menu>

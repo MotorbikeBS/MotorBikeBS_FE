@@ -53,7 +53,7 @@ const LoginComponent = () => {
                 } else if (user?.roleId === 2) {
                     navigave('/store-home')
                 } else if (user?.roleId === 3) {
-                    navigave('/owener-home')
+                    navigave('/owner-home')
                 }
                 else if (user?.roleId === 4) {
                     navigave('/customer-home')
