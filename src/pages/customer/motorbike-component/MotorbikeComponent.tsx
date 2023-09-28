@@ -1,10 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
-import {
-    Box,
-    Button,
-    Typography
-} from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { FavoriteBorderOutlined } from '@mui/icons-material';
 import { Item } from './style/style-root';
@@ -13,14 +9,17 @@ import './style/style.scss';
 import items from '../data/data';
 import BookingDialog from '../booking-dialog-component/BookingDialog';
 import useFormatCurrency from '../../../hooks/useFormatCurrency';
+import { useAppSelector } from '../../../services/store/store';
 
 const MotorbikeComponent = () => {
     const navigate = useNavigate();
+    const { user } = useAppSelector(state => state.account);
+
     const [isOpenDialog, setOpenDialog] = React.useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
 
-    const formatCurrency = useFormatCurrency();;
+    const formatCurrency = useFormatCurrency();
 
     const handleNavigateDetail = (motorbikeId: number) => {
         navigate(`/motorbike/${motorbikeId}`);
@@ -31,7 +30,7 @@ const MotorbikeComponent = () => {
     };
     const handleCloseDialog = () => {
         setOpenDialog(false);
-        setIsOpenSubmitDialog(false)
+        setIsOpenSubmitDialog(false);
         setIsOpenCancelDialog(false);
     };
     const handleOpenSubmitDialog = () => {
@@ -46,7 +45,6 @@ const MotorbikeComponent = () => {
     };
     const handleCloseCancelDialog = () => {
         setIsOpenCancelDialog(false);
-
     };
 
     return (
@@ -60,17 +58,30 @@ const MotorbikeComponent = () => {
                 {items.map((item: IMotorbike) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
                         <Item className="product-item">
-                            <div className="product-image" onClick={() => handleNavigateDetail(item.id)}>
-                                <img src={item.image} alt="Đây là ảnh sản phẩm" />
+                            <div
+                                className="product-image"
+                                onClick={() => handleNavigateDetail(item.id)}
+                            >
+                                <img
+                                    src={item.image}
+                                    alt="Đây là ảnh sản phẩm"
+                                />
                             </div>
                             <div className="product-information">
-                                <Typography variant="h6">{item.name}</Typography>
-                                <Typography color="red" fontWeight="700" fontSize="18px">
+                                <Typography variant="h6">
+                                    {item.name}
+                                </Typography>
+                                <Typography
+                                    color="red"
+                                    fontWeight="700"
+                                    fontSize="18px"
+                                >
                                     Giá: {formatCurrency(item.price)}
                                 </Typography>
                                 <div className="product-info-content">
                                     <Typography>
-                                        <strong>Cửa Hàng:</strong> {item.storeName}
+                                        <strong>Cửa Hàng:</strong>{' '}
+                                        {item.storeName}
                                     </Typography>
                                     <Typography>
                                         <strong>Loại Xe: </strong>
@@ -85,22 +96,28 @@ const MotorbikeComponent = () => {
                                         {item.status}
                                     </Typography>
                                     <Typography>
-                                        <strong>Đăng ký mới:</strong> {item.yearRegister.toLocaleDateString()}
+                                        <strong>Đăng ký mới:</strong>{' '}
+                                        {item.yearRegister.toLocaleDateString()}
                                     </Typography>
                                     <Typography>
-                                        <strong>Ngày đăng bài:</strong> {item.postDate.toLocaleDateString()}
+                                        <strong>Ngày đăng bài:</strong>{' '}
+                                        {item.postDate.toLocaleDateString()}
                                     </Typography>
                                 </div>
                             </div>
-
-                            <div className="btn-style">
-                                <Button variant="outlined" onClick={handleOpenDialog}>
-                                    Đặt lịch xem xe
-                                </Button>
-                                <Button className="btn-favorite">
-                                    <FavoriteBorderOutlined />
-                                </Button>
-                            </div>
+                            {user?.roleId === 4 && (
+                                <div className="btn-style">
+                                    <Button
+                                        variant="outlined"
+                                        onClick={handleOpenDialog}
+                                    >
+                                        Đặt lịch xem xe
+                                    </Button>
+                                    <Button className="btn-favorite">
+                                        <FavoriteBorderOutlined />
+                                    </Button>
+                                </div>
+                            )}
                         </Item>
                     </Grid>
                 ))}

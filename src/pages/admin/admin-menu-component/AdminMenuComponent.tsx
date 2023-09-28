@@ -23,17 +23,37 @@ import {
 import { useAppDispatch } from '../../../services/store/store';
 import { logoutUser } from '../../../services/features/accountSlice';
 
+const pages = [{
+    to: '/dashboard',
+    name: 'Bảng thống kê'
+},
+    {
+        to: '/list-user',
+        name: 'DS. User',
+    },
+];
+
 const AdminMenuComponent = () => {
     const theme = useTheme();
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useAppDispatch();
 
+    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+        null,
+    );
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
         null,
     );
 
     const [searchOpen, setSearchOpen] = React.useState(false);
+
+    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElNav(event.currentTarget);
+    };
+    const handleCloseNavMenu = () => {
+        setAnchorElNav(null);
+    };
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
@@ -46,6 +66,11 @@ const AdminMenuComponent = () => {
     const toggleSearch = () => {
         setSearchOpen(!searchOpen);
     };
+
+    const isMenuItemActive = (to: string) => {
+        return location.pathname === to;
+    };
+
     const handleLogout = (data: any | undefined) => {
         dispatch(logoutUser(data));
         navigate('/login');
@@ -105,11 +130,48 @@ const AdminMenuComponent = () => {
                                 aria-label="account of current user"
                                 aria-controls="menu-appbar"
                                 aria-haspopup="true"
+                                onClick={handleOpenNavMenu}
                                 color="inherit"
                             >
                                 <MenuIcon />
                             </IconButton>
-
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorElNav}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'left',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'left',
+                                }}
+                                open={Boolean(anchorElNav)}
+                                onClose={handleCloseNavMenu}
+                                sx={{
+                                    display: { xs: 'block', md: 'none' },
+                                }}
+                            >
+                                {pages.map((page) => (
+                                    <MenuItem
+                                        key={page.to}
+                                        onClick={handleCloseNavMenu}
+                                    >
+                                        <Link
+                                            to={page.to}
+                                            style={{ textDecoration: 'none' }}
+                                        >
+                                            <Typography
+                                                textAlign="center"
+                                                sx={{ color: 'black' }}
+                                            >
+                                                {page.name}
+                                            </Typography>
+                                        </Link>
+                                    </MenuItem>
+                                ))}
+                            </Menu>
                             <IconButton
                                 size="large"
                                 aria-label="account of current user"
@@ -143,6 +205,28 @@ const AdminMenuComponent = () => {
                                 Motorbike BS
                             </Typography>
                         </Link>
+
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                display: { xs: 'none', md: 'flex' },
+                                gap: 2,
+                            }}
+                        >
+                            {pages.map((page) => (
+                                <Link
+                                    key={page.to}
+                                    to={page.to}
+                                    className={`link-customer ${
+                                        isMenuItemActive(page.to)
+                                            ? 'active'
+                                            : ''
+                                    }`}
+                                >
+                                    {page.name}
+                                </Link>
+                            ))}
+                        </Box>
 
                         <Box sx={{ display: 'flex', flexGrow: 0 }}>
                             <Tooltip title="Thông báo">

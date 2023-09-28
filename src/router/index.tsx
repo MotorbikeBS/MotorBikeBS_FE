@@ -22,6 +22,8 @@ import BuyHistory from '../pages/customer/buy-history/date-booking/BuyHistory';
 import ResetPassword from '../pages/forgot-password/reset-password/ResetPassword';
 import ChangePassword from '../pages/user-profile/ChangePassword';
 import { useAppSelector } from '../services/store/store';
+import ListUser from '../pages/admin/list-user/ListUser';
+// import { Typography } from '@mui/material';
 
 const AppRoutes = () => {
     const { user } = useAppSelector((state) => state.account);
@@ -31,6 +33,20 @@ const AppRoutes = () => {
         if (!storeLocal) {
             navigate('/login');
         }
+        // else if(storeLocal){
+        //     // return(
+        //         <Typography variant='h1' sx={{color: 'red'}}>Bạn đã đăng nhập</Typography>
+        //     // )
+        // }
+        // else if(storeLocal && user?.roleId === 1) {
+        //     navigate('/admin-home')
+        // }else if(storeLocal && user?.roleId === 2) {
+        //     navigate('/store-home')
+        // }else if(storeLocal && user?.roleId === 3) {
+        //     navigate('/owner-home')
+        // }else if(storeLocal && user?.roleId === 4) {
+        //     navigate('/customer-home')
+        // }
     }, [navigate]);
 
     return (
@@ -69,6 +85,9 @@ const AppRoutes = () => {
                 <>
                     {/* Admin Router */}
                     <Route path="/admin-home" element={<AdminHome />} />
+                    <Route path="/list-user" element={<ListUser />} />
+
+                    <Route path="*" element={<PageNotFound />} />
                 </>
             )}
             {/* ============================================== ROUTE STORE ======================================================== */}
@@ -76,6 +95,8 @@ const AppRoutes = () => {
                 <>
                     {/* Store Owner */}
                     <Route path="/store-home" element={<StoreHome />} />
+
+                    <Route path="*" element={<PageNotFound />} />
                 </>
             )}
             {/* ============================================== ROUTE OWNER ==================================================== */}
@@ -83,6 +104,14 @@ const AppRoutes = () => {
                 <>
                     {/* Owner Router  */}
                     <Route path="/owner-home" element={<OwnerHome />} />{' '}
+                    <Route path="/store/:storeId" element={<StoreDetail />} />
+
+
+                    <Route path="*" element={<PageNotFound />} />
+                    <Route
+                        path="/motorbike/:motorbikeId"
+                        element={<MotorBikeDetail />}
+                    />
                     {/* Store list */}
                 </>
             )}
@@ -108,6 +137,8 @@ const AppRoutes = () => {
                     <Route path="/favourite-list" element={<FauvoriteList />} />
                     <Route path="/date-booking" element={<DateBooking />} />
                     <Route path="/buy-history" element={<BuyHistory />} />
+
+                    <Route path="*" element={<PageNotFound />} />
                 </>
             )}
             {/*================================================= ROUTE SHARED ==================================================*/}
@@ -126,7 +157,7 @@ const AppRoutes = () => {
                 </>
             )}
             {/* ====================================================== Page Not Found =========================================  */}
-            <Route path="*" element={<PageNotFound />} />
+            {/* <Route path="*" element={<PageNotFound />} /> */}
         </Routes>
     );
 };
