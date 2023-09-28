@@ -12,13 +12,13 @@ import { IAccount } from '../../models/Account/AccountInterface';
 
 interface AccountState {
     loading: boolean;
-    user: IAccount | null;
+    account: IAccount | null;
     error: string[] | unknown;
 }
 
 const initialState: AccountState = {
     loading: false,
-    user: null,
+    account: null,
     error: null,
 };
 
@@ -147,7 +147,7 @@ export const accountSlice = createSlice({
         });
         builder.addCase(registerUser.fulfilled, (state, action) => {
             state.loading = false;
-            state.user = action.payload;
+            state.account = action.payload;
             state.error = null;
         });
         builder.addCase(registerUser.rejected, (state, action) => {
@@ -160,7 +160,7 @@ export const accountSlice = createSlice({
         });
         builder.addCase(loginUser.fulfilled, (state, action) => {
             state.loading = false;
-            state.user = action.payload;
+            state.account = action.payload;
             state.error = null;
         });
         builder.addCase(loginUser.rejected, (state, action) => {
@@ -172,7 +172,7 @@ export const accountSlice = createSlice({
         });
         builder.addCase(verifyEmail.fulfilled, (state, action) => {
             state.loading = false;
-            state.user = action.payload;
+            state.account = action.payload;
             state.error = null;
         });
         builder.addCase(verifyEmail.rejected, (state, action) => {
@@ -184,7 +184,7 @@ export const accountSlice = createSlice({
         });
         builder.addCase(forgotPassword.fulfilled, (state, action) => {
             state.loading = false;
-            state.user = action.payload;
+            state.account = action.payload;
             state.error = null;
         });
         builder.addCase(forgotPassword.rejected, (state, action) => {
@@ -196,7 +196,7 @@ export const accountSlice = createSlice({
         });
         builder.addCase(resetPassword.fulfilled, (state, action) => {
             state.loading = false;
-            state.user = action.payload;
+            state.account = action.payload;
             state.error = null;
         });
         builder.addCase(resetPassword.rejected, (state, action) => {
@@ -208,7 +208,7 @@ export const accountSlice = createSlice({
         });
         builder.addCase(logoutUser.fulfilled, (state, action) => {
             state.loading = false;
-            state.user = action.payload;
+            state.account = action.payload;
             state.error = null;
         });
         builder.addCase(logoutUser.rejected, (state, action) => {

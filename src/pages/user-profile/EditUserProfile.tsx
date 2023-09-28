@@ -28,7 +28,7 @@ import OwnerMenuComponent from '../owner/owner-menu-component/OwnerMenuComponent
 
 const EditUserProfile = () => {
     const navigate = useNavigate();
-    const { user } = useAppSelector((state) => state.account);
+    const { account } = useAppSelector((state) => state.account);
 
     const [selectedValue, setSelectedValue] = React.useState('male');
     const [openSave, setOpenSave] = React.useState(false);
@@ -78,10 +78,10 @@ const EditUserProfile = () => {
 
     return (
         <>
-            {user?.roleId === 1 && <AdminMenuComponent />}
-            {user?.roleId === 2 && <StoreMenuComponent />}
-            {user?.roleId === 3 && <OwnerMenuComponent />}
-            {user?.roleId === 4 && <CustomerMenuComponent />}
+            {account?.roleId === 1 && <AdminMenuComponent />}
+            {account?.roleId === 2 && <StoreMenuComponent />}
+            {account?.roleId === 3 && <OwnerMenuComponent />}
+            {account?.roleId === 4 && <CustomerMenuComponent />}
 
             <div className="profile-container">
                 <Grid container spacing={2}>
@@ -103,9 +103,6 @@ const EditUserProfile = () => {
                             </div>
                         </div>
                         <hr />
-                        {/* <Button className="change-password-button">
-                            Đổi mật khẩu
-                        </Button> */}
                     </Grid>
                     <Grid item xs={6} md={9}>
                         <div className="profile-input-container">

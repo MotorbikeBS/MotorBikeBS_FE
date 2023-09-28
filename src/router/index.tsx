@@ -25,7 +25,7 @@ import { useAppSelector } from '../services/store/store';
 import ListUser from '../pages/admin/list-user/ListUser';
 
 const AppRoutes = () => {
-    const { user } = useAppSelector((state) => state.account);
+    const { account } = useAppSelector((state) => state.account);
     const navigate = useNavigate();
     useEffect(() => {
         const storeLocal = localStorage.getItem('motorbike_bs');
@@ -36,7 +36,7 @@ const AppRoutes = () => {
 
     return (
         <Routes>
-            {user === null && (
+            {account === null && (
                 <>
                     {/*========================================= COMMON ROUTE ===================================  */}
                     <Route
@@ -66,7 +66,7 @@ const AppRoutes = () => {
                 </>
             )}
             {/* ============================================== ROUTE ADMIN ======================================================== */}
-            {user?.roleId === 1 && (
+            {account?.roleId === 1 && (
                 <>
                     {/* Admin Router */}
                     <Route
@@ -80,7 +80,7 @@ const AppRoutes = () => {
                 </>
             )}
             {/* ============================================== ROUTE STORE ======================================================== */}
-            {user?.roleId === 2 && (
+            {account?.roleId === 2 && (
                 <>
                     {/* Store Owner */}
                     <Route
@@ -94,7 +94,7 @@ const AppRoutes = () => {
                 </>
             )}
             {/* ============================================== ROUTE OWNER ==================================================== */}
-            {user?.roleId === 3 && (
+            {account?.roleId === 3 && (
                 <>
                     {/* Owner Router  */}
                     <Route
@@ -112,7 +112,7 @@ const AppRoutes = () => {
                 </>
             )}
             {/* ============================================== ROUTE CUSTOMER ================================================== */}
-            {user?.roleId === 4 && (
+            {account?.roleId === 4 && (
                 <>
                     {/*Customer Router  */}
                     <Route
@@ -143,7 +143,7 @@ const AppRoutes = () => {
                 </>
             )}
             {/*================================================= ROUTE SHARED ==================================================*/}
-            {user !== null && (
+            {account !== null && (
                 <>
                     <Route
                         path="/change-password"

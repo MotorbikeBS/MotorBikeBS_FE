@@ -27,7 +27,7 @@ type motorbikeParams = {
 
 const MotorBikeDetailComponent = () => {
     const { motorbikeId } = useParams<motorbikeParams | any>();
-    const { user } = useAppSelector(state => state.account)
+    const { account } = useAppSelector(state => state.account)
     const [isOpenDialog, setOpenDialog] = useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = useState(false);
@@ -177,22 +177,22 @@ const MotorBikeDetailComponent = () => {
                             </Table>
                         </TableContainer>
                     </Box>
-                    {user?.roleId === 4 && (
+                    {account?.roleId === 4 && (
 
-                    <Box flexGrow={2} marginTop="10%" maxWidth="50%" marginLeft="26%">
-                        <Button
-                            onClick={handleOpenDialog}
-                            variant="outlined"
-                            sx={{
-                                '&:hover': {
-                                    background: '#ccd6e6',
-                                    color: '#fff',
-                                },
-                            }}
-                        >
-                            Đặt lịch xem xe
-                        </Button>
-                    </Box>
+                        <Box flexGrow={2} marginTop="10%" maxWidth="50%" marginLeft="26%">
+                            <Button
+                                onClick={handleOpenDialog}
+                                variant="outlined"
+                                sx={{
+                                    '&:hover': {
+                                        background: '#ccd6e6',
+                                        color: '#fff',
+                                    },
+                                }}
+                            >
+                                Đặt lịch xem xe
+                            </Button>
+                        </Box>
                     )}
                 </Box>
             </Box>
