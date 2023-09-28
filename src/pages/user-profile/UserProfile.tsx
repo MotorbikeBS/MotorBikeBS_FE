@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Avatar,
     Button,
@@ -7,8 +7,8 @@ import {
     TextField,
     Typography,
     Radio,
-    FormLabel,
     Box,
+    FormLabel,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import './style/style.scss';
@@ -18,16 +18,26 @@ import CustomerMenuComponent from '../customer/customer-menu-component/CustomerM
 import StoreMenuComponent from '../store/store-menu-component/StoreMenuComponent';
 import OwnerMenuComponent from '../owner/owner-menu-component/OwnerMenuComponent';
 import AdminMenuComponent from '../admin/admin-menu-component/AdminMenuComponent';
-import { useAppSelector } from '../../services/store/store';
+import { useAppDispatch, useAppSelector } from '../../services/store/store';
+import { getUserByID } from '../../services/features/userSlice';
 
 const UserProfile = () => {
     const navigate = useNavigate();
-    const { user } = useAppSelector((state) => state.account);
+    const dispatch = useAppDispatch()
 
-    const [selectedValue, setSelectedValue] = React.useState('male');
+    const { user } = useAppSelector((state) => state.users)
+    const { account } = useAppSelector((state) => state.account);
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedValue(event.target.value);
+    const [selectedGender, setSelectedGender] = React.useState<number>(user?.gender ?? 3);
+
+    useEffect(() => {
+        if (account?.userId) {
+            dispatch(getUserByID({ id: account.userId }));
+        }
+    }, [dispatch, account?.userId]);
+
+    const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSelectedGender(Number(event.target.value));
     };
 
     return (
@@ -50,7 +60,7 @@ const UserProfile = () => {
                             >
                                 Hi
                             </Avatar>
-                            <div>
+                            <Box flexDirection='column' display='flex' alignContent={'left'}>
                                 <Typography className="edit-profile-name">
                                     {user?.userName}
                                 </Typography>
@@ -63,7 +73,7 @@ const UserProfile = () => {
                                     <EditIcon />
                                     Sửa hồ sơ
                                 </Button>
-                            </div>
+                            </Box>
                         </div>
                         <hr />
                         <Button
@@ -95,30 +105,33 @@ const UserProfile = () => {
                                 />
                                 <div>
                                     <FormLabel>Giới tính:</FormLabel>
+
                                     <Radio
-                                        checked={selectedValue === 'male'}
-                                        onChange={handleChange}
-                                        value="male"
+                                        checked={selectedGender === 1}
+                                        value={1}
                                         name="radio-buttons"
                                         inputProps={{ 'aria-label': 'male' }}
+                                        onChange={handleGenderChange}
                                         disabled
                                     />
                                     Nam
+
                                     <Radio
-                                        checked={selectedValue === 'female'}
-                                        onChange={handleChange}
-                                        value="female"
+                                        checked={selectedGender === 2}
+                                        value={2}
                                         name="radio-buttons"
-                                        inputProps={{ 'aria-label': 'Female' }}
+                                        inputProps={{ 'aria-label': 'female' }}
+                                        onChange={handleGenderChange}
                                         disabled
                                     />
                                     Nữ
+
                                     <Radio
-                                        checked={selectedValue === 'other'}
-                                        onChange={handleChange}
-                                        value="other"
+                                        checked={selectedGender === 3}
+                                        value={3}
                                         name="radio-buttons"
                                         inputProps={{ 'aria-label': 'other' }}
+                                        onChange={handleGenderChange}
                                         disabled
                                     />
                                     Khác
@@ -149,8 +162,8 @@ const UserProfile = () => {
                                     disabled
                                 />
                                 <TextField
-                                    label="Card"
-                                    value={user?.idCard ? (user?.idCard) : ("Bạn chưa có card.")}
+                                    label="CMND/CCCD"
+                                    value={user?.idCard ? (user?.idCard) : ("Bạn chưa cập nhật CMND/CCCD.")}
                                     type="text"
                                     variant="outlined"
                                     disabled
@@ -173,7 +186,7 @@ const UserProfile = () => {
                         </div>
                     </Grid>
                 </Grid>
-            </div>
+            </div >
             <Box flexGrow={1} className="footer-style">
                 <FooterComponent />
             </Box>

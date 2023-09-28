@@ -27,10 +27,10 @@ const pages = [{
     to: '/dashboard',
     name: 'Bảng thống kê'
 },
-    {
-        to: '/list-user',
-        name: 'DS. User',
-    },
+{
+    to: '/list-user',
+    name: 'DS. Người dùng',
+},
 ];
 
 const AdminMenuComponent = () => {
@@ -217,11 +217,10 @@ const AdminMenuComponent = () => {
                                 <Link
                                     key={page.to}
                                     to={page.to}
-                                    className={`link-customer ${
-                                        isMenuItemActive(page.to)
-                                            ? 'active'
-                                            : ''
-                                    }`}
+                                    className={`link-customer ${isMenuItemActive(page.to)
+                                        ? 'active'
+                                        : ''
+                                        }`}
                                 >
                                     {page.name}
                                 </Link>

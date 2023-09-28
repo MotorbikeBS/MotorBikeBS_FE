@@ -1,7 +1,5 @@
 export interface IUser {
-    roleId: number;
     userId: number;
-    roleName: string;
     userName: string;
     email: string;
     gender: number;
@@ -9,6 +7,13 @@ export interface IUser {
     address?: string;
     dob?: Date;
     idCard: string;
+    roleId: number;
+    role: {
+        roleId: number;
+        title: string;
+    };
+    roleTitle: string;
+    status: string;
     userVerifyAt: Date;
     userUpdatedAt: Date;
 }
