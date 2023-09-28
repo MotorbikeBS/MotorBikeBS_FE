@@ -19,6 +19,7 @@ import './style/style.scss';
 import Carousel from 'react-material-ui-carousel';
 import BookingDialog from '../../pages/customer/booking-dialog-component/BookingDialog';
 import useFormatCurrency from '../../hooks/useFormatCurrency';
+import { useAppSelector } from '../../services/store/store';
 
 type motorbikeParams = {
     motorbikeId: number;
@@ -26,6 +27,7 @@ type motorbikeParams = {
 
 const MotorBikeDetailComponent = () => {
     const { motorbikeId } = useParams<motorbikeParams | any>();
+    const { user } = useAppSelector(state => state.account)
     const [isOpenDialog, setOpenDialog] = useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = useState(false);
@@ -175,6 +177,8 @@ const MotorBikeDetailComponent = () => {
                             </Table>
                         </TableContainer>
                     </Box>
+                    {user?.roleId === 4 && (
+
                     <Box flexGrow={2} marginTop="10%" maxWidth="50%" marginLeft="26%">
                         <Button
                             onClick={handleOpenDialog}
@@ -189,6 +193,7 @@ const MotorBikeDetailComponent = () => {
                             Đặt lịch xem xe
                         </Button>
                     </Box>
+                    )}
                 </Box>
             </Box>
             <BookingDialog

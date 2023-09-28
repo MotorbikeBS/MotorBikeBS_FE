@@ -66,7 +66,8 @@ export const loginUser = createAsyncThunk<IAccount, string | Object>(
             const response = await axios.post(loginEndpoint, data);
             const token = response.data.result.token;
             localStorage.setItem('motorbike_bs', token);
-            toast.success('Đăng nhập thành công !');
+            // toast.success('Đăng nhập thành công !');
+            toast.success(response.data.message);
             return response.data.result;
         } catch (error: any) {
             toast.error('Đăng nhập không thành công !');
