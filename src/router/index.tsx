@@ -23,7 +23,6 @@ import ResetPassword from '../pages/forgot-password/reset-password/ResetPassword
 import ChangePassword from '../pages/user-profile/ChangePassword';
 import { useAppSelector } from '../services/store/store';
 import ListUser from '../pages/admin/list-user/ListUser';
-// import { Typography } from '@mui/material';
 
 const AppRoutes = () => {
     const { user } = useAppSelector((state) => state.account);
@@ -33,20 +32,6 @@ const AppRoutes = () => {
         if (!storeLocal) {
             navigate('/login');
         }
-        // else if(storeLocal){
-        //     // return(
-        //         <Typography variant='h1' sx={{color: 'red'}}>Bạn đã đăng nhập</Typography>
-        //     // )
-        // }
-        // else if(storeLocal && user?.roleId === 1) {
-        //     navigate('/admin-home')
-        // }else if(storeLocal && user?.roleId === 2) {
-        //     navigate('/store-home')
-        // }else if(storeLocal && user?.roleId === 3) {
-        //     navigate('/owner-home')
-        // }else if(storeLocal && user?.roleId === 4) {
-        //     navigate('/customer-home')
-        // }
     }, [navigate]);
 
     return (
@@ -84,6 +69,10 @@ const AppRoutes = () => {
             {user?.roleId === 1 && (
                 <>
                     {/* Admin Router */}
+                    <Route
+                        path="/"
+                        element={<Navigate to="/admin-home" replace />}
+                    />
                     <Route path="/admin-home" element={<AdminHome />} />
                     <Route path="/list-user" element={<ListUser />} />
 
@@ -94,6 +83,11 @@ const AppRoutes = () => {
             {user?.roleId === 2 && (
                 <>
                     {/* Store Owner */}
+                    <Route
+                        path="/"
+                        element={<Navigate to="/store-home" replace />}
+                    />
+
                     <Route path="/store-home" element={<StoreHome />} />
 
                     <Route path="*" element={<PageNotFound />} />
@@ -103,10 +97,12 @@ const AppRoutes = () => {
             {user?.roleId === 3 && (
                 <>
                     {/* Owner Router  */}
+                    <Route
+                        path="/"
+                        element={<Navigate to="/owner-home" replace />}
+                    />
                     <Route path="/owner-home" element={<OwnerHome />} />{' '}
                     <Route path="/store/:storeId" element={<StoreDetail />} />
-
-
                     <Route path="*" element={<PageNotFound />} />
                     <Route
                         path="/motorbike/:motorbikeId"
@@ -119,6 +115,11 @@ const AppRoutes = () => {
             {user?.roleId === 4 && (
                 <>
                     {/*Customer Router  */}
+                    <Route
+                        path="/"
+                        element={<Navigate to="/customer-home" replace />}
+                    />
+
                     <Route path="/customer-home" element={<CustomerHome />} />
                     <Route path="/store-list" element={<StoreList />} />
                     <Route path="/store/:storeId" element={<StoreDetail />} />
