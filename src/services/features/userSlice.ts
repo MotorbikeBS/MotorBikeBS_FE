@@ -2,17 +2,19 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { IUser } from '../../models/User/UserInterface';
-import { getAllUserEndPoint } from '../config/api-config';
+import { getAllUserEndPoint, getUserByIDEndPoint } from '../config/api-config';
 
 interface UserState {
     loading: boolean;
-    users: IUser | null;
+    users: IUser[] | null;
+    user: IUser | null;
     error: string[] | unknown;
 }
 
 const initialState: UserState = {
     loading: false,
     users: null,
+    user: null,
     error: null,
 };
 
@@ -35,6 +37,27 @@ export const getAllUser = createAsyncThunk<IUser[], void>(
     },
 );
 
+export const getUserByID = createAsyncThunk<IUser, { id: number }>(
+    'users/getUserbyID',
+    async (data, thunkAPI) => {
+        const { id } = data;
+        try {
+            const token = localStorage.getItem('motorbike_bs');
+            const response = await axios.get(`${getUserByIDEndPoint}/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data;
+        } catch (err: any) {
+            toast.error('Có lỗi xảy ra ! Vui lòng kiểm tra lại ! ');
+            return thunkAPI.rejectWithValue({
+                error: err.response?.data?.errorMessages,
+            });
+        }
+    },
+);
+
 export const usersSlice = createSlice({
     name: 'users',
     initialState,
@@ -46,6 +69,26 @@ export const usersSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getAllUser.pending, (state) => {
             state.loading = true;
+        });
+        builder.addCase(getAllUser.fulfilled, (state, action) => {
+            state.loading = false;
+            state.users = action.payload;
+            state.error = null;
+        });
+        builder.addCase(getAllUser.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(getUserByID.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(getUserByID.fulfilled, (state, action) => {
+            state.loading = false;
+            state.user = action.payload;
+        });
+        builder.addCase(getUserByID.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
         });
     },
 });

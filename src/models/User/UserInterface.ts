@@ -4,9 +4,9 @@ export interface IUser {
     userName: string;
     email: string;
     gender: number;
-    phone: string;
-    address: string;
-    dob: Date;
+    phone?: string;
+    address?: string;
+    dob?: Date;
     idCard: string;
     userVerifyAt: Date;
     userUpdatedAt: Date;
