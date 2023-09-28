@@ -162,8 +162,8 @@ const UserProfile = () => {
                                     disabled
                                 />
                                 <TextField
-                                    label="Card"
-                                    value={user?.idCard ? (user?.idCard) : ("Bạn chưa có card.")}
+                                    label="CMND/CCCD"
+                                    value={user?.idCard ? (user?.idCard) : ("Bạn chưa cập nhật CMND/CCCD.")}
                                     type="text"
                                     variant="outlined"
                                     disabled
