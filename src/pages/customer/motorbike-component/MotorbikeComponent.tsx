@@ -13,7 +13,7 @@ import { useAppSelector } from '../../../services/store/store';
 
 const MotorbikeComponent = () => {
     const navigate = useNavigate();
-    const { user } = useAppSelector(state => state.account);
+    const { account } = useAppSelector(state => state.account);
 
     const [isOpenDialog, setOpenDialog] = React.useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
@@ -105,7 +105,7 @@ const MotorbikeComponent = () => {
                                     </Typography>
                                 </div>
                             </div>
-                            {user?.roleId === 4 && (
+                            {account?.roleId === 4 && (
                                 <div className="btn-style">
                                     <Button
                                         variant="outlined"

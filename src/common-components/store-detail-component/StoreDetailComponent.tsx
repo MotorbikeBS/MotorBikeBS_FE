@@ -5,7 +5,7 @@ import MotorbikeComponent from '../../pages/customer/motorbike-component/Motorbi
 import { useAppSelector } from '../../services/store/store';
 
 const StoreDetailComponent = () => {
-    const { user } = useAppSelector(state => state.account);
+    const { account } = useAppSelector(state => state.account);
     return (
         <Box className="store-detail-container">
             <Box className="store-detail-header">
@@ -51,7 +51,7 @@ const StoreDetailComponent = () => {
                             </Typography>
                         </div>
                     </Grid>
-                    {user?.roleId === 3 && (
+                    {account?.roleId === 3 && (
                         <Grid xs={3} md={4}>
                             <div className="sell-btn-container">
                                 <Button variant="outlined">

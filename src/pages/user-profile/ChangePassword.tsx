@@ -29,7 +29,7 @@ type FormValues = {
 
 const ChangePassword = () => {
     const navigate = useNavigate();
-    const { user } = useAppSelector((state) => state.account);
+    const { account } = useAppSelector((state) => state.account);
 
     const form = useForm<FormValues>({
         defaultValues: {
@@ -53,10 +53,10 @@ const ChangePassword = () => {
 
     return (
         <>
-            {user?.roleId === 1 && <AdminMenuComponent />}
-            {user?.roleId === 2 && <StoreMenuComponent />}
-            {user?.roleId === 3 && <OwnerMenuComponent />}
-            {user?.roleId === 4 && <CustomerMenuComponent />}
+            {account?.roleId === 1 && <AdminMenuComponent />}
+            {account?.roleId === 2 && <StoreMenuComponent />}
+            {account?.roleId === 3 && <OwnerMenuComponent />}
+            {account?.roleId === 4 && <CustomerMenuComponent />}
 
             <div className="profile-container">
                 <Grid container spacing={2}>

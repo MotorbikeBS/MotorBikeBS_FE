@@ -10,7 +10,7 @@ const VerifyAccount = () => {
     const [validUrl, setValidUrl] = useState(false);
     const { id, token } = useParams<{ id?: string; token?: string }>();
     const dispatch = useAppDispatch();
-    const { user, error, loading } = useAppSelector((state) => state.account);
+    const { error } = useAppSelector((state) => state.account);
 
     useEffect(() => {
         if (id && token) {
