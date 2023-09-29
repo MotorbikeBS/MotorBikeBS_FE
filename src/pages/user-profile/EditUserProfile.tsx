@@ -170,10 +170,12 @@ const EditUserProfile = () => {
                                             </RadioGroup>
                                         </FormControl>
                                     </div>
+
                                     <TextField
                                         label="Điện thoại"
-                                        value=''
-                                        type='string'
+                                        value=""
+                                        type="text"
+                                        variant="outlined"
                                     />
                                     <TextField
                                         label="Địa chỉ"

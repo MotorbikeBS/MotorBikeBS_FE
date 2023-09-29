@@ -23,12 +23,14 @@ import { getUserByID } from '../../services/features/userSlice';
 
 const UserProfile = () => {
     const navigate = useNavigate();
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
 
-    const { user } = useAppSelector((state) => state.users)
+    const { user } = useAppSelector((state) => state.users);
     const { account } = useAppSelector((state) => state.account);
 
-    const [selectedGender, setSelectedGender] = React.useState<number>(user?.gender ?? 3);
+    const [selectedGender, setSelectedGender] = React.useState<number>(
+        user?.gender ?? 3,
+    );
 
     useEffect(() => {
         if (account?.userId) {
@@ -60,7 +62,11 @@ const UserProfile = () => {
                             >
                                 Hi
                             </Avatar>
-                            <Box flexDirection='column' display='flex' alignContent={'left'}>
+                            <Box
+                                flexDirection="column"
+                                display="flex"
+                                alignContent={'left'}
+                            >
                                 <Typography className="edit-profile-name">
                                     {user?.userName}
                                 </Typography>
@@ -96,6 +102,15 @@ const UserProfile = () => {
                                     variant="outlined"
                                     disabled
                                 />
+                                {account?.roleId === 2 && (
+                                    <TextField
+                                        label="Email Cửa hàng"
+                                        value={user?.email}
+                                        type="email"
+                                        variant="outlined"
+                                        disabled
+                                    />
+                                )}
                                 <TextField
                                     label="Tên"
                                     value={user?.userName}
@@ -103,9 +118,17 @@ const UserProfile = () => {
                                     variant="outlined"
                                     disabled
                                 />
+                                {account?.roleId === 2 && (
+                                    <TextField
+                                        label="Tên cửa hàng"
+                                        value={user?.userName}
+                                        type="text"
+                                        variant="outlined"
+                                        disabled
+                                    />
+                                )}
                                 <div>
                                     <FormLabel>Giới tính:</FormLabel>
-
                                     <Radio
                                         checked={selectedGender === 1}
                                         value={1}
@@ -115,7 +138,6 @@ const UserProfile = () => {
                                         disabled
                                     />
                                     Nam
-
                                     <Radio
                                         checked={selectedGender === 2}
                                         value={2}
@@ -125,7 +147,6 @@ const UserProfile = () => {
                                         disabled
                                     />
                                     Nữ
-
                                     <Radio
                                         checked={selectedGender === 3}
                                         value={3}
@@ -149,35 +170,64 @@ const UserProfile = () => {
                                 />
                                 <TextField
                                     label="Địa chỉ"
-                                    value={user?.address ? (user?.address) : ('Bạn chưa có địa chỉ.')}
+                                    value={
+                                        user?.address
+                                            ? user?.address
+                                            : 'Bạn chưa có địa chỉ.'
+                                    }
                                     type="text"
                                     variant="outlined"
                                     disabled
                                 />
                                 <TextField
                                     label="Ngày sinh"
-                                    value={user?.dob ? (user?.dob) : "01/01/2022"}
+                                    value={user?.dob ? user?.dob : '01/01/2022'}
                                     type="date"
                                     variant="outlined"
                                     disabled
                                 />
                                 <TextField
                                     label="CMND/CCCD"
-                                    value={user?.idCard ? (user?.idCard) : ("Bạn chưa cập nhật CMND/CCCD.")}
+                                    value={
+                                        user?.idCard
+                                            ? user?.idCard
+                                            : 'Bạn chưa cập nhật CMND/CCCD.'
+                                    }
                                     type="text"
                                     variant="outlined"
                                     disabled
                                 />
+                                {account?.roleId === 2 && (
+                                    <TextField
+                                        label="Mã số thuế"
+                                        value={
+                                            user?.idCard
+                                                ? user?.idCard
+                                                : 'Bạn chưa cập nhật mã số thuế.'
+                                        }
+                                        type="text"
+                                        variant="outlined"
+                                        disabled
+                                    />
+                                )}
                                 <TextField
                                     label="Ngày tạo tài khoản"
-                                    value={user?.userVerifyAt ? (user?.userVerifyAt) : ("mm-dd-yyyy")}
+                                    value={
+                                        user?.userVerifyAt
+                                            ? user?.userVerifyAt
+                                            : 'mm-dd-yyyy'
+                                    }
                                     type="text"
                                     variant="outlined"
                                     disabled
                                 />
                                 <TextField
                                     label="Cập nhật lần cuối"
-                                    value={user?.userUpdatedAt ? (user?.userUpdatedAt) : ("mm-dd-yyyy")}
+                                    value={
+                                        user?.userUpdatedAt
+                                            ? user?.userUpdatedAt
+                                            : 'mm-dd-yyyy'
+                                    }
                                     type="text"
                                     variant="outlined"
                                     disabled
@@ -186,7 +236,7 @@ const UserProfile = () => {
                         </div>
                     </Grid>
                 </Grid>
-            </div >
+            </div>
             <Box flexGrow={1} className="footer-style">
                 <FooterComponent />
             </Box>
