@@ -112,13 +112,13 @@ const EditUserProfile = () => {
                             <Stack spacing={3} className="profile-input-fields">
                                 <TextField
                                     label="Email"
-                                    value="phanminhtri269@gmail.com"
+                                    value=""
                                     type="email"
                                     variant="outlined"
                                 />
                                 <TextField
                                     label="Tên"
-                                    value="Minh Tri"
+                                    value=""
                                     type="text"
                                     variant="outlined"
                                 />
@@ -151,25 +151,25 @@ const EditUserProfile = () => {
                                 </div>
                                 <TextField
                                     label="Điện thoại"
-                                    value="0908660977"
+                                    value=""
                                     type="text"
                                     variant="outlined"
                                 />
                                 <TextField
                                     label="Địa chỉ"
-                                    value="Quận 4, Tp.HCM"
+                                    value=""
                                     type="text"
                                     variant="outlined"
                                 />
                                 <TextField
                                     label="Ngày sinh"
-                                    value="11/01/2001"
+                                    value=""
                                     type="date"
                                     variant="outlined"
                                 />
                                 <TextField
-                                    label="Card"
-                                    value="10"
+                                    label="CCCD/CMND"
+                                    value=""
                                     type="text"
                                     variant="outlined"
                                 />

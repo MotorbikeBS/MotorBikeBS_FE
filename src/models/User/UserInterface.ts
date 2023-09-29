@@ -17,3 +17,12 @@ export interface IUser {
     userVerifyAt: Date;
     userUpdatedAt: Date;
 }
+export interface IEditUser {
+    userId: number;
+    userName: string;
+    phone?: string;
+    gender: number;
+    dob?: Date;
+    idCard?: string;
+    address: string;
+}

@@ -4,8 +4,8 @@ import {
     forgotPasswordEndPoint,
     loginEndpoint,
     resetPasswordEndPoint,
-    signupEndpoint,
-    verifyEndpoit,
+    signupEndPoint,
+    verifyEndPoit,
 } from '../config/api-config';
 import { toast } from 'react-toastify';
 import { IAccount } from '../../models/Account/AccountInterface';
@@ -26,7 +26,7 @@ export const registerUser = createAsyncThunk<IAccount, Object>(
     'auth/register-user',
     async (data, thunkAPI) => {
         try {
-            const response = await axios.post(signupEndpoint, data);
+            const response = await axios.post(signupEndPoint, data);
             toast.success(
                 'Đăng ký thành công ! Vui lòng xác minh email để tiếp tục !',
             );
@@ -45,7 +45,7 @@ export const verifyEmail = createAsyncThunk<
     const { id, token } = data;
     try {
         const response = await axios.post(
-            `${verifyEndpoit}?id=${id}&token=${token}`,
+            `${verifyEndPoit}?id=${id}&token=${token}`,
         );
         toast.success('Xác minh email thành công !');
         return response.data;
