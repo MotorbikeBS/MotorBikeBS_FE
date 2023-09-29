@@ -181,8 +181,11 @@ const UserProfile = () => {
                                 />
                                 <TextField
                                     label="Ngày sinh"
-                                    value={user?.dob ? user?.dob : '01/01/2022'}
-                                    type="date"
+                                    value={
+                                        user?.dob
+                                            ? user?.dob
+                                            : 'mm-dd-yyyy'
+                                    } type="text"
                                     variant="outlined"
                                     disabled
                                 />
