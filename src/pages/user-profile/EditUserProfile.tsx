@@ -14,6 +14,9 @@ import {
     DialogTitle,
     DialogActions,
     Box,
+    FormControl,
+    RadioGroup,
+    FormControlLabel,
 } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -25,6 +28,17 @@ import { useAppSelector } from '../../services/store/store';
 import AdminMenuComponent from '../admin/admin-menu-component/AdminMenuComponent';
 import StoreMenuComponent from '../store/store-menu-component/StoreMenuComponent';
 import OwnerMenuComponent from '../owner/owner-menu-component/OwnerMenuComponent';
+import { useForm } from 'react-hook-form';
+
+
+type FormValues = {
+    userName: string
+    phone: string
+    gender: string
+    dob: string
+    idCard: string;
+    address: string
+}
 
 const EditUserProfile = () => {
     const navigate = useNavigate();
@@ -76,6 +90,22 @@ const EditUserProfile = () => {
         navigate('/user/profile');
     };
 
+    const form = useForm<FormValues>({
+        defaultValues: {
+            userName: '',
+            phone: '',
+            gender: '',
+            dob: '',
+            idCard: '',
+            address: ''
+        }
+    })
+    const { register, handleSubmit, formState } = form;
+    const { errors } = formState;
+
+    const onSubmit = (data: FormValues) => {
+        console.log(data)
+    };
     return (
         <>
             {account?.roleId === 1 && <AdminMenuComponent />}
@@ -110,69 +140,60 @@ const EditUserProfile = () => {
                                 Chỉnh sửa hồ sơ
                             </Typography>
                             <Stack spacing={3} className="profile-input-fields">
-                                <TextField
-                                    label="Email"
-                                    value=""
-                                    type="email"
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    label="Tên"
-                                    value=""
-                                    type="text"
-                                    variant="outlined"
-                                />
-                                <div>
-                                    <FormLabel>Giới tính:</FormLabel>
-                                    <Radio
-                                        checked={selectedValue === 'male'}
-                                        onChange={handleChange}
-                                        value="male"
-                                        name="radio-buttons"
-                                        inputProps={{ 'aria-label': 'male' }}
+                                <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                                    <TextField
+                                        label="Email"
+                                        // value={user?.email}
+                                        type="email"
+                                        variant="outlined"
+                                        disabled
                                     />
-                                    Nam
-                                    <Radio
-                                        checked={selectedValue === 'female'}
-                                        onChange={handleChange}
-                                        value="female"
-                                        name="radio-buttons"
-                                        inputProps={{ 'aria-label': 'Female' }}
+                                    <TextField
+                                        label='Họ và Tên'
+                                        type='text'
+                                        {...register('userName', { required: 'Bạn Chưa Nhập Tên' })}
+                                        error={!!errors.userName}
+                                        helperText={errors.userName && errors.userName.message}
                                     />
-                                    Nữ
-                                    <Radio
-                                        checked={selectedValue === 'other'}
-                                        onChange={handleChange}
-                                        value="other"
-                                        name="radio-buttons"
-                                        inputProps={{ 'aria-label': 'other' }}
+                                    <div>
+                                        <FormControl component="fieldset">
+                                            <FormLabel component="legend">Giới tính:</FormLabel>
+                                            <RadioGroup
+                                                aria-label="gender"
+                                                name="gender"
+                                                value={selectedValue}
+                                                onChange={handleChange}
+                                            >
+                                                <FormControlLabel value="male" control={<Radio />} label="Nam" />
+                                                <FormControlLabel value="female" control={<Radio />} label="Nữ" />
+                                                <FormControlLabel value="other" control={<Radio />} label="Khác" />
+                                            </RadioGroup>
+                                        </FormControl>
+                                    </div>
+                                    <TextField
+                                        label="Điện thoại"
+                                        value=''
+                                        type='string'
                                     />
-                                    Khác
-                                </div>
-                                <TextField
-                                    label="Điện thoại"
-                                    value=""
-                                    type="text"
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    label="Địa chỉ"
-                                    value=""
-                                    type="text"
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    label="Ngày sinh"
-                                    value=""
-                                    type="date"
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    label="CCCD/CMND"
-                                    value=""
-                                    type="text"
-                                    variant="outlined"
-                                />
+                                    <TextField
+                                        label="Địa chỉ"
+                                        value=""
+                                        type="text"
+                                        variant="outlined"
+                                    />
+                                    <TextField
+                                        label="Ngày sinh"
+                                        value=""
+                                        type="date"
+                                        variant="outlined"
+                                    />
+                                    <TextField
+                                        label="CCCD/CMND"
+                                        value=""
+                                        type="text"
+                                        variant="outlined"
+                                    />
+                                </form>
                             </Stack>
                             <div className="edit-profile-btn">
                                 <Button
