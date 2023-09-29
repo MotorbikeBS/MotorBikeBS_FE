@@ -173,6 +173,14 @@ const EditUserProfile = () => {
                                     type="text"
                                     variant="outlined"
                                 />
+                                {account?.roleId === 2 && (
+                                    <TextField
+                                        label="Mã số thuế"
+                                        value=""
+                                        type="text"
+                                        variant="outlined"
+                                    />
+                                )}
                             </Stack>
                             <div className="edit-profile-btn">
                                 <Button
