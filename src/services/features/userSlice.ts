@@ -62,29 +62,29 @@ export const getUserByID = createAsyncThunk<IUser, { id: number }>(
         }
     },
 );
-// export const editUserByID = createAsyncThunk<IUser, IEditUser>(
-//     'users/editUserByID',
-//     async (data, thunkAPI) => {
-//         try {
-//             const token = localStorage.getItem('motorbike_bs');
-//             const response = await axios.put(
-//                 `${editUserByIDEndPoint}/${id}`,
-//                 data,
-//                 {
-//                     headers: {
-//                         Authorization: `Bearer ${token}`,
-//                     },
-//                 },
-//             );
-//             return response.data;
-//         } catch (err: any) {
-//             toast.error('Có lỗi xảy ra ! Vui lòng kiểm tra lại ! ');
-//             return thunkAPI.rejectWithValue({
-//                 error: err.response?.data?.errorMessages,
-//             });
-//         }
-//     },
-// );
+export const editUserByID = createAsyncThunk<
+    IUser,
+    { id: number; data: IEditUser }
+>('users/editUserByID', async ({ id, data }, thunkAPI) => {
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.put(
+            `${editUserByIDEndPoint}/${id}`,
+            data,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return response.data;
+    } catch (err: any) {
+        toast.error('Có lỗi xảy ra ! Vui lòng kiểm tra lại ! ');
+        return thunkAPI.rejectWithValue({
+            error: err.response?.data?.errorMessages,
+        });
+    }
+});
 export const usersSlice = createSlice({
     name: 'users',
     initialState,
