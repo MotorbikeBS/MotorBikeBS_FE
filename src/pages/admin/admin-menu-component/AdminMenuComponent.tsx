@@ -31,6 +31,11 @@ const pages = [{
     to: '/list-user',
     name: 'DS. Người dùng',
 },
+{
+    to: '/store-list',
+    name: 'DS.Cửa hàng'
+
+}
 ];
 
 const AdminMenuComponent = () => {

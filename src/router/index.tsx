@@ -23,6 +23,7 @@ import ResetPassword from '../pages/forgot-password/reset-password/ResetPassword
 import ChangePassword from '../pages/user-profile/ChangePassword';
 import { useAppSelector } from '../services/store/store';
 import ListUser from '../pages/admin/list-user/ListUser';
+import StoreListAdmin from '../pages/admin/store-list/StoreList';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -75,7 +76,7 @@ const AppRoutes = () => {
                     />
                     <Route path="/admin-home" element={<AdminHome />} />
                     <Route path="/list-user" element={<ListUser />} />
-
+                    <Route path='/store-list' element={<StoreListAdmin />} />
                     <Route path="*" element={<PageNotFound />} />
                 </>
             )}

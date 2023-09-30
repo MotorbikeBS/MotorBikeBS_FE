@@ -52,7 +52,7 @@ export const getAllStore = createAsyncThunk<IStore[], void>(
             const token = localStorage.getItem('motorbike_bs');
             const response = await axios.get(getAllStoreEndPoint, {
                 headers: {
-                    Authorization: `Beare ${token}`,
+                    Authorization: `Bearer ${token}`,
                 },
             });
             return response.data.result;
