@@ -17,7 +17,7 @@ const ListUser = () => {
                     <AdminMenuComponent />
                 </Box>
 
-                    <ListUserComponent />
+                <ListUserComponent />
                 <Box flexGrow={1} className="footer-style">
                     <FooterComponent />
                 </Box>

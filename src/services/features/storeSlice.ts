@@ -1,18 +1,24 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { IRegisterStore } from '../../models/Account/AccountInterface';
 import axios from 'axios';
-import { registerStoreEndPoint } from '../config/api-config';
+import {
+    getAllStoreEndPoint,
+    registerStoreEndPoint,
+} from '../config/api-config';
 import { toast } from 'react-toastify';
+import { IStore } from '../../models/Store/Store';
 
 interface StoreState {
     loading: boolean;
     storeRegister: IRegisterStore | null;
+    stores: IStore[] | null;
     error: string[] | unknown;
 }
 
 const initialState: StoreState = {
     loading: false,
     storeRegister: null,
+    stores: null,
     error: null,
 };
 
@@ -39,6 +45,25 @@ export const registerStore = createAsyncThunk<IRegisterStore, Object>(
     },
 );
 
+export const getAllStore = createAsyncThunk<IStore[], void>(
+    'store/getAllStore',
+    async (_, thunkAPI) => {
+        try {
+            const token = localStorage.getItem('motorbike_bs');
+            const response = await axios.get(getAllStoreEndPoint, {
+                headers: {
+                    Authorization: `Beare ${token}`,
+                },
+            });
+            return response.data.result;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue({
+                error: error.response?.data?.errorMessages,
+            });
+        }
+    },
+);
+
 export const storeSlice = createSlice({
     name: 'store',
     initialState,
@@ -57,6 +82,17 @@ export const storeSlice = createSlice({
             state.error = null;
         });
         builder.addCase(registerStore.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(getAllStore.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(getAllStore.fulfilled, (state, action) => {
+            state.loading = false;
+            state.stores = action.payload;
+        });
+        builder.addCase(getAllStore.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });

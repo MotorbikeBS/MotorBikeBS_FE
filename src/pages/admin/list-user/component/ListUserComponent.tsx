@@ -2,7 +2,7 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
 import { getAllUser } from '../../../../services/features/userSlice';
-import { columns } from './table/table';
+import { columns } from '../../../../common-components/table/table';
 import { IUser } from '../../../../models/User/UserInterface';
 import { Container, Typography } from '@mui/material';
 
