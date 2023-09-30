@@ -19,3 +19,4 @@ export const editUserByIDEndPoint = `${BASE_URL}/api/user`;
 
 //store endpoint
 export const registerStoreEndPoint = `${BASE_URL}/api/storedescription/store-register`;
+export const getAllStoreEndPoint = `${BASE_URL}/api/storedescription`;

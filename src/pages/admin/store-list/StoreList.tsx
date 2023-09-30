@@ -2,9 +2,9 @@ import React from 'react';
 import AdminMenuComponent from '../admin-menu-component/AdminMenuComponent';
 import { Box } from '@mui/material';
 import FooterComponent from '../../../common-components/footer-component/FooterComponent';
-import ListUserComponent from './component/ListUserComponent';
+import StoreListComponent from './store-list-component/StoreListComponent';
 
-const ListUser = () => {
+const StoreListAdmin = () => {
     return (
         <>
             <Box
@@ -13,11 +13,12 @@ const ListUser = () => {
                 height="100vh"
                 width="100%"
             >
-                <Box flexGrow={1} zIndex={2}>
+                <Box flexGrow={1} >
                     <AdminMenuComponent />
                 </Box>
-
-                <ListUserComponent />
+                <Box flexGrow={12}>
+                    <StoreListAdmin />
+                </Box>
                 <Box flexGrow={1} className="footer-style">
                     <FooterComponent />
                 </Box>
@@ -26,4 +27,4 @@ const ListUser = () => {
     );
 };
 
-export default ListUser;
+export default StoreListAdmin;
