@@ -12,7 +12,10 @@ export const loginEndpoint = `${BASE_URL}/api/auth/login`;
 export const forgotPasswordEndPoint = `${BASE_URL}/api/auth/forgot-password`;
 export const resetPasswordEndPoint = `${BASE_URL}/api/auth/reset-password`;
 
-//User-profile and edit Userprofile
+//User endpoints
 export const getAllUserEndPoint = `${BASE_URL}/api/user`;
 export const getUserByIDEndPoint = `${BASE_URL}/api/user`;
 export const editUserByIDEndPoint = `${BASE_URL}/api/user`;
+
+//store endpoint
+export const registerStoreEndPoint = `${BASE_URL}/api/storedescription/store-register`;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import {
     Box,
@@ -12,25 +12,31 @@ import CustomerMenuComponent from '../customer-menu-component/CustomerMenuCompon
 import FooterComponent from '../../../common-components/footer-component/FooterComponent';
 
 import './style/style.scss';
+import { useAppDispatch, useAppSelector } from '../../../services/store/store';
+import { registerStore, setError } from '../../../services/features/storeSlice';
 
 interface ISignupStore {
+    userId: number;
     storeName: string;
+    taxCode: string;
     storePhone: string;
     storeEmail: string;
-    storeAddress: string;
-    storeTaxCode: string;
-    local: [];
+    address: string;
 }
 
 const SignUpStoreOwner = () => {
+    const dispatch = useAppDispatch()
+    const { error } = useAppSelector((state) => state.store)
+    const errorData: any = error;
+
     const form = useForm<ISignupStore>({
         defaultValues: {
             storeName: '',
+            taxCode: '',
             storePhone: '',
             storeEmail: '',
-            storeAddress: '',
-            storeTaxCode: '',
-            // local: []
+            address: ''
+
         },
     });
     const { register, formState, handleSubmit } = form;
@@ -38,7 +44,15 @@ const SignUpStoreOwner = () => {
 
     const onSubmit = (data: ISignupStore) => {
         console.log(data);
+        dispatch(registerStore(data))
     };
+
+    useEffect(() => {
+        return () => {
+            dispatch(setError(null));
+        };
+    }, [dispatch]);
+
     return (
         <Box
             display="flex"
@@ -53,6 +67,7 @@ const SignUpStoreOwner = () => {
             <Box flexGrow={8} display="flex">
                 <Container className="container-page">
                     <div className="signup-storeOwner-header">
+
                         <Typography
                             fontSize={30}
                             fontWeight={700}
@@ -62,7 +77,19 @@ const SignUpStoreOwner = () => {
                             Đăng ký trở thành chủ cửa hàng
                         </Typography>
                     </div>
+                    <div className="signup-storeOwner-header">
+                        {errorData?.error && (
+                            <div className="error-message">
+                                {Object.keys(errorData?.error).map((key) => (
+                                    <Typography key={key} color='red' marginBottom='20px' alignContent='center'>
+                                        {errorData.error[key]}
+                                    </Typography>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                     <div className="form-signup-storeOwner">
+
                         <form onSubmit={handleSubmit(onSubmit)} noValidate>
                             <Stack
                                 spacing={2}
@@ -86,11 +113,11 @@ const SignUpStoreOwner = () => {
                                 <TextField
                                     label="Mã số thuế"
                                     type="text"
-                                    {...register('storeTaxCode', {
+                                    {...register('taxCode', {
                                         required: 'Bạn chưa nhập mã số thuế',
                                     })}
-                                    error={!!errors.storeTaxCode}
-                                    helperText={errors.storeTaxCode?.message}
+                                    error={!!errors.taxCode}
+                                    helperText={errors.taxCode?.message}
                                     variant="outlined"
                                 />
                                 <TextField
@@ -116,11 +143,11 @@ const SignUpStoreOwner = () => {
                                 <TextField
                                     label="Địa chỉ cửa hàng"
                                     type="text"
-                                    {...register('storeAddress', {
+                                    {...register('address', {
                                         required: 'Bạn chưa nhập địa chỉ',
                                     })}
-                                    error={!!errors.storeAddress}
-                                    helperText={errors.storeAddress?.message}
+                                    error={!!errors.address}
+                                    helperText={errors.address?.message}
                                     variant="outlined"
                                 />{' '}
                                 <Button
@@ -135,7 +162,9 @@ const SignUpStoreOwner = () => {
                             </Stack>
                         </form>
                     </div>
+
                     <div className="text-note">
+
                         <Typography color="red">* Lưu ý:</Typography>
                         <Typography
                             maxWidth="60%"
