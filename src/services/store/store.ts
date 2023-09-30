@@ -5,17 +5,19 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import accountSlice from '../features/accountSlice';
 import userslice from '../features/userSlice';
+import storeSlice from '../features/storeSlice';
 
 // Định nghĩa cấu hình persist
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['account', 'users'],
+    whitelist: ['account', 'users', 'store'],
 };
 
 const rootReducer = combineReducers({
     account: accountSlice,
     users: userslice,
+    store: storeSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

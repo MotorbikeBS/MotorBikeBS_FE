@@ -13,3 +13,12 @@ export interface IAccount {
     userUpdatedAt: Date;
     status: string;
 }
+
+export interface IRegisterStore {
+    userId: number;
+    storeName: string;
+    taxCode: string;
+    storePhone: string;
+    storeEmail: string;
+    address: string;
+}
