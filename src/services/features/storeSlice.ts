@@ -3,7 +3,9 @@ import { IRegisterStore } from '../../models/Account/AccountInterface';
 import axios from 'axios';
 import {
     getAllStoreEndPoint,
+    getStoreByIDEndPoint,
     registerStoreEndPoint,
+    verifyStoreEndPoint,
 } from '../config/api-config';
 import { toast } from 'react-toastify';
 import { IStore } from '../../models/Store/Store';
@@ -12,6 +14,7 @@ interface StoreState {
     loading: boolean;
     storeRegister: IRegisterStore | null;
     stores: IStore[] | null;
+    store: IStore | null;
     error: string[] | unknown;
 }
 
@@ -19,6 +22,7 @@ const initialState: StoreState = {
     loading: false,
     storeRegister: null,
     stores: null,
+    store: null,
     error: null,
 };
 
@@ -44,6 +48,32 @@ export const registerStore = createAsyncThunk<IRegisterStore, Object>(
         }
     },
 );
+export const verifyStore = createAsyncThunk<IStore, { storeId: number }>(
+    'stores/verifyStore',
+    async (data, thunkAPI) => {
+        const { storeId } = data;
+        try {
+            const token = localStorage.getItem('motorbike_bs');
+            const response = await axios.post(
+                `${verifyStoreEndPoint}?storeId=${storeId}`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+            );
+            toast.success('Xác minh thành công !');
+            return response.data;
+        } catch (error: any) {
+            console.log(error);
+            toast.error('Có lỗi xảy ra, vui lòng thử lại sau !');
+            return thunkAPI.rejectWithValue({
+                error: error.response?.data?.errorMessages,
+            });
+        }
+    },
+);
 
 export const getAllStore = createAsyncThunk<IStore[], void>(
     'store/getAllStore',
@@ -59,6 +89,26 @@ export const getAllStore = createAsyncThunk<IStore[], void>(
         } catch (error: any) {
             return thunkAPI.rejectWithValue({
                 error: error.response?.data?.errorMessages,
+            });
+        }
+    },
+);
+export const getStoreByID = createAsyncThunk<IStore, { id: number }>(
+    'stores/getStoreByID',
+    async (data, thunkAPI) => {
+        const { id } = data;
+        try {
+            const token = localStorage.getItem('motorbike_bs');
+            const response = await axios.get(`${getStoreByIDEndPoint}/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data.result;
+        } catch (err: any) {
+            toast.error('Có lỗi xảy ra ! Vui lòng kiểm tra lại ! ');
+            return thunkAPI.rejectWithValue({
+                error: err.response?.data?.errorMessages,
             });
         }
     },
@@ -93,6 +143,30 @@ export const storeSlice = createSlice({
             state.stores = action.payload;
         });
         builder.addCase(getAllStore.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(getStoreByID.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(getStoreByID.fulfilled, (state, action) => {
+            state.loading = false;
+            state.store = action.payload;
+            state.error = null;
+        });
+        builder.addCase(getStoreByID.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(verifyStore.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(verifyStore.fulfilled, (state, action) => {
+            state.loading = false;
+            state.store = action.payload;
+            state.error = null;
+        });
+        builder.addCase(verifyStore.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });

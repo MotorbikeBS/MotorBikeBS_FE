@@ -18,6 +18,7 @@ const StoreListNotVerify = () => {
         dispatch(getAllStore());
     }, [dispatch]);
 
+
     const notVerifiedStores = useMemo(() => {
         return (stores ?? []).filter((store: IStore) => store.status === 'NOT VERIFY');
     }, [stores]);
@@ -25,10 +26,12 @@ const StoreListNotVerify = () => {
     const rows = useMemo(() => {
         return notVerifiedStores.map((store: IStore) => ({
             id: store.storeId,
+            storeId: store.storeId,
             storeName: store.storeName,
             taxCode: store.taxCode,
             storePhone: store.storePhone,
             storeEmail: store.storeEmail,
+            address: store.address,
             storeCreatedAt: store.storeCreatedAt,
             status: store.status,
         }));

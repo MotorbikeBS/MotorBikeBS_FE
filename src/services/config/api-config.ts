@@ -16,7 +16,10 @@ export const resetPasswordEndPoint = `${BASE_URL}/api/auth/reset-password`;
 export const getAllUserEndPoint = `${BASE_URL}/api/user`;
 export const getUserByIDEndPoint = `${BASE_URL}/api/user`;
 export const editUserByIDEndPoint = `${BASE_URL}/api/user`;
+export const changePasswordEndPoint = `${BASE_URL}/api/user/changepassword;`;
 
 //store endpoint
 export const registerStoreEndPoint = `${BASE_URL}/api/storedescription/store-register`;
+export const verifyStoreEndPoint = `${BASE_URL}/api/storedescription/verifystore`;
 export const getAllStoreEndPoint = `${BASE_URL}/api/storedescription`;
+export const getStoreByIDEndPoint = `${BASE_URL}/api/storedescription`;
