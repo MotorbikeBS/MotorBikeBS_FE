@@ -73,8 +73,11 @@ const OwnerMenuComponent = () => {
     };
 
     const handleLogout = (data: any | undefined) => {
-        dispatch(logoutUser(data));
-        navigate('/login')
+        dispatch(logoutUser(data))
+            .unwrap()
+            .then(() => {
+                navigate('/login');
+            });
     };
     return (
         <>
