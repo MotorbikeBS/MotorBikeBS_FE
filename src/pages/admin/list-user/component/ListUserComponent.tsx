@@ -26,10 +26,7 @@ export default function DataTable() {
         userVerifyAt: user.userVerifyAt,
         status: user.status
     }));
-    // const rows = (Array.isArray(users) ? users : []).map((user: IUser) => ({
-    //     id: user.userId,
 
-    // }));
     return (
         <Container maxWidth='xl'>
             <div style={{

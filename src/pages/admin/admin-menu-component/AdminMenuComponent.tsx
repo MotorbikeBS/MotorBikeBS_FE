@@ -32,7 +32,7 @@ const pages = [{
     name: 'DS. Người dùng',
 },
 {
-    to: '/store-list',
+    to: '/store-list-admin',
     name: 'DS.Cửa hàng'
 
 }
