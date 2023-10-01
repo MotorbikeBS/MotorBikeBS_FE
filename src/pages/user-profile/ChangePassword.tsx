@@ -16,10 +16,13 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CustomerMenuComponent from '../customer/customer-menu-component/CustomerMenuComponent';
 import EditIcon from '@mui/icons-material/Edit';
 import FooterComponent from '../../common-components/footer-component/FooterComponent';
-import { useAppSelector } from '../../services/store/store';
+import { useAppDispatch, useAppSelector } from '../../services/store/store';
 import OwnerMenuComponent from '../owner/owner-menu-component/OwnerMenuComponent';
 import StoreMenuComponent from '../store/store-menu-component/StoreMenuComponent';
 import AdminMenuComponent from '../admin/admin-menu-component/AdminMenuComponent';
+import { changePassword, setError } from '../../services/features/userSlice';
+import { logoutUser } from '../../services/features/accountSlice';
+import { toast } from 'react-toastify';
 
 type FormValues = {
     oldPassword: string;
@@ -29,6 +32,7 @@ type FormValues = {
 
 const ChangePassword = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const { account } = useAppSelector((state) => state.account);
 
     const form = useForm<FormValues>({
@@ -42,12 +46,41 @@ const ChangePassword = () => {
     const { register, handleSubmit, formState } = form;
     const { errors } = formState;
 
-    const [showPassword, setShowPassword] = useState(false);
-    const handleShowPass = () => {
-        setShowPassword(!showPassword);
+    const [showOldPassword, setShowOldPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
+
+    const handleShowOldPass = () => {
+        setShowOldPassword(!showOldPassword);
     };
 
+    const handleShowNewPass = () => {
+        setShowNewPassword(!showNewPassword);
+    };
+    const handleShowConfirmNewPass = () => {
+        setShowConfirmNewPassword(!showConfirmNewPassword);
+    };
     const onSubmit = (data: FormValues) => {
+        dispatch(
+            changePassword({
+                oldPassword: data.oldPassword,
+                password: data.newPassword,
+                passwordConfirmed: data.confirmNewPassword,
+            }),
+        )
+            .unwrap()
+            .then(() => {
+                toast.success('Đổi mật khẩu thành công.')
+                dispatch(logoutUser(data))
+                    .unwrap()
+                    .then(() => {
+                        navigate('/login');
+                    });
+                dispatch(setError(null));
+            })
+            .catch((e) => {
+                toast.error(e.error[0]);
+            });
         console.log(data);
     };
 
@@ -113,15 +146,15 @@ const ChangePassword = () => {
                                         }}
                                     >
                                         <TextField
-                                            label="Mật khẩu Cũ"
+                                            label="Mật khẩu hiện tại"
                                             type={
-                                                showPassword
+                                                showOldPassword
                                                     ? 'text'
                                                     : 'password'
                                             }
                                             {...register('oldPassword', {
                                                 required:
-                                                    'Bạn Chưa Nhập Password',
+                                                    'Bạn chưa nhập Mật khẩu hiện tại',
                                             })}
                                             error={!!errors.oldPassword}
                                             helperText={
@@ -133,10 +166,10 @@ const ChangePassword = () => {
                                                     <InputAdornment position="end">
                                                         <IconButton
                                                             onClick={
-                                                                handleShowPass
+                                                                handleShowOldPass
                                                             }
                                                         >
-                                                            {showPassword ? (
+                                                            {showOldPassword ? (
                                                                 <Visibility />
                                                             ) : (
                                                                 <VisibilityOff />
@@ -149,13 +182,13 @@ const ChangePassword = () => {
                                         <TextField
                                             label="Mật khẩu mới"
                                             type={
-                                                showPassword
+                                                showNewPassword
                                                     ? 'text'
                                                     : 'password'
                                             }
                                             {...register('newPassword', {
                                                 required:
-                                                    'Bạn Chưa Nhập Password',
+                                                    'Bạn chưa nhập Mật khẩu mới',
                                             })}
                                             error={!!errors.newPassword}
                                             helperText={
@@ -167,10 +200,10 @@ const ChangePassword = () => {
                                                     <InputAdornment position="end">
                                                         <IconButton
                                                             onClick={
-                                                                handleShowPass
+                                                                handleShowNewPass
                                                             }
                                                         >
-                                                            {showPassword ? (
+                                                            {showNewPassword ? (
                                                                 <Visibility />
                                                             ) : (
                                                                 <VisibilityOff />
@@ -183,13 +216,13 @@ const ChangePassword = () => {
                                         <TextField
                                             label="Xác nhận mật khẩu mới"
                                             type={
-                                                showPassword
+                                                showConfirmNewPassword
                                                     ? 'text'
                                                     : 'password'
                                             }
                                             {...register('confirmNewPassword', {
                                                 required:
-                                                    'Bạn Chưa Nhập Password',
+                                                    'Bạn chưa nhập xác nhận lại mật khẩu',
                                             })}
                                             error={!!errors.confirmNewPassword}
                                             helperText={
@@ -202,10 +235,10 @@ const ChangePassword = () => {
                                                     <InputAdornment position="end">
                                                         <IconButton
                                                             onClick={
-                                                                handleShowPass
+                                                                handleShowConfirmNewPass
                                                             }
                                                         >
-                                                            {showPassword ? (
+                                                            {showConfirmNewPassword ? (
                                                                 <Visibility />
                                                             ) : (
                                                                 <VisibilityOff />

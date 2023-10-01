@@ -16,7 +16,12 @@ import {
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 
-import { AccountCircle, DriveFileRenameOutline, Notifications, SearchOutlined } from '@mui/icons-material';
+import {
+    AccountCircle,
+    DriveFileRenameOutline,
+    Notifications,
+    SearchOutlined,
+} from '@mui/icons-material';
 import './style/style.scss';
 import { useAppDispatch } from '../../../services/store/store';
 import { logoutUser } from '../../../services/features/accountSlice';
@@ -45,12 +50,14 @@ const StoreMenuComponent = () => {
     const theme = useTheme();
     const location = useLocation();
     const navigate = useNavigate();
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
 
-
-
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+        null,
+    );
+    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+        null,
+    );
 
     const [searchOpen, setSearchOpen] = React.useState(false);
 
@@ -76,10 +83,12 @@ const StoreMenuComponent = () => {
         return location.pathname === to;
     };
 
-    
     const handleLogout = (data: any | undefined) => {
-        dispatch(logoutUser(data));
-        navigate('/login')
+        dispatch(logoutUser(data))
+            .unwrap()
+            .then(() => {
+                navigate('/login');
+            });
     };
     return (
         <>
@@ -93,7 +102,10 @@ const StoreMenuComponent = () => {
             >
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
-                        <Link to="/store-dashboard" style={{ textDecoration: 'none' }}>
+                        <Link
+                            to="/store-dashboard"
+                            style={{ textDecoration: 'none' }}
+                        >
                             <Typography
                                 variant="h4"
                                 noWrap
@@ -116,10 +128,18 @@ const StoreMenuComponent = () => {
                             <SearchIconWrapper>
                                 <SearchOutlined />
                             </SearchIconWrapper>
-                            <StyledInputBase placeholder="Tìm Kiếm…" inputProps={{ 'aria-label': 'search' }} />
+                            <StyledInputBase
+                                placeholder="Tìm Kiếm…"
+                                inputProps={{ 'aria-label': 'search' }}
+                            />
                         </Search>
 
-                        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                display: { xs: 'flex', md: 'none' },
+                            }}
+                        >
                             <IconButton
                                 size="large"
                                 aria-label="account of current user"
@@ -149,9 +169,18 @@ const StoreMenuComponent = () => {
                                 }}
                             >
                                 {pages.map((page) => (
-                                    <Link to={page.to} style={{ textDecoration: 'none' }}>
-                                        <MenuItem key={page.to} onClick={handleCloseNavMenu}>
-                                            <Typography textAlign="center" sx={{ color: 'black' }}>
+                                    <Link
+                                        to={page.to}
+                                        style={{ textDecoration: 'none' }}
+                                    >
+                                        <MenuItem
+                                            key={page.to}
+                                            onClick={handleCloseNavMenu}
+                                        >
+                                            <Typography
+                                                textAlign="center"
+                                                sx={{ color: 'black' }}
+                                            >
                                                 {page.name}
                                             </Typography>
                                         </MenuItem>
@@ -192,12 +221,22 @@ const StoreMenuComponent = () => {
                             </Typography>
                         </Link>
 
-                        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 2 }}>
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                display: { xs: 'none', md: 'flex' },
+                                gap: 2,
+                            }}
+                        >
                             {pages.map((page) => (
                                 <Link
                                     key={page.to}
                                     to={page.to}
-                                    className={`link-customer ${isMenuItemActive(page.to) ? 'active' : ''}`}
+                                    className={`link-customer ${
+                                        isMenuItemActive(page.to)
+                                            ? 'active'
+                                            : ''
+                                    }`}
                                 >
                                     {page.name}
                                 </Link>
@@ -238,13 +277,20 @@ const StoreMenuComponent = () => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                 <MenuItem onClick={handleCloseUserMenu}>
-                                    <Link to="/user/profile" style={{ textDecoration: 'none' }}>
+                                <MenuItem onClick={handleCloseUserMenu}>
+                                    <Link
+                                        to="/user/profile"
+                                        style={{ textDecoration: 'none' }}
+                                    >
                                         <Typography>Hồ Sơ</Typography>
                                     </Link>
                                 </MenuItem>
                                 <MenuItem onClick={handleCloseUserMenu}>
-                                    <Link to="/" style={{ textDecoration: 'none' }} onClick={handleLogout}>
+                                    <Link
+                                        to="/"
+                                        style={{ textDecoration: 'none' }}
+                                        onClick={handleLogout}
+                                    >
                                         <Typography>Đăng xuất</Typography>
                                     </Link>
                                 </MenuItem>
@@ -263,7 +309,10 @@ const StoreMenuComponent = () => {
                                 <Typography>Đẩy Bài</Typography>
                             </Button>
 
-                            <Tooltip title="Đăng tin" sx={{ display: { xs: 'flex', md: 'none' } }}>
+                            <Tooltip
+                                title="Đăng tin"
+                                sx={{ display: { xs: 'flex', md: 'none' } }}
+                            >
                                 <IconButton size="large" color="inherit">
                                     <DriveFileRenameOutline />
                                 </IconButton>
@@ -273,12 +322,21 @@ const StoreMenuComponent = () => {
                 </Container>
             </AppBar>
             {searchOpen && (
-                <Box sx={{ flexGrow: 1, display: 'flex', backgroundColor: '#04618f' }}>
+                <Box
+                    sx={{
+                        flexGrow: 1,
+                        display: 'flex',
+                        backgroundColor: '#04618f',
+                    }}
+                >
                     <Search sx={{ display: 'flex', flexGrow: 1 }}>
                         <SearchIconWrapper>
                             <SearchOutlined />
                         </SearchIconWrapper>
-                        <StyledInputBase placeholder="Tìm Kiếm…" inputProps={{ 'aria-label': 'search' }} />
+                        <StyledInputBase
+                            placeholder="Tìm Kiếm…"
+                            inputProps={{ 'aria-label': 'search' }}
+                        />
                     </Search>
                 </Box>
             )}

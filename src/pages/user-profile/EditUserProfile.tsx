@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Avatar,
     Button,
@@ -8,8 +8,6 @@ import {
     Typography,
     Radio,
     FormLabel,
-    Snackbar,
-    Alert,
     Dialog,
     DialogTitle,
     DialogActions,
@@ -24,60 +22,44 @@ import './style/style.scss';
 import { useNavigate } from 'react-router-dom';
 import FooterComponent from '../../common-components/footer-component/FooterComponent';
 import CustomerMenuComponent from '../customer/customer-menu-component/CustomerMenuComponent';
-import { useAppSelector } from '../../services/store/store';
+import { useAppDispatch, useAppSelector } from '../../services/store/store';
 import AdminMenuComponent from '../admin/admin-menu-component/AdminMenuComponent';
 import StoreMenuComponent from '../store/store-menu-component/StoreMenuComponent';
 import OwnerMenuComponent from '../owner/owner-menu-component/OwnerMenuComponent';
 import { useForm } from 'react-hook-form';
-
+import { format } from 'date-fns';
+import { editUserByID, getUserByID } from '../../services/features/userSlice';
+import { toast } from 'react-toastify';
 
 type FormValues = {
-    userName: string
-    phone: string
-    gender: string
-    dob: string
+    userId: number;
+    userName: string;
+    phone: string;
+    gender: number;
+    dob: Date;
     idCard: string;
-    address: string
-}
+    address: string;
+};
 
 const EditUserProfile = () => {
     const navigate = useNavigate();
-    const { account } = useAppSelector((state) => state.account);
+    const dispatch = useAppDispatch();
 
-    const [selectedValue, setSelectedValue] = React.useState('male');
-    const [openSave, setOpenSave] = React.useState(false);
+    const { account } = useAppSelector((state) => state.account);
+    const { user } = useAppSelector((state) => state.users);
+
     const [openCancel, setOpenCancel] = React.useState(false);
 
-    const handleClickSave = () => {
-        setOpenSave(true);
-    };
+    const [userName, setUserName] = useState<string>('');
+    const [phone, setPhone] = useState<string>('');
+    const [address, setAddress] = useState<string>('');
+    const [dob, setDob] = useState<string>('');
+    const [idCard, setIdCard] = useState<string>('');
+    const [gender, setGender] = useState<string>('3');
 
     const handleClickCancel = () => {
         setOpenCancel(true);
     };
-
-    const handleClose = (
-        event?: React.SyntheticEvent | Event,
-        reason?: string,
-    ) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-
-        setOpenSave(false);
-    };
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedValue(event.target.value);
-    };
-
-    const handleSave = () => {
-        handleClickSave();
-        setTimeout(() => {
-            navigate('/user/profile');
-        }, 2000);
-    };
-
     const handleCancel = () => {
         handleClickCancel();
     };
@@ -90,22 +72,61 @@ const EditUserProfile = () => {
         navigate('/user/profile');
     };
 
+    const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setGender(event.target.value);
+    };
+
+    useEffect(() => {
+        if (account?.userId) {
+            dispatch(getUserByID({ id: account.userId }));
+        }
+    }, [dispatch, account?.userId]);
+
+    useEffect(() => {
+        if (user) {
+            setUserName(user?.userName);
+            setPhone(user?.phone ? user.phone : '');
+            setAddress(user?.address ? user.address : '');
+            setDob(
+                user?.dob
+                    ? format(new Date(user.dob), "yyyy-MM-dd'T'HH:mm")
+                    : '',
+            );
+            setIdCard(user?.idCard);
+            setGender(user?.gender ? user?.gender.toString() : '3');
+        }
+    }, [user]);
+
     const form = useForm<FormValues>({
         defaultValues: {
+            userId: account?.userId,
             userName: '',
             phone: '',
-            gender: '',
-            dob: '',
+            gender: 3,
+            dob: new Date(),
             idCard: '',
-            address: ''
-        }
-    })
+            address: '',
+        },
+    });
     const { register, handleSubmit, formState } = form;
     const { errors } = formState;
 
     const onSubmit = (data: FormValues) => {
-        console.log(data)
+        if (account && account.userId) {
+            dispatch(editUserByID({ id: account.userId, data: data }))
+                .unwrap()
+                .then(() => {
+                    toast.success('Chỉnh sửa thành công');
+                    navigate('/user/profile');
+                })
+                .catch((err) => {
+                    console.log(err.error[0]);
+                    toast.error(err.error[0]);
+                });
+        }
+        console.log(data);
     };
+
     return (
         <>
             {account?.roleId === 1 && <AdminMenuComponent />}
@@ -139,101 +160,194 @@ const EditUserProfile = () => {
                             <Typography className="profile-input-heading">
                                 Chỉnh sửa hồ sơ
                             </Typography>
-                            <Stack spacing={3} className="profile-input-fields">
-                                <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                            <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                                <Stack
+                                    spacing={3}
+                                    className="profile-input-fields"
+                                >
+                                    {account?.roleId === 2 && (
+                                        <>
+                                            <TextField
+                                                label="Email Cửa hàng"
+                                                value={user?.email}
+                                                type="email"
+                                                variant="outlined"
+                                                disabled
+                                            />
+
+                                            <TextField
+                                                label="Tên cửa hàng"
+                                                value={user?.userName}
+                                                type="text"
+                                                variant="outlined"
+                                                disabled
+                                            />
+                                            <TextField
+                                                label="Mã số thuế"
+                                                value={
+                                                    user?.idCard
+                                                        ? user?.idCard
+                                                        : 'Bạn chưa cập nhật mã số thuế.'
+                                                }
+                                                type="text"
+                                                variant="outlined"
+                                                disabled
+                                            />
+                                        </>
+                                    )}
                                     <TextField
                                         label="Email"
-                                        // value={user?.email}
+                                        value={user?.email}
                                         type="email"
                                         variant="outlined"
                                         disabled
                                     />
                                     <TextField
-                                        label='Họ và Tên'
-                                        type='text'
-                                        {...register('userName', { required: 'Bạn Chưa Nhập Tên' })}
+                                        label="Họ và Tên"
+                                        type="text"
+                                        value={userName}
+                                        {...register('userName', {
+                                            required: 'Bạn chưa chỉnh sửa tên',
+                                        })}
                                         error={!!errors.userName}
-                                        helperText={errors.userName && errors.userName.message}
+                                        helperText={
+                                            errors.userName &&
+                                            errors.userName.message
+                                        }
+                                        onChange={(e) =>
+                                            setUserName(e.target.value)
+                                        }
                                     />
-                                    <div>
-                                        <FormControl component="fieldset">
-                                            <FormLabel component="legend">Giới tính:</FormLabel>
-                                            <RadioGroup
-                                                aria-label="gender"
-                                                name="gender"
-                                                value={selectedValue}
-                                                onChange={handleChange}
-                                            >
-                                                <FormControlLabel value="male" control={<Radio />} label="Nam" />
-                                                <FormControlLabel value="female" control={<Radio />} label="Nữ" />
-                                                <FormControlLabel value="other" control={<Radio />} label="Khác" />
-                                            </RadioGroup>
-                                        </FormControl>
-                                    </div>
+                                    <FormControl component="fieldset">
+                                        <FormLabel component="legend">
+                                            Giới tính:
+                                        </FormLabel>
+                                        <RadioGroup
+                                            row
+                                            aria-label="gender"
+                                            value={gender}
+                                            onChange={handleGenderChange}
+                                        >
+                                            <div>
+                                                <FormControlLabel
+                                                    value={1}
+                                                    control={<Radio />}
+                                                    label="Nam"
+                                                    {...register('gender')}
+                                                />
+                                                <FormControlLabel
+                                                    value={2}
+                                                    control={<Radio />}
+                                                    label="Nữ"
+                                                    {...register('gender')}
+                                                />
+                                                <FormControlLabel
+                                                    value={3}
+                                                    control={<Radio />}
+                                                    label="Khác"
+                                                    {...register('gender')}
+                                                />
+                                            </div>
+                                        </RadioGroup>
+                                    </FormControl>
 
                                     <TextField
                                         label="Điện thoại"
-                                        value=""
+                                        value={phone}
                                         type="text"
-                                        variant="outlined"
+                                        {...register('phone', {
+                                            required:
+                                                'Bạn chưa chỉnh sửa Số Điện thoại',
+                                        })}
+                                        error={!!errors.phone}
+                                        helperText={
+                                            errors.phone && errors.phone.message
+                                        }
+                                        onChange={(e) =>
+                                            setPhone(e.target.value)
+                                        }
                                     />
                                     <TextField
                                         label="Địa chỉ"
-                                        value=""
+                                        value={address}
                                         type="text"
-                                        variant="outlined"
+                                        {...register('address', {
+                                            required:
+                                                'Bạn chưa chỉnh sửa Địa chỉ',
+                                        })}
+                                        error={!!errors.address}
+                                        helperText={
+                                            errors.address &&
+                                            errors.address.message
+                                        }
+                                        onChange={(e) =>
+                                            setAddress(e.target.value)
+                                        }
                                     />
                                     <TextField
                                         label="Ngày sinh"
-                                        value=""
-                                        type="date"
-                                        variant="outlined"
+                                        value={dob}
+                                        type="datetime-local"
+                                        {...register('dob', {
+                                            required: 'Nhập ngày',
+                                        })}
+                                        error={!!errors.dob}
+                                        helperText={
+                                            errors.dob && errors.dob.message
+                                        }
+                                        onChange={(e) => {
+                                            setDob(e.target.value);
+                                        }}
                                     />
+
                                     <TextField
                                         label="CCCD/CMND"
-                                        value=""
+                                        value={idCard}
                                         type="text"
-                                        variant="outlined"
+                                        {...register('idCard', {
+                                            required:
+                                                'Bạn chưa chỉnh sửa CCCD/CMND',
+                                        })}
+                                        error={!!errors.idCard}
+                                        helperText={
+                                            errors.idCard &&
+                                            errors.idCard.message
+                                        }
+                                        onChange={(e) =>
+                                            setIdCard(e.target.value)
+                                        }
                                     />
-                                </form>
-                            </Stack>
-                            <div className="edit-profile-btn">
-                                <Button
-                                    variant="outlined"
-                                    color="success"
-                                    onClick={handleSave}
-                                >
-                                    <DoneIcon />
-                                    Lưu
-                                </Button>
-                                <Button
-                                    variant="outlined"
-                                    color="error"
-                                    onClick={handleCancel}
-                                >
-                                    <ClearIcon />
-                                    Hủy bỏ
-                                </Button>
-                            </div>
+                                </Stack>
+                                <div className="edit-profile-btn">
+                                    <Button
+                                        variant="outlined"
+                                        color="success"
+                                        type="submit"
+                                    >
+                                        <DoneIcon />
+                                        Lưu
+                                    </Button>
+                                    <Button
+                                        variant="outlined"
+                                        color="error"
+                                        onClick={handleCancel}
+                                    >
+                                        <ClearIcon />
+                                        Hủy bỏ
+                                    </Button>
+                                </div>
+                            </form>
                         </div>
                     </Grid>
                 </Grid>
-                <Snackbar
-                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                    open={openSave}
-                    autoHideDuration={1500}
-                    onClose={handleClose}
-                >
-                    <Alert severity="success" sx={{ width: '100%' }}>
-                        Chỉnh sửa thành công
-                    </Alert>
-                </Snackbar>
                 <Dialog
                     open={openCancel}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogTitle>Bạn có chắc chắn không?</DialogTitle>
+                    <DialogTitle>
+                        Bạn có chắc muốn hủy bỏ chỉnh sửa không?
+                    </DialogTitle>
                     <DialogActions>
                         <Button color="error" onClick={handleCancelCan}>
                             Từ chối

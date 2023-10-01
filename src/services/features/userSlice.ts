@@ -3,6 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { IEditUser, IUser } from '../../models/User/UserInterface';
 import {
+    changePasswordEndPoint,
     editUserByIDEndPoint,
     getAllUserEndPoint,
     getUserByIDEndPoint,
@@ -79,12 +80,40 @@ export const editUserByID = createAsyncThunk<
         );
         return response.data;
     } catch (err: any) {
-        toast.error('Có lỗi xảy ra ! Vui lòng kiểm tra lại ! ');
+        // toast.error('Có lỗi xảy ra ! Vui lòng kiểm tra lại ! ');
         return thunkAPI.rejectWithValue({
             error: err.response?.data?.errorMessages,
         });
     }
 });
+
+export const changePassword = createAsyncThunk<
+    IUser,
+    { oldPassword: string; password: string; passwordConfirmed: string }
+>(
+    'users/changePassword',
+    async ({ oldPassword, password, passwordConfirmed }, thunkAPI) => {
+        try {
+            const token = localStorage.getItem('motorbike_bs');
+            const response = await axios.post(
+                changePasswordEndPoint,
+                { oldPassword, password, passwordConfirmed },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+            );
+            return response.data;
+        } catch (err: any) {
+            // toast.error('Có lỗi xảy ra ! Vui lòng kiểm tra lại ! ');
+            return thunkAPI.rejectWithValue({
+                error: err.response?.data?.errorMessages,
+            });
+        }
+    },
+);
+
 export const usersSlice = createSlice({
     name: 'users',
     initialState,
@@ -115,6 +144,18 @@ export const usersSlice = createSlice({
         });
         builder.addCase(getUserByID.rejected, (state, action) => {
             state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(changePassword.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(changePassword.fulfilled, (state, action) => {
+            state.loading = true;
+            state.user = action.payload;
+            state.error = null;
+        });
+        builder.addCase(changePassword.rejected, (state, action) => {
+            state.loading = true;
             state.error = action.payload;
         });
     },

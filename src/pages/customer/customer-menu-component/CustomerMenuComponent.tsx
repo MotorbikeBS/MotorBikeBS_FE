@@ -53,11 +53,16 @@ const CustomerMenuComponent = () => {
     const theme = useTheme();
     const navigate = useNavigate();
     const location = useLocation();
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
 
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-    const [anchorElNotify, setAnchorElNotify] = React.useState<null | HTMLElement>(null);
+    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+        null,
+    );
+    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+        null,
+    );
+    const [anchorElNotify, setAnchorElNotify] =
+        React.useState<null | HTMLElement>(null);
 
     const [searchOpen, setSearchOpen] = React.useState(false);
 
@@ -92,8 +97,11 @@ const CustomerMenuComponent = () => {
     };
 
     const handleLogout = (data: any | undefined) => {
-        dispatch(logoutUser(data));
-        navigate('/login')
+        dispatch(logoutUser(data))
+            .unwrap()
+            .then(() => {
+                navigate('/login');
+            });
     };
     return (
         <>
@@ -126,7 +134,9 @@ const CustomerMenuComponent = () => {
                         <Link to="/customer/store-owner-signup">
                             <Button sx={{ gap: '5px' }}>
                                 <BusinessCenter />
-                                <Typography variant="subtitle2">Dành cho chủ cửa hàng </Typography>
+                                <Typography variant="subtitle2">
+                                    Dành cho chủ cửa hàng{' '}
+                                </Typography>
                             </Button>
                         </Link>
                     </Box>
@@ -145,7 +155,9 @@ const CustomerMenuComponent = () => {
                         <Link to="/customer/bike-owner-signup">
                             <Button sx={{ gap: '5px' }}>
                                 <DirectionsBike />
-                                <Typography variant="subtitle2">Tôi là chủ xe </Typography>
+                                <Typography variant="subtitle2">
+                                    Tôi là chủ xe{' '}
+                                </Typography>
                             </Button>
                         </Link>
                     </Box>
@@ -192,7 +204,10 @@ const CustomerMenuComponent = () => {
                 </Tooltip>
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
-                        <Link to="/customer-home" style={{ textDecoration: 'none' }}>
+                        <Link
+                            to="/customer-home"
+                            style={{ textDecoration: 'none' }}
+                        >
                             <Typography
                                 variant="h4"
                                 noWrap
@@ -215,10 +230,18 @@ const CustomerMenuComponent = () => {
                             <SearchIconWrapper>
                                 <SearchOutlined />
                             </SearchIconWrapper>
-                            <StyledInputBase placeholder="Tìm Kiếm…" inputProps={{ 'aria-label': 'search' }} />
+                            <StyledInputBase
+                                placeholder="Tìm Kiếm…"
+                                inputProps={{ 'aria-label': 'search' }}
+                            />
                         </Search>
 
-                        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                display: { xs: 'flex', md: 'none' },
+                            }}
+                        >
                             <IconButton
                                 size="large"
                                 aria-label="account of current user"
@@ -248,9 +271,18 @@ const CustomerMenuComponent = () => {
                                 }}
                             >
                                 {pages.map((page) => (
-                                    <MenuItem key={page.to} onClick={handleCloseNavMenu}>
-                                        <Link to={page.to} style={{ textDecoration: 'none' }}>
-                                            <Typography textAlign="center" sx={{ color: 'black' }}>
+                                    <MenuItem
+                                        key={page.to}
+                                        onClick={handleCloseNavMenu}
+                                    >
+                                        <Link
+                                            to={page.to}
+                                            style={{ textDecoration: 'none' }}
+                                        >
+                                            <Typography
+                                                textAlign="center"
+                                                sx={{ color: 'black' }}
+                                            >
                                                 {page.name}
                                             </Typography>
                                         </Link>
@@ -291,12 +323,22 @@ const CustomerMenuComponent = () => {
                             </Typography>
                         </Link>
 
-                        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 2 }}>
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                display: { xs: 'none', md: 'flex' },
+                                gap: 2,
+                            }}
+                        >
                             {pages.map((page) => (
                                 <Link
                                     key={page.to}
                                     to={page.to}
-                                    className={`link-customer ${isMenuItemActive(page.to) ? 'active' : ''}`}
+                                    className={`link-customer ${
+                                        isMenuItemActive(page.to)
+                                            ? 'active'
+                                            : ''
+                                    }`}
                                 >
                                     {page.name}
                                 </Link>
@@ -304,7 +346,10 @@ const CustomerMenuComponent = () => {
                         </Box>
 
                         <Box sx={{ display: 'flex', flexGrow: 0 }}>
-                            <Tooltip title="Yêu Thích" onClick={() => navigate('/favourite-list')}>
+                            <Tooltip
+                                title="Yêu Thích"
+                                onClick={() => navigate('/favourite-list')}
+                            >
                                 <IconButton size="large" color="inherit">
                                     <FavoriteBorderOutlined />
                                 </IconButton>
@@ -353,15 +398,20 @@ const CustomerMenuComponent = () => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-
-                                
                                 <MenuItem onClick={handleCloseUserMenu}>
-                                    <Link to="/user/profile" style={{ textDecoration: 'none' }}>
+                                    <Link
+                                        to="/user/profile"
+                                        style={{ textDecoration: 'none' }}
+                                    >
                                         <Typography>Hồ Sơ</Typography>
                                     </Link>
                                 </MenuItem>
                                 <MenuItem onClick={handleCloseUserMenu}>
-                                    <Link to="/" style={{ textDecoration: 'none' }} onClick={handleLogout}>
+                                    <Link
+                                        to="/"
+                                        style={{ textDecoration: 'none' }}
+                                        onClick={handleLogout}
+                                    >
                                         <Typography>Đăng xuất</Typography>
                                     </Link>
                                 </MenuItem>
@@ -371,12 +421,21 @@ const CustomerMenuComponent = () => {
                 </Container>
             </AppBar>
             {searchOpen && (
-                <Box sx={{ flexGrow: 1, display: 'flex', backgroundColor: '#04618f' }}>
+                <Box
+                    sx={{
+                        flexGrow: 1,
+                        display: 'flex',
+                        backgroundColor: '#04618f',
+                    }}
+                >
                     <Search sx={{ display: 'flex', flexGrow: 1 }}>
                         <SearchIconWrapper>
                             <SearchOutlined />
                         </SearchIconWrapper>
-                        <StyledInputBase placeholder="Tìm Kiếm…" inputProps={{ 'aria-label': 'search' }} />
+                        <StyledInputBase
+                            placeholder="Tìm Kiếm…"
+                            inputProps={{ 'aria-label': 'search' }}
+                        />
                     </Search>
                 </Box>
             )}
