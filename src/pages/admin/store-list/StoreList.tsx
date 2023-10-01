@@ -2,7 +2,8 @@ import React from 'react';
 import AdminMenuComponent from '../admin-menu-component/AdminMenuComponent';
 import { Box } from '@mui/material';
 import FooterComponent from '../../../common-components/footer-component/FooterComponent';
-import StoreListComponent from './store-list-component/StoreListComponent';
+import StoreListNotVerify from './store-list-component/StoreListNotVerify';
+import StoreListActive from './store-list-component/StoreListActive';
 
 const StoreListAdmin = () => {
     return (
@@ -17,7 +18,12 @@ const StoreListAdmin = () => {
                     <AdminMenuComponent />
                 </Box>
                 <Box flexGrow={12}>
-                    <StoreListAdmin />
+                    <Box flexGrow={6}>
+                        <StoreListNotVerify />
+                    </Box>
+                    <Box flexGrow={6}>
+                        <StoreListActive />
+                    </Box>
                 </Box>
                 <Box flexGrow={1} className="footer-style">
                     <FooterComponent />

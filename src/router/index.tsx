@@ -76,7 +76,7 @@ const AppRoutes = () => {
                     />
                     <Route path="/admin-home" element={<AdminHome />} />
                     <Route path="/list-user" element={<ListUser />} />
-                    <Route path='/store-list' element={<StoreListAdmin />} />
+                    <Route path='//store-list-admin' element={<StoreListAdmin />} />
                     <Route path="*" element={<PageNotFound />} />
                 </>
             )}
