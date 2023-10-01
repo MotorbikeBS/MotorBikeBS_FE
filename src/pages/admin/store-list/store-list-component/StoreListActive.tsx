@@ -1,14 +1,14 @@
-import React, { useEffect, useMemo } from 'react'
-import { useAppDispatch, useAppSelector } from '../../../../services/store/store'
-import { Container, Paper, Typography } from '@mui/material'
-import { DataGrid } from '@mui/x-data-grid'
-import { columns } from './table/TableStoreList'
-import { getAllStore } from '../../../../services/features/storeSlice'
-import { IStore } from '../../../../models/Store/Store'
+import React, { useEffect, useMemo } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
+import { Container, Paper, Typography } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
+import { columns } from './table/TableStoreList';
+import { getAllStore } from '../../../../services/features/storeSlice';
+import { IStore } from '../../../../models/Store/Store';
 
 const StoreListActive = () => {
-    const dispatch = useAppDispatch()
-    const { stores } = useAppSelector((state) => state.store)
+    const dispatch = useAppDispatch();
+    const { stores } = useAppSelector((state) => state.store);
 
     useEffect(() => {
         dispatch(getAllStore());
@@ -21,14 +21,16 @@ const StoreListActive = () => {
     const rows = useMemo(() => {
         return VerifiedStores.map((store: IStore) => ({
             id: store.storeId,
+            storeId: store.storeId,
             storeName: store.storeName,
             taxCode: store.taxCode,
             storePhone: store.storePhone,
             storeEmail: store.storeEmail,
-            storeCreateAt: store.storeCreatedAt,
+            address: store.address,
+            storeCreatedAt: store.storeCreatedAt,
             status: store.status,
         }));
-    }, [stores]);
+    }, [VerifiedStores]);
 
     return (
         <Container maxWidth="xl">
@@ -44,7 +46,7 @@ const StoreListActive = () => {
                 />
             </Paper>
         </Container>
-    )
-}
+    );
+};
 
-export default StoreListActive
+export default StoreListActive;

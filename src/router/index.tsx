@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Register from '../pages/register/Register';
 import Login from '../pages/login/Login';
 import PageNotFound from '../pages/page-notfound/PageNotFound';
@@ -27,14 +27,6 @@ import StoreListAdmin from '../pages/admin/store-list/StoreList';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
-    const navigate = useNavigate();
-    useEffect(() => {
-        const storeLocal = localStorage.getItem('motorbike_bs');
-        if (!storeLocal) {
-            navigate('/login');
-        }
-    }, [navigate]);
-
     return (
         <Routes>
             {account === null && (
@@ -76,7 +68,10 @@ const AppRoutes = () => {
                     />
                     <Route path="/admin-home" element={<AdminHome />} />
                     <Route path="/list-user" element={<ListUser />} />
-                    <Route path='//store-list-admin' element={<StoreListAdmin />} />
+                    <Route
+                        path="//store-list-admin"
+                        element={<StoreListAdmin />}
+                    />
                     <Route path="*" element={<PageNotFound />} />
                 </>
             )}

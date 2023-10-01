@@ -1,18 +1,23 @@
-import React, { useEffect, useMemo } from 'react';
+// StoreListNotVerify.js
+import React, { useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
 import { getAllStore } from '../../../../services/features/storeSlice';
 import { IStore } from '../../../../models/Store/Store';
-import { Container, Typography, Paper } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
+import { Container, Typography, Paper, Button } from '@mui/material';
+import { DataGrid, GridRowParams } from '@mui/x-data-grid';
+import StoreModal from '../ModalComponent/StoreModalComponent';
 import { columns } from './table/TableStoreList';
 
 const StoreListNotVerify = () => {
     const dispatch = useAppDispatch();
     const { stores } = useAppSelector((state) => state.store);
+    const [selectedRow, setSelectedRow] = useState<IStore | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         dispatch(getAllStore());
     }, [dispatch]);
+
 
     const notVerifiedStores = useMemo(() => {
         return (stores ?? []).filter((store: IStore) => store.status === 'NOT VERIFY');
@@ -21,14 +26,21 @@ const StoreListNotVerify = () => {
     const rows = useMemo(() => {
         return notVerifiedStores.map((store: IStore) => ({
             id: store.storeId,
+            storeId: store.storeId,
             storeName: store.storeName,
             taxCode: store.taxCode,
             storePhone: store.storePhone,
             storeEmail: store.storeEmail,
-            storeCreateAt: store.storeCreatedAt,
+            address: store.address,
+            storeCreatedAt: store.storeCreatedAt,
             status: store.status,
         }));
     }, [stores]);
+
+    const handleRowDoubleClick = (params: GridRowParams) => {
+        setSelectedRow(params.row as IStore);
+        setIsModalOpen(true);
+    };
 
     return (
         <Container maxWidth="xl">
@@ -41,8 +53,11 @@ const StoreListNotVerify = () => {
                     columns={columns}
                     pageSizeOptions={[5, 10, 100, 200]}
                     disableRowSelectionOnClick
+                    onRowDoubleClick={handleRowDoubleClick}
                 />
             </Paper>
+
+            <StoreModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} data={selectedRow} />
         </Container>
     );
 };
