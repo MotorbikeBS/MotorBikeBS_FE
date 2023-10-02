@@ -92,18 +92,35 @@ const StoreModal: React.FC<StoreModalProps> = ({ isOpen, onClose, data }) => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <Button
-                    variant="contained"
-                    color="success"
-                    style={{
-                        position: 'absolute',
-                        bottom: '16%',
-                        right: '20px',
-                    }}
-                    onClick={handleActive}
-                >
-                    ACTIVE
-                </Button>
+                {data.status === 'NOT VERIFY' && (
+                    <Button
+                        variant="contained"
+                        color="success"
+                        style={{
+                            position: 'absolute',
+                            bottom: '16%',
+                            right: '20px',
+                        }}
+                        onClick={handleActive}
+                    >
+                        ACTIVE
+                    </Button>
+                )}
+
+                {data.status === 'ACTIVE' && (
+                    <Button
+                        variant="contained"
+                        color="error"
+                        style={{
+                            position: 'absolute',
+                            bottom: '16%',
+                            right: '20px',
+                        }}
+                    // onClick={handleActive}
+                    >
+                        UN-ACTIVE
+                    </Button>
+                )}
                 <div>
                     <Button
                         onClick={onClose}

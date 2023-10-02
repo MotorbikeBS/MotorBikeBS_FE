@@ -1,3 +1,8 @@
+export interface IStoreImages {
+    storeImageId: number;
+    imageLink: string;
+    storeId: number;
+}
 export interface IStore {
     storeId: number;
     userId: number;
@@ -11,5 +16,9 @@ export interface IStore {
     address: string;
     status: string;
     taxCode: string;
-    storeImage: [];
+    storeImages: {
+        storeImageId: number;
+        imageLink: string;
+        storeId: number;
+    }[];
 }

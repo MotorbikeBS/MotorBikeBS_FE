@@ -56,7 +56,6 @@ const StoreListNotVerify = () => {
                     onRowDoubleClick={handleRowDoubleClick}
                 />
             </Paper>
-
             <StoreModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} data={selectedRow} />
         </Container>
     );

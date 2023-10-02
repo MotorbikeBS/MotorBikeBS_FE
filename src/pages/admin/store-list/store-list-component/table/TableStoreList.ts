@@ -38,6 +38,12 @@ export const columns: GridColDef[] = [
         editable: false,
     },
     {
+        field: 'storeUpdatedAt',
+        headerName: 'Ngày cập nhật',
+        width: 250,
+        editable: false,
+    },
+    {
         field: 'status',
         headerName: 'Status',
         width: 100,
