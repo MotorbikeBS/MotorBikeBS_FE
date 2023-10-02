@@ -23,3 +23,7 @@ export const registerStoreEndPoint = `${BASE_URL}/api/storedescription/store-reg
 export const verifyStoreEndPoint = `${BASE_URL}/api/storedescription/verifystore`;
 export const getAllStoreEndPoint = `${BASE_URL}/api/storedescription`;
 export const getStoreByIDEndPoint = `${BASE_URL}/api/storedescription`;
+
+//motorbike endpoint
+export const getAllOnExChangeEndPoint = `${BASE_URL}/api/motorbike/getallonexchange`;
+export const getAllOnStoreExChangeEndPoint = `${BASE_URL}/api/motorbike/getallonstoreexchange`;
