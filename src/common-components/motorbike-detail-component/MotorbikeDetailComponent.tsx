@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { IMotorbike } from '../../pages/customer/motorbike-component/model/Motorbike';
-import motorbikes from '../../pages/customer/data/data';
 import {
     Box,
     Typography,
@@ -14,12 +12,17 @@ import {
     TableRow,
     Button,
 } from '@mui/material';
-import { MonetizationOnOutlined, StoreOutlined, FmdGoodOutlined } from '@mui/icons-material';
+import {
+    MonetizationOnOutlined,
+    StoreOutlined,
+    FmdGoodOutlined,
+} from '@mui/icons-material';
 import './style/style.scss';
 import Carousel from 'react-material-ui-carousel';
 import BookingDialog from '../../pages/customer/booking-dialog-component/BookingDialog';
 import useFormatCurrency from '../../hooks/useFormatCurrency';
 import { useAppSelector } from '../../services/store/store';
+import { IMotorbike } from '../../models/Motorbike/Motorbike';
 
 type motorbikeParams = {
     motorbikeId: number;
@@ -27,19 +30,20 @@ type motorbikeParams = {
 
 const MotorBikeDetailComponent = () => {
     const { motorbikeId } = useParams<motorbikeParams | any>();
-    const { account } = useAppSelector(state => state.account)
+    const { account } = useAppSelector((state) => state.account);
+    const { motorbikes } = useAppSelector((state) => state.motorbikes);
     const [isOpenDialog, setOpenDialog] = useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = useState(false);
 
-    const formatPrice = useFormatCurrency()
+    const formatPrice = useFormatCurrency();
 
     const handleOpenDialog = () => {
         setOpenDialog(true);
     };
     const handleCloseDialog = () => {
         setOpenDialog(false);
-        setIsOpenSubmitDialog(false)
+        setIsOpenSubmitDialog(false);
         setIsOpenCancelDialog(false);
     };
     const handleOpenSubmitDialog = () => {
@@ -64,7 +68,19 @@ const MotorBikeDetailComponent = () => {
             </Container>
         );
     }
-    const motorbike = motorbikes.find((mt: IMotorbike) => mt.id === Number(motorbikeId));
+
+    if (!motorbikes) {
+        return (
+            <Container>
+                <Paper elevation={3} sx={{ padding: 2 }}>
+                    Loading... Chờ chút
+                </Paper>
+            </Container>
+        );
+    }
+    const motorbike = motorbikes.find(
+        (mt: IMotorbike) => mt.motorId === Number(motorbikeId),
+    );
 
     if (!motorbike) {
         return (
@@ -78,49 +94,87 @@ const MotorBikeDetailComponent = () => {
 
     return (
         <Container>
-            <Box margin="20px 0 20px 0px" display="flex" justifyContent="space-between">
-                <Box flexGrow={6} flexDirection="column" maxWidth="50%" marginRight="40px">
+            <Box
+                margin="20px 0 20px 0px"
+                display="flex"
+                justifyContent="space-between"
+            >
+                <Box
+                    flexGrow={6}
+                    flexDirection="column"
+                    maxWidth="50%"
+                    marginRight="40px"
+                >
                     <Box flexGrow={4} marginBottom="30px">
                         <Carousel>
-                            {motorbike.images && motorbike.images.length > 0 ? (
-                                [motorbike.image, ...motorbike.images].map((image, index) => (
-                                    <div className="motorbike-detail-images" key={index}>
-                                        <img src={image} alt={`Hình ảnh thêm ${index + 1}`} />
-                                    </div>
-                                ))
-                            ) : motorbike.image ? (
+                            {motorbike.motorbikeImages && motorbike.motorbikeImages.length > 0 ? (
+                             motorbike.motorbikeImages.map(
+                                    (image) => (
+                                        <div
+                                            className="motorbike-detail-images"
+                                            key={image.imageId}
+                                        >
+                                            <img
+                                                src={image.imageLink}
+                                                alt={`Hình ảnh thêm ${
+                                                    image.imageId
+                                                }`}
+                                            />
+                                        </div>
+                                    ),
+                                )
+                            ) : motorbike.motorbikeImages ? (
                                 <div className="motorbike-detail-images">
-                                    <img src={motorbike.image} alt={`Hình ảnh`} />
+                                    <img
+                                        src={motorbike.motorbikeImages[0].imageLink}
+                                        alt={`Hình ảnh`}
+                                    />
                                 </div>
                             ) : null}
                         </Carousel>
 
                         <div className="information-detail-motorbike">
-                            <Typography variant="h5" fontWeight="bold" margin="10px 0 20px 0">
-                                {motorbike.name}
+                            <Typography
+                                variant="h5"
+                                fontWeight="bold"
+                                margin="10px 0 20px 0"
+                            >
+                                {motorbike.motorName}
                             </Typography>
                             <div className="icon-infomation">
                                 <MonetizationOnOutlined />
-                                <Typography variant="h6" textAlign="left" color="red" fontWeight="bold">
+                                <Typography
+                                    variant="h6"
+                                    textAlign="left"
+                                    color="red"
+                                    fontWeight="bold"
+                                >
                                     {formatPrice(motorbike.price)}
                                 </Typography>
                             </div>
                             <div className="icon-infomation">
                                 <StoreOutlined />
                                 <Link to="">
-                                    <Typography>{motorbike.storeName}</Typography>
+                                    <Typography>
+                                        {motorbike.store.storeName}
+                                    </Typography>
                                 </Link>
                             </div>
                             <div className="icon-infomation">
                                 <FmdGoodOutlined />
                                 <Typography variant="body1">
-                                    288/3 Man Thiện, Tăng Nhơn Phú A, Thành Phố Thủ Đức, Thành Phố HCM
+                                    288/3 Man Thiện, Tăng Nhơn Phú A, Thành Phố
+                                    Thủ Đức, Thành Phố HCM
                                 </Typography>
                             </div>
                         </div>
                     </Box>
                     <Box flexGrow={2}>
-                        <Typography variant="h6" fontWeight="bold" marginBottom="10px">
+                        <Typography
+                            variant="h6"
+                            fontWeight="bold"
+                            marginBottom="10px"
+                        >
                             Mô tả chi tiết:
                         </Typography>
                         <Typography>{motorbike.description}</Typography>
@@ -142,35 +196,67 @@ const MotorBikeDetailComponent = () => {
                             <Table>
                                 <TableBody>
                                     <TableRow>
-                                        <TableCell className="header-table">Hãng xe</TableCell>
-                                        <TableCell>{motorbike.brand}</TableCell>
+                                        <TableCell className="header-table">
+                                            Hãng xe
+                                        </TableCell>
+                                        <TableCell>
+                                            {motorbike.model.brand.brandName}
+                                        </TableCell>
                                     </TableRow>
                                     <TableRow>
-                                        <TableCell style={{ fontWeight: 'bold' }}>Năm đăng ký</TableCell>
-                                        <TableCell>{motorbike.yearRegister.toLocaleDateString()}</TableCell>
+                                        <TableCell
+                                            style={{ fontWeight: 'bold' }}
+                                        >
+                                            Năm đăng ký
+                                        </TableCell>
+                                        <TableCell>
+                                            {new Date(
+                                                motorbike.year,
+                                            ).toLocaleDateString()}
+                                        </TableCell>
+                                    </TableRow>
+                                    {/* <TableRow>
+                                        <TableCell className="header-table">
+                                            Tình trạng
+                                        </TableCell>
+                                        <TableCell>
+                                            {motorbike.status}
+                                        </TableCell>
+                                    </TableRow> */}
+                                    {/* <TableRow>
+                                        <TableCell className="header-table">
+                                            Dung tích
+                                        </TableCell>
+                                        <TableCell>
+                                            {motorbike.vehicleCapacity} cc
+                                        </TableCell>
+                                    </TableRow> */}
+                                    <TableRow>
+                                        <TableCell className="header-table">
+                                            Model
+                                        </TableCell>
+                                        <TableCell>
+                                            {motorbike.model.modelName}
+                                        </TableCell>
                                     </TableRow>
                                     <TableRow>
-                                        <TableCell className="header-table">Tình trạng</TableCell>
-                                        <TableCell>{motorbike.status}</TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell className="header-table">Dung tích</TableCell>
-                                        <TableCell>{motorbike.vehicleCapacity} cc</TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell className="header-table">Model</TableCell>
-                                        <TableCell>{motorbike.model}</TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell className="header-table">Số Km đã đi</TableCell>
+                                        <TableCell className="header-table">
+                                            Số Km đã đi
+                                        </TableCell>
                                         <TableCell>{motorbike.odo}</TableCell>
                                     </TableRow>
                                     <TableRow>
-                                        <TableCell className="header-table">Loại Xe</TableCell>
-                                        <TableCell>{motorbike.motorType}</TableCell>
+                                        <TableCell className="header-table">
+                                            Loại Xe
+                                        </TableCell>
+                                        <TableCell>
+                                            {motorbike.motorType.title}
+                                        </TableCell>
                                     </TableRow>
                                     <TableRow>
-                                        <TableCell className="header-table">Xuất Xứ</TableCell>
+                                        <TableCell className="header-table">
+                                            Xuất Xứ
+                                        </TableCell>
                                         <TableCell>Việt Nam</TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -178,8 +264,12 @@ const MotorBikeDetailComponent = () => {
                         </TableContainer>
                     </Box>
                     {account?.roleId === 4 && (
-
-                        <Box flexGrow={2} marginTop="10%" maxWidth="50%" marginLeft="26%">
+                        <Box
+                            flexGrow={2}
+                            marginTop="10%"
+                            maxWidth="50%"
+                            marginLeft="26%"
+                        >
                             <Button
                                 onClick={handleOpenDialog}
                                 variant="outlined"
