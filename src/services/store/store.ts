@@ -6,18 +6,20 @@ import storage from 'redux-persist/lib/storage';
 import accountSlice from '../features/accountSlice';
 import userslice from '../features/userSlice';
 import storeSlice from '../features/storeSlice';
+import motorbikeSlice from '../features/motorbikeSlice';
 
 // Định nghĩa cấu hình persist
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['account', 'users', 'store'],
+    whitelist: ['account', 'users', 'store', 'motorbikes'],
 };
 
 const rootReducer = combineReducers({
     account: accountSlice,
     users: userslice,
     store: storeSlice,
+    motorbikes: motorbikeSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
