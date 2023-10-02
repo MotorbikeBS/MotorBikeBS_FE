@@ -7,16 +7,24 @@ import BannerComponent from "../../../common-components/banner-component/BannerC
 
 const StoreList = () => {
   return (
-    <>
-      <CustomerMenuComponent />
-      <BannerComponent />
 
-      <StoreListComponent />
+    <Box display="flex" flexDirection="column" height="100vh" width="100%">
+      <Box flexGrow={1} zIndex={2}>
+        <CustomerMenuComponent />
+      </Box>
+
+      <Box flexGrow={1} zIndex={1}>
+        <BannerComponent />
+      </Box>
+
+      <Box flexGrow={9} >
+        <StoreListComponent />
+      </Box>
 
       <Box flexGrow={1} className="footer-style">
         <FooterComponent />
       </Box>
-    </>
+    </Box>
   );
 };
 
