@@ -239,17 +239,19 @@ const UserProfile = () => {
                                         disabled
                                     />
                                 )}
-                                <TextField
-                                    label="Ngày xác minh cửa hàng"
-                                    value={
-                                        user?.storeDesciptions[0].storeCreatedAt
-                                            ? user?.storeDesciptions[0].storeCreatedAt
-                                            : 'mm-dd-yyyy'
-                                    }
-                                    type="text"
-                                    variant="outlined"
-                                    disabled
-                                />
+                                {account?.roleId === 2 && (
+                                    <TextField
+                                        label="Ngày xác minh cửa hàng"
+                                        value={
+                                            user?.storeDesciptions[0].storeCreatedAt
+                                                ? user?.storeDesciptions[0].storeCreatedAt
+                                                : 'mm-dd-yyyy'
+                                        }
+                                        type="text"
+                                        variant="outlined"
+                                        disabled
+                                    />
+                                )}
                                 <TextField
                                     label="Ngày tạo tài khoản"
                                     value={
