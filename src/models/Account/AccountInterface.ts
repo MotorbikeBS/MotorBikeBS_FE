@@ -15,7 +15,6 @@ export interface IAccount {
 }
 
 export interface IRegisterStore {
-    userId: number;
     storeName: string;
     taxCode: string;
     storePhone: string;
