@@ -105,7 +105,7 @@ const UserProfile = () => {
                                 {account?.roleId === 2 && (
                                     <TextField
                                         label="Email Cửa hàng"
-                                        value={user?.storeDesciptions[0].storeEmail}
+                                        value={user?.storeDesciptions?.[0]?.storeEmail || ''}
                                         type="email"
                                         variant="outlined"
                                         disabled
@@ -121,7 +121,7 @@ const UserProfile = () => {
                                 {account?.roleId === 2 && (
                                     <TextField
                                         label="Tên cửa hàng"
-                                        value={user?.storeDesciptions[0].storeName}
+                                        value={user?.storeDesciptions?.[0]?.storeName || ''}
                                         type="text"
                                         variant="outlined"
                                         disabled
@@ -172,8 +172,9 @@ const UserProfile = () => {
                                     <TextField
                                         label="Điện thoại cửa hàng"
                                         value={
-                                            user?.storeDesciptions[0].storePhone
-                                                ? user?.storeDesciptions[0].storePhone
+
+                                            user?.storeDesciptions[0]?.storePhone || ''
+                                                ? user?.storeDesciptions[0]?.storePhone || ''
                                                 : 'Bạn chưa có số điện thoại.'
                                         }
                                         type="text"
@@ -196,8 +197,8 @@ const UserProfile = () => {
                                     <TextField
                                         label="Địa chỉ cửa hàng"
                                         value={
-                                            user?.storeDesciptions[0].address
-                                                ? user?.storeDesciptions[0].address
+                                            user?.storeDesciptions[0]?.address || ''
+                                                ? user?.storeDesciptions[0].address || ''
                                                 : 'Bạn chưa có địa chỉ.'
                                         }
                                         type="text"
@@ -230,8 +231,8 @@ const UserProfile = () => {
                                     <TextField
                                         label="Mã số thuế"
                                         value={
-                                            user?.storeDesciptions[0].taxCode
-                                                ? user?.storeDesciptions[0].taxCode
+                                            user?.storeDesciptions[0]?.taxCode || ''
+                                                ? user?.storeDesciptions[0].taxCode || ''
                                                 : 'Bạn chưa cập nhật mã số thuế.'
                                         }
                                         type="text"
@@ -243,8 +244,8 @@ const UserProfile = () => {
                                     <TextField
                                         label="Ngày xác minh cửa hàng"
                                         value={
-                                            user?.storeDesciptions[0].storeCreatedAt
-                                                ? user?.storeDesciptions[0].storeCreatedAt
+                                            user?.storeDesciptions[0]?.storeCreatedAt || ''
+                                                ? user?.storeDesciptions[0].storeCreatedAt || ''
                                                 : 'mm-dd-yyyy'
                                         }
                                         type="text"
