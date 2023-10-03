@@ -1,3 +1,5 @@
+import { IStore } from '../Store/Store';
+
 export interface IUser {
     userId: number;
     userName: string;
@@ -16,7 +18,9 @@ export interface IUser {
     status: string;
     userVerifyAt: Date;
     userUpdatedAt: Date;
+    storeDesciptions: IStore[];
 }
+
 export interface IEditUser {
     userId: number;
     userName: string;

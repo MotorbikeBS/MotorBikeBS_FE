@@ -29,16 +29,16 @@ const StoreModal: React.FC<StoreModalProps> = ({ isOpen, onClose, data }) => {
         return null;
     }
 
-    const columns = [
-        { id: 'storeId', label: 'ID cửa hàng' },
-        { id: 'storeName', label: 'Tên cửa hàng' },
-        { id: 'taxCode', label: 'Mã số thuế' },
-        { id: 'storePhone', label: 'Số điện thoại' },
-        { id: 'storeEmail', label: 'Email' },
-        { id: 'address', label: 'Địa chỉ cửa hàng' },
-        { id: 'storeCreatedAt', label: 'Ngày tạo' },
-        { id: 'status', label: 'Trạng thái' },
-    ];
+    // const columns = [
+    //     { id: 'storeId', label: 'ID cửa hàng' },
+    //     { id: 'storeName', label: 'Tên cửa hàng' },
+    //     { id: 'taxCode', label: 'Mã số thuế' },
+    //     { id: 'storePhone', label: 'Số điện thoại' },
+    //     { id: 'storeEmail', label: 'Email' },
+    //     { id: 'address', label: 'Địa chỉ cửa hàng' },
+    //     { id: 'storeCreatedAt', label: 'Ngày tạo' },
+    //     { id: 'status', label: 'Trạng thái' },
+    // ];
 
     const createData = (label: string, value: string | number | null) => ({ label, value });
 

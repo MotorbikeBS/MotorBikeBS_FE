@@ -73,7 +73,16 @@ const StoreListComponent = () => {
               </div>
 
               <div className="btn-style">
-                <Button variant="outlined">Xem cửa hàng</Button>
+                <Button
+                  variant="outlined"
+                  onClick={() =>
+                    handleNavigateDetail(
+                      store.storeId,
+                    )
+                  }
+                >
+                  Xem cửa hàng
+                </Button>
               </div>
             </Item>
 
