@@ -148,9 +148,19 @@ const EditUserProfile = () => {
                                 Hi
                             </Avatar>
                             <div>
-                                <Typography className="edit-profile-name">
-                                    Minh Tri
-                                </Typography>
+                                {account?.roleId === 2 ? (
+                                    <>
+                                        <Typography className="edit-profile-name">
+                                            {user?.storeDesciptions?.[0]?.storeName || user?.userName}
+                                        </Typography>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Typography className="edit-profile-name">
+                                            {user?.userName}
+                                        </Typography>
+                                    </>
+                                )}
                             </div>
                         </div>
                         <hr />

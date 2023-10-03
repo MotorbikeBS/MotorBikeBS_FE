@@ -29,7 +29,7 @@ type motorbikeParams = {
 };
 
 const MotorBikeDetailComponent = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const { motorbikeId } = useParams<motorbikeParams | any>();
     const { account } = useAppSelector((state) => state.account);
     const { motorbikes } = useAppSelector((state) => state.motorbikes);
@@ -39,9 +39,9 @@ const MotorBikeDetailComponent = () => {
 
     const formatPrice = useFormatCurrency();
 
-    const handleNavigatedDetailStoreId = (storeId: number) =>{
-        navigate(`/store/${storeId}`)
-    }
+    const handleNavigatedDetailStoreId = (storeId: number) => {
+        navigate(`/store/${storeId}`);
+    };
 
     const handleOpenDialog = () => {
         setOpenDialog(true);
@@ -84,7 +84,7 @@ const MotorBikeDetailComponent = () => {
         );
     }
     const motorbike = motorbikes.find(
-        (mt: IMotorbike ) => mt.motorId === Number(motorbikeId),
+        (mt: IMotorbike) => mt.motorId === Number(motorbikeId),
     );
 
     if (!motorbike) {
@@ -112,26 +112,26 @@ const MotorBikeDetailComponent = () => {
                 >
                     <Box flexGrow={4} marginBottom="30px">
                         <Carousel>
-                            {motorbike.motorbikeImages && motorbike.motorbikeImages.length > 0 ? (
-                             motorbike.motorbikeImages.map(
-                                    (image) => (
-                                        <div
-                                            className="motorbike-detail-images"
-                                            key={image.imageId}
-                                        >
-                                            <img
-                                                src={image.imageLink}
-                                                alt={`Hình ảnh thêm ${
-                                                    image.imageId
-                                                }`}
-                                            />
-                                        </div>
-                                    ),
-                                )
+                            {motorbike.motorbikeImages &&
+                            motorbike.motorbikeImages.length > 0 ? (
+                                motorbike.motorbikeImages.map((image) => (
+                                    <div
+                                        className="motorbike-detail-images"
+                                        key={image.imageId}
+                                    >
+                                        <img
+                                            src={image.imageLink}
+                                            alt={`Hình ảnh thêm ${image.imageId}`}
+                                        />
+                                    </div>
+                                ))
                             ) : motorbike.motorbikeImages ? (
                                 <div className="motorbike-detail-images">
                                     <img
-                                        src={motorbike.motorbikeImages[0].imageLink}
+                                        src={
+                                            motorbike.motorbikeImages[0]
+                                                .imageLink
+                                        }
                                         alt={`Hình ảnh`}
                                     />
                                 </div>
@@ -159,7 +159,14 @@ const MotorBikeDetailComponent = () => {
                             </div>
                             <div className="icon-infomation">
                                 <StoreOutlined />
-                                <div onClick={()=> handleNavigatedDetailStoreId(motorbike.storeId)}>
+                                <div
+                                    className='store-detail-navigate'
+                                    onClick={() =>
+                                        handleNavigatedDetailStoreId(
+                                            motorbike.storeId,
+                                        )
+                                    }
+                                >
                                     <Typography>
                                         {motorbike.store.storeName}
                                     </Typography>
@@ -168,7 +175,7 @@ const MotorBikeDetailComponent = () => {
                             <div className="icon-infomation">
                                 <FmdGoodOutlined />
                                 <Typography variant="body1">
-                                {motorbike.store.address}
+                                    {motorbike.store.address}
                                 </Typography>
                             </div>
                         </div>

@@ -24,6 +24,7 @@ import ChangePassword from '../pages/user-profile/ChangePassword';
 import { useAppSelector } from '../services/store/store';
 import ListUser from '../pages/admin/list-user/ListUser';
 import StoreListAdmin from '../pages/admin/store-list/StoreList';
+import MotorOwnerExchange from '../pages/store/motor-owner-exchange/MotorOwnerExchange';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -81,10 +82,11 @@ const AppRoutes = () => {
                     {/* Store Owner */}
                     <Route
                         path="/"
-                        element={<Navigate to="/store-home" replace />}
+                        element={<Navigate to="/dashboard" replace />}
                     />
 
-                    <Route path="/store-home" element={<StoreHome />} />
+                    <Route path="/dashboard" element={<StoreHome />} />
+                    <Route path="/motorbike-exchange" element={<MotorOwnerExchange />} />
 
                     <Route path="*" element={<PageNotFound />} />
                 </>

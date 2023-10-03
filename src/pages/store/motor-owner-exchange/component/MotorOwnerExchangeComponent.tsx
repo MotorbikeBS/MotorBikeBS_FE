@@ -1,20 +1,18 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router';
-import { Box, Button, Container, Paper, Typography } from '@mui/material';
-import Grid from '@mui/material/Grid';
+import React, { useEffect } from 'react'
+import BookingDialog from '../../../customer/booking-dialog-component/BookingDialog';
+import { Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
+import { Item } from '../style/style-root';
 import { FavoriteBorderOutlined } from '@mui/icons-material';
-import { Item } from './style/style-root';
-import './style/style.scss';
-import BookingDialog from '../booking-dialog-component/BookingDialog';
-import useFormatCurrency from '../../../hooks/useFormatCurrency';
-import { useAppDispatch, useAppSelector } from '../../../services/store/store';
-import { getAllOnExchange } from '../../../services/features/motorbikeSlice';
+import useFormatCurrency from '../../../../hooks/useFormatCurrency';
+import { useNavigate } from 'react-router';
+import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
+import { getAllOnStoreExchange } from '../../../../services/features/motorbikeSlice';
 
-const MotorbikeComponent = () => {
+const MotorOwnerExchangeComponent = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { account } = useAppSelector((state) => state.account);
-    const { motorbikes } = useAppSelector((state) => state.motorbikes);
+    const { motorbikesByOwner } = useAppSelector((state) => state.motorbikes);
 
     const [isOpenDialog, setOpenDialog] = React.useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
@@ -27,7 +25,7 @@ const MotorbikeComponent = () => {
     };
 
     useEffect(() => {
-        dispatch(getAllOnExchange());
+        dispatch(getAllOnStoreExchange());
     }, [dispatch]);
 
     const handleOpenDialog = () => {
@@ -59,7 +57,7 @@ const MotorbikeComponent = () => {
                 margin: '0 48px 0 48px',
             }}
         >
-            {motorbikes && motorbikes.length === 0 ? (
+            {motorbikesByOwner && motorbikesByOwner.length === 0 ? (
                 <>
                     <Container>
                         <Paper elevation={3} sx={{ padding: 2 }}>
@@ -70,8 +68,8 @@ const MotorbikeComponent = () => {
             ) : (
                 <>
                     <Grid container spacing={2} className="product-grid">
-                        {motorbikes &&
-                            motorbikes.map((motor) => (
+                        {motorbikesByOwner &&
+                            motorbikesByOwner.map((motor) => (
                                 <Grid
                                     item
                                     xs={12}
@@ -89,15 +87,27 @@ const MotorbikeComponent = () => {
                                                 )
                                             }
                                         >
-                                            {motor.motorbikeImages && (
-                                                <img
-                                                    src={
-                                                        motor.motorbikeImages[0]
-                                                            ?.imageLink || ''
-                                                    }
-                                                    alt="Đây là ảnh sản phẩm"
-                                                />
-                                            )}
+                                             {motor.motorbikeImages &&
+                                                    motor.motorbikeImages
+                                                        .length === 0 ? (
+                                                        <>
+                                                            <img
+                                                                src="https://png.pngtree.com/element_origin_min_pic/16/10/21/277448a877a33e8d0efc778025291c86.jpg"
+                                                                alt="Đây là ảnh sản phẩm"
+                                                            />
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <img
+                                                                src={
+                                                                    motor
+                                                                        .motorbikeImages[0]
+                                                                        .imageLink
+                                                                }
+                                                                alt="Đây là ảnh sản phẩm"
+                                                            />
+                                                        </>
+                                                    )}
                                         </div>
                                         <div className="product-information">
                                             <Typography variant="h6">
@@ -113,12 +123,12 @@ const MotorbikeComponent = () => {
                                             </Typography>
                                             <div className="product-info-content">
                                                 <Typography>
-                                                    <strong>Cửa Hàng:</strong> {' '}
-                                                    {motor.store?.storeName}
+                                                    <strong>Người dùng:</strong>{' '}
+                                                    {motor.owner.userName}
                                                 </Typography>
                                                 <Typography>
                                                     <strong>Loại Xe: </strong>
-                                                    {motor.motorType?.title}
+                                                    {motor.motorType.title}
                                                 </Typography>
                                                 <Typography>
                                                     <strong>Odo: </strong>
@@ -174,6 +184,6 @@ const MotorbikeComponent = () => {
             />
         </Box>
     );
-};
+}
 
-export default MotorbikeComponent;
+export default MotorOwnerExchangeComponent
