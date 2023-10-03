@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
     Box,
     Typography,
@@ -22,13 +22,14 @@ import Carousel from 'react-material-ui-carousel';
 import BookingDialog from '../../pages/customer/booking-dialog-component/BookingDialog';
 import useFormatCurrency from '../../hooks/useFormatCurrency';
 import { useAppSelector } from '../../services/store/store';
-import { IMotorbike } from '../../models/Motorbike/Motorbike';
+import { IMotorbike, IMotorbikeDetail } from '../../models/Motorbike/Motorbike';
 
 type motorbikeParams = {
     motorbikeId: number;
 };
 
 const MotorBikeDetailComponent = () => {
+    const navigate = useNavigate()
     const { motorbikeId } = useParams<motorbikeParams | any>();
     const { account } = useAppSelector((state) => state.account);
     const { motorbikes } = useAppSelector((state) => state.motorbikes);
@@ -37,6 +38,10 @@ const MotorBikeDetailComponent = () => {
     const [isOpenCancelDialog, setIsOpenCancelDialog] = useState(false);
 
     const formatPrice = useFormatCurrency();
+
+    const handleNavigatedDetailStoreId = (storeId: number) =>{
+        navigate(`/store/${storeId}`)
+    }
 
     const handleOpenDialog = () => {
         setOpenDialog(true);
@@ -79,7 +84,7 @@ const MotorBikeDetailComponent = () => {
         );
     }
     const motorbike = motorbikes.find(
-        (mt: IMotorbike) => mt.motorId === Number(motorbikeId),
+        (mt: IMotorbike ) => mt.motorId === Number(motorbikeId),
     );
 
     if (!motorbike) {
@@ -154,17 +159,16 @@ const MotorBikeDetailComponent = () => {
                             </div>
                             <div className="icon-infomation">
                                 <StoreOutlined />
-                                <Link to="">
+                                <div onClick={()=> handleNavigatedDetailStoreId(motorbike.storeId)}>
                                     <Typography>
                                         {motorbike.store.storeName}
                                     </Typography>
-                                </Link>
+                                </div>
                             </div>
                             <div className="icon-infomation">
                                 <FmdGoodOutlined />
                                 <Typography variant="body1">
-                                    288/3 Man Thiện, Tăng Nhơn Phú A, Thành Phố
-                                    Thủ Đức, Thành Phố HCM
+                                {motorbike.store.address}
                                 </Typography>
                             </div>
                         </div>
