@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, } from 'react';
 import { useForm } from 'react-hook-form';
 import {
     Box,
@@ -10,24 +10,22 @@ import {
 } from '@mui/material';
 import CustomerMenuComponent from '../customer-menu-component/CustomerMenuComponent';
 import FooterComponent from '../../../common-components/footer-component/FooterComponent';
-
-import './style/style.scss';
 import { useAppDispatch, useAppSelector } from '../../../services/store/store';
 import { registerStore, setError } from '../../../services/features/storeSlice';
 
 interface ISignupStore {
-    userId: number;
     storeName: string;
     taxCode: string;
     storePhone: string;
     storeEmail: string;
     address: string;
-    file: string
+    file: FileList;
 }
 
 const SignUpStoreOwner = () => {
-    const dispatch = useAppDispatch()
-    const { error } = useAppSelector((state) => state.store)
+
+    const dispatch = useAppDispatch();
+    const { error } = useAppSelector((state) => state.store);
     const errorData: any = error;
 
     const form = useForm<ISignupStore>({
@@ -37,15 +35,25 @@ const SignUpStoreOwner = () => {
             storePhone: '',
             storeEmail: '',
             address: '',
-            file: ''
+            file: undefined,
         },
     });
     const { register, formState, handleSubmit } = form;
     const { errors } = formState;
 
     const onSubmit = (data: ISignupStore) => {
+        const formData = new FormData();
+        formData.append('storeName', data.storeName);
+        formData.append('taxCode', data.taxCode);
+        formData.append('storePhone', data.storePhone);
+        formData.append('storeEmail', data.storeEmail);
+        formData.append('address', data.address);
+        if (data.file && data.file.length > 0) {
+            formData.append('file', data.file[0]);
+        }
+
         console.log(data);
-        dispatch(registerStore(data))
+        dispatch(registerStore(formData));
     };
 
     useEffect(() => {
@@ -68,12 +76,12 @@ const SignUpStoreOwner = () => {
             <Box flexGrow={8} display="flex">
                 <Container className="container-page">
                     <div className="signup-storeOwner-header">
-
                         <Typography
                             fontSize={30}
                             fontWeight={700}
                             color="primary"
                             className="text-header"
+                            textAlign='center'
                         >
                             Đăng ký trở thành chủ cửa hàng
                         </Typography>
@@ -82,7 +90,13 @@ const SignUpStoreOwner = () => {
                         {errorData?.error && (
                             <div className="error-message">
                                 {Object.keys(errorData?.error).map((key) => (
-                                    <Typography key={key} color='red' marginBottom='20px' alignContent='center'>
+                                    <Typography
+                                        key={key}
+                                        color="red"
+                                        marginBottom="20px"
+                                        alignContent="center"
+                                        textAlign='center'
+                                    >
                                         {errorData.error[key]}
                                     </Typography>
                                 ))}
@@ -90,8 +104,11 @@ const SignUpStoreOwner = () => {
                         )}
                     </div>
                     <div className="form-signup-storeOwner">
-
-                        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                        <form
+                            onSubmit={handleSubmit(onSubmit)}
+                            noValidate
+                            encType="multipart/form-data"
+                        >
                             <Stack
                                 spacing={2}
                                 sx={{
@@ -152,18 +169,12 @@ const SignUpStoreOwner = () => {
                                     variant="outlined"
                                 />
                                 <input
-                                    id='file'
+                                    id="file"
                                     type="file"
                                     {...register('file', {
                                         required: 'Bạn chưa chọn ảnh cho cửa hàng',
                                     })}
                                 />
-                                {errors.file && (
-                                    <Typography color='error' marginBottom='20px' alignContent='center'>
-                                        {errors.file.message}
-                                    </Typography>
-                                )}
-
                                 <Button
                                     type="submit"
                                     variant="contained"
@@ -178,12 +189,15 @@ const SignUpStoreOwner = () => {
                     </div>
 
                     <div className="text-note">
-
-                        <Typography color="red">* Lưu ý:</Typography>
+                        <Typography color="red"
+                            marginLeft='35%'>
+                            * Lưu ý:
+                        </Typography>
                         <Typography
-                            maxWidth="60%"
+                            maxWidth="30%"
                             fontSize="12px"
-                            minWidth="60%"
+                            minWidth="30%"
+                            marginLeft='35%'
                         >
                             Đây là biểu mẫu đăng ký để trở thành chủ cửa hàng,
                             khi đã trở thành chủ cửa hàng bạn sẽ không thực hiện

@@ -34,6 +34,7 @@ export const registerStore = createAsyncThunk<IRegisterStore, Object>(
             const response = await axios.post(registerStoreEndPoint, data, {
                 headers: {
                     Authorization: `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data',
                 },
             });
             toast.success(
@@ -41,6 +42,7 @@ export const registerStore = createAsyncThunk<IRegisterStore, Object>(
             );
             return response.data;
         } catch (error: any) {
+            console.log(error);
             toast.error('Có lỗi xảy ra, vui lòng thử lại sau !');
             return thunkAPI.rejectWithValue({
                 error: error.response?.data?.errorMessages,
