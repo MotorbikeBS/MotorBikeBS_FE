@@ -22,6 +22,7 @@ interface ISignupStore {
     storePhone: string;
     storeEmail: string;
     address: string;
+    file: string
 }
 
 const SignUpStoreOwner = () => {
@@ -35,8 +36,8 @@ const SignUpStoreOwner = () => {
             taxCode: '',
             storePhone: '',
             storeEmail: '',
-            address: ''
-
+            address: '',
+            file: ''
         },
     });
     const { register, formState, handleSubmit } = form;
@@ -149,7 +150,20 @@ const SignUpStoreOwner = () => {
                                     error={!!errors.address}
                                     helperText={errors.address?.message}
                                     variant="outlined"
-                                />{' '}
+                                />
+                                <input
+                                    id='file'
+                                    type="file"
+                                    {...register('file', {
+                                        required: 'Bạn chưa chọn ảnh cho cửa hàng',
+                                    })}
+                                />
+                                {errors.file && (
+                                    <Typography color='error' marginBottom='20px' alignContent='center'>
+                                        {errors.file.message}
+                                    </Typography>
+                                )}
+
                                 <Button
                                     type="submit"
                                     variant="contained"

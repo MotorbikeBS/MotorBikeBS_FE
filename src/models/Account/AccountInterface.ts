@@ -21,4 +21,5 @@ export interface IRegisterStore {
     storePhone: string;
     storeEmail: string;
     address: string;
+    file: File;
 }
