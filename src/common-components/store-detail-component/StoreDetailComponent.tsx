@@ -1,16 +1,17 @@
 import React from 'react';
 import { Avatar, Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
 import './style/style.scss';
-import MotorbikeComponent from '../../pages/customer/motorbike-component/MotorbikeComponent';
 import { useAppSelector } from '../../services/store/store';
 import { useParams } from 'react-router-dom';
 import { IStore } from '../../models/Store/Store';
+import MotorbikeByStoreIdComponent from './MotorBikeByStoreIDComponent';
 
 type storeParams = {
     storeId: number
 }
+
 const StoreDetailComponent = () => {
-    const { storeId } = useParams<storeParams | any>();
+    const { storeId } = useParams<storeParams | any >();
     const { account } = useAppSelector(state => state.account);
     const { stores } = useAppSelector((state) => state.store)
 
@@ -108,7 +109,7 @@ const StoreDetailComponent = () => {
             <hr />
 
             <Box>
-                <MotorbikeComponent />
+                <MotorbikeByStoreIdComponent />
             </Box>
         </Box>
     );

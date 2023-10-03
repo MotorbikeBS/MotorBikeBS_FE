@@ -25,5 +25,11 @@ export const getAllStoreEndPoint = `${BASE_URL}/api/storedescription`;
 export const getStoreByIDEndPoint = `${BASE_URL}/api/storedescription`;
 
 //motorbike endpoint
+export const getAllWithSpecificStatusEndPoint = `${BASE_URL}/api/motorbike/getallwithspecificstatus`;
 export const getAllOnExChangeEndPoint = `${BASE_URL}/api/motorbike/getallonexchange`;
 export const getAllOnStoreExChangeEndPoint = `${BASE_URL}/api/motorbike/getallonstoreexchange`;
+export const getMotorByStoreIdEndPoint = `${BASE_URL}/api/motorbike/getmotorbystoreid`;
+export const getMotorByOwnerIdEndPoint = `${BASE_URL}/api/motorbike/getmotorbyowner`;
+export const getMotorByIdEndPoint = `${BASE_URL}/api/motorbike`;
+export const updateMotorByIdEndPoint = `${BASE_URL}/api/motorbike/updatemotor`;
+export const postMotorRegisterEndPoint = `${BASE_URL}/api/motorbike/motorregister`;
