@@ -28,8 +28,12 @@ import { logoutUser } from '../../../services/features/accountSlice';
 
 const pages = [
     {
-        to: '/store-dashboard',
+        to: '/dashboard',
         name: 'Thống kê',
+    },
+    {
+        to: '/motorbike-exchange',
+        name: 'Sàn giao dịch',
     },
     {
         to: '/motorbike-list',
@@ -103,7 +107,7 @@ const StoreMenuComponent = () => {
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
                         <Link
-                            to="/store-dashboard"
+                            to="/dashboard"
                             style={{ textDecoration: 'none' }}
                         >
                             <Typography
@@ -200,7 +204,7 @@ const StoreMenuComponent = () => {
                         </Box>
 
                         <Link
-                            to="/store-home"
+                            to="/dashboard"
                             style={{
                                 textDecoration: 'none',
                                 flexGrow: 1,

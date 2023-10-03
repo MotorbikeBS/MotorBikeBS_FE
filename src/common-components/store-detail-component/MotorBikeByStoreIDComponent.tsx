@@ -3,10 +3,8 @@ import { Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Item } from '../../pages/customer/store-list/style/style-root';
 import { FavoriteBorderOutlined } from '@mui/icons-material';
-import items from '../../pages/customer/data/data';
 import { useAppDispatch, useAppSelector } from '../../services/store/store';
 import { clearMotorByStoreId, getMotorByStoreId } from '../../services/features/motorbikeSlice';
-import { IMotorbike } from '../../models/Motorbike/Motorbike';
 import useFormatCurrency from '../../hooks/useFormatCurrency';
 import BookingDialog from '../../pages/customer/booking-dialog-component/BookingDialog';
 

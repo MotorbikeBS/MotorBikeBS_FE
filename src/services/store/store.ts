@@ -7,19 +7,21 @@ import accountSlice from '../features/accountSlice';
 import userslice from '../features/userSlice';
 import storeSlice from '../features/storeSlice';
 import motorbikeSlice from '../features/motorbikeSlice';
+import motorFiledsSlice from '../features/motorFields';
 
 // Định nghĩa cấu hình persist
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['account', 'users', 'store', 'motorbikes'],
+    whitelist: ['account', 'users', 'store', 'motorbikes', 'motorFields'],
 };
 
 const rootReducer = combineReducers({
     account: accountSlice,
     users: userslice,
     store: storeSlice,
-    motorbikes: motorbikeSlice
+    motorbikes: motorbikeSlice,
+    motorFields: motorFiledsSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

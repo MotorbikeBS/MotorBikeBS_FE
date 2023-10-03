@@ -12,6 +12,7 @@ import {
 interface MotorbikeState {
     loading: boolean;
     motorbikes: IMotorbike[] | null;
+    motorbikesByOwner: IMotorbike[] | null;
     motorbike: IMotorbike | null;
     motorbikeByStoreId: IMotorbikeDetail[] | null;
     error: string[] | unknown;
@@ -20,6 +21,7 @@ interface MotorbikeState {
 const initialState: MotorbikeState = {
     loading: false,
     motorbikes: null,
+    motorbikesByOwner: null,
     motorbike: null,
     motorbikeByStoreId: null,
     error: null,
@@ -157,7 +159,7 @@ export const motorbikeSlice = createSlice({
         });
         builder.addCase(getAllOnStoreExchange.fulfilled, (state, action) => {
             state.loading = false;
-            state.motorbikes = action.payload;
+            state.motorbikesByOwner = action.payload;
             state.error = null;
         });
         builder.addCase(getAllOnStoreExchange.rejected, (state, action) => {
