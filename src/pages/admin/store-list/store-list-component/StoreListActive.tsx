@@ -23,7 +23,7 @@ const StoreListActive = () => {
 
     const rows = useMemo(() => {
         return VerifiedStores.map((store: IStore) => ({
-            id: store.storeId,
+            id: store.userId,
             storeId: store.storeId,
             storeName: store.storeName,
             taxCode: store.taxCode,

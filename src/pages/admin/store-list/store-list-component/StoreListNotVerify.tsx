@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
 import { getAllStore } from '../../../../services/features/storeSlice';
 import { IStore } from '../../../../models/Store/Store';
-import { Container, Typography, Paper, Button } from '@mui/material';
+import { Container, Typography, Paper } from '@mui/material';
 import { DataGrid, GridRowParams } from '@mui/x-data-grid';
 import StoreModal from '../ModalComponent/StoreModalComponent';
 import { columns } from './table/TableStoreList';
@@ -25,7 +25,7 @@ const StoreListNotVerify = () => {
 
     const rows = useMemo(() => {
         return notVerifiedStores.map((store: IStore) => ({
-            id: store.storeId,
+            id: store.userId,
             storeId: store.storeId,
             storeName: store.storeName,
             taxCode: store.taxCode,

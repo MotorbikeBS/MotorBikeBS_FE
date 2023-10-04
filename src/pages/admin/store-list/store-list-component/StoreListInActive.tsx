@@ -23,7 +23,7 @@ const StoreListInActive = () => {
 
     const rows = useMemo(() => {
         return unActiveStores.map((store: IStore) => ({
-            id: store.storeId,
+            id: store.userId,
             storeId: store.storeId,
             storeName: store.storeName,
             taxCode: store.taxCode,
