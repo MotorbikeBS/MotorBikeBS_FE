@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button, Grid, Stack, TextField, Typography, InputAdornment, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Background from '../../common-components/background-component/BackgroundComponent';
@@ -17,7 +17,7 @@ type FormValues = {
 };
 
 const Register = () => {
-
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const { error } = useAppSelector((state) => state.account);
     const errorData: any = error;
@@ -45,6 +45,13 @@ const Register = () => {
 
     const onSubmit = (data: FormValues) => {
         dispatch(registerUser(data))
+            .unwrap()
+            .then(() => {
+                navigate('/login');
+            })
+            .catch((error) => {
+                console.error('Registration failed:', error);
+            });
     };
 
     useEffect(() => {
