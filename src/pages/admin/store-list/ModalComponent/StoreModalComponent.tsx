@@ -7,14 +7,14 @@ import {
     TableBody,
     TableCell,
     TableContainer,
-    TableHead,
     TableRow,
     Paper,
+    Grid,
 } from '@mui/material';
 import { IStore } from '../../../../models/Store/Store';
-import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
-import { verifyStore } from '../../../../services/features/storeSlice';
-
+import { useAppDispatch } from '../../../../services/store/store';
+import { inActiveStore, reActiveStore, refuseStore, verifyStore } from '../../../../services/features/storeSlice';
+import './style/style.scss'
 interface StoreModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -23,22 +23,11 @@ interface StoreModalProps {
 
 const StoreModal: React.FC<StoreModalProps> = ({ isOpen, onClose, data }) => {
     const dispatch = useAppDispatch();
-    const { store } = useAppSelector((state) => state.store);
 
     if (!data) {
         return null;
     }
 
-    // const columns = [
-    //     { id: 'storeId', label: 'ID cửa hàng' },
-    //     { id: 'storeName', label: 'Tên cửa hàng' },
-    //     { id: 'taxCode', label: 'Mã số thuế' },
-    //     { id: 'storePhone', label: 'Số điện thoại' },
-    //     { id: 'storeEmail', label: 'Email' },
-    //     { id: 'address', label: 'Địa chỉ cửa hàng' },
-    //     { id: 'storeCreatedAt', label: 'Ngày tạo' },
-    //     { id: 'status', label: 'Trạng thái' },
-    // ];
 
     const createData = (label: string, value: string | number | null) => ({ label, value });
 
@@ -56,27 +45,35 @@ const StoreModal: React.FC<StoreModalProps> = ({ isOpen, onClose, data }) => {
     const handleActive = () => {
         if (data && data.storeId) {
             dispatch(verifyStore({ storeId: data.storeId }));
+
         }
+        onClose();
     };
+    const handleRefuse = () => {
+        if (data && data.storeId) {
+            dispatch(refuseStore({ storeId: data.storeId }));
+        }
+        onClose();
+    };
+
+    const handleInActive = () => {
+        if (data && data.storeId) {
+            dispatch(inActiveStore({ storeId: data.storeId }))
+        }
+        onClose();
+    }
+    const handleReActive = () => {
+        if (data && data.storeId) {
+            dispatch(reActiveStore({ storeId: data.storeId }))
+        }
+        onClose()
+    }
 
     return (
         <Modal open={isOpen} onClose={onClose}>
-            <div
-                style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    padding: '20px',
-                    backgroundColor: 'white',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}
-            >
-                <Typography variant="h4" gutterBottom>
-                    Thông tin cửa hàng
+            <div className='modal-container'>
+                <Typography variant="h4" gutterBottom fontWeight='700'>
+                    Thông tin cửa hàng {data.storeName}
                 </Typography>
                 <TableContainer component={Paper}>
                     <Table>
@@ -93,33 +90,63 @@ const StoreModal: React.FC<StoreModalProps> = ({ isOpen, onClose, data }) => {
                     </Table>
                 </TableContainer>
                 {data.status === 'NOT VERIFY' && (
-                    <Button
-                        variant="contained"
-                        color="success"
-                        style={{
-                            position: 'absolute',
-                            bottom: '16%',
-                            right: '20px',
-                        }}
-                        onClick={handleActive}
-                    >
-                        ACTIVE
-                    </Button>
+                    <Grid className='btn-status'>
+                        <div>
+                            <Button
+                                variant="contained"
+                                color="success"
+                                onClick={handleActive}
+                            >
+                                ACTIVE
+                            </Button>
+                        </div>
+                        <div>
+                            <Button
+                                variant="contained"
+                                color="error"
+                                onClick={handleRefuse}
+                            >
+                                REFUSE
+                            </Button>
+                        </div>
+                    </Grid>
                 )}
 
                 {data.status === 'ACTIVE' && (
-                    <Button
-                        variant="contained"
-                        color="error"
-                        style={{
-                            position: 'absolute',
-                            bottom: '16%',
-                            right: '20px',
-                        }}
-                    // onClick={handleActive}
-                    >
-                        UN-ACTIVE
-                    </Button>
+                    <Grid>
+                        <div>
+                            <Button
+                                variant="contained"
+                                color="error"
+                                style={{
+                                    position: 'absolute',
+                                    bottom: '16%',
+                                    right: '24px',
+                                }}
+                                onClick={handleInActive}
+                            >
+                                IN-ACTIVE
+                            </Button>
+                        </div>
+                    </Grid>
+                )}
+                {data.status === 'INACTIVE' && (
+                    <Grid>
+                        <div>
+                            <Button
+                                variant="contained"
+                                color="warning"
+                                style={{
+                                    position: 'absolute',
+                                    bottom: '16%',
+                                    right: '24px',
+                                }}
+                                onClick={handleReActive}
+                            >
+                                RE-ACTIVE
+                            </Button>
+                        </div>
+                    </Grid>
                 )}
                 <div>
                     <Button

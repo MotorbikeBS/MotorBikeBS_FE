@@ -21,6 +21,9 @@ export const changePasswordEndPoint = `${BASE_URL}/api/user/changepassword;`;
 //store endpoint
 export const registerStoreEndPoint = `${BASE_URL}/api/storedescription/store-register`;
 export const verifyStoreEndPoint = `${BASE_URL}/api/storedescription/verifystore`;
+export const refuseStoreEndPoint = `${BASE_URL}/api/storedescription/refusestore`;
+export const inActiveStoreEndPoint = `${BASE_URL}/api/storedescription/inactivestore`;
+export const reActiveStoreEndPoint = `${BASE_URL}/api/storedescription/reactivestore`;
 export const getAllStoreEndPoint = `${BASE_URL}/api/storedescription`;
 export const getStoreByIDEndPoint = `${BASE_URL}/api/storedescription`;
 
