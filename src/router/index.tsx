@@ -25,6 +25,8 @@ import { useAppSelector } from '../services/store/store';
 import ListUser from '../pages/admin/list-user/ListUser';
 import StoreListAdmin from '../pages/admin/store-list/StoreList';
 import MotorOwnerExchange from '../pages/store/motor-owner-exchange/MotorOwnerExchange';
+import OwnerMotorDetail from '../pages/store/motor-owner-exchange/OwnerMotorDetail';
+import OwnerMotorList from '../pages/owner/owner-motor-list/OwnerMotorList';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -87,7 +89,10 @@ const AppRoutes = () => {
 
                     <Route path="/dashboard" element={<StoreHome />} />
                     <Route path="/motorbike-exchange" element={<MotorOwnerExchange />} />
-
+                    <Route
+                        path="/motorbike/:motorbikeId"
+                        element={<OwnerMotorDetail />}
+                    />
                     <Route path="*" element={<PageNotFound />} />
                 </>
             )}
@@ -105,6 +110,10 @@ const AppRoutes = () => {
                     <Route
                         path="/motorbike/:motorbikeId"
                         element={<MotorBikeDetail />}
+                    />
+                     <Route
+                        path="/owner/motors"
+                        element={<OwnerMotorList />}
                     />
                     {/* Store list */}
                 </>
