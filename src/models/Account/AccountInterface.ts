@@ -22,3 +22,8 @@ export interface IRegisterStore {
     address: string;
     file: File;
 }
+export interface IRegisterOwner {
+    phone: string;
+    idCard: string;
+    address: string;
+}

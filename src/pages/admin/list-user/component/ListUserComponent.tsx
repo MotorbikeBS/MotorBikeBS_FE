@@ -40,7 +40,7 @@ export default function DataTable() {
                             paginationModel: { page: 0, pageSize: 5 },
                         },
                     }}
-                    pageSizeOptions={[5, 10, 100, 200]}
+                    pageSizeOptions={[5, 10, 100]}
                 />
             </div>
         </Container>
