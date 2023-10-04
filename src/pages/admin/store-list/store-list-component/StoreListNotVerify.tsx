@@ -51,7 +51,7 @@ const StoreListNotVerify = () => {
                 <DataGrid
                     rows={rows}
                     columns={columns}
-                    pageSizeOptions={[5, 10, 100, 200]}
+                    pageSizeOptions={[5, 10, 100]}
                     disableRowSelectionOnClick
                     onRowDoubleClick={handleRowDoubleClick}
                 />
