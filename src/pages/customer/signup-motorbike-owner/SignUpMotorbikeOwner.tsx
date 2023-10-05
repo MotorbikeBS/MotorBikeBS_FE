@@ -1,11 +1,13 @@
 import { Box, Button, Container, Stack, TextField, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CustomerMenuComponent from '../customer-menu-component/CustomerMenuComponent'
 import FooterComponent from '../../../common-components/footer-component/FooterComponent'
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../services/store/store';
 import { clearError, ownerRegister } from '../../../services/features/ownerSlice';
 import { logoutUser, setError } from '../../../services/features/accountSlice';
+import { getUserByID } from '../../../services/features/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 interface IRegisterOwner {
@@ -15,41 +17,62 @@ interface IRegisterOwner {
 }
 
 const SignUpMotorbikeOwner = () => {
-    const dispatch = useAppDispatch()
+    const [phone, setPhone] = useState<string>('');
+    const [address, setAddress] = useState<string>('');
+    const [idCard, setIdCard] = useState<string>('');
 
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate()
 
+    const { account } = useAppSelector((state) => state.account);
+    const { user } = useAppSelector((state) => state.users);
     const { error } = useAppSelector((state) => state.owner);
-
     const errorData: any = error;
+
+    useEffect(() => {
+        if (account?.userId) {
+            dispatch(getUserByID({ id: account.userId }));
+        }
+    }, [dispatch, account?.userId]);
+
+    useEffect(() => {
+        if (user) {
+            setPhone(user?.phone ? user.phone : '');
+            setAddress(user?.address ? user.address : '');
+
+            setIdCard(user?.idCard);
+        }
+    }, [user]);
+
 
     const form = useForm({
         defaultValues: {
-            phone: '',
-            idCard: '',
-            address: ''
+            phone: account?.phone || '',
+            idCard: account?.idCard || '',
+            address: account?.address || '',
         }
     })
+
     const { register, handleSubmit, formState } = form;
     const { errors } = formState;
 
+
     const onSubmit = async (data: IRegisterOwner) => {
         try {
-            await dispatch(ownerRegister(data));
-            if (!errorData) {
-                form.reset();
-                dispatch(setError(null));
-
+            await dispatch(ownerRegister(data)).unwrap();
+            if (account) {
+                await dispatch(getUserByID({ id: account.userId }));
+                dispatch(logoutUser(account.userId));
+                navigate('/login')
             }
         } catch (error) {
-            console.error('An error occurred:', error);
         }
     };
-
-    React.useEffect(() => {
+    useEffect(() => {
         return () => {
             dispatch(clearError());
         };
-    }, [dispatch]);
+    }, [dispatch, form]);
 
     return (
         <Box
@@ -108,28 +131,49 @@ const SignUpMotorbikeOwner = () => {
                             >
                                 <TextField
                                     label='Số Điện Thoại'
+                                    value={user?.phone || ''}
                                     type='text'
                                     {...register('phone', {
                                         required: 'Bạn chưa nhập số điện thoại'
                                     })}
+                                    onChange={(e) => {
+                                        const inputValue = e.target.value;
+                                        form.setValue('phone', inputValue);
+                                    }}
                                     error={!!errors.phone}
                                     helperText={errors.phone?.message}
                                 />
                                 <TextField
                                     label='CMND/CCCD'
+                                    value={
+                                        user?.idCard
+                                            ? user?.idCard
+                                            : 'Bạn chưa cập nhật CMND/CCCD.'
+                                    }
                                     type='text'
                                     {...register('idCard', {
                                         required: 'Bạn chưa nhập CMND/CCCD'
                                     })}
+                                    onChange={(e) => {
+                                        const inputValue = e.target.value;
+                                        console.log('Input changed:', inputValue);
+                                        form.setValue('idCard', inputValue);
+                                    }}
                                     error={!!errors.idCard}
                                     helperText={errors.idCard?.message}
                                 />
+
                                 <TextField
                                     label='Địa chỉ của bạn'
+                                    value={address}
                                     type='text'
                                     {...register('address', {
                                         required: 'Bạn chưa nhập địa chỉ'
                                     })}
+                                    onChange={(e) => {
+                                        const inputValue = e.target.value;
+                                        form.setValue('address', inputValue);
+                                    }}
                                     error={!!errors.address}
                                     helperText={errors.address?.message}
                                 />
