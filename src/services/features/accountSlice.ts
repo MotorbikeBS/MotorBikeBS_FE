@@ -14,11 +14,17 @@ interface AccountState {
     loading: boolean;
     account: IAccount | null;
     error: string[] | unknown;
+    success: boolean;
+    verify: boolean;
+    reset: boolean;
 }
 
 const initialState: AccountState = {
     loading: false,
     account: null,
+    success: false,
+    verify: false,
+    reset: false,
     error: null,
 };
 
@@ -126,6 +132,7 @@ export const resetPassword = createAsyncThunk<
         toast.success('Đổi mật khẩu thành công! Bạn có thể đăng nhập !');
         return response.data;
     } catch (error: any) {
+        console.log(error);
         toast.error('Xác minh không thành công !');
         return thunkAPI.rejectWithValue({
             error: error.response?.data?.errorMessages,
@@ -147,7 +154,7 @@ export const accountSlice = createSlice({
         });
         builder.addCase(registerUser.fulfilled, (state, action) => {
             state.loading = false;
-            state.account = action.payload;
+            state.success = true;
             state.error = null;
         });
         builder.addCase(registerUser.rejected, (state, action) => {
@@ -172,7 +179,7 @@ export const accountSlice = createSlice({
         });
         builder.addCase(verifyEmail.fulfilled, (state, action) => {
             state.loading = false;
-            state.account = action.payload;
+            state.verify = true;
             state.error = null;
         });
         builder.addCase(verifyEmail.rejected, (state, action) => {
@@ -184,7 +191,8 @@ export const accountSlice = createSlice({
         });
         builder.addCase(forgotPassword.fulfilled, (state, action) => {
             state.loading = false;
-            state.account = action.payload;
+            // state.account = action.payload;
+            state.success = true;
             state.error = null;
         });
         builder.addCase(forgotPassword.rejected, (state, action) => {
@@ -196,7 +204,8 @@ export const accountSlice = createSlice({
         });
         builder.addCase(resetPassword.fulfilled, (state, action) => {
             state.loading = false;
-            state.account = action.payload;
+            // state.account = action.payload;
+            state.reset = true;
             state.error = null;
         });
         builder.addCase(resetPassword.rejected, (state, action) => {

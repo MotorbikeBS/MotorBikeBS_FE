@@ -80,6 +80,7 @@ const ChangePassword = () => {
             })
             .catch((e) => {
                 toast.error(e.error[0]);
+                // console.log(e);
             });
         console.log(data);
     };

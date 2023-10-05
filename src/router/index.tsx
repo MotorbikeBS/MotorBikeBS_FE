@@ -32,7 +32,17 @@ const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
     return (
         <Routes>
-            {account === null && (
+            <Route
+                path="/user/:id/reset-password/:token"
+                element={<ResetPassword />}
+            />
+
+            <Route
+                path="/users/:id/verify/:token"
+                element={<VerifyAccount />}
+            />
+
+            {(account === null || account === undefined) && (
                 <>
                     {/*========================================= COMMON ROUTE ===================================  */}
                     <Route
@@ -45,19 +55,11 @@ const AppRoutes = () => {
 
                     {/* Signup  */}
                     <Route path="/sign-up" element={<Register />} />
-                    <Route
-                        path="/users/:id/verify/:token"
-                        element={<VerifyAccount />}
-                    />
 
                     {/* forgot-passworrd */}
                     <Route
                         path="/forgot-password"
                         element={<ForgotPassword />}
-                    />
-                    <Route
-                        path="/user/:id/reset-password/:token"
-                        element={<ResetPassword />}
                     />
                 </>
             )}
@@ -88,7 +90,10 @@ const AppRoutes = () => {
                     />
 
                     <Route path="/dashboard" element={<StoreHome />} />
-                    <Route path="/motorbike-exchange" element={<MotorOwnerExchange />} />
+                    <Route
+                        path="/motorbike-exchange"
+                        element={<MotorOwnerExchange />}
+                    />
                     <Route
                         path="/motorbike/:motorbikeId"
                         element={<OwnerMotorDetail />}
@@ -111,10 +116,7 @@ const AppRoutes = () => {
                         path="/motorbike/:motorbikeId"
                         element={<MotorBikeDetail />}
                     />
-                     <Route
-                        path="/owner/motors"
-                        element={<OwnerMotorList />}
-                    />
+                    <Route path="/owner/motors" element={<OwnerMotorList />} />
                     {/* Store list */}
                 </>
             )}
