@@ -16,7 +16,7 @@ export const resetPasswordEndPoint = `${BASE_URL}/api/auth/reset-password`;
 export const getAllUserEndPoint = `${BASE_URL}/api/user`;
 export const getUserByIDEndPoint = `${BASE_URL}/api/user`;
 export const editUserByIDEndPoint = `${BASE_URL}/api/user`;
-export const changePasswordEndPoint = `${BASE_URL}/api/user/changepassword;`;
+export const changePasswordEndPoint = `${BASE_URL}/api/user/changepassword`;
 
 //store endpoint
 export const registerStoreEndPoint = `${BASE_URL}/api/storedescription/store-register`;
@@ -26,6 +26,9 @@ export const inActiveStoreEndPoint = `${BASE_URL}/api/storedescription/inactives
 export const reActiveStoreEndPoint = `${BASE_URL}/api/storedescription/reactivestore`;
 export const getAllStoreEndPoint = `${BASE_URL}/api/storedescription`;
 export const getStoreByIDEndPoint = `${BASE_URL}/api/storedescription`;
+
+//owner endpoint
+export const ownerRegisterEndPoint = `${BASE_URL}/api/owner/ownerregister`;
 
 //motorbike endpoint
 export const getAllWithSpecificStatusEndPoint = `${BASE_URL}/api/motorbike/getallwithspecificstatus`;
@@ -39,9 +42,6 @@ export const postMotorRegisterEndPoint = `${BASE_URL}/api/motorbike/motorregiste
 
 //motorbikeField endpoint
 export const getMotorBrandEndPoint = `${BASE_URL}/api/motorbrand`;
-
 export const getMotorModelEndPoint = `${BASE_URL}/api/motormodel`;
-
 export const getMotorTypeEndPoint = `${BASE_URL}/api/motortype`;
-
 export const getMotorStatusEndPoint = `${BASE_URL}/api/motorstatus`;

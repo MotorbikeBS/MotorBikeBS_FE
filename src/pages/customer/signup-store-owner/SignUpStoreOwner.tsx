@@ -201,7 +201,7 @@ const SignUpStoreOwner = () => {
                         >
                             Đây là biểu mẫu đăng ký để trở thành chủ cửa hàng,
                             khi đã trở thành chủ cửa hàng bạn sẽ không thực hiện
-                            chức năng như như mua xe
+                            chức năng như tài khoản khách hàng.
                         </Typography>
                     </div>
                 </Container>
