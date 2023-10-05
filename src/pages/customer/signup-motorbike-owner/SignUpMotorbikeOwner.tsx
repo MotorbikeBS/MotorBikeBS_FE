@@ -34,7 +34,6 @@ const SignUpMotorbikeOwner = () => {
             dispatch(getUserByID({ id: account.userId }));
         }
     }, [dispatch, account?.userId]);
-
     useEffect(() => {
         if (user) {
             setPhone(user?.phone ? user.phone : '');
@@ -47,9 +46,9 @@ const SignUpMotorbikeOwner = () => {
 
     const form = useForm({
         defaultValues: {
-            phone: account?.phone || '',
-            idCard: account?.idCard || '',
-            address: account?.address || '',
+            phone: user?.phone || '',
+            idCard: user?.idCard || '',
+            address: user?.address || '',
         }
     })
 
@@ -131,7 +130,6 @@ const SignUpMotorbikeOwner = () => {
                             >
                                 <TextField
                                     label='Số Điện Thoại'
-                                    value={user?.phone || ''}
                                     type='text'
                                     {...register('phone', {
                                         required: 'Bạn chưa nhập số điện thoại'
@@ -145,11 +143,6 @@ const SignUpMotorbikeOwner = () => {
                                 />
                                 <TextField
                                     label='CMND/CCCD'
-                                    value={
-                                        user?.idCard
-                                            ? user?.idCard
-                                            : 'Bạn chưa cập nhật CMND/CCCD.'
-                                    }
                                     type='text'
                                     {...register('idCard', {
                                         required: 'Bạn chưa nhập CMND/CCCD'
@@ -165,7 +158,6 @@ const SignUpMotorbikeOwner = () => {
 
                                 <TextField
                                     label='Địa chỉ của bạn'
-                                    value={address}
                                     type='text'
                                     {...register('address', {
                                         required: 'Bạn chưa nhập địa chỉ'
