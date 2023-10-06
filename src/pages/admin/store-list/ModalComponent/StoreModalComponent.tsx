@@ -11,6 +11,7 @@ import {
     Paper,
     Grid,
 } from '@mui/material';
+import { ClearRounded } from '@mui/icons-material'
 import { IStore } from '../../../../models/Store/Store';
 import { useAppDispatch } from '../../../../services/store/store';
 import { inActiveStore, reActiveStore, refuseStore, verifyStore } from '../../../../services/features/storeSlice';
@@ -18,10 +19,11 @@ import './style/style.scss'
 interface StoreModalProps {
     isOpen: boolean;
     onClose: () => void;
+    loadData: () => void
     data: IStore | null;
 }
 
-const StoreModal: React.FC<StoreModalProps> = ({ isOpen, onClose, data }) => {
+const StoreModal: React.FC<StoreModalProps> = ({ isOpen, onClose, data, loadData }) => {
     const dispatch = useAppDispatch();
 
     if (!data) {
@@ -44,30 +46,54 @@ const StoreModal: React.FC<StoreModalProps> = ({ isOpen, onClose, data }) => {
 
     const handleActive = () => {
         if (data && data.storeId) {
-            dispatch(verifyStore({ storeId: data.storeId }));
-
+            dispatch(verifyStore({ storeId: data.storeId }))
+                .then(() => {
+                    loadData()
+                    setTimeout(() => {
+                        onClose()
+                    }, 1000)
+                })
         }
-        onClose();
+
     };
     const handleRefuse = () => {
         if (data && data.storeId) {
-            dispatch(refuseStore({ storeId: data.storeId }));
+            dispatch(refuseStore({ storeId: data.storeId }))
+                .then(() => {
+                    loadData()
+                    setTimeout(() => {
+                        onClose()
+                    }, 1000)
+                })
         }
-        onClose();
+
     };
 
     const handleInActive = () => {
         if (data && data.storeId) {
             dispatch(inActiveStore({ storeId: data.storeId }))
+                .then(() => {
+                    loadData()
+                    setTimeout(() => {
+                        onClose()
+                    }, 1000)
+                })
         }
-        onClose();
     }
     const handleReActive = () => {
         if (data && data.storeId) {
             dispatch(reActiveStore({ storeId: data.storeId }))
+                .then(() => {
+                    loadData();
+                    setTimeout(() => {
+                        onClose();
+                    }, 1000);
+                })
+                .catch((error) => {
+                    onClose();
+                });
         }
-        onClose()
-    }
+    };
 
     return (
         <Modal open={isOpen} onClose={onClose}>
@@ -75,6 +101,7 @@ const StoreModal: React.FC<StoreModalProps> = ({ isOpen, onClose, data }) => {
                 <Typography variant="h4" gutterBottom fontWeight='700'>
                     Thông tin cửa hàng {data.storeName}
                 </Typography>
+
                 <TableContainer component={Paper}>
                     <Table>
                         <TableBody>

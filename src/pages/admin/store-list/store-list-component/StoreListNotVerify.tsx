@@ -14,6 +14,10 @@ const StoreListNotVerify = () => {
     const [selectedRow, setSelectedRow] = useState<IStore | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const loadData = () => {
+        dispatch(getAllStore())
+    }
+
     useEffect(() => {
         dispatch(getAllStore());
     }, [dispatch]);
@@ -56,7 +60,7 @@ const StoreListNotVerify = () => {
                     onRowDoubleClick={handleRowDoubleClick}
                 />
             </Paper>
-            <StoreModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} data={selectedRow} />
+            <StoreModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} data={selectedRow} loadData={loadData} />
         </Container>
     );
 };
