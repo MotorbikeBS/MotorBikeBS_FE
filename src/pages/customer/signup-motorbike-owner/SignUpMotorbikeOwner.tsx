@@ -34,24 +34,30 @@ const SignUpMotorbikeOwner = () => {
             dispatch(getUserByID({ id: account.userId }));
         }
     }, [dispatch, account?.userId]);
-    useEffect(() => {
-        if (user) {
-            setPhone(user?.phone ? user.phone : '');
-            setAddress(user?.address ? user.address : '');
 
-            setIdCard(user?.idCard);
-        }
-    }, [user]);
 
 
     const form = useForm({
         defaultValues: {
-            phone: user?.phone || '',
-            idCard: user?.idCard || '',
-            address: user?.address || '',
+            phone: '',
+            idCard: '',
+            address: '',
         }
     })
 
+    useEffect(() => {
+        if (user) {
+            setPhone(user?.phone ? user.phone : '');
+            setAddress(user?.address ? user.address : '');
+            setIdCard(user?.idCard);
+
+            form.reset({
+                phone: user?.phone || '',
+                idCard: user?.idCard || '',
+                address: user?.address || '',
+            });
+        }
+    }, [user, form]);
     const { register, handleSubmit, formState } = form;
     const { errors } = formState;
 
@@ -62,6 +68,7 @@ const SignUpMotorbikeOwner = () => {
             if (account) {
                 await dispatch(getUserByID({ id: account.userId }));
                 dispatch(logoutUser(account.userId));
+                form.reset();
                 navigate('/login')
             }
         } catch (error) {
