@@ -98,9 +98,18 @@ const StoreModal: React.FC<StoreModalProps> = ({ isOpen, onClose, data, loadData
     return (
         <Modal open={isOpen} onClose={onClose}>
             <div className='modal-container'>
-                <Typography variant="h4" gutterBottom fontWeight='700'>
-                    Thông tin cửa hàng {data.storeName}
-                </Typography>
+                <div className='modal-header'>
+                    <Typography variant="h4" gutterBottom fontWeight='700'>
+                        Thông tin cửa hàng {data.storeName}
+                    </Typography>
+                    <div className='header-btn-close'>
+                        <Button
+                            onClick={onClose}
+                        >
+                            <ClearRounded />
+                        </Button>
+                    </div>
+                </div>
 
                 <TableContainer component={Paper}>
                     <Table>
@@ -147,8 +156,8 @@ const StoreModal: React.FC<StoreModalProps> = ({ isOpen, onClose, data, loadData
                                 color="error"
                                 style={{
                                     position: 'absolute',
-                                    bottom: '16%',
-                                    right: '24px',
+                                    bottom: '6%',
+                                    left: '50%',
                                 }}
                                 onClick={handleInActive}
                             >
@@ -165,8 +174,8 @@ const StoreModal: React.FC<StoreModalProps> = ({ isOpen, onClose, data, loadData
                                 color="warning"
                                 style={{
                                     position: 'absolute',
-                                    bottom: '16%',
-                                    right: '24px',
+                                    bottom: '6%',
+                                    left: '50%',
                                 }}
                                 onClick={handleReActive}
                             >
@@ -175,18 +184,6 @@ const StoreModal: React.FC<StoreModalProps> = ({ isOpen, onClose, data, loadData
                         </div>
                     </Grid>
                 )}
-                <div>
-                    <Button
-                        onClick={onClose}
-                        variant="contained"
-                        color="primary"
-                        style={{
-                            marginTop: '20px',
-                        }}
-                    >
-                        Đóng
-                    </Button>
-                </div>
             </div>
         </Modal>
     );
