@@ -24,6 +24,7 @@ const MotorbikeByStoreIdComponent = () => {
     const { storeId } = useParams<storeParams | any>();
     const { account } = useAppSelector((state) => state.account);
     const { motorbikeByStoreId } = useAppSelector((state) => state.motorbikes);
+    const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<number | null>(null)
 
     const handleNavigateDetail = (motorbikeId: number) => {
         navigate(`/motorbike/${motorbikeId}`);
@@ -35,9 +36,13 @@ const MotorbikeByStoreIdComponent = () => {
         dispatch(getMotorByStoreId({ storeId: Number(storeId) }));
     }, [dispatch, storeId]);
 
-    const handleOpenDialog = () => {
+
+    const handleOpenDialog = (motorbikeId: number) => {
+        setMotorbikeIdForDialog(motorbikeId);
         setOpenDialog(true);
+        console.log(motorbikeId)
     };
+
     const handleCloseDialog = () => {
         setOpenDialog(false);
         setIsOpenSubmitDialog(false);
@@ -97,8 +102,8 @@ const MotorbikeByStoreIdComponent = () => {
                                                     }
                                                 >
                                                     {motor.motorbikeImages &&
-                                                    motor.motorbikeImages
-                                                        .length === 0 ? (
+                                                        motor.motorbikeImages
+                                                            .length === 0 ? (
                                                         <>
                                                             <img
                                                                 src="https://png.pngtree.com/element_origin_min_pic/16/10/21/277448a877a33e8d0efc778025291c86.jpg"
@@ -179,8 +184,8 @@ const MotorbikeByStoreIdComponent = () => {
                                                     <div className="btn-style">
                                                         <Button
                                                             variant="outlined"
-                                                            onClick={
-                                                                handleOpenDialog
+                                                            onClick={() =>
+                                                                handleOpenDialog(motor.motorId)
                                                             }
                                                         >
                                                             Đặt lịch xem xe
@@ -208,6 +213,7 @@ const MotorbikeByStoreIdComponent = () => {
                 onOpenCancelDialog={handleOpenCancelDialog}
                 onCloseCancelDialog={handleCloseCancelDialog}
                 onClose={handleCloseDialog}
+                motorbikeId={motorbikeIdForDialog}
             />
         </Box>
     );

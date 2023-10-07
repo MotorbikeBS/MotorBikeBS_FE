@@ -20,12 +20,16 @@ const OwnerMotorDetailComponent = () => {
     const [isOpenDialog, setOpenDialog] = useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = useState(false);
+    const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<number | null>(null)
 
     const formatPrice = useFormatCurrency();
 
-    const handleOpenDialog = () => {
+    const handleOpenDialog = (motorbikeId: number) => {
+        setMotorbikeIdForDialog(motorbikeId);
         setOpenDialog(true);
+        console.log(motorbikeId)
     };
+
     const handleCloseDialog = () => {
         setOpenDialog(false);
         setIsOpenSubmitDialog(false);
@@ -92,7 +96,7 @@ const OwnerMotorDetailComponent = () => {
                     <Box flexGrow={4} marginBottom="30px">
                         <Carousel>
                             {motorbike.motorbikeImages &&
-                            motorbike.motorbikeImages.length > 0 ? (
+                                motorbike.motorbikeImages.length > 0 ? (
                                 motorbike.motorbikeImages.map((image) => (
                                     <div
                                         className="motorbike-detail-images"
@@ -262,14 +266,10 @@ const OwnerMotorDetailComponent = () => {
                             marginLeft="26%"
                         >
                             <Button
-                                onClick={handleOpenDialog}
                                 variant="outlined"
-                                sx={{
-                                    '&:hover': {
-                                        background: '#ccd6e6',
-                                        color: '#fff',
-                                    },
-                                }}
+                                onClick={() =>
+                                    handleOpenDialog(motorbike.motorId)
+                                }
                             >
                                 Đặt lịch xem xe
                             </Button>
@@ -286,6 +286,7 @@ const OwnerMotorDetailComponent = () => {
                 onOpenCancelDialog={handleOpenCancelDialog}
                 onCloseCancelDialog={handleCloseCancelDialog}
                 onClose={handleCloseDialog}
+                motorbikeId={motorbikeIdForDialog}
             />
         </Container>
     );

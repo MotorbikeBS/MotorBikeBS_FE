@@ -36,6 +36,7 @@ const MotorBikeDetailComponent = () => {
     const [isOpenDialog, setOpenDialog] = useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = useState(false);
+    const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<number | null>(null)
 
     const formatPrice = useFormatCurrency();
 
@@ -43,9 +44,13 @@ const MotorBikeDetailComponent = () => {
         navigate(`/store/${storeId}`);
     };
 
-    const handleOpenDialog = () => {
+
+    const handleOpenDialog = (motorbikeId: number) => {
+        setMotorbikeIdForDialog(motorbikeId);
         setOpenDialog(true);
+        console.log(motorbikeId)
     };
+
     const handleCloseDialog = () => {
         setOpenDialog(false);
         setIsOpenSubmitDialog(false);
@@ -113,7 +118,7 @@ const MotorBikeDetailComponent = () => {
                     <Box flexGrow={4} marginBottom="30px">
                         <Carousel>
                             {motorbike.motorbikeImages &&
-                            motorbike.motorbikeImages.length > 0 ? (
+                                motorbike.motorbikeImages.length > 0 ? (
                                 motorbike.motorbikeImages.map((image) => (
                                     <div
                                         className="motorbike-detail-images"
@@ -282,7 +287,9 @@ const MotorBikeDetailComponent = () => {
                             marginLeft="26%"
                         >
                             <Button
-                                onClick={handleOpenDialog}
+                                onClick={() =>
+                                    handleOpenDialog(motorbike.motorId)
+                                }
                                 variant="outlined"
                                 sx={{
                                     '&:hover': {
@@ -306,6 +313,7 @@ const MotorBikeDetailComponent = () => {
                 onOpenCancelDialog={handleOpenCancelDialog}
                 onCloseCancelDialog={handleCloseCancelDialog}
                 onClose={handleCloseDialog}
+                motorbikeId={motorbikeIdForDialog}
             />
         </Container>
     );
