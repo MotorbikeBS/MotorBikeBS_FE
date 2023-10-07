@@ -17,6 +17,7 @@ const MotorOwnerExchangeComponent = () => {
     const [isOpenDialog, setOpenDialog] = React.useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
+    const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<number | null>(null)
 
     const formatCurrency = useFormatCurrency();
 
@@ -28,9 +29,12 @@ const MotorOwnerExchangeComponent = () => {
         dispatch(getAllOnStoreExchange());
     }, [dispatch]);
 
-    const handleOpenDialog = () => {
+    const handleOpenDialog = (motorbikeId: number) => {
+        setMotorbikeIdForDialog(motorbikeId);
         setOpenDialog(true);
+        console.log(motorbikeId)
     };
+
     const handleCloseDialog = () => {
         setOpenDialog(false);
         setIsOpenSubmitDialog(false);
@@ -87,27 +91,27 @@ const MotorOwnerExchangeComponent = () => {
                                                 )
                                             }
                                         >
-                                             {motor.motorbikeImages &&
-                                                    motor.motorbikeImages
-                                                        .length === 0 ? (
-                                                        <>
-                                                            <img
-                                                                src="https://png.pngtree.com/element_origin_min_pic/16/10/21/277448a877a33e8d0efc778025291c86.jpg"
-                                                                alt="Đây là ảnh sản phẩm"
-                                                            />
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <img
-                                                                src={
-                                                                    motor
-                                                                        .motorbikeImages[0]
-                                                                        .imageLink
-                                                                }
-                                                                alt="Đây là ảnh sản phẩm"
-                                                            />
-                                                        </>
-                                                    )}
+                                            {motor.motorbikeImages &&
+                                                motor.motorbikeImages
+                                                    .length === 0 ? (
+                                                <>
+                                                    <img
+                                                        src="https://png.pngtree.com/element_origin_min_pic/16/10/21/277448a877a33e8d0efc778025291c86.jpg"
+                                                        alt="Đây là ảnh sản phẩm"
+                                                    />
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <img
+                                                        src={
+                                                            motor
+                                                                .motorbikeImages[0]
+                                                                .imageLink
+                                                        }
+                                                        alt="Đây là ảnh sản phẩm"
+                                                    />
+                                                </>
+                                            )}
                                         </div>
                                         <div className="product-information">
                                             <Typography variant="h6">
@@ -156,7 +160,9 @@ const MotorOwnerExchangeComponent = () => {
                                             <div className="btn-style">
                                                 <Button
                                                     variant="outlined"
-                                                    onClick={handleOpenDialog}
+                                                    onClick={() =>
+                                                        handleOpenDialog(motor.motorId)
+                                                    }
                                                 >
                                                     Đặt lịch xem xe
                                                 </Button>
@@ -181,6 +187,7 @@ const MotorOwnerExchangeComponent = () => {
                 onOpenCancelDialog={handleOpenCancelDialog}
                 onCloseCancelDialog={handleCloseCancelDialog}
                 onClose={handleCloseDialog}
+                motorbikeId={motorbikeIdForDialog}
             />
         </Box>
     );

@@ -18,6 +18,7 @@ import './style/style.scss';
 
 interface BookingDialogProps {
     open: boolean;
+    motorbikeId: number | null;
     openSubmit: boolean;
     openCancel: boolean;
     onOpenSubmitDialog: () => void;
@@ -29,12 +30,12 @@ interface BookingDialogProps {
 
 interface IBookingViewMotorbike {
     bookingDate: Date;
-    bookingTime: Date;
     note: string;
 }
 
 const BookingDialog: React.FC<BookingDialogProps> = ({
     open,
+    motorbikeId,
     openSubmit,
     openCancel,
     onOpenCancelDialog,
@@ -64,7 +65,7 @@ const BookingDialog: React.FC<BookingDialogProps> = ({
 
     const onSubmit = (data: IBookingViewMotorbike) => {
         console.log(data);
-        handleCloseDialog()  
+        handleCloseDialog()
     };
 
     return (

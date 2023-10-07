@@ -19,20 +19,24 @@ const MotorbikeComponent = () => {
     const [isOpenDialog, setOpenDialog] = React.useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
-
+    const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<number | null>(null)
     const formatCurrency = useFormatCurrency();
 
     const handleNavigateDetail = (motorbikeId: number) => {
         navigate(`/motorbike/${motorbikeId}`);
     };
 
+
     useEffect(() => {
         dispatch(getAllOnExchange());
     }, [dispatch]);
 
-    const handleOpenDialog = () => {
+    const handleOpenDialog = (motorbikeId: number) => {
+        setMotorbikeIdForDialog(motorbikeId);
         setOpenDialog(true);
+        console.log(motorbikeId)
     };
+
     const handleCloseDialog = () => {
         setOpenDialog(false);
         setIsOpenSubmitDialog(false);
@@ -146,7 +150,9 @@ const MotorbikeComponent = () => {
                                             <div className="btn-style">
                                                 <Button
                                                     variant="outlined"
-                                                    onClick={handleOpenDialog}
+                                                    onClick={() =>
+                                                        handleOpenDialog(motor.motorId)
+                                                    }
                                                 >
                                                     Đặt lịch xem xe
                                                 </Button>
@@ -171,6 +177,7 @@ const MotorbikeComponent = () => {
                 onOpenCancelDialog={handleOpenCancelDialog}
                 onCloseCancelDialog={handleCloseCancelDialog}
                 onClose={handleCloseDialog}
+                motorbikeId={motorbikeIdForDialog}
             />
         </Box>
     );
