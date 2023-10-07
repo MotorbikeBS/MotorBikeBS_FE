@@ -20,6 +20,7 @@ import OwnerMenuComponent from '../owner/owner-menu-component/OwnerMenuComponent
 import AdminMenuComponent from '../admin/admin-menu-component/AdminMenuComponent';
 import { useAppDispatch, useAppSelector } from '../../services/store/store';
 import { getUserByID } from '../../services/features/userSlice';
+import { format } from 'date-fns';
 
 const UserProfile = () => {
     const navigate = useNavigate();
@@ -245,7 +246,7 @@ const UserProfile = () => {
                                         label="Ngày xác minh cửa hàng"
                                         value={
                                             user?.storeDesciptions[0]?.storeCreatedAt || ''
-                                                ? user?.storeDesciptions[0].storeCreatedAt || ''
+                                                ? format(new Date(user?.storeDesciptions[0].storeCreatedAt || ''), 'MM-dd-yyyy HH:mm:ss')
                                                 : 'mm-dd-yyyy'
                                         }
                                         type="text"
@@ -257,8 +258,8 @@ const UserProfile = () => {
                                     label="Ngày tạo tài khoản"
                                     value={
                                         user?.userVerifyAt
-                                            ? user?.userVerifyAt
-                                            : 'mm-dd-yyyy'
+                                            ? format(new Date(user?.userVerifyAt), 'MM-dd-yyyy HH:mm:ss')
+                                            : 'yyyy-MM-dd'
                                     }
                                     type="text"
                                     variant="outlined"
@@ -268,7 +269,7 @@ const UserProfile = () => {
                                     label="Cập nhật lần cuối"
                                     value={
                                         user?.userUpdatedAt
-                                            ? user?.userUpdatedAt
+                                            ? format(new Date(user?.userUpdatedAt), 'MM-dd-yyyy HH:mm:ss')
                                             : 'mm-dd-yyyy'
                                     }
                                     type="text"
