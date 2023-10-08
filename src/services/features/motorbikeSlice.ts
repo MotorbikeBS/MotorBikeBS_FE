@@ -7,6 +7,7 @@ import {
     getMotorByIdEndPoint,
     getMotorByOwnerIdEndPoint,
     getMotorByStoreIdEndPoint,
+    postMotorRegisterEndPoint,
 } from '../config/api-config';
 
 interface MotorbikeState {
@@ -124,6 +125,26 @@ export const getMotorId = createAsyncThunk<IMotorbike, { motorId: number }>(
                     },
                 },
             );
+            return response.data.result;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue({
+                error: error.response?.data?.errorMessages,
+            });
+        }
+    },
+);
+
+export const createMotorbike = createAsyncThunk<IMotorbike, Object>(
+    'motorbikes/createMotorbike',
+    async (data, thunkAPI) => {
+        try {
+            const token = localStorage.getItem('motorbike_bs');
+            const response = await axios.post(postMotorRegisterEndPoint, data, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
             return response.data.result;
         } catch (error: any) {
             return thunkAPI.rejectWithValue({

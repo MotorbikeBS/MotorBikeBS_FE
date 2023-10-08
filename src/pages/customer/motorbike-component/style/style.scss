@@ -19,9 +19,10 @@
                 flex-grow: 2;
                 .product-info-content {
                     display: flex;
+                    justify-content: flex-start;
                     align-items: flex-start;
                     flex-direction: column;
-                    // margin-left: 30%;
+                    margin-left: 5% !important;
                 }
             }
             .product-information h6 {
