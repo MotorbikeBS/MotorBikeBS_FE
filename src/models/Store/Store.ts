@@ -16,6 +16,7 @@ export interface IStore {
     address: string;
     status: string;
     taxCode: string;
+    businessLicense: string;
     storeImages: {
         storeImageId: number;
         imageLink: string;

@@ -45,11 +45,12 @@ export const registerStore = createAsyncThunk<IRegisterStore, Object>(
             );
             return response.data;
         } catch (error: any) {
-            console.log(error);
-            toast.error('Có lỗi xảy ra, vui lòng thử lại sau !');
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
+            if (error.response) {
+                toast.error(`${error.response.data?.errorMessages}`);
+                return thunkAPI.rejectWithValue({
+                    error: error.response?.data?.errorMessages,
+                });
+            }
         }
     },
 );
@@ -71,11 +72,12 @@ export const verifyStore = createAsyncThunk<IStore, { storeId: number }>(
             toast.success('Xác minh thành công !');
             return response.data;
         } catch (error: any) {
-            console.log(error);
-            toast.error('Có lỗi xảy ra, vui lòng thử lại sau !');
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
+            if (error.response) {
+                toast.error(`${error.response.data?.errorMessages}`);
+                return thunkAPI.rejectWithValue({
+                    error: error.response?.data?.errorMessages,
+                });
+            }
         }
     },
 );
@@ -97,11 +99,12 @@ export const refuseStore = createAsyncThunk<IStore, { storeId: number }>(
             toast.success('Từ chối đơn đăng ký thành công !');
             return response.data;
         } catch (error: any) {
-            console.log(error);
-            toast.error('Có lỗi xảy ra, vui lòng thử lại sau !');
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
+            if (error.response) {
+                toast.error(`${error.response.data?.errorMessages}`);
+                return thunkAPI.rejectWithValue({
+                    error: error.response?.data?.errorMessages,
+                });
+            }
         }
     },
 );
@@ -124,10 +127,12 @@ export const inActiveStore = createAsyncThunk<IStore, { storeId: number }>(
             toast.success('Khóa tài khoản Account thành công');
             return response.data;
         } catch (error: any) {
-            toast.error('Có lỗi xảy ra, vui lòng thử lại sau !');
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
+            if (error.response) {
+                toast.error(`${error.response.data?.errorMessages}`);
+                return thunkAPI.rejectWithValue({
+                    error: error.response?.data?.errorMessages,
+                });
+            }
         }
     },
 );
@@ -150,10 +155,12 @@ export const reActiveStore = createAsyncThunk<IStore, { storeId: number }>(
             toast.success('Kích hoạt lại tài khoản thành công !');
             return response.data;
         } catch (error: any) {
-            toast.error('Có lỗi xảy ra, vui lòng thử lại sau !');
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
+            if (error.response) {
+                toast.error(`${error.response.data?.errorMessages}`);
+                return thunkAPI.rejectWithValue({
+                    error: error.response?.data?.errorMessages,
+                });
+            }
         }
     },
 );
@@ -170,9 +177,12 @@ export const getAllStore = createAsyncThunk<IStore[], void>(
             });
             return response.data.result;
         } catch (error: any) {
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
+            if (error.response) {
+                toast.error(`${error.response.data?.errorMessages}`);
+                return thunkAPI.rejectWithValue({
+                    error: error.response?.data?.errorMessages,
+                });
+            }
         }
     },
 );
