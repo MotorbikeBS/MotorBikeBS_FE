@@ -38,9 +38,12 @@ export const registerUser = createAsyncThunk<IAccount, Object>(
             );
             return response.data;
         } catch (error: any) {
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
+            if (error.response) {
+                toast.error(`${error.response.data?.errorMessages}`);
+                return thunkAPI.rejectWithValue({
+                    error: error.response?.data?.errorMessages,
+                });
+            }
         }
     },
 );
@@ -56,12 +59,12 @@ export const verifyEmail = createAsyncThunk<
         toast.success('Xác minh email thành công !');
         return response.data;
     } catch (error: any) {
-        toast.error(
-            'Xác minh email không thành công ! Token không hợp lệ hoặc đã hết hạn !',
-        );
-        return thunkAPI.rejectWithValue({
-            error: error.response?.data?.errorMessages,
-        });
+        if (error.response) {
+            toast.error(`${error.response.data?.errorMessages}`);
+            return thunkAPI.rejectWithValue({
+                error: error.response?.data?.errorMessages,
+            });
+        }
     }
 });
 
@@ -76,10 +79,12 @@ export const loginUser = createAsyncThunk<IAccount, string | Object>(
             toast.success(response.data.message);
             return response.data.result;
         } catch (error: any) {
-            toast.error('Đăng nhập không thành công !');
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
+            if (error.response) {
+                toast.error(`${error.response.data?.errorMessages}`);
+                return thunkAPI.rejectWithValue({
+                    error: error.response?.data?.errorMessages,
+                });
+            }
         }
     },
 );
@@ -111,11 +116,12 @@ export const forgotPassword = createAsyncThunk<IAccount, { email: string }>(
             toast.success('Mã xác minh đã được gửi đến email của bạn !');
             return response.data;
         } catch (error: any) {
-            console.log(error);
-            toast.error('Có lỗi xảy ra! Hãy kiểm tra lại thông tin');
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
+            if (error.response) {
+                toast.error(`${error.response.data?.errorMessages}`);
+                return thunkAPI.rejectWithValue({
+                    error: error.response?.data?.errorMessages,
+                });
+            }
         }
     },
 );
@@ -132,11 +138,12 @@ export const resetPassword = createAsyncThunk<
         toast.success('Đổi mật khẩu thành công! Bạn có thể đăng nhập !');
         return response.data;
     } catch (error: any) {
-        console.log(error);
-        toast.error('Xác minh không thành công !');
-        return thunkAPI.rejectWithValue({
-            error: error.response?.data?.errorMessages,
-        });
+        if (error.response) {
+            toast.error(`${error.response.data?.errorMessages}`);
+            return thunkAPI.rejectWithValue({
+                error: error.response?.data?.errorMessages,
+            });
+        }
     }
 });
 
