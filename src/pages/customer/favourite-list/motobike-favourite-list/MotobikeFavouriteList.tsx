@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Box,
     Button,
@@ -11,16 +11,19 @@ import {
     Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router';
-import { IMotorbike } from '../../motorbike-component/model/Motorbike';
-import items from '../../data/data';
 import { Item } from './style/style-root';
 import { Favorite, DeleteOutline } from '@mui/icons-material';
 import './style/style.scss';
+import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
+import { deleteAllWishList, getWishList } from '../../../../services/features/wishListSlice';
+import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 
 const MotobikeFavouriteList = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch()
+    const { wishlists } = useAppSelector((state) => state.wishlist)
     const [openDelete, setOpenDelete] = React.useState(false);
-
+    const formatCurrency = useFormatCurrency()
     const handleNavigateDetail = (motorbikeId: number) => {
         navigate(`/motorbike/${motorbikeId}`);
     };
@@ -34,12 +37,23 @@ const MotobikeFavouriteList = () => {
     };
 
     const handleDeleteSuc = () => {
-        navigate('/customer-home');
+        dispatch(deleteAllWishList())
+            .then(() => {
+                loadingData()
+            })
     };
 
     const handleDelete = () => {
         handleClickDelete();
     };
+
+    const loadingData = () => {
+        dispatch(getWishList())
+    }
+
+    useEffect(() => {
+        dispatch(getWishList())
+    }, [dispatch])
 
     return (
         <Box
@@ -52,8 +66,7 @@ const MotobikeFavouriteList = () => {
                 sx={{
                     display: 'flex',
                     justifyContent: 'flex-end',
-                    padding: '6px 6px',
-                    // backgroundColor: '#ccc',
+                    padding: '0px 6px 0px 0px',
                 }}
             >
                 <Button variant="outlined" color="error" className="btn-delete" onClick={handleDelete}>
@@ -63,39 +76,48 @@ const MotobikeFavouriteList = () => {
             </Box>
 
             <Grid container spacing={2} className="product-grid">
-                {items.map((item: IMotorbike) => (
-                    <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
+
+                {wishlists && wishlists.map((wishlist) => (
+                    <Grid item xs={12} sm={6} md={4} lg={3}>
+                        {/* key={item.id} */}
                         <Item className="product-item">
-                            <div className="product-image" onClick={() => handleNavigateDetail(item.id)}>
-                                <img src={item.image} alt="Đây là ảnh sản phẩm" />
+                            <div className="product-image" onClick={() => handleNavigateDetail(wishlist.motor.motorId)}>
+                                <img src={wishlist.motor.motorbikeImages[0]?.imageLink || ''} alt="Đây là ảnh sản phẩm" />
                             </div>
                             <div className="product-information">
-                                <Typography variant="h6">{item.name}</Typography>
+                                <Typography variant="h6">{wishlist.motor.motorName}</Typography>
                                 <Typography color="red" fontWeight="700" fontSize="18px">
-                                    Giá: {item.price}
+                                    Giá: {formatCurrency(wishlist.motor.price)}
                                 </Typography>
                                 <div className="product-info-content">
                                     <Typography>
-                                        <strong>Cửa Hàng:</strong> {item.storeName}
+                                        <strong>Cửa Hàng:</strong> {wishlist.motor.store.storeName}
                                     </Typography>
                                     <Typography>
                                         <strong>Loại Xe: </strong>
-                                        {item.motorType}
+                                        {wishlist.motor.motorType.title}
                                     </Typography>
                                     <Typography>
                                         <strong>Odo: </strong>
-                                        {item.odo} Km
+                                        {wishlist.motor.odo}
                                     </Typography>
+
                                     <Typography>
-                                        <strong>Tình trạng: </strong>
-                                        {item.status}
+                                        <strong>
+                                            Đăng ký mới:
+                                        </strong>
+                                        {new Date(
+                                            wishlist.motor.year
+                                        ).toLocaleDateString() || ''}
                                     </Typography>
-                                    <Typography>
-                                        <strong>Đăng ký mới:</strong> {item.yearRegister.toLocaleDateString()}
-                                    </Typography>
-                                    <Typography>
-                                        <strong>Ngày đăng bài:</strong> {item.postDate.toLocaleDateString()}
-                                    </Typography>
+                                    {/* <Typography>
+                                        <strong>
+                                            Ngày đăng bài:
+                                        </strong>
+                                        {new Date(
+                                            wishlist.motor.year
+                                        ).toLocaleDateString() || ''}
+                                    </Typography> */}
                                 </div>
                             </div>
 

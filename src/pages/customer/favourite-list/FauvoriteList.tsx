@@ -6,15 +6,24 @@ import MotobikeFavouriteList from './motobike-favourite-list/MotobikeFavouriteLi
 
 const FauvoriteList = () => {
     return (
-        <>
-            <CustomerMenuComponent />
+        <Box
+            display="flex"
+            flexDirection="column"
+            height="100vh"
+            width="100%"
+        >
+            <Box flexGrow={1}>
+                <CustomerMenuComponent />
+            </Box>
 
-            <MotobikeFavouriteList />
+            <Box flexGrow={10} >
+                <MotobikeFavouriteList />
+            </Box>
 
             <Box flexGrow={1} className="footer-style">
                 <FooterComponent />
             </Box>
-        </>
+        </Box>
     );
 };
 
