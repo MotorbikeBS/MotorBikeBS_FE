@@ -50,3 +50,4 @@ export const getMotorStatusEndPoint = `${BASE_URL}/api/motorstatus`;
 export const getWishListEndPoint = `${BASE_URL}/api/wishlist/getwishlist`;
 export const addToWishListEndPoint = `${BASE_URL}/api/wishlist/addtowishlist`;
 export const deleteAllWishListEndPoint = `${BASE_URL}/api/wishlist/deleteallwishlist`;
+export const deleteWishListByMotorIdEndPoint = `${BASE_URL}/api/wishlist/deletewishlist`;

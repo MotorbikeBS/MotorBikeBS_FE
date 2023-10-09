@@ -9,6 +9,7 @@ import BookingDialog from '../booking-dialog-component/BookingDialog';
 import useFormatCurrency from '../../../hooks/useFormatCurrency';
 import { useAppDispatch, useAppSelector } from '../../../services/store/store';
 import { getAllOnExchange } from '../../../services/features/motorbikeSlice';
+import { addToWishList } from '../../../services/features/wishListSlice';
 
 const MotorbikeComponent = () => {
     const navigate = useNavigate();
@@ -36,6 +37,9 @@ const MotorbikeComponent = () => {
         setOpenDialog(true);
         console.log(motorbikeId)
     };
+    const handleAddToWishList = (motorId: number) => {
+        dispatch(addToWishList({ motorId: motorId }))
+    }
 
     const handleCloseDialog = () => {
         setOpenDialog(false);
@@ -156,7 +160,10 @@ const MotorbikeComponent = () => {
                                                 >
                                                     Đặt lịch xem xe
                                                 </Button>
-                                                <Button className="btn-favorite">
+                                                <Button
+                                                    className="btn-favorite"
+                                                    onClick={() => handleAddToWishList(motor.motorId)}
+                                                >
                                                     <FavoriteBorderOutlined />
                                                 </Button>
                                             </div>
