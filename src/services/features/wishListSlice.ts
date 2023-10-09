@@ -158,7 +158,7 @@ export const wishListSlice = createSlice({
         });
         builder.addCase(deleteWishlistByMotorId.fulfilled, (state, action) => {
             state.loading = false;
-            state.wishlist = action.payload;
+            state.wishlists = [];
         });
         builder.addCase(deleteWishlistByMotorId.rejected, (state, action) => {
             state.loading = false;
