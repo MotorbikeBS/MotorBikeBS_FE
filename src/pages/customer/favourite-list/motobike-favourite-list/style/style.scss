@@ -4,6 +4,13 @@ $primary-favorite: #f76157;
     gap: 6px;
 }
 
+.wishlist-container-notFound {
+    :nth-child(1) {
+        align-items: center;
+        text-align: center !important;
+    }
+}
+
 .product-grid {
     display: flex;
     flex-direction: row;

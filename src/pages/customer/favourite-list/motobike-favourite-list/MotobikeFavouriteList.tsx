@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import {
     Box,
     Button,
+    Container,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
     DialogTitle,
     Grid,
+    Paper,
     Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router';
@@ -15,7 +17,7 @@ import { Item } from './style/style-root';
 import { Favorite, DeleteOutline } from '@mui/icons-material';
 import './style/style.scss';
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
-import { deleteAllWishList, getWishList } from '../../../../services/features/wishListSlice';
+import { deleteAllWishList, deleteWishlistByMotorId, getWishList } from '../../../../services/features/wishListSlice';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 
 const MotobikeFavouriteList = () => {
@@ -36,13 +38,6 @@ const MotobikeFavouriteList = () => {
         setOpenDelete(false);
     };
 
-    const handleDeleteSuc = () => {
-        dispatch(deleteAllWishList())
-            .then(() => {
-                loadingData()
-            })
-    };
-
     const handleDelete = () => {
         handleClickDelete();
     };
@@ -51,9 +46,27 @@ const MotobikeFavouriteList = () => {
         dispatch(getWishList())
     }
 
+    const handleDeleteSuc = () => {
+        dispatch(deleteAllWishList())
+            .then(() => {
+                loadingData()
+                setTimeout(() => {
+                    setOpenDelete(false);
+                }, 1000)
+            })
+    };
+
+    const handleDeleteFavouriteByID = (motorId: number) => {
+        dispatch(deleteWishlistByMotorId({ motorId: motorId }))
+            .then(() => {
+                loadingData()
+            })
+    }
+
     useEffect(() => {
         dispatch(getWishList())
     }, [dispatch])
+
 
     return (
         <Box
@@ -69,17 +82,32 @@ const MotobikeFavouriteList = () => {
                     padding: '0px 6px 0px 0px',
                 }}
             >
-                <Button variant="outlined" color="error" className="btn-delete" onClick={handleDelete}>
-                    <DeleteOutline />
-                    <Typography variant="subtitle2">Xóa hết</Typography>
-                </Button>
+                {wishlists && wishlists.length > 0 ? (
+                    <Button variant="outlined" color="error" className="btn-delete" onClick={handleDelete}>
+                        <DeleteOutline />
+                        <Typography variant="subtitle2">Xóa hết</Typography>
+                    </Button>
+                ) : <Container className='wishlist-container-notFound'>
+                    <Paper elevation={3} sx={{
+                        padding: 4
+
+                    }}>
+                        <Typography
+                            variant='h5'
+                        >
+                            Danh sách yêu thích trống
+                        </Typography>
+                    </Paper>
+
+                </Container>
+                }
+
             </Box>
 
             <Grid container spacing={2} className="product-grid">
 
                 {wishlists && wishlists.map((wishlist) => (
-                    <Grid item xs={12} sm={6} md={4} lg={3}>
-                        {/* key={item.id} */}
+                    <Grid item xs={12} sm={6} md={4} lg={3} key={wishlist.motorId}>
                         <Item className="product-item">
                             <div className="product-image" onClick={() => handleNavigateDetail(wishlist.motor.motorId)}>
                                 <img src={wishlist.motor.motorbikeImages[0]?.imageLink || ''} alt="Đây là ảnh sản phẩm" />
@@ -123,7 +151,10 @@ const MotobikeFavouriteList = () => {
 
                             <div className="btn-style">
                                 <Button variant="outlined">Đặt lịch xem xe</Button>
-                                <Button className="btn-favorite">
+                                <Button
+                                    className="btn-favorite"
+                                    onClick={() => handleDeleteFavouriteByID(wishlist.motorId)}
+                                >
                                     <Favorite />
                                 </Button>
                             </div>
