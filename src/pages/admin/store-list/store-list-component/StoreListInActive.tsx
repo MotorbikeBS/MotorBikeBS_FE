@@ -30,6 +30,7 @@ const StoreListInActive = () => {
             id: store.userId,
             storeId: store.storeId,
             storeName: store.storeName,
+            businessLicense: store.businessLicense,
             taxCode: store.taxCode,
             storePhone: store.storePhone,
             storeEmail: store.storeEmail,

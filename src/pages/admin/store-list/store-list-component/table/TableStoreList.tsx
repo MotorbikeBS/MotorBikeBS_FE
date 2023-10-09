@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 export const columns: GridColDef[] = [
     { field: 'id', headerName: 'User ID', width: 100 },
@@ -6,6 +7,22 @@ export const columns: GridColDef[] = [
         field: 'storeName',
         headerName: 'Tên cửa hàng',
         width: 200,
+    },
+    {
+        field: 'businessLicense',
+        headerName: 'Giấy phép kinh doanh',
+        width: 200,
+        renderCell: (params) => (
+            <div>
+                {params.row.businessLicense && (
+                    <img
+                        src={params.row.businessLicense}
+                        alt='Business License'
+                        style={{ width: '30%', height: '30%', objectFit: 'cover' }}
+                    />
+                )}
+            </div>
+        ),
     },
     {
         field: 'taxCode',

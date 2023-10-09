@@ -21,6 +21,7 @@ export interface IRegisterStore {
     storeEmail: string;
     address: string;
     file: File;
+    license: File;
 }
 export interface IRegisterOwner {
     phone: string;

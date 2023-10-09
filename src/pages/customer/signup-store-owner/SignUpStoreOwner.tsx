@@ -4,6 +4,8 @@ import {
     Box,
     Button,
     Container,
+    Input,
+    InputLabel,
     Stack,
     TextField,
     Typography,
@@ -20,6 +22,7 @@ interface ISignupStore {
     storeEmail: string;
     address: string;
     file: FileList;
+    license: FileList;
 }
 
 const SignUpStoreOwner = () => {
@@ -36,6 +39,7 @@ const SignUpStoreOwner = () => {
             storeEmail: '',
             address: '',
             file: undefined,
+            license: undefined
         },
     });
     const { register, formState, handleSubmit } = form;
@@ -51,8 +55,10 @@ const SignUpStoreOwner = () => {
         if (data.file && data.file.length > 0) {
             formData.append('file', data.file[0]);
         }
+        if (data.license && data.license.length > 0) {
+            formData.append('license', data.license[0]);
+        }
 
-        console.log(data);
         dispatch(registerStore(formData));
     };
 
@@ -168,13 +174,24 @@ const SignUpStoreOwner = () => {
                                     helperText={errors.address?.message}
                                     variant="outlined"
                                 />
-                                <input
+                                <label htmlFor="file">Ảnh cho cửa hàng:</label>
+                                <Input
                                     id="file"
                                     type="file"
                                     {...register('file', {
                                         required: 'Bạn chưa chọn ảnh cho cửa hàng',
                                     })}
                                 />
+
+                                <label htmlFor="license">Giấy phép kinh doanh:</label>
+                                <Input
+                                    id="license"
+                                    type="file"
+                                    {...register('license', {
+                                        required: 'Bạn chưa chọn giấy phép kinh doanh',
+                                    })}
+                                />
+
                                 <Button
                                     type="submit"
                                     variant="contained"
