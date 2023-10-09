@@ -26,13 +26,18 @@ import {
     getWishList,
 } from '../../../../services/features/wishListSlice';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
+import { toast } from 'react-toastify';
 
 const MotobikeFavouriteList = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const { wishlists } = useAppSelector((state) => state.wishlist);
-    const [openDelete, setOpenDelete] = React.useState(false);
     const formatCurrency = useFormatCurrency();
+
+    const { wishlists } = useAppSelector((state) => state.wishlist);
+
+    const [openDelete, setOpenDelete] = React.useState(false);
+
+
     const handleNavigateDetail = (motorbikeId: number) => {
         navigate(`/motorbike/${motorbikeId}`);
     };
@@ -52,6 +57,7 @@ const MotobikeFavouriteList = () => {
     useEffect(() => {
         dispatch(getWishList());
     }, [dispatch]);
+
     const loadingData = () => {
         dispatch(getWishList());
     };
