@@ -30,6 +30,21 @@ export const columns: GridColDef[] = [
         width: 150,
     },
     {
+        field: 'images',
+        headerName: 'Ảnh',
+        width: 150,
+        // cellClassName: 'images',
+        renderCell: (params) =>
+            params.row.images ? (
+                <img
+                    src={params.row.images}
+                    alt="Đây là ảnh sản phẩm"
+                    width="70"
+                    height="70"
+                />
+            ) : null,
+    },
+    {
         field: 'motorName',
         headerName: 'Tên xe',
         width: 180,
@@ -72,12 +87,15 @@ export const columns: GridColDef[] = [
         headerName: 'Tình trạng',
         width: 240,
         editable: false,
-        renderCell: (params) => params.row.motorStatus === 'Consignment' ? (
-            <Typography sx={{ color: 'blue' }}>Consignment</Typography>
-        ) : params.row.motorStatus === 'Storage' ? (
-            <Typography sx={{ color: 'orange' }}>Storage</Typography>
-        ) : (
-            <Typography sx={{ color: 'green' }}>Posting</Typography>
-        ),
+        renderCell: (params) =>
+            params.row.motorStatus === 'POSTING' ? (
+                <Typography sx={{ color: 'green' }}>POSTING</Typography>
+            ) : params.row.motorStatus === 'STORAGE' ? (
+                <Typography sx={{ color: 'orange' }}>STORAGE</Typography>
+            ) : params.row.motorStatus === 'CONSIGNMENT' ? (
+                <Typography sx={{ color: '#E6A160' }}>CONSIGNMENT</Typography>
+            ) : (
+                <Typography sx={{ color: '3D609A' }}>LIVELIHOOD</Typography>
+            ),
     },
 ];

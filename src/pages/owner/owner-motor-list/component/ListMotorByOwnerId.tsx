@@ -22,6 +22,7 @@ const ListMotorByOwnerId = () => {
         return (motorbikes ?? []).map((motor: IMotorbike) => ({
         id: motor.motorId,
         certificateNumber: motor.certificateNumber,
+        images: motor.motorbikeImages[0].imageLink,
         motorName: motor.motorName,
         odo: motor.odo,
         year: motor.year,
