@@ -40,15 +40,15 @@ export const addToWishList = createAsyncThunk<IWishList, { motorId: number }>(
             toast.success('Thêm vào danh sách thành công !');
             return response.data;
         } catch (error: any) {
-            console.log(error);
-            toast.error('Có lỗi xảy ra, vui lòng thử lại sau !');
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
+            if (error.response) {
+                toast.error(`${error.response.data?.errorMessages}`);
+                return thunkAPI.rejectWithValue({
+                    error: error.response?.data?.errorMessages,
+                });
+            }
         }
     },
 );
-
 export const getWishList = createAsyncThunk<IWishList[], void>(
     'wishlist/getAllWishList',
     async (_, thunkAPI) => {
@@ -61,9 +61,12 @@ export const getWishList = createAsyncThunk<IWishList[], void>(
             });
             return response.data.result;
         } catch (error: any) {
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
+            if (error.response) {
+                toast.warning(`${error.response.data?.errorMessages}`);
+                return thunkAPI.rejectWithValue({
+                    error: error.response?.data?.errorMessages,
+                });
+            }
         }
     },
 );
@@ -80,10 +83,12 @@ export const deleteAllWishList = createAsyncThunk<IWishList[], void>(
             toast.success('Xóa danh sách yêu thích thành công !');
             return response.data.result;
         } catch (error: any) {
-            toast.error('Xóa danh sách yêu thích không thành công');
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
+            if (error.response) {
+                toast.error(`${error.response.data?.errorMessages}`);
+                return thunkAPI.rejectWithValue({
+                    error: error.response?.data?.errorMessages,
+                });
+            }
         }
     },
 );
@@ -104,11 +109,13 @@ export const deleteWishlistByMotorId = createAsyncThunk<
         );
         toast.success('Xóa mục yêu thích thành công !');
         return response.data;
-    } catch (err: any) {
-        toast.error('Xóa mục yêu thích không thành công !');
-        return thunkAPI.rejectWithValue({
-            error: err.response?.data?.errorMessages,
-        });
+    } catch (error: any) {
+        if (error.response) {
+            toast.error(`${error.response.data?.errorMessages}`);
+            return thunkAPI.rejectWithValue({
+                error: error.response?.data?.errorMessages,
+            });
+        }
     }
 });
 export const wishListSlice = createSlice({

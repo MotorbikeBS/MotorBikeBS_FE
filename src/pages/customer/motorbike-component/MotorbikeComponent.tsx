@@ -10,10 +10,12 @@ import useFormatCurrency from '../../../hooks/useFormatCurrency';
 import { useAppDispatch, useAppSelector } from '../../../services/store/store';
 import { getAllOnExchange } from '../../../services/features/motorbikeSlice';
 import { addToWishList } from '../../../services/features/wishListSlice';
+import { toast } from 'react-toastify';
 
 const MotorbikeComponent = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+
     const { account } = useAppSelector((state) => state.account);
     const { motorbikes } = useAppSelector((state) => state.motorbikes);
 
@@ -35,8 +37,8 @@ const MotorbikeComponent = () => {
     const handleOpenDialog = (motorbikeId: number) => {
         setMotorbikeIdForDialog(motorbikeId);
         setOpenDialog(true);
-        console.log(motorbikeId)
     };
+
     const handleAddToWishList = (motorId: number) => {
         dispatch(addToWishList({ motorId: motorId }))
     }
