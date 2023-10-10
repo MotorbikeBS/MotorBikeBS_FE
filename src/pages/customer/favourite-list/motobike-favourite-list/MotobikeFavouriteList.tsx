@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
     Box,
     Button,
@@ -70,11 +70,14 @@ const MotobikeFavouriteList = () => {
         });
     };
 
-    const handleDeleteFavouriteByID = (motorId: number) => {
-        dispatch(deleteWishlistByMotorId({ motorId: motorId })).then(() => {
-            loadingData();
-        });
-    };
+    const handleDeleteFavouriteByID = useMemo(
+        () => (motorId: number) => {
+            dispatch(deleteWishlistByMotorId({ motorId: motorId })).then(() => {
+                loadingData();
+            });
+        },
+        [dispatch, loadingData]
+    );
 
     return (
         <Box
