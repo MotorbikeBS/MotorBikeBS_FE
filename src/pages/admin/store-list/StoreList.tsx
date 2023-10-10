@@ -42,7 +42,7 @@ const StoreListAdmin: React.FC = () => {
                         <Tab label="Đang Bị Khóa" />
                     </Tabs>
 
-                    <Box flexGrow={4}>
+                    <Box flexGrow={4} marginTop='3rem'>
                         {value === 0 && <StoreListNotVerify />}
                         {value === 1 && <StoreListActive />}
                         {value === 2 && <StoreListInActive />}
