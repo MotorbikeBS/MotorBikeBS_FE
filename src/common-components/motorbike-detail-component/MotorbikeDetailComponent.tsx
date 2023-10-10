@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
     Box,
     Typography,
@@ -22,7 +22,7 @@ import Carousel from 'react-material-ui-carousel';
 import BookingDialog from '../../pages/customer/booking-dialog-component/BookingDialog';
 import useFormatCurrency from '../../hooks/useFormatCurrency';
 import { useAppSelector } from '../../services/store/store';
-import { IMotorbike, IMotorbikeDetail } from '../../models/Motorbike/Motorbike';
+import { IMotorbike } from '../../models/Motorbike/Motorbike';
 
 type motorbikeParams = {
     motorbikeId: number;

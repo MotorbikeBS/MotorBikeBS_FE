@@ -5,11 +5,9 @@ import {
     DialogTitle,
     DialogContent,
     DialogActions,
-    IconButton,
     Button,
     Typography,
 } from '@mui/material';
-import { ClearRounded } from '@mui/icons-material';
 
 interface FullScreenImageDialogProps {
     isOpen: boolean;

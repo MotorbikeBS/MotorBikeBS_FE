@@ -11,11 +11,6 @@ import {
     Paper,
     Grid,
     Box,
-    Dialog,
-    DialogTitle,
-    IconButton,
-    DialogContent,
-    DialogActions, // Added Box component
 } from '@mui/material';
 import { ClearRounded } from '@mui/icons-material';
 import { IStore } from '../../../../models/Store/Store';

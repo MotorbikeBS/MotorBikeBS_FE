@@ -26,7 +26,6 @@ import {
     getWishList,
 } from '../../../../services/features/wishListSlice';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
-import { toast } from 'react-toastify';
 
 const MotobikeFavouriteList = () => {
     const navigate = useNavigate();

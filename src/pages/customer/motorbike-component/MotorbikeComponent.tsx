@@ -10,7 +10,6 @@ import useFormatCurrency from '../../../hooks/useFormatCurrency';
 import { useAppDispatch, useAppSelector } from '../../../services/store/store';
 import { getAllOnExchange } from '../../../services/features/motorbikeSlice';
 import { addToWishList } from '../../../services/features/wishListSlice';
-import { toast } from 'react-toastify';
 
 const MotorbikeComponent = () => {
     const navigate = useNavigate();
