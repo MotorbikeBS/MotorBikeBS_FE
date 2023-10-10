@@ -37,6 +37,13 @@
                 margin-top: 10px;
                 margin-left: 25%;
             }
+            .btn-style-1 {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 10px;
+                // margin-left: 25%;
+            }
             .btn-favorite {
                 color: $primary-favorite;
                 margin-left: 4px;

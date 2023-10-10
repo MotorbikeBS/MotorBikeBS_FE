@@ -21,6 +21,7 @@ export interface IMotorbike {
         idCard: string;
         address: string;
     };
+    registrationImage: string;
     motorbikeImages: IMotorImages[];
 }
 

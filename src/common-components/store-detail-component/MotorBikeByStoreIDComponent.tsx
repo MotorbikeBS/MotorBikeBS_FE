@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Item } from '../../pages/customer/store-list/style/style-root';
 import { FavoriteBorderOutlined } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '../../services/store/store';
-import { clearMotorByStoreId, getMotorByStoreId } from '../../services/features/motorbikeSlice';
+import { clearMotor, getMotorByStoreId } from '../../services/features/motorbikeSlice';
 import useFormatCurrency from '../../hooks/useFormatCurrency';
 import BookingDialog from '../../pages/customer/booking-dialog-component/BookingDialog';
 import { addToWishList } from '../../services/features/wishListSlice';
@@ -33,7 +33,7 @@ const MotorbikeByStoreIdComponent = () => {
     console.log(motorbikeByStoreId);
 
     useEffect(() => {
-        dispatch(clearMotorByStoreId())
+        dispatch(clearMotor())
         dispatch(getMotorByStoreId({ storeId: Number(storeId) }));
     }, [dispatch, storeId]);
 
