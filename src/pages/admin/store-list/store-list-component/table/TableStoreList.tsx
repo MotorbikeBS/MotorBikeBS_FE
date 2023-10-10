@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 export const columns: GridColDef[] = [
     { field: 'id', headerName: 'User ID', width: 100 },
