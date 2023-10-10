@@ -156,8 +156,8 @@ const MotorOwnerExchangeComponent = () => {
                                     </Typography> */}
                                             </div>
                                         </div>
-                                        {account?.roleId === 4 && (
-                                            <div className="btn-style">
+                                        {/* {account?.roleId === 4 && ( */}
+                                            <div className="btn-style-1">
                                                 <Button
                                                     variant="outlined"
                                                     onClick={() =>
@@ -166,11 +166,11 @@ const MotorOwnerExchangeComponent = () => {
                                                 >
                                                     Đặt lịch xem xe
                                                 </Button>
-                                                <Button className="btn-favorite">
+                                                {/* <Button className="btn-favorite">
                                                     <FavoriteBorderOutlined />
-                                                </Button>
+                                                </Button> */}
                                             </div>
-                                        )}
+                                        {/*  )} */}
                                     </Item>
                                 </Grid>
                             ))}

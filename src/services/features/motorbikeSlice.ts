@@ -8,6 +8,7 @@ import {
     getMotorByOwnerIdEndPoint,
     getMotorByStoreIdEndPoint,
     postMotorRegisterEndPoint,
+    updateMotorStatusEndPoint,
 } from '../config/api-config';
 
 interface MotorbikeState {
@@ -145,7 +146,7 @@ export const createMotorbike = createAsyncThunk<IMotorbike, Object>(
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            return response.data.result;
+            return response.data;
         } catch (error: any) {
             return thunkAPI.rejectWithValue({
                 error: error.response?.data?.errorMessages,
@@ -154,12 +155,38 @@ export const createMotorbike = createAsyncThunk<IMotorbike, Object>(
     },
 );
 
+export const updateMotorStatus = createAsyncThunk<
+    IMotorbike,
+    { motorId: number; statusId: number }
+>('motorbike/updateMotorStatus', async ({ motorId, statusId }, thunkAPI) => {
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.put(
+            updateMotorStatusEndPoint,
+            { motorId, statusId },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return response.data;
+    } catch (error: any) {
+        return thunkAPI.rejectWithValue({
+            error: error.response?.data?.errorMessages,
+        });
+    }
+});
+
 export const motorbikeSlice = createSlice({
     name: 'motorbikes',
     initialState,
     reducers: {
-        clearMotorByStoreId: (state) => {
+        clearMotor: (state) => {
+            state.motorbikes = [];
             state.motorbikeByStoreId = [];
+            state.motorbikesByOwner = [];
+            state.motorbike = null;
         },
     },
     extraReducers: (builder) => {
@@ -204,7 +231,7 @@ export const motorbikeSlice = createSlice({
         });
         builder.addCase(getMotorByOwnerId.fulfilled, (state, action) => {
             state.loading = false;
-            state.motorbikes = action.payload;
+            state.motorbikesByOwner = action.payload;
             state.error = null;
         });
         builder.addCase(getMotorByOwnerId.rejected, (state, action) => {
@@ -225,5 +252,5 @@ export const motorbikeSlice = createSlice({
         });
     },
 });
-export const { clearMotorByStoreId } = motorbikeSlice.actions;
+export const { clearMotor } = motorbikeSlice.actions;
 export default motorbikeSlice.reducer;

@@ -33,7 +33,7 @@ const pages = [
     },
     {
         to: '/motorbike-exchange',
-        name: 'Sàn giao dịch',
+        name: 'Sàn chủ xe',
     },
     {
         to: '/motorbike-list',

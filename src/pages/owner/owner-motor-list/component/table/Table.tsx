@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material';
 import { GridColDef, GridColTypeDef } from '@mui/x-data-grid';
+
 import '../../style/style.scss';
 
 const currencyFormatter = new Intl.NumberFormat('vi-VN', {
@@ -23,7 +24,7 @@ const formatDate = (dateString: string) => {
 };
 
 export const columns: GridColDef[] = [
-    { field: 'id', headerName: 'Motor ID', width: 100 },
+    { field: 'id', headerName: 'Motor ID', width: 100, hideable: true },
     {
         field: 'certificateNumber',
         headerName: 'Số đăng ký',
@@ -33,7 +34,6 @@ export const columns: GridColDef[] = [
         field: 'images',
         headerName: 'Ảnh',
         width: 150,
-        // cellClassName: 'images',
         renderCell: (params) =>
             params.row.images ? (
                 <img
@@ -85,7 +85,7 @@ export const columns: GridColDef[] = [
     {
         field: 'motorStatus',
         headerName: 'Tình trạng',
-        width: 240,
+        width: 150,
         editable: false,
         renderCell: (params) =>
             params.row.motorStatus === 'POSTING' ? (
@@ -95,7 +95,7 @@ export const columns: GridColDef[] = [
             ) : params.row.motorStatus === 'CONSIGNMENT' ? (
                 <Typography sx={{ color: '#E6A160' }}>CONSIGNMENT</Typography>
             ) : (
-                <Typography sx={{ color: '3D609A' }}>LIVELIHOOD</Typography>
+                <Typography sx={{ color: '#3D609A' }}>LIVELIHOOD</Typography>
             ),
     },
 ];

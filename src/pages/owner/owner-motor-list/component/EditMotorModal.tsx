@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
+import { format } from 'date-fns';
 import {
     Box,
     Button,
@@ -24,16 +25,18 @@ import {
     SelectChangeEvent,
 } from '@mui/material';
 
-import './style/style.scss';
-import { useAppDispatch, useAppSelector } from '../../services/store/store';
+import { toast } from 'react-toastify';
 import {
     getMotorModel,
     getMotorType,
-} from '../../services/features/motorFields';
-import { createMotorbike } from '../../services/features/motorbikeSlice';
-import { toast } from 'react-toastify';
+} from '../../../../services/features/motorFields';
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../../../../services/store/store';
+import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
 
-interface CreateDialogProps {
+interface EditDialogProps {
     open: boolean;
     openSubmit: boolean;
     openCancel: boolean;
@@ -42,12 +45,12 @@ interface CreateDialogProps {
     onOpenCancelDialog: () => void;
     onCloseCancelDialog: () => void;
     onClose: () => void;
+    selectedRow: IMotorbike | null;
     loadData: () => void;
 }
 
 interface ICreateMotorbike {
     certificateNumber: string;
-    registrationImage: FileList;
     motorName: string;
     modelId: number;
     odo: number;
@@ -58,7 +61,7 @@ interface ICreateMotorbike {
     images: FileList;
 }
 
-const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
+const EditMotorModal: React.FC<EditDialogProps> = ({
     open,
     openSubmit,
     openCancel,
@@ -67,6 +70,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
     onCloseSubmitDialog,
     onCloseCancelDialog,
     onClose,
+    selectedRow,
     loadData,
 }) => {
     const dispatch = useAppDispatch();
@@ -76,6 +80,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
 
     const [model, setModel] = useState('');
     const [motorType, setMotorType] = useState('');
+    const [formattedYear, setFormattedYear] = useState('');
 
     const handleChangeModel = (event: SelectChangeEvent) => {
         setModel(event.target.value);
@@ -94,7 +99,6 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
     const form = useForm<ICreateMotorbike>({
         defaultValues: {
             certificateNumber: '',
-            registrationImage: undefined,
             motorName: '',
             modelId: undefined,
             odo: undefined,
@@ -105,6 +109,20 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
             images: undefined,
         },
     });
+
+    useEffect(() => {
+        if (selectedRow) {
+            form.setValue('certificateNumber', selectedRow.certificateNumber);
+            form.setValue('motorName', selectedRow.motorName);
+            form.setValue('modelId', selectedRow.model?.modelId);
+            form.setValue('odo', selectedRow.odo);
+            // form.setValue('year', format(new Date(selectedRow.year), 'yyyy-MM-dd'));
+            form.setValue('year', new Date(format(new Date(selectedRow.year), 'yyyy-MM-dd')));
+            form.setValue('price', selectedRow.price);
+            form.setValue('description', selectedRow.description || '');
+            form.setValue('motorTypeId', selectedRow.motorType?.motorTypeId);
+        }
+    }, [selectedRow, form]);
 
     const { formState, handleSubmit, register } = form;
     const { errors } = formState;
@@ -124,9 +142,6 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
         const formData = new FormData();
         const year = new Date(data.year);
         formData.append('certificateNumber', data.certificateNumber);
-        if (data.registrationImage && data.registrationImage.length > 0) {
-            formData.append('registrationImage', data.images[0]);
-        }
         formData.append('motorName', data.motorName);
         formData.append('modelId', data.modelId.toString());
         formData.append('odo', data.odo.toString());
@@ -140,17 +155,17 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
             }
         }
         console.log(data);
-        dispatch(createMotorbike(formData))
-            .unwrap()
-            .then((data) => {
-                loadData();
-                toast.success('Thêm xe thành công.');
-                handleCloseDialog();
-            })
-            .catch((error) => {
-                toast.error(error.error[0]);
-                // handleCloseDialog();
-            });
+        handleCloseDialog();
+
+        // dispatch(createMotorbike(formData))
+        //     .then(() => {
+        //         loadData();
+        //         toast.success('Thêm xe thành công.');
+        //         handleCloseDialog();
+        //     })
+        //     .catch((error) => {
+        //         toast.error('Thêm xe thất bại.');
+        //     });
     };
 
     return (
@@ -158,7 +173,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
             <Dialog open={open} onClose={handleOpenCancelDialog}>
                 <DialogTitle>
                     <Typography variant="h4" textAlign="center">
-                        Thêm Xe
+                        Chỉnh Sửa Xe
                     </Typography>
                 </DialogTitle>
                 <DialogContent>
@@ -194,25 +209,6 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                             }
                                                             variant="outlined"
                                                             fullWidth
-                                                        />
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell className="header-table">
-                                                        Thêm ảnh đăng ký xe
-                                                    </TableCell>
-                                                    <TableCell className="header-table-content">
-                                                        <input
-                                                            id="registrationImage"
-                                                            type="file"
-                                                            {...register(
-                                                                'registrationImage',
-                                                                {
-                                                                    required:
-                                                                        'Bạn chưa chọn ảnh đăng ký xe',
-                                                                },
-                                                            )}
-                                                            multiple
                                                         />
                                                     </TableCell>
                                                 </TableRow>
@@ -439,7 +435,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                 </TableRow>
                                                 <TableRow>
                                                     <TableCell className="header-table">
-                                                        Thêm ảnh xe
+                                                        Thêm ảnh
                                                     </TableCell>
                                                     <TableCell className="header-table-content">
                                                         <input
@@ -449,7 +445,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                                 'images',
                                                                 {
                                                                     required:
-                                                                        'Bạn chưa chọn ảnh cho xe',
+                                                                        'Bạn chưa chọn ảnh cho cửa hàng',
                                                                 },
                                                             )}
                                                             multiple
@@ -466,7 +462,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                 color="primary"
                                 onClick={handleOpenSubmitDialog}
                             >
-                                Thêm xe
+                                Chỉnh sửa
                             </Button>
                         </form>
                     </Box>
@@ -482,15 +478,15 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                 </DialogContent>
             </Dialog>
 
-            {/* Dialog Đặt lịch */}
+            {/* Dialog Chỉnh sửa xe */}
             <Dialog open={openSubmit}>
                 <DialogTitle>
-                    <Typography variant="h5">Xác nhận Thêm xe</Typography>
+                    <Typography variant="h5">Xác nhận Chỉnh sửa xe</Typography>
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         <Typography>
-                            Bạn có chắc chắn muốn thêm xe không ?
+                            Bạn có chắc chắn muốn chỉnh sửa xe không ?
                         </Typography>
                     </DialogContentText>
                 </DialogContent>
@@ -520,7 +516,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                 <DialogContent>
                     <DialogContentText>
                         <Typography>
-                            Bạn có chắc chắn muốn hủy bỏ thêm xe không ?
+                            Bạn có chắc chắn muốn hủy bỏ chỉnh sửa xe không ?
                         </Typography>
                     </DialogContentText>
                 </DialogContent>
@@ -545,4 +541,4 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
     );
 };
 
-export default CreateMotorbikeComponent;
+export default EditMotorModal;
