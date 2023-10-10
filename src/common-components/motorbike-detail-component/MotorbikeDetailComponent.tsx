@@ -16,13 +16,15 @@ import {
     MonetizationOnOutlined,
     StoreOutlined,
     FmdGoodOutlined,
+    FavoriteBorderOutlined,
 } from '@mui/icons-material';
 import './style/style.scss';
 import Carousel from 'react-material-ui-carousel';
 import BookingDialog from '../../pages/customer/booking-dialog-component/BookingDialog';
 import useFormatCurrency from '../../hooks/useFormatCurrency';
-import { useAppSelector } from '../../services/store/store';
+import { useAppDispatch, useAppSelector } from '../../services/store/store';
 import { IMotorbike } from '../../models/Motorbike/Motorbike';
+import { addToWishList } from '../../services/features/wishListSlice';
 
 type motorbikeParams = {
     motorbikeId: number;
@@ -30,6 +32,8 @@ type motorbikeParams = {
 
 const MotorBikeDetailComponent = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+
     const { motorbikeId } = useParams<motorbikeParams | any>();
     const { account } = useAppSelector((state) => state.account);
     const { motorbikes } = useAppSelector((state) => state.motorbikes);
@@ -69,6 +73,11 @@ const MotorBikeDetailComponent = () => {
     const handleCloseCancelDialog = () => {
         setIsOpenCancelDialog(false);
     };
+
+    const handleAddToWishList = (motorId: number) => {
+        dispatch(addToWishList({ motorId: motorId }))
+    }
+
     if (!motorbikeId) {
         return (
             <Container>
@@ -299,6 +308,15 @@ const MotorBikeDetailComponent = () => {
                                 }}
                             >
                                 Đặt lịch xem xe
+                            </Button>
+                            <Button
+                                className="btn-favorite"
+                                sx={{
+                                    color: 'red'
+                                }}
+                                onClick={() => handleAddToWishList(motorbike.motorId)}
+                            >
+                                <FavoriteBorderOutlined />
                             </Button>
                         </Box>
                     )}

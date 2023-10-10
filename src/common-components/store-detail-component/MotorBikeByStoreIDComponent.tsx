@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../services/store/store';
 import { clearMotorByStoreId, getMotorByStoreId } from '../../services/features/motorbikeSlice';
 import useFormatCurrency from '../../hooks/useFormatCurrency';
 import BookingDialog from '../../pages/customer/booking-dialog-component/BookingDialog';
+import { addToWishList } from '../../services/features/wishListSlice';
 
 type storeParams = {
     storeId: number;
@@ -61,6 +62,9 @@ const MotorbikeByStoreIdComponent = () => {
     const handleCloseCancelDialog = () => {
         setIsOpenCancelDialog(false);
     };
+    const handleAddToWishList = (motorId: number) => {
+        dispatch(addToWishList({ motorId: motorId }))
+    }
 
     return (
         <Box
@@ -190,7 +194,10 @@ const MotorbikeByStoreIdComponent = () => {
                                                         >
                                                             Đặt lịch xem xe
                                                         </Button>
-                                                        <Button className="btn-favorite">
+                                                        <Button
+                                                            className="btn-favorite"
+                                                            onClick={() => handleAddToWishList(motor.motorId)}
+                                                        >
                                                             <FavoriteBorderOutlined />
                                                         </Button>
                                                     </div>
