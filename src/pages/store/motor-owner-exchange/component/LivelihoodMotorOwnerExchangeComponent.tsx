@@ -60,7 +60,7 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
     };
 
     const motorbikesLivelihoodByOwner = motorbikesByOwner?.filter(
-        (motor) => motor.motorStatus.motorStatusId === 5,
+        (motor) => motor.motorStatus?.motorStatusId === 5,
     );
 
     return (
@@ -127,7 +127,7 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
                                         </div>
                                         <div className="product-information">
                                             <Typography variant="h6">
-                                                {motor.motorName}
+                                                {motor?.motorName}
                                             </Typography>
                                             <Typography
                                                 color="red"

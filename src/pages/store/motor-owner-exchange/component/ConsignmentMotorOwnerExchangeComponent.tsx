@@ -55,7 +55,7 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
         setIsOpenCancelDialog(false);
     };
 
-    const motorbikesConsignmentByOwner = motorbikesByOwner?.filter(motor => motor.motorStatus.motorStatusId === 4)
+    const motorbikesConsignmentByOwner = motorbikesByOwner?.filter(motor => motor.motorStatus?.motorStatusId === 4)
 
     return (
         <Box
