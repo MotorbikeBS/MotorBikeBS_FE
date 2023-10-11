@@ -3,13 +3,13 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import accountSlice from '../features/accountSlice';
-import userslice from '../features/userSlice';
-import storeSlice from '../features/storeSlice';
-import motorbikeSlice from '../features/motorbikeSlice';
-import motorFiledsSlice from '../features/motorFields';
-import ownerSlice from '../features/ownerSlice';
-import wishListSlice from './../features/wishListSlice';
+import accountSlice from '../features/auth/accountSlice';
+import userslice from '../features/user/userSlice';
+import storeSlice from '../features/store/storeSlice';
+import motorbikeSlice from '../features/motorbike/motorbikeSlice';
+import motorFiledsSlice from '../features/motorbike/motorFields';
+import ownerSlice from '../features/owner/ownerSlice';
+import wishListSlice from '../features/motorbike/wishListSlice';
 
 // Định nghĩa cấu hình persist
 const persistConfig = {

@@ -16,7 +16,7 @@ import { Search, SearchIconWrapper, StyledInputBase } from './styleMUI/styled';
 import { AccountCircle, Notifications, SearchOutlined } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAppDispatch } from '../../../services/store/store';
-import { logoutUser } from '../../../services/features/accountSlice';
+import { logoutUser } from '../../../services/features/auth/accountSlice';
 
 const pages = [
     {

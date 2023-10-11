@@ -28,7 +28,7 @@ import {
 import './style/style.scss';
 import MenuComponent from '../../../common-components/notify-component/NotifyComponent';
 import { useAppDispatch } from '../../../services/store/store';
-import { logoutUser } from '../../../services/features/accountSlice';
+import { logoutUser } from '../../../services/features/auth/accountSlice';
 
 const pages = [
     {
@@ -334,11 +334,10 @@ const CustomerMenuComponent = () => {
                                 <Link
                                     key={page.to}
                                     to={page.to}
-                                    className={`link-customer ${
-                                        isMenuItemActive(page.to)
+                                    className={`link-customer ${isMenuItemActive(page.to)
                                             ? 'active'
                                             : ''
-                                    }`}
+                                        }`}
                                 >
                                     {page.name}
                                 </Link>

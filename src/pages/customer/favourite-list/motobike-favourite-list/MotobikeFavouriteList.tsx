@@ -24,7 +24,7 @@ import {
     deleteAllWishList,
     deleteWishlistByMotorId,
     getWishList,
-} from '../../../../services/features/wishListSlice';
+} from '../../../../services/features/motorbike/wishListSlice';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 
 const MotobikeFavouriteList = () => {

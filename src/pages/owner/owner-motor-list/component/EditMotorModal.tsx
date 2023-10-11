@@ -29,7 +29,7 @@ import { toast } from 'react-toastify';
 import {
     getMotorModel,
     getMotorType,
-} from '../../../../services/features/motorFields';
+} from '../../../../services/features/motorbike/motorFields';
 import {
     useAppDispatch,
     useAppSelector,

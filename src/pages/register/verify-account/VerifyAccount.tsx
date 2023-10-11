@@ -3,7 +3,7 @@ import './style/style.scss';
 import { Button, Container, Typography } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../services/store/store';
-import { verifyEmail } from '../../../services/features/accountSlice';
+import { verifyEmail } from '../../../services/features/auth/accountSlice';
 import PageNotFound from '../../page-notfound/PageNotFound';
 
 const VerifyAccount = () => {

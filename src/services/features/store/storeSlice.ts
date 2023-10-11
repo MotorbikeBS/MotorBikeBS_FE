@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IRegisterStore } from '../../models/Account/AccountInterface';
+import { IRegisterStore } from '../../../models/Account/AccountInterface';
 import axios from 'axios';
 import {
     getAllStoreEndPoint,
@@ -9,9 +9,9 @@ import {
     refuseStoreEndPoint,
     registerStoreEndPoint,
     verifyStoreEndPoint,
-} from '../config/api-config';
+} from '../../config/api-config';
 import { toast } from 'react-toastify';
-import { IStore } from '../../models/Store/Store';
+import { IStore } from '../../../models/Store/Store';
 
 interface StoreState {
     loading: boolean;

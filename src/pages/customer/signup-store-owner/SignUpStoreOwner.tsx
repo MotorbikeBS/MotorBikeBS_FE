@@ -12,7 +12,7 @@ import {
 import CustomerMenuComponent from '../customer-menu-component/CustomerMenuComponent';
 import FooterComponent from '../../../common-components/footer-component/FooterComponent';
 import { useAppDispatch, useAppSelector } from '../../../services/store/store';
-import { registerStore, setError } from '../../../services/features/storeSlice';
+import { registerStore, setError } from '../../../services/features/store/storeSlice';
 
 interface ISignupStore {
     storeName: string;

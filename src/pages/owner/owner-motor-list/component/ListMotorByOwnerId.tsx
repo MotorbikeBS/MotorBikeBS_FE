@@ -15,7 +15,7 @@ import {
     useAppSelector,
 } from '../../../../services/store/store';
 import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
-import { getMotorByOwnerId } from '../../../../services/features/motorbikeSlice';
+import { getMotorByOwnerId } from '../../../../services/features/motorbike/motorbikeSlice';
 import EditMotorModal from './EditMotorModal';
 import PostMotorModal from './PostMotorModal';
 

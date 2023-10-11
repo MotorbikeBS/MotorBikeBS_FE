@@ -4,10 +4,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Item } from '../../pages/customer/store-list/style/style-root';
 import { FavoriteBorderOutlined } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '../../services/store/store';
-import { clearMotor, getMotorByStoreId } from '../../services/features/motorbikeSlice';
+import { clearMotor, getMotorByStoreId } from '../../services/features/motorbike/motorbikeSlice';
 import useFormatCurrency from '../../hooks/useFormatCurrency';
 import BookingDialog from '../../pages/customer/booking-dialog-component/BookingDialog';
-import { addToWishList } from '../../services/features/wishListSlice';
+import { addToWishList } from '../../services/features/motorbike/wishListSlice';
 
 type storeParams = {
     storeId: number;

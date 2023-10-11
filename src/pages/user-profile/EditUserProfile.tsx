@@ -28,7 +28,7 @@ import StoreMenuComponent from '../store/store-menu-component/StoreMenuComponent
 import OwnerMenuComponent from '../owner/owner-menu-component/OwnerMenuComponent';
 import { useForm } from 'react-hook-form';
 import { format } from 'date-fns';
-import { editUserByID, getUserByID } from '../../services/features/userSlice';
+import { editUserByID, getUserByID } from '../../services/features/user/userSlice';
 import { toast } from 'react-toastify';
 
 type FormValues = {

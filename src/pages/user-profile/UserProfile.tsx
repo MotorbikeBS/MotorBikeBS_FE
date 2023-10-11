@@ -19,7 +19,7 @@ import StoreMenuComponent from '../store/store-menu-component/StoreMenuComponent
 import OwnerMenuComponent from '../owner/owner-menu-component/OwnerMenuComponent';
 import AdminMenuComponent from '../admin/admin-menu-component/AdminMenuComponent';
 import { useAppDispatch, useAppSelector } from '../../services/store/store';
-import { getUserByID } from '../../services/features/userSlice';
+import { getUserByID } from '../../services/features/user/userSlice';
 import { format } from 'date-fns';
 
 const UserProfile = () => {

@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IRegisterOwner } from '../../models/Account/AccountInterface';
+import { IRegisterOwner } from '../../../models/Account/AccountInterface';
 import { toast } from 'react-toastify';
-import { IUser } from '../../models/User/UserInterface';
+import { IUser } from '../../../models/User/UserInterface';
 import axios from 'axios';
-import { ownerRegisterEndPoint } from '../config/api-config';
+import { ownerRegisterEndPoint } from '../../config/api-config';
 
 interface OwnerState {
     loading: boolean;

@@ -8,7 +8,7 @@ import Background from '../../common-components/background-component/BackgroundC
 
 import './style/style.scss';
 import { useAppDispatch, useAppSelector } from '../../services/store/store';
-import { forgotPassword, setError } from '../../services/features/accountSlice';
+import { forgotPassword, setError } from '../../services/features/auth/accountSlice';
 
 type FormValues = {
     email: string;

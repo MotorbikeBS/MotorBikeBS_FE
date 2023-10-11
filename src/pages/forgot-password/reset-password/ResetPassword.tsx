@@ -6,7 +6,7 @@ import BackgroundComponent from '../../../common-components/background-component
 import {
     resetPassword,
     setError,
-} from '../../../services/features/accountSlice';
+} from '../../../services/features/auth/accountSlice';
 import { useAppDispatch, useAppSelector } from '../../../services/store/store';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 

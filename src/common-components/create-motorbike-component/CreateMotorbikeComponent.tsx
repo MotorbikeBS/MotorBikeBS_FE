@@ -29,8 +29,8 @@ import { useAppDispatch, useAppSelector } from '../../services/store/store';
 import {
     getMotorModel,
     getMotorType,
-} from '../../services/features/motorFields';
-import { createMotorbike } from '../../services/features/motorbikeSlice';
+} from '../../services/features/motorbike/motorFields';
+import { createMotorbike } from '../../services/features/motorbike/motorbikeSlice';
 import { toast } from 'react-toastify';
 
 interface CreateDialogProps {

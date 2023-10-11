@@ -24,7 +24,7 @@ import BookingDialog from '../../pages/customer/booking-dialog-component/Booking
 import useFormatCurrency from '../../hooks/useFormatCurrency';
 import { useAppDispatch, useAppSelector } from '../../services/store/store';
 import { IMotorbike } from '../../models/Motorbike/Motorbike';
-import { addToWishList } from '../../services/features/wishListSlice';
+import { addToWishList } from '../../services/features/motorbike/wishListSlice';
 
 type motorbikeParams = {
     motorbikeId: number;

@@ -4,9 +4,9 @@ import CustomerMenuComponent from '../customer-menu-component/CustomerMenuCompon
 import FooterComponent from '../../../common-components/footer-component/FooterComponent'
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../services/store/store';
-import { clearError, ownerRegister } from '../../../services/features/ownerSlice';
-import { logoutUser, setError } from '../../../services/features/accountSlice';
-import { getUserByID } from '../../../services/features/userSlice';
+import { clearError, ownerRegister } from '../../../services/features/owner/ownerSlice';
+import { logoutUser, setError } from '../../../services/features/auth/accountSlice';
+import { getUserByID } from '../../../services/features/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 

@@ -16,7 +16,7 @@ import Background from '../../common-components/background-component/BackgroundC
 
 import './login-style/login-style.scss';
 import { useAppDispatch, useAppSelector } from '../../services/store/store';
-import { loginUser, setError } from '../../services/features/accountSlice';
+import { loginUser, setError } from '../../services/features/auth/accountSlice';
 
 type FormValues = {
     email: string;

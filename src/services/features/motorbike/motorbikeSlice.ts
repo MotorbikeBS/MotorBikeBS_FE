@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IMotorbike, IMotorbikeDetail } from '../../models/Motorbike/Motorbike';
+import {
+    IMotorbike,
+    IMotorbikeDetail,
+} from '../../../models/Motorbike/Motorbike';
 import {
     getAllOnExChangeEndPoint,
     getAllOnStoreExChangeEndPoint,
@@ -9,7 +12,7 @@ import {
     getMotorByStoreIdEndPoint,
     postMotorRegisterEndPoint,
     updateMotorStatusEndPoint,
-} from '../config/api-config';
+} from '../../config/api-config';
 
 interface MotorbikeState {
     loading: boolean;

@@ -7,7 +7,7 @@ import Background from '../../common-components/background-component/BackgroundC
 
 import './styles/style.scss';
 import { useAppDispatch, useAppSelector } from '../../services/store/store';
-import { registerUser, setError } from '../../services/features/accountSlice';
+import { registerUser, setError } from '../../services/features/auth/accountSlice';
 
 type FormValues = {
     username: string;

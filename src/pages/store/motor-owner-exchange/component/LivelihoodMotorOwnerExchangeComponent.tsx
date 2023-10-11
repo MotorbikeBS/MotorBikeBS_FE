@@ -9,7 +9,7 @@ import {
     useAppDispatch,
     useAppSelector,
 } from '../../../../services/store/store';
-import { getAllOnStoreExchange } from '../../../../services/features/motorbikeSlice';
+import { getAllOnStoreExchange } from '../../../../services/features/motorbike/motorbikeSlice';
 
 const LivelihoodMotorOwnerExchangeComponent = () => {
     const navigate = useNavigate();
@@ -71,7 +71,7 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
             }}
         >
             {motorbikesLivelihoodByOwner &&
-            motorbikesLivelihoodByOwner.length === 0 ? (
+                motorbikesLivelihoodByOwner.length === 0 ? (
                 <>
                     <Container className="wishlist-container-notFound">
                         <Paper elevation={3} sx={{ padding: 2 }}>
@@ -104,7 +104,7 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
                                             }
                                         >
                                             {motor.motorbikeImages &&
-                                            motor.motorbikeImages.length ===
+                                                motor.motorbikeImages.length ===
                                                 0 ? (
                                                 <>
                                                     <img

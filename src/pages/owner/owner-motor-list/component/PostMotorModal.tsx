@@ -23,7 +23,7 @@ import {
 } from '@mui/material';
 import { useAppDispatch } from '../../../../services/store/store';
 import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
-import { updateMotorStatus } from '../../../../services/features/motorbikeSlice';
+import { updateMotorStatus } from '../../../../services/features/motorbike/motorbikeSlice';
 import { toast } from 'react-toastify';
 interface PostDialogProps {
     open: boolean;

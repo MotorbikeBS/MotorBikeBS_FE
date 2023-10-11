@@ -20,8 +20,8 @@ import { useAppDispatch, useAppSelector } from '../../services/store/store';
 import OwnerMenuComponent from '../owner/owner-menu-component/OwnerMenuComponent';
 import StoreMenuComponent from '../store/store-menu-component/StoreMenuComponent';
 import AdminMenuComponent from '../admin/admin-menu-component/AdminMenuComponent';
-import { changePassword, setError } from '../../services/features/userSlice';
-import { logoutUser } from '../../services/features/accountSlice';
+import { changePassword, setError } from '../../services/features/user/userSlice';
+import { logoutUser } from '../../services/features/auth/accountSlice';
 import { toast } from 'react-toastify';
 
 type FormValues = {

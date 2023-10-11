@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../../../services/store/store
 import { Container, Paper, Typography } from '@mui/material';
 import { DataGrid, GridRowParams } from '@mui/x-data-grid';
 import { columns } from './table/TableStoreList';
-import { getAllStore } from '../../../../services/features/storeSlice';
+import { getAllStore } from '../../../../services/features/store/storeSlice';
 import { IStore } from '../../../../models/Store/Store';
 import StoreModal from '../ModalComponent/StoreModalComponent';
 

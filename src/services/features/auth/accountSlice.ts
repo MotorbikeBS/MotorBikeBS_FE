@@ -6,9 +6,9 @@ import {
     resetPasswordEndPoint,
     signupEndPoint,
     verifyEndPoit,
-} from '../config/api-config';
+} from '../../config/api-config';
 import { toast } from 'react-toastify';
-import { IAccount } from '../../models/Account/AccountInterface';
+import { IAccount } from '../../../models/Account/AccountInterface';
 
 interface AccountState {
     loading: boolean;

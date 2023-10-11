@@ -4,12 +4,12 @@ import AddIcon from '@mui/icons-material/Add';
 import CreateMotorbikeComponent from '../../../../common-components/create-motorbike-component/CreateMotorbikeComponent';
 import '../style/style.scss';
 import ListMotorByOwnerId from './ListMotorByOwnerId';
-import { getMotorByOwnerId } from '../../../../services/features/motorbikeSlice';
+import { getMotorByOwnerId } from '../../../../services/features/motorbike/motorbikeSlice';
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
 
 const OwnerMotorListComponent = () => {
     const { account } = useAppSelector((state) => state.account);
-    const dispatch =useAppDispatch()
+    const dispatch = useAppDispatch()
     const [isOpenDialog, setOpenDialog] = useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = useState(false);
@@ -49,7 +49,7 @@ const OwnerMotorListComponent = () => {
                 </Button>
             </div>
 
-            <ListMotorByOwnerId  loadData={loadData}/>
+            <ListMotorByOwnerId loadData={loadData} />
 
             <CreateMotorbikeComponent
                 open={isOpenDialog}

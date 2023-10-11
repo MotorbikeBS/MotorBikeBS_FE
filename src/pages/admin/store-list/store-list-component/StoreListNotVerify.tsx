@@ -1,7 +1,7 @@
 // StoreListNotVerify.js
 import React, { useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
-import { getAllStore } from '../../../../services/features/storeSlice';
+import { getAllStore } from '../../../../services/features/store/storeSlice';
 import { IStore } from '../../../../models/Store/Store';
 import { Container, Typography, Paper } from '@mui/material';
 import { DataGrid, GridRowParams } from '@mui/x-data-grid';

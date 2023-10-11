@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store'
-import { getAllUser } from '../../../../services/features/userSlice'
+import { getAllUser } from '../../../../services/features/user/userSlice'
 import { IUser } from '../../../../models/User/UserInterface'
 import { Container, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'

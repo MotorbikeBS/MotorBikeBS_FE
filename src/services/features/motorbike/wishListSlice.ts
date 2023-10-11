@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IWishList } from '../../models/WishList/WishList';
+import { IWishList } from '../../../models/WishList/WishList';
 import axios from 'axios';
 import {
     addToWishListEndPoint,
     deleteAllWishListEndPoint,
     deleteWishListByMotorIdEndPoint,
     getWishListEndPoint,
-} from '../config/api-config';
+} from '../../config/api-config';
 import { toast } from 'react-toastify';
 
 interface WishListState {

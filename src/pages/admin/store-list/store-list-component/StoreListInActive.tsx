@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store'
 import { IStore } from '../../../../models/Store/Store'
-import { getAllStore } from '../../../../services/features/storeSlice'
+import { getAllStore } from '../../../../services/features/store/storeSlice'
 import { DataGrid, GridRowParams } from '@mui/x-data-grid'
 import { Container, Paper, Typography } from '@mui/material'
 import { columns } from './table/TableStoreList'

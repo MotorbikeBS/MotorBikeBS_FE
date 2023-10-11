@@ -24,7 +24,7 @@ import {
 } from '@mui/icons-material';
 import './style/style.scss';
 import { useAppDispatch } from '../../../services/store/store';
-import { logoutUser } from '../../../services/features/accountSlice';
+import { logoutUser } from '../../../services/features/auth/accountSlice';
 
 const pages = [
     {
@@ -236,11 +236,10 @@ const StoreMenuComponent = () => {
                                 <Link
                                     key={page.to}
                                     to={page.to}
-                                    className={`link-customer ${
-                                        isMenuItemActive(page.to)
+                                    className={`link-customer ${isMenuItemActive(page.to)
                                             ? 'active'
                                             : ''
-                                    }`}
+                                        }`}
                                 >
                                     {page.name}
                                 </Link>

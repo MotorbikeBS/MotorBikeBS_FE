@@ -5,13 +5,13 @@ import {
     IModel,
     IMotorStatus,
     IMotorType,
-} from '../../models/Motorbike/Motorbike';
+} from '../../../models/Motorbike/Motorbike';
 import {
     getMotorBrandEndPoint,
     getMotorModelEndPoint,
     getMotorStatusEndPoint,
     getMotorTypeEndPoint,
-} from '../config/api-config';
+} from '../../config/api-config';
 
 interface MotorFileds {
     loading: boolean;

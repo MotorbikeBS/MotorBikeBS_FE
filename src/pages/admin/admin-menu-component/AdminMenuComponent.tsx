@@ -21,7 +21,7 @@ import {
     SearchOutlined,
 } from '@mui/icons-material';
 import { useAppDispatch } from '../../../services/store/store';
-import { logoutUser } from '../../../services/features/accountSlice';
+import { logoutUser } from '../../../services/features/auth/accountSlice';
 
 const pages = [{
     to: '/dashboard',

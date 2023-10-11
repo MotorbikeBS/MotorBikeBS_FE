@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { IEditUser, IUser } from '../../models/User/UserInterface';
+import { IEditUser, IUser } from '../../../models/User/UserInterface';
 import {
     changePasswordEndPoint,
     editUserByIDEndPoint,
     getAllUserEndPoint,
     getUserByIDEndPoint,
-} from '../config/api-config';
+} from '../../config/api-config';
 
 interface UserState {
     loading: boolean;
