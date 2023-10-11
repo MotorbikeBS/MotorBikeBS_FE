@@ -19,7 +19,11 @@ import { getMotorByOwnerId } from '../../../../services/features/motorbikeSlice'
 import EditMotorModal from './EditMotorModal';
 import PostMotorModal from './PostMotorModal';
 
-const ListMotorByOwnerId = () => {
+interface ListMotorProps {
+    loadData: () => void;
+}
+
+const ListMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
     const dispatch = useAppDispatch();
     const { motorbikesByOwner } = useAppSelector((state) => state.motorbikes);
     const { account } = useAppSelector((state) => state.account);
@@ -100,7 +104,7 @@ const ListMotorByOwnerId = () => {
             year: motor.year,
             price: motor.price,
             modelName: motor.model.modelName,
-            motorType: motor.motorType.title,
+            motorTypeName: motor.motorType.title,
             motorStatus: motor.motorStatus.title,
         }));
     }, [motorbikesByOwner]);
@@ -171,8 +175,8 @@ const ListMotorByOwnerId = () => {
                 onOpenCancelDialog={handleOpenCancelEditDialog}
                 onCloseCancelDialog={handleCloseCancelEditDialog}
                 onClose={handleCloseDialog}
-                selectedRow={selectedRow} 
-                loadData={() => {}}
+                selectedRow={selectedRow}
+                loadData={loadData}
             />
 
             <PostMotorModal
@@ -184,7 +188,8 @@ const ListMotorByOwnerId = () => {
                 onOpenCancelDialog={handleOpenCancelPostDialog}
                 onCloseCancelDialog={handleCloseCancelPostDialog}
                 onClose={handleCloseDialog}
-                loadData={() => {}}
+                selectedRow={selectedRow}
+                loadData={loadData}
             />
         </Container>
     );

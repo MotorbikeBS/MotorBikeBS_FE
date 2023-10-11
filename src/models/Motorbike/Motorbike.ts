@@ -9,6 +9,11 @@ export interface IMotorbike {
     price: number;
     description?: string;
     model: IModel;
+    //id, modelName, motorTypeName này để show lại xe ======
+    id: number;
+    modelName?: string;
+    motorTypeName?: string;
+    // ===============================================
     motorStatus: IMotorStatus;
     motorType: IMotorType;
     store: IStore;
