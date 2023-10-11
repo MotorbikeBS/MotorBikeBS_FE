@@ -26,15 +26,20 @@ import {
 } from '@mui/material';
 
 import { toast } from 'react-toastify';
-import {
-    getMotorModel,
-    getMotorType,
-} from '../../../../services/features/motorbike/motorFields';
+
 import {
     useAppDispatch,
     useAppSelector,
 } from '../../../../services/store/store';
 import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
+import {
+    getMotorModel,
+    getMotorType,
+} from '../../../../services/features/motorbike/motorFields';
+import {
+    getMotorId,
+    // updateMotorById,
+} from '../../../../services/features/motorbike/motorbikeSlice';
 
 interface EditDialogProps {
     open: boolean;
@@ -51,10 +56,11 @@ interface EditDialogProps {
 
 interface ICreateMotorbike {
     certificateNumber: string;
+    registrationImage: FileList;
     motorName: string;
     modelId: number;
     odo: number;
-    year: Date;
+    year: string;
     price: number;
     description: string;
     motorTypeId: number;
@@ -74,13 +80,13 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
     loadData,
 }) => {
     const dispatch = useAppDispatch();
+    const { motorbike } = useAppSelector((state) => state.motorbikes);
     const { motorModels, motorTypes } = useAppSelector(
         (state) => state.motorFields,
     );
 
     const [model, setModel] = useState('');
     const [motorType, setMotorType] = useState('');
-    const [formattedYear, setFormattedYear] = useState('');
 
     const handleChangeModel = (event: SelectChangeEvent) => {
         setModel(event.target.value);
@@ -94,15 +100,17 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
     useEffect(() => {
         dispatch(getMotorModel());
         dispatch(getMotorType());
-    }, [dispatch]);
+        dispatch(getMotorId({ motorId: Number(selectedRow?.id) }));
+    }, [dispatch, selectedRow]);
 
     const form = useForm<ICreateMotorbike>({
         defaultValues: {
             certificateNumber: '',
+            registrationImage: undefined,
             motorName: '',
             modelId: undefined,
             odo: undefined,
-            year: new Date(),
+            year: '',
             price: undefined,
             description: '',
             motorTypeId: undefined,
@@ -111,21 +119,20 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
     });
 
     useEffect(() => {
-        if (selectedRow) {
-            form.setValue('certificateNumber', selectedRow.certificateNumber);
-            form.setValue('motorName', selectedRow.motorName);
-            form.setValue('modelId', selectedRow.model?.modelId);
-            form.setValue('odo', selectedRow.odo);
-            // form.setValue('year', format(new Date(selectedRow.year), 'yyyy-MM-dd'));
+        if (motorbike) {
+            form.setValue('certificateNumber', motorbike.certificateNumber);
+            form.setValue('motorName', motorbike.motorName);
+            form.setValue('modelId', motorbike.model?.modelId);
+            form.setValue('odo', motorbike.odo);
             form.setValue(
                 'year',
-                new Date(format(new Date(selectedRow.year), 'yyyy-MM-dd')),
+                format(new Date(motorbike.year), 'yyyy-MM-dd'),
             );
-            form.setValue('price', selectedRow.price);
-            form.setValue('description', selectedRow.description || '');
-            form.setValue('motorTypeId', selectedRow.motorType?.motorTypeId);
+            form.setValue('price', motorbike.price);
+            form.setValue('description', motorbike.description || '');
+            form.setValue('motorTypeId', motorbike.motorType?.motorTypeId);
         }
-    }, [selectedRow, form]);
+    }, [motorbike, form]);
 
     const { formState, handleSubmit, register } = form;
     const { errors } = formState;
@@ -145,6 +152,9 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
         const formData = new FormData();
         const year = new Date(data.year);
         formData.append('certificateNumber', data.certificateNumber);
+        if (data.registrationImage && data.registrationImage.length > 0) {
+            formData.append('registrationImage', data.images[0]);
+        }
         formData.append('motorName', data.motorName);
         formData.append('modelId', data.modelId.toString());
         formData.append('odo', data.odo.toString());
@@ -158,16 +168,17 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
             }
         }
         console.log(data);
-        handleCloseDialog();
+        // handleCloseDialog();
 
-        // dispatch(createMotorbike(formData))
+        // dispatch(updateMotorById({motorId: motorbike?.motorId}, formData))
+        //     .unwrap()
         //     .then(() => {
         //         loadData();
-        //         toast.success('Thêm xe thành công.');
+        //         toast.success('Chỉnh sửa xe thành công.');
         //         handleCloseDialog();
         //     })
         //     .catch((error) => {
-        //         toast.error('Thêm xe thất bại.');
+        //         toast.error(error.error[0]);
         //     });
     };
 
@@ -216,6 +227,25 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
                                                     </TableCell>
                                                 </TableRow>
                                                 <TableRow>
+                                                    <TableCell className="header-table">
+                                                        Thêm ảnh đăng ký xe
+                                                    </TableCell>
+                                                    <TableCell className="header-table-content">
+                                                        <input
+                                                            id="registrationImage"
+                                                            type="file"
+                                                            {...register(
+                                                                'registrationImage',
+                                                                {
+                                                                    required:
+                                                                        'Bạn chưa chọn ảnh đăng ký xe',
+                                                                },
+                                                            )}
+                                                            multiple
+                                                        />
+                                                    </TableCell>
+                                                </TableRow>
+                                                <TableRow>
                                                     <TableCell
                                                         style={{
                                                             fontWeight: 'bold',
@@ -259,7 +289,14 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
                                                             <Select
                                                                 labelId="demo-simple-select-label"
                                                                 label="Model"
-                                                                value={model}
+                                                                value={
+                                                                    model 
+                                                                    // ||
+                                                                    // motorbike
+                                                                    //     ?.model
+                                                                    //     ?.modelId ||
+                                                                    // ''
+                                                                }
                                                                 {...register(
                                                                     'modelId',
                                                                     {
@@ -404,6 +441,11 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
                                                                 label="Loại xe"
                                                                 value={
                                                                     motorType
+                                                                    //  ||
+                                                                    // motorbike
+                                                                    //     ?.motorType
+                                                                    //     ?.motorTypeId ||
+                                                                    // 0
                                                                 }
                                                                 {...register(
                                                                     'motorTypeId',

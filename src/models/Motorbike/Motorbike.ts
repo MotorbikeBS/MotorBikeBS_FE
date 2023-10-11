@@ -5,7 +5,7 @@ export interface IMotorbike {
     certificateNumber: string;
     motorName: string;
     odo: number;
-    year: Date;
+    year: string;
     price: number;
     description?: string;
     model: IModel;
