@@ -21,11 +21,10 @@ import {
     InputLabel,
     SelectChangeEvent,
 } from '@mui/material';
-import {
-    useAppDispatch,
-    useAppSelector,
-} from '../../../../services/store/store';
-
+import { useAppDispatch } from '../../../../services/store/store';
+import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
+import { updateMotorStatus } from '../../../../services/features/motorbikeSlice';
+import { toast } from 'react-toastify';
 interface PostDialogProps {
     open: boolean;
     openSubmit: boolean;
@@ -35,19 +34,8 @@ interface PostDialogProps {
     onOpenCancelDialog: () => void;
     onCloseCancelDialog: () => void;
     onClose: () => void;
+    selectedRow: IMotorbike | null;
     loadData: () => void;
-}
-
-interface ICreateMotorbike {
-    certificateNumber: string;
-    motorName: string;
-    modelId: number;
-    odo: number;
-    year: Date;
-    price: number;
-    description: string;
-    motorTypeId: number;
-    images: FileList;
 }
 
 const PostMotorModal: React.FC<PostDialogProps> = ({
@@ -59,19 +47,15 @@ const PostMotorModal: React.FC<PostDialogProps> = ({
     onCloseSubmitDialog,
     onCloseCancelDialog,
     onClose,
+    selectedRow,
     loadData,
 }) => {
     const dispatch = useAppDispatch();
 
-    const [model, setModel] = useState('');
-    const [motorType, setMotorType] = useState('');
+    const [motorStatus, setMotorStatus] = useState('');
 
-    const handleChangeModel = (event: SelectChangeEvent) => {
-        setModel(event.target.value);
-    };
-
-    const handleChangeType = (event: SelectChangeEvent) => {
-        setMotorType(event.target.value);
+    const handleChangeStatus = (event: SelectChangeEvent) => {
+        setMotorStatus(event.target.value);
     };
 
     const handleCloseDialog = () => {
@@ -83,6 +67,25 @@ const PostMotorModal: React.FC<PostDialogProps> = ({
 
     const handleOpenCancelDialog = () => {
         onOpenCancelDialog();
+    };
+
+    const handleSubmitUpdateMotorStatus = () => {
+        dispatch(
+            updateMotorStatus({
+                motorId: Number(selectedRow?.id),
+                statusId: Number(motorStatus),
+            }),
+        )
+            .unwrap()
+            .then(() => {
+                toast.success('Đăng bài thành công!');
+                loadData();
+                handleCloseDialog();
+            })
+            .catch((error) => {
+                toast.error(error?.error[0]);
+                console.log(error);
+            });
     };
 
     return (
@@ -111,6 +114,10 @@ const PostMotorModal: React.FC<PostDialogProps> = ({
                                                             type="text"
                                                             variant="outlined"
                                                             fullWidth
+                                                            value={
+                                                                selectedRow?.certificateNumber
+                                                            }
+                                                            disabled
                                                         />
                                                     </TableCell>
                                                 </TableRow>
@@ -127,8 +134,12 @@ const PostMotorModal: React.FC<PostDialogProps> = ({
                                                         <TextField
                                                             label="Tên xe"
                                                             type="text"
+                                                            value={
+                                                                selectedRow?.motorName
+                                                            }
                                                             variant="outlined"
                                                             fullWidth
+                                                            disabled
                                                         />
                                                     </TableCell>
                                                 </TableRow>
@@ -137,7 +148,7 @@ const PostMotorModal: React.FC<PostDialogProps> = ({
                                                         Model
                                                     </TableCell>
                                                     <TableCell className="header-table-content">
-                                                        <FormControl fullWidth>
+                                                        {/* <FormControl fullWidth>
                                                             <InputLabel id="demo-simple-select-label">
                                                                 Model
                                                             </InputLabel>
@@ -149,9 +160,21 @@ const PostMotorModal: React.FC<PostDialogProps> = ({
                                                                     handleChangeModel
                                                                 }
                                                             >
-                                                                <MenuItem value="1">@</MenuItem>
+                                                                <MenuItem value="1">
+                                                                    @
+                                                                </MenuItem>
                                                             </Select>
-                                                        </FormControl>
+                                                        </FormControl> */}
+                                                        <TextField
+                                                            label="Model"
+                                                            type="text"
+                                                            value={
+                                                                selectedRow?.modelName
+                                                            }
+                                                            variant="outlined"
+                                                            fullWidth
+                                                            disabled
+                                                        />
                                                     </TableCell>
                                                 </TableRow>
                                                 <TableRow>
@@ -162,21 +185,29 @@ const PostMotorModal: React.FC<PostDialogProps> = ({
                                                         <TextField
                                                             label="Số Km đã đi"
                                                             type="text"
+                                                            value={
+                                                                selectedRow?.odo
+                                                            }
                                                             variant="outlined"
                                                             fullWidth
+                                                            disabled
                                                         />
                                                     </TableCell>
                                                 </TableRow>
                                                 <TableRow>
                                                     <TableCell className="header-table">
-                                                        Đăng ký mới
+                                                        Ngày đăng ký
                                                     </TableCell>
                                                     <TableCell className="header-table-content">
                                                         <TextField
-                                                            label="Đăng ký mới"
-                                                            type="date"
+                                                            label="Ngày đăng ký"
+                                                            type="text"
+                                                            value={
+                                                                selectedRow?.year
+                                                            }
                                                             variant="outlined"
                                                             fullWidth
+                                                            disabled
                                                         />
                                                     </TableCell>
                                                 </TableRow>
@@ -188,8 +219,12 @@ const PostMotorModal: React.FC<PostDialogProps> = ({
                                                         <TextField
                                                             label="Giá"
                                                             type="text"
+                                                            value={
+                                                                selectedRow?.price
+                                                            }
                                                             variant="outlined"
                                                             fullWidth
+                                                            disabled
                                                         />
                                                     </TableCell>
                                                 </TableRow>
@@ -199,46 +234,49 @@ const PostMotorModal: React.FC<PostDialogProps> = ({
                                                     </TableCell>
                                                     <TableCell className="header-table-content">
                                                         <FormControl fullWidth>
-                                                            <InputLabel id="motor-type">
-                                                                Loại xe
+                                                            <TextField
+                                                                label="Loại"
+                                                                type="text"
+                                                                value={
+                                                                    selectedRow?.motorTypeName
+                                                                }
+                                                                variant="outlined"
+                                                                fullWidth
+                                                                disabled
+                                                            />
+                                                        </FormControl>
+                                                    </TableCell>
+                                                </TableRow>
+                                                <TableRow>
+                                                    <TableCell className="header-table">
+                                                        Đăng bán
+                                                    </TableCell>
+                                                    <TableCell className="header-table-content">
+                                                        <FormControl fullWidth>
+                                                            <InputLabel id="motor-status">
+                                                                Trạng thái bán
+                                                                xe
                                                             </InputLabel>
                                                             <Select
-                                                                labelId="motor-type"
-                                                                label="Loại xe"
+                                                                labelId="motor-status"
+                                                                label="Trạng thái bán xe"
                                                                 value={
-                                                                    motorType
+                                                                    motorStatus
                                                                 }
                                                                 onChange={
-                                                                    handleChangeType
+                                                                    handleChangeStatus
                                                                 }
                                                             >
-                                                                <MenuItem value="1">
-                                                                    @
+                                                                <MenuItem value="4">
+                                                                    Kí gởi
+                                                                </MenuItem>
+                                                                <MenuItem value="5">
+                                                                    Kiếm sống
                                                                 </MenuItem>
                                                             </Select>
                                                         </FormControl>
                                                     </TableCell>
                                                 </TableRow>
-
-                                                <TableCell className="header-table-content">
-                                                        <FormControl fullWidth>
-                                                            <InputLabel id="motor-status">
-                                                                Trạng thái bán xe
-                                                            </InputLabel>
-                                                            <Select
-                                                                labelId="motor-status"
-                                                                label="Trạng thái bán xe"
-                                                                // value="1"                                                               
-                                                            >
-                                                                <MenuItem value="1">
-                                                                    Kí gởi
-                                                                </MenuItem>
-                                                                <MenuItem value="1">
-                                                                    Kiếm sống
-                                                                </MenuItem>
-                                                            </Select>
-                                                        </FormControl>
-                                                    </TableCell>                                              
                                             </TableBody>
                                         </Table>
                                     </TableContainer>
@@ -285,7 +323,11 @@ const PostMotorModal: React.FC<PostDialogProps> = ({
                     >
                         Hủy bỏ
                     </Button>
-                    <Button color="success" variant="outlined">
+                    <Button
+                        color="success"
+                        variant="outlined"
+                        onClick={handleSubmitUpdateMotorStatus}
+                    >
                         Đồng ý
                     </Button>
                 </DialogActions>

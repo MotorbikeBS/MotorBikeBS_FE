@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import BookingDialog from '../../../customer/booking-dialog-component/BookingDialog';
 import { Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
 import { Item } from '../style/style-root';
 import { FavoriteBorderOutlined } from '@mui/icons-material';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import { useNavigate } from 'react-router';
-import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../../../../services/store/store';
 import { getAllOnStoreExchange } from '../../../../services/features/motorbikeSlice';
 
-const MotorOwnerExchangeComponent = () => {
+const LivelihoodMotorOwnerExchangeComponent = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { account } = useAppSelector((state) => state.account);
@@ -17,7 +20,9 @@ const MotorOwnerExchangeComponent = () => {
     const [isOpenDialog, setOpenDialog] = React.useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
-    const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<number | null>(null)
+    const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<
+        number | null
+    >(null);
 
     const formatCurrency = useFormatCurrency();
 
@@ -32,7 +37,7 @@ const MotorOwnerExchangeComponent = () => {
     const handleOpenDialog = (motorbikeId: number) => {
         setMotorbikeIdForDialog(motorbikeId);
         setOpenDialog(true);
-        console.log(motorbikeId)
+        console.log(motorbikeId);
     };
 
     const handleCloseDialog = () => {
@@ -54,6 +59,10 @@ const MotorOwnerExchangeComponent = () => {
         setIsOpenCancelDialog(false);
     };
 
+    const motorbikesLivelihoodByOwner = motorbikesByOwner?.filter(
+        (motor) => motor.motorStatus.motorStatusId === 5,
+    );
+
     return (
         <Box
             sx={{
@@ -61,19 +70,22 @@ const MotorOwnerExchangeComponent = () => {
                 margin: '0 48px 0 48px',
             }}
         >
-            {motorbikesByOwner && motorbikesByOwner.length === 0 ? (
+            {motorbikesLivelihoodByOwner &&
+            motorbikesLivelihoodByOwner.length === 0 ? (
                 <>
-                    <Container>
+                    <Container className="wishlist-container-notFound">
                         <Paper elevation={3} sx={{ padding: 2 }}>
-                            Sàn giao dịch hiện không có bài đăng nào.
+                            <Typography variant='h5'>
+                                Sàn xe hiện không có bài đăng nào.
+                            </Typography>
                         </Paper>
                     </Container>
                 </>
             ) : (
                 <>
                     <Grid container spacing={2} className="product-grid">
-                        {motorbikesByOwner &&
-                            motorbikesByOwner.map((motor) => (
+                        {motorbikesLivelihoodByOwner &&
+                            motorbikesLivelihoodByOwner.map((motor) => (
                                 <Grid
                                     item
                                     xs={12}
@@ -92,8 +104,8 @@ const MotorOwnerExchangeComponent = () => {
                                             }
                                         >
                                             {motor.motorbikeImages &&
-                                                motor.motorbikeImages
-                                                    .length === 0 ? (
+                                            motor.motorbikeImages.length ===
+                                                0 ? (
                                                 <>
                                                     <img
                                                         src="https://png.pngtree.com/element_origin_min_pic/16/10/21/277448a877a33e8d0efc778025291c86.jpg"
@@ -139,9 +151,9 @@ const MotorOwnerExchangeComponent = () => {
                                                     {motor.odo} Km
                                                 </Typography>
                                                 {/* <Typography>
-                                            <strong>Tình trạng: </strong>
-                                            {motor.motorStatus.title}
-                                        </Typography> */}
+                                          <strong>Tình trạng: </strong>
+                                          {motor.motorStatus.title}
+                                      </Typography> */}
                                                 <Typography>
                                                     <strong>
                                                         Đăng ký mới:
@@ -151,25 +163,27 @@ const MotorOwnerExchangeComponent = () => {
                                                     ).toLocaleDateString()}
                                                 </Typography>
                                                 {/* <Typography>
-                                        <strong>Ngày đăng bài:</strong>{' '}
-                                        {motor.postDate.toLocaleDateString()}
-                                    </Typography> */}
+                                      <strong>Ngày đăng bài:</strong>{' '}
+                                      {motor.postDate.toLocaleDateString()}
+                                  </Typography> */}
                                             </div>
                                         </div>
                                         {/* {account?.roleId === 4 && ( */}
-                                            <div className="btn-style-1">
-                                                <Button
-                                                    variant="outlined"
-                                                    onClick={() =>
-                                                        handleOpenDialog(motor.motorId)
-                                                    }
-                                                >
-                                                    Đặt lịch xem xe
-                                                </Button>
-                                                {/* <Button className="btn-favorite">
-                                                    <FavoriteBorderOutlined />
-                                                </Button> */}
-                                            </div>
+                                        <div className="btn-style-1">
+                                            <Button
+                                                variant="outlined"
+                                                onClick={() =>
+                                                    handleOpenDialog(
+                                                        motor.motorId,
+                                                    )
+                                                }
+                                            >
+                                                Đặt lịch xem xe
+                                            </Button>
+                                            {/* <Button className="btn-favorite">
+                                                  <FavoriteBorderOutlined />
+                                              </Button> */}
+                                        </div>
                                         {/*  )} */}
                                     </Item>
                                 </Grid>
@@ -191,6 +205,6 @@ const MotorOwnerExchangeComponent = () => {
             />
         </Box>
     );
-}
+};
 
-export default MotorOwnerExchangeComponent
+export default LivelihoodMotorOwnerExchangeComponent;

@@ -117,7 +117,10 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
             form.setValue('modelId', selectedRow.model?.modelId);
             form.setValue('odo', selectedRow.odo);
             // form.setValue('year', format(new Date(selectedRow.year), 'yyyy-MM-dd'));
-            form.setValue('year', new Date(format(new Date(selectedRow.year), 'yyyy-MM-dd')));
+            form.setValue(
+                'year',
+                new Date(format(new Date(selectedRow.year), 'yyyy-MM-dd')),
+            );
             form.setValue('price', selectedRow.price);
             form.setValue('description', selectedRow.description || '');
             form.setValue('motorTypeId', selectedRow.motorType?.motorTypeId);
@@ -318,11 +321,11 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
                                                 </TableRow>
                                                 <TableRow>
                                                     <TableCell className="header-table">
-                                                        Đăng ký mới
+                                                        Ngày đăng ký
                                                     </TableCell>
                                                     <TableCell className="header-table-content">
                                                         <TextField
-                                                            label="Đăng ký mới"
+                                                            label="Ngày đăng ký"
                                                             type="date"
                                                             {...register(
                                                                 'year',

@@ -49,7 +49,7 @@ const OwnerMotorListComponent = () => {
                 </Button>
             </div>
 
-            <ListMotorByOwnerId />
+            <ListMotorByOwnerId  loadData={loadData}/>
 
             <CreateMotorbikeComponent
                 open={isOpenDialog}

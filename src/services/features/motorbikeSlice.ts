@@ -161,16 +161,17 @@ export const updateMotorStatus = createAsyncThunk<
 >('motorbike/updateMotorStatus', async ({ motorId, statusId }, thunkAPI) => {
     try {
         const token = localStorage.getItem('motorbike_bs');
+        console.log(token);
         const response = await axios.put(
-            updateMotorStatusEndPoint,
-            { motorId, statusId },
+            `${updateMotorStatusEndPoint}?motorId=${motorId}&statusId=${statusId}`,
+            {},
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             },
         );
-        return response.data;
+        return response.data.result;
     } catch (error: any) {
         return thunkAPI.rejectWithValue({
             error: error.response?.data?.errorMessages,
@@ -247,6 +248,30 @@ export const motorbikeSlice = createSlice({
             state.error = null;
         });
         builder.addCase(getMotorId.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(createMotorbike.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(createMotorbike.fulfilled, (state, action) => {
+            state.loading = false;
+            // state.motorbike = action.payload;
+            state.error = null;
+        });
+        builder.addCase(createMotorbike.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(updateMotorStatus.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(updateMotorStatus.fulfilled, (state, action) => {
+            state.loading = false;
+            state.motorbike = action.payload;
+            state.error = null;
+        });
+        builder.addCase(updateMotorStatus.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });

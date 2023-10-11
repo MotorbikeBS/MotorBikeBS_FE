@@ -77,7 +77,7 @@ export const columns: GridColDef[] = [
         editable: false,
     },
     {
-        field: 'motorType',
+        field: 'motorTypeName',
         headerName: 'Loại xe',
         width: 156,
         editable: false,
@@ -91,11 +91,11 @@ export const columns: GridColDef[] = [
             params.row.motorStatus === 'POSTING' ? (
                 <Typography sx={{ color: 'green' }}>POSTING</Typography>
             ) : params.row.motorStatus === 'STORAGE' ? (
-                <Typography sx={{ color: 'orange' }}>STORAGE</Typography>
+                <Typography sx={{ color: 'orange' }}>Kho xe</Typography>
             ) : params.row.motorStatus === 'CONSIGNMENT' ? (
-                <Typography sx={{ color: '#E6A160' }}>CONSIGNMENT</Typography>
+                <Typography sx={{ color: '#E6A160' }}>Kí gởi</Typography>
             ) : (
-                <Typography sx={{ color: '#3D609A' }}>LIVELIHOOD</Typography>
+                <Typography sx={{ color: '#3D609A' }}>Kiếm sống</Typography>
             ),
     },
 ];
