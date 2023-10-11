@@ -3,44 +3,51 @@ import { GridColDef } from '@mui/x-data-grid';
 export const columns: GridColDef[] = [
     { field: 'id', headerName: 'Request ID', width: 100 },
     {
+        field: 'motorName',
+        headerName: 'Tên xe',
+        width: 240,
+        editable: false,
+    },
+    {
+        field: 'certificateNumber',
+        headerName: 'Số Đăng Ký Xe',
+        width: 240,
+        editable: false,
+    },
+    {
         field: 'storeName',
         headerName: 'Tên cửa hàng',
         width: 200,
     },
     {
-        field: 'storeEmail',
-        headerName: 'Email cửa hàng',
+        field: 'storePhone',
+        headerName: 'Số điện thoại cửa hàng',
         width: 250,
         editable: false,
     },
     {
-        field: 'idCard',
-        headerName: 'CCCD/CMND',
-        width: 250,
-        editable: false,
-    },
-    {
-        field: 'phone',
-        headerName: 'Số điện thoại',
+        field: 'address',
+        headerName: 'Địa chỉ cửa hàng',
         width: 200,
         editable: false,
     },
+
     {
-        field: 'userVerifyAt',
-        headerName: 'Đăng Ký',
+        field: 'bookingDate',
+        headerName: 'Ngày hẹn',
         width: 240,
         editable: false,
     },
     {
-        field: 'roleTitle',
-        headerName: 'Role',
+        field: 'note',
+        headerName: 'Ghi Chú',
         width: 240,
         editable: false,
     },
 
     {
         field: 'status',
-        headerName: 'Status',
+        headerName: 'Trạng thái',
         width: 240,
         editable: false,
     },
