@@ -2,6 +2,8 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, D
 import React from 'react'
 import { format } from 'date-fns';
 import { Controller, useForm } from 'react-hook-form';
+import { useAppDispatch } from '../../../services/store/store';
+import { storeBookingOwnerExchange } from '../../../services/features/booking/bookingSlice';
 
 interface BookingDialogProps {
     open: boolean;
@@ -30,6 +32,8 @@ const BookingWithOwnerExchange: React.FC<BookingDialogProps> = ({
     onCloseSubmitDialog,
     onCloseCancelDialog,
     onClose, }) => {
+    const dispatch = useAppDispatch()
+
     const form = useForm<IBookingViewMotorbike>({
         defaultValues: {
             bookingDate: new Date(),
@@ -50,8 +54,17 @@ const BookingWithOwnerExchange: React.FC<BookingDialogProps> = ({
     };
 
     const onSubmit = (data: IBookingViewMotorbike) => {
-        console.log(data);
-        handleCloseDialog()
+        if (motorbikeId !== null) {
+            dispatch(storeBookingOwnerExchange({
+                motorId: motorbikeId,
+                bookingDate: data.bookingDate,
+                note: data.note,
+            }));
+            handleCloseDialog();
+            console.log(motorbikeId);
+        } else {
+            console.error('Invalid motorbikeId');
+        }
     };
     return (
         <div>
