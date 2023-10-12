@@ -26,7 +26,12 @@ interface StoreModalProps {
     data: IStore | null;
 }
 
-const StoreModal: React.FC<StoreModalProps> = ({ isOpen, onClose, data, loadData }) => {
+const StoreModal: React.FC<StoreModalProps> = ({
+    isOpen,
+    onClose,
+    data,
+    loadData
+}) => {
     const dispatch = useAppDispatch();
     const [fullscreenOpen, setFullscreenOpen] = useState(false);
 
@@ -116,7 +121,7 @@ const StoreModal: React.FC<StoreModalProps> = ({ isOpen, onClose, data, loadData
                 <div className='modal-container'>
                     <div className='modal-header'>
                         <Typography variant="h4" gutterBottom fontWeight='700'>
-                            Thông tin cửa hàng {data.storeName}
+                            Thông tin {data.storeName}
                         </Typography>
                         <div className='header-btn-close'>
                             <Button onClick={onClose}>
