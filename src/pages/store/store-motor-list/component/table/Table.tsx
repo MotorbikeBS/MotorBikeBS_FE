@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material';
 import { GridColDef, GridColTypeDef } from '@mui/x-data-grid';
+import ReportIcon from '@mui/icons-material/Report';
 
 import '../../style/style.scss';
 
@@ -25,6 +26,25 @@ const formatDate = (dateString: string) => {
 
 export const columns: GridColDef[] = [
     { field: 'id', headerName: 'Motor ID', width: 100, hideable: true },
+    {
+        field: 'storeId',
+        headerName: 'Cửa hàng ID',
+        width: 120,
+        hideable: true,
+        renderCell: (params) =>
+            params.row.storeId === null ? (
+                <>
+                    {/* <Typography sx={{ color: '#e6b30b' }}>
+                        !!!
+                    </Typography> */}
+                    <ReportIcon color="warning" />
+                    <ReportIcon color="warning" />
+                    <ReportIcon color="warning" />
+                </>
+            ) : (
+                <>{params.row.storeId}</>
+            ),
+    },
     {
         field: 'certificateNumber',
         headerName: 'Số đăng ký',
@@ -53,13 +73,13 @@ export const columns: GridColDef[] = [
     {
         field: 'odo',
         headerName: 'Số km',
-        width: 150,
+        width: 120,
         editable: false,
     },
     {
         field: 'year',
         headerName: 'Năm đăng ký',
-        width: 200,
+        width: 150,
         editable: false,
         valueFormatter: ({ value }) => formatDate(value),
     },
@@ -73,7 +93,7 @@ export const columns: GridColDef[] = [
     {
         field: 'modelName',
         headerName: 'Model xe',
-        width: 150,
+        width: 120,
         editable: false,
     },
     {

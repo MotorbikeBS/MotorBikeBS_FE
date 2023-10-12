@@ -16,14 +16,15 @@ import {
 } from '../../../../services/store/store';
 import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
 import { getMotorByOwnerId } from '../../../../services/features/motorbike/motorbikeSlice';
-import EditMotorModal from './EditMotorModal';
-import PostMotorModal from './PostMotorModal';
+import PostMotorModalByStore from './PostMotorModalByStore';
+import EditMotorModalByStore from './EditMotorModalByStore';
+import ReportIcon from '@mui/icons-material/Report';
 
 interface ListMotorProps {
     loadData: () => void;
 }
 
-const ListStorageMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
+const ListStorageMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
     const dispatch = useAppDispatch();
     const { motorbikesByOwner } = useAppSelector((state) => state.motorbikes);
     const { account } = useAppSelector((state) => state.account);
@@ -103,6 +104,7 @@ const ListStorageMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
     const rows = useMemo(() => {
         return (motorbikesByOwnerStorage ?? []).map((motor: IMotorbike) => ({
             id: motor.motorId,
+            storeId: motor?.storeId,
             certificateNumber: motor?.certificateNumber,
             images: motor.motorbikeImages[0]?.imageLink,
             motorName: motor?.motorName,
@@ -128,6 +130,13 @@ const ListStorageMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
                     width: '100%',
                 }}
             >
+                <div style={{ marginBottom: '8px' }}>
+                    <Typography sx={{color: '#e81c1c'}}>
+                        *** Nếu bạn thấy <ReportIcon color="warning" />
+                        <ReportIcon color="warning" />
+                        <ReportIcon color="warning" />. Bạn phải chỉnh sửa xe để thay đổi trạng thái cửa hàng cho xe trước rồi mới được đăng bài.
+                    </Typography>
+                </div>
                 <DataGrid
                     sx={{
                         '& .css-gl260s-MuiDataGrid-columnHeadersInner': {
@@ -166,13 +175,15 @@ const ListStorageMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
                     <Button onClick={openEditModal} color="info">
                         Sửa thông tin
                     </Button>
-                    <Button onClick={openPostModal} color="warning">
-                        Đăng bài
-                    </Button>
+                    {selectedRow && selectedRow.storeId !== null && (
+                        <Button onClick={openPostModal} color="warning">
+                            Đăng bài
+                        </Button>
+                    )}
                 </DialogActions>
             </Dialog>
 
-            <EditMotorModal
+            <EditMotorModalByStore
                 open={isEditModalOpen}
                 openSubmit={isOpenSubmitEditDialog}
                 openCancel={isOpenCancelEditDialog}
@@ -185,7 +196,7 @@ const ListStorageMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
                 loadData={loadData}
             />
 
-            <PostMotorModal
+            <PostMotorModalByStore
                 open={isPostModalOpen}
                 openSubmit={isOpenSubmitPostDialog}
                 openCancel={isOpenCancelPostDialog}
@@ -201,4 +212,4 @@ const ListStorageMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
     );
 };
 
-export default ListStorageMotorByOwnerId;
+export default ListStorageMotorByStoreId;

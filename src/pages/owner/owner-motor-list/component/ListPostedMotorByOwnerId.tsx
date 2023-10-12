@@ -29,7 +29,6 @@ const ListPostedMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
     const dispatch = useAppDispatch();
     const { motorbikesByOwner } = useAppSelector((state) => state.motorbikes);
     const { account } = useAppSelector((state) => state.account);
-
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
     const [isConfirmCancelPost, setIsConfirmCancelPost] = useState(false);
@@ -73,7 +72,7 @@ const ListPostedMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
         dispatch(getMotorByOwnerId({ ownerId: Number(account?.userId) }));
     }, [dispatch, account?.userId]);
 
-    const motorbikesByOwnerStorage = motorbikesByOwner?.filter(
+    const motorbikesByOwnerStorage = motorbikesByOwner && motorbikesByOwner?.filter(
         (motor) => motor?.motorStatus.motorStatusId !== 3,
     );
 

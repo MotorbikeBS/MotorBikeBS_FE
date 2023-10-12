@@ -8,7 +8,7 @@ import './style/style.scss';
 import BookingDialog from '../booking-dialog-component/BookingDialog';
 import useFormatCurrency from '../../../hooks/useFormatCurrency';
 import { useAppDispatch, useAppSelector } from '../../../services/store/store';
-import { getAllOnExchange } from '../../../services/features/motorbike/motorbikeSlice';
+import { clearMotor, getAllOnExchange } from '../../../services/features/motorbike/motorbikeSlice';
 import { addToWishList } from '../../../services/features/motorbike/wishListSlice';
 
 const MotorbikeComponent = () => {
@@ -30,6 +30,7 @@ const MotorbikeComponent = () => {
 
 
     useEffect(() => {
+        dispatch(clearMotor());
         dispatch(getAllOnExchange());
     }, [dispatch]);
 
