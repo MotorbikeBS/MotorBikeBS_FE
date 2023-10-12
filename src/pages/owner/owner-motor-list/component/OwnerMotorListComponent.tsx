@@ -1,22 +1,35 @@
-import { Button } from '@mui/material';
+import { Box, Button, Tab, Tabs } from '@mui/material';
 import React, { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import CreateMotorbikeComponent from '../../../../common-components/create-motorbike-component/CreateMotorbikeComponent';
 import '../style/style.scss';
-import ListMotorByOwnerId from './ListMotorByOwnerId';
 import { getMotorByOwnerId } from '../../../../services/features/motorbike/motorbikeSlice';
-import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../../../../services/store/store';
+import ListPostedMotorByOwnerId from './ListPostedMotorByOwnerId';
+import ListStorageMotorByOwnerId from './ListStorageMotorByOwnerId';
 
 const OwnerMotorListComponent = () => {
     const { account } = useAppSelector((state) => state.account);
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
     const [isOpenDialog, setOpenDialog] = useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = useState(false);
 
+    const [value, setValue] = useState<number>(0);
+
+    const handleChangeTabs = (
+        event: React.ChangeEvent<{}>,
+        newValue: number,
+    ) => {
+        setValue(newValue);
+    };
+
     const loadData = () => {
         dispatch(getMotorByOwnerId({ ownerId: Number(account?.userId) }));
-    }
+    };
 
     const handleOpenDialog = () => {
         setOpenDialog(true);
@@ -42,14 +55,37 @@ const OwnerMotorListComponent = () => {
 
     return (
         <div className="motorlist-container">
-            <div className='motorlist-add-btn'>
+            <div className="motorlist-add-btn">
                 <Button onClick={handleOpenDialog} variant="contained">
                     <AddIcon />
                     Thêm xe
                 </Button>
             </div>
 
-            <ListMotorByOwnerId loadData={loadData} />
+            <Tabs
+                value={value}
+                onChange={handleChangeTabs}
+                indicatorColor="secondary"
+                sx={{
+                    '.Mui-selected': {
+                        color: `orange`,
+                    },
+                }}
+                centered
+            >
+                <Tab label="Xe trong kho" />
+                <Tab label="Xe đã đăng" />
+            </Tabs>
+            <Box flexGrow={4} marginTop="3rem">
+                {value === 0 && (
+                    <ListStorageMotorByOwnerId loadData={loadData} />
+                )}
+                {value === 1 && (
+                    <ListPostedMotorByOwnerId loadData={loadData} />
+                )}
+            </Box>
+
+            {/* <ListMotorByOwnerId loadData={loadData} /> */}
 
             <CreateMotorbikeComponent
                 open={isOpenDialog}
