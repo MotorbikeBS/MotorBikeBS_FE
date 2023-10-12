@@ -23,7 +23,7 @@ interface ListMotorProps {
     loadData: () => void;
 }
 
-const ListMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
+const ListStorageMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
     const dispatch = useAppDispatch();
     const { motorbikesByOwner } = useAppSelector((state) => state.motorbikes);
     const { account } = useAppSelector((state) => state.account);
@@ -94,20 +94,24 @@ const ListMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
         dispatch(getMotorByOwnerId({ ownerId: Number(account?.userId) }));
     }, [dispatch, account?.userId]);
 
+    const motorbikesByOwnerStorage = motorbikesByOwner?.filter(
+        (motor) => motor?.motorStatus.motorStatusId === 3,
+    );
+
     const rows = useMemo(() => {
-        return (motorbikesByOwner ?? []).map((motor: IMotorbike) => ({
+        return (motorbikesByOwnerStorage ?? []).map((motor: IMotorbike) => ({
             id: motor.motorId,
-            certificateNumber: motor.certificateNumber,
-            images: motor.motorbikeImages[0].imageLink,
-            motorName: motor.motorName,
-            odo: motor.odo,
-            year: motor.year,
-            price: motor.price,
-            modelName: motor.model.modelName,
-            motorTypeName: motor.motorType.title,
-            motorStatus: motor.motorStatus.title,
+            certificateNumber: motor?.certificateNumber,
+            images: motor.motorbikeImages[0]?.imageLink,
+            motorName: motor?.motorName,
+            odo: motor?.odo,
+            year: motor?.year,
+            price: motor?.price,
+            modelName: motor.model?.modelName,
+            motorTypeName: motor.motorType?.title,
+            motorStatus: motor.motorStatus?.title,
         }));
-    }, [motorbikesByOwner]);
+    }, [motorbikesByOwnerStorage]);
 
     const handleRowDoubleClick = (params: GridRowParams) => {
         setSelectedRow(params.row as IMotorbike);
@@ -195,4 +199,4 @@ const ListMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
     );
 };
 
-export default ListMotorByOwnerId;
+export default ListStorageMotorByOwnerId;

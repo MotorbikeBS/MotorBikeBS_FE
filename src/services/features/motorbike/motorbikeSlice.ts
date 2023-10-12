@@ -159,46 +159,27 @@ export const createMotorbike = createAsyncThunk<IMotorbike, Object>(
     },
 );
 
-// export const updateMotorById = createAsyncThunk<
-//     IMotorbike,
-//     { motorId: number },
-//     Object
-// >('motorbike/updateMotorById', async ({ motorId }, data, thunkAPI) => {
-//     try {
-//         const token = localStorage.getItem('motorbike_bs');
-//         const response = await axios.put(`${updateMotorByIdEndPoint}?motorId=${motorId}`, data, {
-//             headers: {
-//                 Authorization: `Bearer ${token}`,
-//                 'Content-Type': 'multipart/form-data',
-//             },
-//         });
-//         return response.data;
-//     } catch (error: any) {
-//         return thunkAPI.rejectWithValue({
-//             error: error.response?.data?.errorMessages,
-//         });
-//     }
-// });
+export const updateMotorById = createAsyncThunk<
+    IMotorbike,
+    { motorId: number, data: Object },
+    Object
+>('motorbike/updateMotorById', async ({ motorId, data }, thunkAPI) => {
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.put(`${updateMotorByIdEndPoint}?motorId=${motorId}`, data, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return response.data;
+    } catch (error: any) {
+        return thunkAPI.rejectWithValue({
+            error: error.response?.data?.errorMessages,
+        });
+    }
+});
 
-// export const updateMotorById = createAsyncThunk<IMotorbike, { motorId: number }, Object>(
-//     'motorbike/updateMotorById',
-//     async ({ motorId }, thunkAPI) => {
-//       try {
-//         const token = localStorage.getItem('motorbike_bs');
-//         const response = await axios.put(`${updateMotorByIdEndPoint}?motorId=${motorId}`, data, {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//             'Content-Type': 'multipart/form-data',
-//           },
-//         });
-//         return response.data;
-//       } catch (error: any) {
-//         return thunkAPI.rejectWithValue({
-//           error: error.response?.data?.errorMessages,
-//         });
-//       }
-//     }
-//   );
 
 export const updateMotorStatus = createAsyncThunk<
     IMotorbike,
@@ -308,18 +289,18 @@ export const motorbikeSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         });
-        // builder.addCase(updateMotorById.pending, (state) => {
-        //     state.loading = true;
-        // });
-        // builder.addCase(updateMotorById.fulfilled, (state, action) => {
-        //     state.loading = false;
-        //     state.motorbike = action.payload;
-        //     state.error = null;
-        // });
-        // builder.addCase(updateMotorById.rejected, (state, action) => {
-        //     state.loading = false;
-        //     state.error = action.payload;
-        // });
+        builder.addCase(updateMotorById.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(updateMotorById.fulfilled, (state, action) => {
+            state.loading = false;
+            state.motorbike = action.payload;
+            state.error = null;
+        });
+        builder.addCase(updateMotorById.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
         builder.addCase(updateMotorStatus.pending, (state) => {
             state.loading = true;
         });
