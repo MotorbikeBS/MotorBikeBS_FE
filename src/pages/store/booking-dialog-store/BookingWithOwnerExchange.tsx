@@ -39,6 +39,7 @@ const BookingWithOwnerExchange: React.FC<BookingDialogProps> = ({
             bookingDate: new Date(),
             note: '',
         },
+
     });
     const { control, handleSubmit, register } = form;
 
@@ -51,6 +52,7 @@ const BookingWithOwnerExchange: React.FC<BookingDialogProps> = ({
 
     const handleOpenCancelDialog = () => {
         onOpenCancelDialog();
+
     };
 
     const onSubmit = (data: IBookingViewMotorbike) => {
@@ -61,9 +63,7 @@ const BookingWithOwnerExchange: React.FC<BookingDialogProps> = ({
                 note: data.note,
             }));
             handleCloseDialog();
-            console.log(motorbikeId);
         } else {
-            console.error('Invalid motorbikeId');
         }
     };
     return (

@@ -1,47 +1,55 @@
-import React, { ReactNode } from 'react';
-import { IBookingResponse } from '../../../../models/Booking/Booking';
-import './style/style.scss';
-import { Button, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
+import React, { ReactNode, useEffect, useState } from 'react';
+import {
+    Modal,
+    Typography,
+    Button,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableRow,
+    Paper,
+} from '@mui/material';
 import { ClearRounded } from '@mui/icons-material';
+import './style/style.scss';
+import { IBookingSelectRow } from '../../../../models/Booking/Booking';
+
 
 interface BookingInforModalProps {
+
     isOpen: boolean;
     onClose: () => void;
-    loadingData?: () => void;
-    data: IBookingResponse | null;
+    data: IBookingSelectRow | null;
 }
 
-const BookingInforModal: React.FC<BookingInforModalProps> = ({
-    isOpen,
-    onClose,
-    data,
-    loadingData
-}) => {
-    if (!data) {
-        return null;
-    }
+const BookingInforModal: React.FC<BookingInforModalProps> = ({ isOpen, onClose, data }) => {
 
-    console.log(data);
+    console.log(data?.status)
 
-    const createData = (label: string, value: ReactNode) => ({ label, value: value || 'N/A' });
+    const createData = (label: string, value: ReactNode) => ({
+        label,
+        value: value ?? 'N/A',
+    });
 
     const rows = [
-        createData('Request ID', data.requestId || 'N/A'),
-        createData('Tên xe', data.motor?.motorName || 'N/A'),
-        createData('Số đăng ký', data.motor?.certificateNumber || 'N/A')
+        createData('Tên Xe', data?.motorName),
+        createData('Số Đăng Ký', data?.certificateNumber),
+        createData('Tên Cửa Hàng', data?.storeName),
+        createData('Số Điện Thoại Cửa Hàng', data?.storePhone),
+        // createData('Ngày Đặt Lịch', data?.bookingDate),
+        createData('Ghi Chú', data?.note),
+        createData('Trạng Thái', data?.status),
     ];
 
-    console.log(rows);
+
+
 
     return (
-        <Modal
-            open={isOpen}
-            onClose={onClose}
-        >
+        <Modal open={isOpen} onClose={onClose}>
             <div className='modal-container'>
                 <div className='modal-header'>
                     <Typography variant="h4" gutterBottom fontWeight='700'>
-                        Thông tin cửa hàng {data.sender?.storeName}
+                        Thông tin cửa hàng
                     </Typography>
                     <div className='header-btn-close'>
                         <Button onClick={onClose}>
@@ -66,6 +74,6 @@ const BookingInforModal: React.FC<BookingInforModalProps> = ({
             </div>
         </Modal>
     );
-}
+};
 
 export default BookingInforModal;
