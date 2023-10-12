@@ -6,7 +6,6 @@ import { DataGrid, GridRowParams } from '@mui/x-data-grid'
 import { Container, Paper, Typography } from '@mui/material'
 import { columns } from './table/TableStoreList'
 import StoreModal from '../ModalComponent/StoreModalComponent'
-
 const StoreListInActive = () => {
     const dispatch = useAppDispatch()
     const { stores } = useAppSelector((state) => state.store)
@@ -60,7 +59,12 @@ const StoreListInActive = () => {
                     onRowDoubleClick={handleRowDoubleClick}
                 />
             </Paper>
-            <StoreModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} data={selectedRow} loadData={loadData} />
+            <StoreModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                data={selectedRow}
+                loadData={loadData}
+            />
         </Container>
     )
 }
