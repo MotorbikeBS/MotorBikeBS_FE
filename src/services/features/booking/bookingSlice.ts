@@ -1,18 +1,21 @@
-import { IBookingResponse } from './../../../models/Booking/Booking';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IBookingOwnerExchange } from '../../../models/Booking/Booking';
 import axios from 'axios';
 import {
     getAllBookingByOwnerEndPoint,
+    getBookingByIDEndPoint,
     storeBookingWithOwnerExchangeEndPoint,
 } from '../../config/api-config';
 import { toast } from 'react-toastify';
+import {
+    IBooking,
+    IBookingOwnerExchange,
+} from '../../../models/Booking/Booking';
 
 interface BookingOwnerState {
     loading: boolean;
     error: string[] | unknown;
-    getStoreBooking: IBookingResponse[] | null;
-    storeBooking: IBookingResponse | null;
+    getStoreBooking: IBooking[] | null;
+    storeBooking: IBooking | null;
 }
 
 const initialState: BookingOwnerState = {
@@ -23,7 +26,7 @@ const initialState: BookingOwnerState = {
 };
 
 export const storeBookingOwnerExchange = createAsyncThunk<
-    IBookingResponse,
+    IBooking,
     IBookingOwnerExchange
 >(
     'booking/storeBookingWithOwnerExchange',
@@ -53,7 +56,7 @@ export const storeBookingOwnerExchange = createAsyncThunk<
     },
 );
 
-export const getAllBookingByOwner = createAsyncThunk<IBookingResponse[], void>(
+export const getAllBookingByOwner = createAsyncThunk<IBooking[], void>(
     'bookings/getAllBookingByOWner',
     async (_, thunkAPI) => {
         try {
@@ -71,6 +74,28 @@ export const getAllBookingByOwner = createAsyncThunk<IBookingResponse[], void>(
                     error: error.response?.data?.errorMessages,
                 });
             }
+        }
+    },
+);
+export const getBookingByID = createAsyncThunk<IBooking, { id: number }>(
+    'bookings/getBookingByID',
+    async ({ id }, thunkAPI) => {
+        try {
+            const token = localStorage.getItem('motorbike_bs');
+            const response = await axios.get(
+                `${getBookingByIDEndPoint}/${id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+            );
+            return response.data.result;
+        } catch (error: any) {
+            toast.error('Có lỗi xảy ra ! Vui lòng kiểm tra lại ! ');
+            return thunkAPI.rejectWithValue({
+                error: error.response?.data?.errorMessages,
+            });
         }
     },
 );
@@ -105,6 +130,17 @@ export const bookingSlice = createSlice({
             state.getStoreBooking = action.payload;
         });
         builder.addCase(getAllBookingByOwner.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(getBookingByID.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(getBookingByID.fulfilled, (state, action) => {
+            state.loading = false;
+            state.storeBooking = action.payload;
+        });
+        builder.addCase(getBookingByID.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });

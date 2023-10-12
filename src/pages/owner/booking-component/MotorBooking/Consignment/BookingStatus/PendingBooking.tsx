@@ -1,16 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../../../services/store/store'
 import { getAllBookingByOwner } from '../../../../../../services/features/booking/bookingSlice'
-import { IBookingResponse } from '../../../../../../models/Booking/Booking'
 import { Container, Paper, Typography } from '@mui/material'
 import { DataGrid, GridRowParams } from '@mui/x-data-grid'
 import { columns } from '../../Table/Table'
 import BookingInforModal from '../../../BookingInforModal/BookingInforModal'
+import { IBooking, IBookingSelectRow } from '../../../../../../models/Booking/Booking'
 
 const PendingBooking = () => {
     const dispatch = useAppDispatch()
     const { getStoreBooking } = useAppSelector((state) => state.booking)
-    const [selectedRow, setSelectedRow] = useState<IBookingResponse | null>(null)
+    const [selectedRow, setSelectedRow] = useState<IBookingSelectRow | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const loadingData = () => {
@@ -23,28 +23,27 @@ const PendingBooking = () => {
 
 
     const pendingBooking = useMemo(() => {
-        return (getStoreBooking ?? []).filter((booking: IBookingResponse) => booking.status === 'PENDING');
+        return (getStoreBooking ?? []).filter((booking: IBooking) => booking.status === 'PENDING');
     }, [getStoreBooking]);
 
     const rows = useMemo(() => {
-        return pendingBooking.map((booking: IBookingResponse) => ({
+        return pendingBooking.map((booking: IBooking) => ({
             id: booking.requestId,
             motorName: booking.motor?.motorName,
-            certificateNumber: booking.motor.certificateNumber,
+            certificateNumber: booking.motor?.certificateNumber,
             storeName: booking.sender.storeName,
             storePhone: booking.sender.storePhone,
             address: booking.sender.address,
-            bookingDate: booking.bookings[0].bookingDate,
-            note: booking.bookings[0].note,
-            status: booking.bookings[0].status
-
+            bookingDate: booking.bookings[0]?.bookingDate,
+            note: booking.bookings[0]?.note,
+            status: booking.bookings[0]?.status
         }));
-    }, [pendingBooking])
+    }, [pendingBooking]);
 
     const handleRowDoubleClick = (params: GridRowParams) => {
-        setSelectedRow(params.row as IBookingResponse);
+        setSelectedRow(params.row as IBookingSelectRow);
         setIsModalOpen(true);
-    }
+    };
 
 
     return (
@@ -66,8 +65,8 @@ const PendingBooking = () => {
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 data={selectedRow}
-                loadingData={loadingData}
             />
+
         </Container>)
 }
 

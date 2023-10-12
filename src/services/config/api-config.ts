@@ -40,8 +40,8 @@ export const getMotorByIdEndPoint = `${BASE_URL}/api/motorbike`;
 export const updateMotorByIdEndPoint = `${BASE_URL}/api/motorbike/updatemotor`;
 export const postMotorRegisterEndPoint = `${BASE_URL}/api/motorbike/motorregister`;
 export const updateMotorStatusEndPoint = `${BASE_URL}/api/motorbike/updatemotor-status`;
-export const searchMotorNameEndPoint = `${BASE_URL}/api/motorbike/search-MotorName`
-export const filterMotorbikeEndPoint = `${BASE_URL}/api/MotorBike/filter`
+export const searchMotorNameEndPoint = `${BASE_URL}/api/motorbike/search-MotorName`;
+export const filterMotorbikeEndPoint = `${BASE_URL}/api/MotorBike/filter`;
 
 //motorbikeField endpoint
 export const getMotorBrandEndPoint = `${BASE_URL}/api/motorbrand`;
@@ -58,3 +58,4 @@ export const deleteWishListByMotorIdEndPoint = `${BASE_URL}/api/wishlist/deletew
 //Booking
 export const storeBookingWithOwnerExchangeEndPoint = `${BASE_URL}/api/booking/storebookingowner`;
 export const getAllBookingByOwnerEndPoint = `${BASE_URL}/api/booking/getbookingrequest`;
+export const getBookingByIDEndPoint = `${BASE_URL}/api/booking`;
