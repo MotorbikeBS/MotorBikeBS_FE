@@ -63,11 +63,12 @@ interface ICreateMotorbike {
     price: number;
     description: string;
     motorStatusId: number;
+    storeId: number,
     motorTypeId: number;
     images: FileList;
 }
 
-const EditMotorModal: React.FC<EditDialogProps> = ({
+const EditMotorModalByStore: React.FC<EditDialogProps> = ({
     open,
     openSubmit,
     openCancel,
@@ -84,6 +85,8 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
     const { motorModels, motorTypes } = useAppSelector(
         (state) => state.motorFields,
     );
+
+    const {user } = useAppSelector(state=>state.users)
 
     const [model, setModel] = useState('');
     const [motorType, setMotorType] = useState('');
@@ -123,6 +126,7 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
             price: undefined,
             description: '',
             motorStatusId: undefined,
+            storeId: undefined,
             motorTypeId: undefined,
             images: undefined,
         },
@@ -132,7 +136,7 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
         if (motorbike) {
             form.setValue('certificateNumber', motorbike?.certificateNumber);
             form.setValue('motorName', motorbike?.motorName);
-            form.setValue('modelId', motorbike.model?.modelId);
+            form.setValue('modelId', motorbike?.model?.modelId);
             form.setValue('odo', motorbike?.odo);
             form.setValue('price', motorbike?.price);
             form.setValue('description', motorbike?.description || '');
@@ -140,9 +144,13 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
                 'motorStatusId',
                 motorbike?.motorStatus?.motorStatusId,
             );
-            form.setValue('motorTypeId', motorbike.motorType?.motorTypeId);
+            form.setValue('storeId', Number(user?.storeDesciptions[0]?.storeId))
+            form.setValue('motorTypeId', motorbike?.motorType?.motorTypeId);
         }
-    }, [motorbike, form]);
+    }, [motorbike, form, user]);
+
+    console.log('usernef', user?.storeDesciptions[0]?.storeId);
+    
 
     const { formState, handleSubmit, register } = form;
     const { errors } = formState;
@@ -176,6 +184,10 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
         if (data.motorStatusId !== undefined) {
             formData.append('motorStatusId', data.motorStatusId.toString());
         }
+        if (data.storeId !== undefined) {
+            formData.append('storeId', data.storeId.toString());
+        }
+        
         formData.append('motorTypeId', data.motorTypeId.toString());
         if (data.images && data.images.length > 0) {
             for (let i = 0; i < data.images.length; i++) {
@@ -681,4 +693,4 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
     );
 };
 
-export default EditMotorModal;
+export default EditMotorModalByStore;

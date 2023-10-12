@@ -15,28 +15,23 @@ import {
     useAppSelector,
 } from '../../../../services/store/store';
 import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
-import { getMotorByOwnerId } from '../../../../services/features/motorbike/motorbikeSlice';
-import EditMotorModal from './EditMotorModal';
-import PostMotorModal from './PostMotorModal';
+import {
+    getMotorByOwnerId,
+    updateMotorStatus,
+} from '../../../../services/features/motorbike/motorbikeSlice';
+import { toast } from 'react-toastify';
 
 interface ListMotorProps {
     loadData: () => void;
 }
 
-const ListStorageMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
+const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
     const dispatch = useAppDispatch();
     const { motorbikesByOwner } = useAppSelector((state) => state.motorbikes);
     const { account } = useAppSelector((state) => state.account);
-
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
-    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [isOpenSubmitEditDialog, setIsOpenSubmitEditDialog] = useState(false);
-    const [isOpenCancelEditDialog, setIsOpenCancelEditDialog] = useState(false);
-
-    const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-    const [isOpenSubmitPostDialog, setIsOpenSubmitPostDialog] = useState(false);
-    const [isOpenCancelPostDialog, setIsOpenCancelPostDialog] = useState(false);
+    const [isConfirmCancelPost, setIsConfirmCancelPost] = useState(false);
 
     const [selectedRow, setSelectedRow] = useState<IMotorbike | null>(null);
 
@@ -46,63 +41,44 @@ const ListStorageMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
 
     const openEditModal = () => {
         setIsDetailModalOpen(false);
-        setIsEditModalOpen(true);
+        setIsConfirmCancelPost(true);
         setSelectedRow(selectedRow);
     };
-
     const handleCloseDialog = () => {
-        setIsEditModalOpen(false);
-        setIsOpenSubmitEditDialog(false);
-        setIsOpenCancelEditDialog(false);
-        setIsPostModalOpen(false);
-        setIsOpenSubmitPostDialog(false);
-        setIsOpenCancelPostDialog(false);
-    };
-
-    const handleOpenSubmitEditDialog = () => {
-        setIsOpenSubmitEditDialog(true);
-    };
-    const handleCloseSubmitEditDialog = () => {
-        setIsOpenSubmitEditDialog(false);
-    };
-    const handleOpenCancelEditDialog = () => {
-        setIsOpenCancelEditDialog(true);
-    };
-    const handleCloseCancelEditDialog = () => {
-        setIsOpenCancelEditDialog(false);
-    };
-
-    const handleOpenSubmitPostDialog = () => {
-        setIsOpenSubmitPostDialog(true);
-    };
-    const handleCloseSubmitPostDialog = () => {
-        setIsOpenSubmitPostDialog(false);
-    };
-    const handleOpenCancelPostDialog = () => {
-        setIsOpenCancelPostDialog(true);
-    };
-    const handleCloseCancelPostDialog = () => {
-        setIsOpenCancelPostDialog(false);
-    };
-
-    const openPostModal = () => {
         setIsDetailModalOpen(false);
-        setIsPostModalOpen(true);
+        setIsConfirmCancelPost(false);
+    };
+
+    const handleSubmitConfirmCancelPost = () => {
+        dispatch(
+            updateMotorStatus({
+                motorId: Number(selectedRow?.id),
+                statusId: 3,
+            }),
+        )
+            .unwrap()
+            .then(() => {
+                toast.success('Hủy đăng bài thành công!');
+                loadData();
+                handleCloseDialog();
+            })
+            .catch((error) => {
+                toast.error(error?.error[0]);
+            });
     };
 
     React.useEffect(() => {
         dispatch(getMotorByOwnerId({ ownerId: Number(account?.userId) }));
     }, [dispatch, account?.userId]);
 
-    const motorbikesByOwnerStorage =
-        motorbikesByOwner &&
-        motorbikesByOwner?.filter(
-            (motor) => motor?.motorStatus.motorStatusId === 3,
-        );
+    const motorbikesByOwnerStorage = motorbikesByOwner && motorbikesByOwner?.filter(
+        (motor) => motor?.motorStatus.motorStatusId !== 3,
+    );
 
     const rows = useMemo(() => {
         return (motorbikesByOwnerStorage ?? []).map((motor: IMotorbike) => ({
             id: motor.motorId,
+            storeId: motor?.storeId,
             certificateNumber: motor?.certificateNumber,
             images: motor.motorbikeImages[0]?.imageLink,
             motorName: motor?.motorName,
@@ -163,42 +139,34 @@ const ListStorageMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
                     )}
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={openEditModal} color="info">
-                        Sửa thông tin
-                    </Button>
-                    <Button onClick={openPostModal} color="warning">
-                        Đăng bài
+                    <Button onClick={openEditModal} color="warning">
+                        Hủy đăng bài
                     </Button>
                 </DialogActions>
             </Dialog>
 
-            <EditMotorModal
-                open={isEditModalOpen}
-                openSubmit={isOpenSubmitEditDialog}
-                openCancel={isOpenCancelEditDialog}
-                onOpenSubmitDialog={handleOpenSubmitEditDialog}
-                onCloseSubmitDialog={handleCloseSubmitEditDialog}
-                onOpenCancelDialog={handleOpenCancelEditDialog}
-                onCloseCancelDialog={handleCloseCancelEditDialog}
-                onClose={handleCloseDialog}
-                selectedRow={selectedRow}
-                loadData={loadData}
-            />
-
-            <PostMotorModal
-                open={isPostModalOpen}
-                openSubmit={isOpenSubmitPostDialog}
-                openCancel={isOpenCancelPostDialog}
-                onOpenSubmitDialog={handleOpenSubmitPostDialog}
-                onCloseSubmitDialog={handleCloseSubmitPostDialog}
-                onOpenCancelDialog={handleOpenCancelPostDialog}
-                onCloseCancelDialog={handleCloseCancelPostDialog}
-                onClose={handleCloseDialog}
-                selectedRow={selectedRow}
-                loadData={loadData}
-            />
+            <Dialog open={isConfirmCancelPost}>
+                <DialogTitle>
+                    <Typography variant="h4" textAlign="center">
+                        Xác nhận hủy đăng bài
+                    </Typography>
+                </DialogTitle>
+                <DialogContent>
+                    <Typography variant="subtitle1" textAlign="center">
+                        Bạn có chắc chắn hủy đăng bài không?
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDialog} color="error">
+                        Hủy bỏ
+                    </Button>
+                    <Button onClick={handleSubmitConfirmCancelPost} color="info">
+                        Xác nhận
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Container>
     );
 };
 
-export default ListStorageMotorByOwnerId;
+export default ListPostedMotorByStoreId;
