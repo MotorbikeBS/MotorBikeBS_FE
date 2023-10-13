@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import {
+    acceptBookingEndPoint,
     getAllBookingByOwnerEndPoint,
     getBookingByIDEndPoint,
     storeBookingWithOwnerExchangeEndPoint,
@@ -66,10 +67,11 @@ export const getAllBookingByOwner = createAsyncThunk<IBooking[], void>(
                     Authorization: `Bearer ${token}`,
                 },
             });
+
             return response.data.result;
         } catch (error: any) {
             if (error.response) {
-                toast.error(`${error.response.data?.errorMessages}`);
+                toast.warning(`${error.response.data?.errorMessages}`);
                 return thunkAPI.rejectWithValue({
                     error: error.response?.data?.errorMessages,
                 });
@@ -99,12 +101,43 @@ export const getBookingByID = createAsyncThunk<IBooking, { id: number }>(
         }
     },
 );
+export const acceptBooking = createAsyncThunk<IBooking, { bookingId: number }>(
+    'booking/acceptBookingByOwner',
+    async (data, thunkAPI) => {
+        const { bookingId } = data;
+        try {
+            const token = localStorage.getItem('motorbike_bs');
+            const response = await axios.put(
+                `${acceptBookingEndPoint}?bookingId=${bookingId}`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+            );
+            toast.success('Xác nhận lịch hẹn thành công !');
+            return response.data;
+        } catch (error: any) {
+            if (error.response) {
+                toast.error(`${error.response.data?.errorMessages}`);
+                return thunkAPI.rejectWithValue({
+                    error: error.response?.data?.errorMessages,
+                });
+            }
+        }
+    },
+);
 export const bookingSlice = createSlice({
     name: 'bookingOwerExchange',
     initialState,
     reducers: {
         setError: (state, action) => {
             state.error = action.payload;
+        },
+        clearBooking: (state) => {
+            state.getBooking = [];
+            state.storeBooking = null;
         },
     },
     extraReducers: (builder) => {
@@ -144,8 +177,20 @@ export const bookingSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         });
+        builder.addCase(acceptBooking.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(acceptBooking.fulfilled, (state, action) => {
+            state.loading = false;
+            state.storeBooking = action.payload;
+            state.error = null;
+        });
+        builder.addCase(acceptBooking.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
     },
 });
 
-export const { setError } = bookingSlice.actions;
+export const { setError, clearBooking } = bookingSlice.actions;
 export default bookingSlice.reducer;
