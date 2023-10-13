@@ -29,6 +29,7 @@ import OwnerMotorDetail from '../pages/store/motor-owner-exchange/OwnerMotorDeta
 import OwnerMotorList from '../pages/owner/owner-motor-list/OwnerMotorList';
 import BookingListOwner from '../pages/owner/booking-component/BookingListOwner';
 import StoreMotorList from '../pages/store/store-motor-list/StoreMotorList';
+import BookingListStore from '../pages/store/booking-list/BookingListStore';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -93,7 +94,6 @@ const AppRoutes = () => {
                         path="/"
                         element={<Navigate to="/dashboard" replace />}
                     />
-
                     <Route path="/dashboard" element={<StoreHome />} />
                     <Route
                         path="/motorbike-exchange"
@@ -106,6 +106,10 @@ const AppRoutes = () => {
                     <Route
                         path="/motorbike-list"
                         element={<StoreMotorList />}
+                    />
+                    <Route
+                        path='/booking-list'
+                        element={<BookingListStore />}
                     />
                     <Route path="*" element={<PageNotFound />} />
                 </>

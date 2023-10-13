@@ -53,6 +53,7 @@ const BookingInforModal: React.FC<BookingInforModalProps> = ({
         createData('Ghi Chú', data?.note),
         createData('Trạng Thái', data?.status),
     ];
+
     const handleAcceptBooking = () => {
         if (data && data.id) {
             dispatch(acceptBooking({ bookingId: data.id }))
@@ -104,7 +105,7 @@ const BookingInforModal: React.FC<BookingInforModalProps> = ({
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {data?.status === 'PENDING' && account?.roleId === 3 && (
+                {data?.status === 'PENDING' && (
                     <Grid
                         container
                         spacing={2}
@@ -131,18 +132,7 @@ const BookingInforModal: React.FC<BookingInforModalProps> = ({
                         </Grid>
                     </Grid>
                 )}
-                {data?.status === 'PENDING' && account?.roleId === 2 && (
-                    <Box className='btn-status'>
-                        <Button
-                            variant="contained"
-                            color="warning"
-                        // onClick={handleReActive}
-                        >
-                            Hủy Đặt Lịch
-                        </Button>
-                    </Box>
-                )}
-                {data?.status === 'ACCEPT' && account?.roleId === 3 && (
+                {data?.status === 'ACCEPT' && (
                     <Box className='btn-status'>
                         <Button
                             variant="contained"
