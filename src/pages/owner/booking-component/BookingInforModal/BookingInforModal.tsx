@@ -15,20 +15,28 @@ import {
 import { ClearRounded } from '@mui/icons-material';
 import './style/style.scss';
 import { IBookingSelectRow } from '../../../../models/Booking/Booking';
-import { useAppSelector } from '../../../../services/store/store';
+import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
+import { acceptBooking } from '../../../../services/features/booking/bookingSlice';
 
 
 interface BookingInforModalProps {
 
     isOpen: boolean;
     onClose: () => void;
+    loadingData: () => void;
     data: IBookingSelectRow | null;
 }
 
-const BookingInforModal: React.FC<BookingInforModalProps> = ({ isOpen, onClose, data }) => {
+const BookingInforModal: React.FC<BookingInforModalProps> = ({
+    isOpen,
+    onClose,
+    data,
+    loadingData
+}) => {
+    const dispatch = useAppDispatch()
     const { user } = useAppSelector((state) => state.users)
 
-    console.log(data?.status)
+    console.log(data?.bookingId)
 
     const createData = (label: string, value: ReactNode | string) => ({
         label,
@@ -44,6 +52,18 @@ const BookingInforModal: React.FC<BookingInforModalProps> = ({ isOpen, onClose, 
         createData('Ghi Chú', data?.note),
         createData('Trạng Thái', data?.status),
     ];
+
+    const handleAcceptBooking = () => {
+        if (data && data.bookingId) {
+            dispatch(acceptBooking({ bookingId: data.bookingId }))
+                .then(() => {
+                    loadingData()
+                    setTimeout(() => {
+                        onClose()
+                    }, 1000)
+                })
+        }
+    }
 
     return (
         <Modal open={isOpen} onClose={onClose}>
@@ -83,7 +103,7 @@ const BookingInforModal: React.FC<BookingInforModalProps> = ({ isOpen, onClose, 
                             <Button
                                 variant="contained"
                                 color="success"
-                            // onClick={handleActive}
+                                onClick={handleAcceptBooking}
                             >
                                 Chấp nhận
                             </Button>

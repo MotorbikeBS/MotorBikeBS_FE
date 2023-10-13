@@ -59,3 +59,6 @@ export const deleteWishListByMotorIdEndPoint = `${BASE_URL}/api/wishlist/deletew
 export const storeBookingWithOwnerExchangeEndPoint = `${BASE_URL}/api/booking/storebookingowner`;
 export const getAllBookingByOwnerEndPoint = `${BASE_URL}/api/booking/getbookingrequest`;
 export const getBookingByIDEndPoint = `${BASE_URL}/api/booking`;
+export const acceptBookingEndPoint = `${BASE_URL}/api/booking/acceptbooking`;
+export const rejectBookingEndPoint = `${BASE_URL}/api/booking/rejectbooking`;
+export const cancelBookingEndPoint = `${BASE_URL}/api/booking/cancelbooking`;
