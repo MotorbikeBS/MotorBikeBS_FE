@@ -16,7 +16,7 @@ import { ClearRounded } from '@mui/icons-material';
 import './style/style.scss';
 import { IBookingSelectRow } from '../../../../models/Booking/Booking';
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
-import { acceptBooking } from '../../../../services/features/booking/bookingSlice';
+import { acceptBooking, rejectBooking } from '../../../../services/features/booking/bookingSlice';
 
 
 interface BookingInforModalProps {
@@ -34,9 +34,10 @@ const BookingInforModal: React.FC<BookingInforModalProps> = ({
     loadingData
 }) => {
     const dispatch = useAppDispatch()
-    const { user } = useAppSelector((state) => state.users)
+    const { account } = useAppSelector((state) => state.account)
+    console.log(data?.id)
 
-    console.log(data?.bookingId)
+
 
     const createData = (label: string, value: ReactNode | string) => ({
         label,
@@ -52,10 +53,21 @@ const BookingInforModal: React.FC<BookingInforModalProps> = ({
         createData('Ghi Chú', data?.note),
         createData('Trạng Thái', data?.status),
     ];
-
     const handleAcceptBooking = () => {
-        if (data && data.bookingId) {
-            dispatch(acceptBooking({ bookingId: data.bookingId }))
+        if (data && data.id) {
+            dispatch(acceptBooking({ bookingId: data.id }))
+                .then(() => {
+                    loadingData()
+                    setTimeout(() => {
+                        onClose()
+                    }, 1000)
+                })
+        }
+    }
+
+    const handleRejectBooking = () => {
+        if (data && data.id) {
+            dispatch(rejectBooking({ bookingId: data.id }))
                 .then(() => {
                     loadingData()
                     setTimeout(() => {
@@ -92,7 +104,7 @@ const BookingInforModal: React.FC<BookingInforModalProps> = ({
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {data?.status === 'PENDING' && user?.role.roleId === 3 && (
+                {data?.status === 'PENDING' && account?.roleId === 3 && (
                     <Grid
                         container
                         spacing={2}
@@ -112,14 +124,14 @@ const BookingInforModal: React.FC<BookingInforModalProps> = ({
                             <Button
                                 variant="contained"
                                 color="error"
-                            // onClick={handleRefuse}
+                                onClick={handleRejectBooking}
                             >
                                 Từ Chối
                             </Button>
                         </Grid>
                     </Grid>
                 )}
-                {data?.status === 'PENDING' && user?.role.roleId === 2 && (
+                {data?.status === 'PENDING' && account?.roleId === 2 && (
                     <Box className='btn-status'>
                         <Button
                             variant="contained"
@@ -130,7 +142,7 @@ const BookingInforModal: React.FC<BookingInforModalProps> = ({
                         </Button>
                     </Box>
                 )}
-                {data?.status === 'ACCEPT' && user?.role.roleId === 3 && (
+                {data?.status === 'ACCEPT' && account?.roleId === 3 && (
                     <Box className='btn-status'>
                         <Button
                             variant="contained"

@@ -4,6 +4,7 @@ import {
     acceptBookingEndPoint,
     getAllBookingByOwnerEndPoint,
     getBookingByIDEndPoint,
+    rejectBookingEndPoint,
     storeBookingWithOwnerExchangeEndPoint,
 } from '../../config/api-config';
 import { toast } from 'react-toastify';
@@ -128,6 +129,35 @@ export const acceptBooking = createAsyncThunk<IBooking, { bookingId: number }>(
         }
     },
 );
+
+export const rejectBooking = createAsyncThunk<IBooking, { bookingId: number }>(
+    'booking/rejectBookingByOwner',
+    async (data, thunkAPI) => {
+        const { bookingId } = data;
+        try {
+            const token = localStorage.getItem('motorbike_bs');
+            const response = await axios.put(
+                `${rejectBookingEndPoint}?bookingId=${bookingId}`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+            );
+            toast.success('Từ chối lịch hẹn thành công !');
+            return response.data;
+        } catch (error: any) {
+            if (error.response) {
+                toast.error(`${error.response.data?.errorMessages}`);
+                return thunkAPI.rejectWithValue({
+                    error: error.response?.data?.errorMessages,
+                });
+            }
+        }
+    },
+);
+
 export const bookingSlice = createSlice({
     name: 'bookingOwerExchange',
     initialState,
@@ -186,6 +216,18 @@ export const bookingSlice = createSlice({
             state.error = null;
         });
         builder.addCase(acceptBooking.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(rejectBooking.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(rejectBooking.fulfilled, (state, action) => {
+            state.loading = false;
+            state.storeBooking = action.payload;
+            state.error = null;
+        });
+        builder.addCase(rejectBooking.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });

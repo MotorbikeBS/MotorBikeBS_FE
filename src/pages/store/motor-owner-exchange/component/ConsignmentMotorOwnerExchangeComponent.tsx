@@ -5,7 +5,6 @@ import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
 import { getAllOnStoreExchange } from '../../../../services/features/motorbike/motorbikeSlice';
-import BookingConsignment from '../../../owner/booking-component/MotorBooking/Consignment/BookingConsignment';
 import BookingWithOwnerExchange from '../../booking-dialog-store/BookingWithOwnerExchange';
 
 const ConsignmentMotorOwnerExchangeComponent = () => {
