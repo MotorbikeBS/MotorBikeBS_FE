@@ -3,7 +3,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-width: 50%;
+    min-width: 60%;
     max-width: 100%;
     padding: 20px;
     background-color: white;
@@ -28,8 +28,6 @@
         display: flex;
         position: relative;
         bottom: 3rem;
-        :nth-child(1) {
-            margin-right: 10px;
-        }
+        left: 2rem;
     }
 }
