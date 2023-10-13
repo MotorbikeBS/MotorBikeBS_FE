@@ -2,8 +2,8 @@ import { Box, Tab, Tabs } from '@mui/material'
 import React, { useState } from 'react'
 import OwnerMenuComponent from '../owner-menu-component/OwnerMenuComponent'
 import FooterComponent from '../../../common-components/footer-component/FooterComponent'
-import BookingEarnLiving from './MotorBooking/EarnLiving/BookingEarnLiving'
-import BookingConsignment from './MotorBooking/Consignment/BookingConsignment'
+import BookingConsignment from './motor-booking/consignment/BookingConsignment'
+import BookingEarnLiving from './motor-booking/earnLiving/BookingEarnLiving'
 
 const BookingListOwner = () => {
     const [value, setValue] = useState<number>(0)
