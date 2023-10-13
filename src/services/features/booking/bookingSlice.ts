@@ -14,14 +14,14 @@ import {
 interface BookingOwnerState {
     loading: boolean;
     error: string[] | unknown;
-    getStoreBooking: IBooking[] | null;
+    getBooking: IBooking[] | null;
     storeBooking: IBooking | null;
 }
 
 const initialState: BookingOwnerState = {
     loading: false,
     error: null,
-    getStoreBooking: null,
+    getBooking: null,
     storeBooking: null,
 };
 
@@ -127,7 +127,7 @@ export const bookingSlice = createSlice({
         });
         builder.addCase(getAllBookingByOwner.fulfilled, (state, action) => {
             state.loading = false;
-            state.getStoreBooking = action.payload;
+            state.getBooking = action.payload;
         });
         builder.addCase(getAllBookingByOwner.rejected, (state, action) => {
             state.loading = false;

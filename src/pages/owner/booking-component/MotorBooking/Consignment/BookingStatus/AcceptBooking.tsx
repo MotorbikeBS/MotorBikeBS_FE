@@ -1,35 +1,29 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../../../services/store/store'
+import { IBooking, IBookingSelectRow } from '../../../../../../models/Booking/Booking'
 import { getAllBookingByOwner } from '../../../../../../services/features/booking/bookingSlice'
 import { Container, Paper, Typography } from '@mui/material'
 import { DataGrid, GridRowParams } from '@mui/x-data-grid'
 import { columns } from '../../Table/Table'
 import BookingInforModal from '../../../BookingInforModal/BookingInforModal'
-import { IBooking, IBookingSelectRow } from '../../../../../../models/Booking/Booking'
 
-const PendingBooking = () => {
+const AcceptBooking = () => {
+
     const dispatch = useAppDispatch()
     const { getBooking } = useAppSelector((state) => state.booking)
     const [selectedRow, setSelectedRow] = useState<IBookingSelectRow | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const loadingData = () => {
-        dispatch(getAllBookingByOwner())
-    }
-
     useEffect(() => {
-        dispatch(getAllBookingByOwner());
-    }, [dispatch]);
+        dispatch(getAllBookingByOwner())
+    }, [dispatch])
 
-
-    const pendingBooking = useMemo(() => {
-        return (getBooking ?? []).filter(
-            (booking: IBooking) => booking.status === 'PENDING'
-        );
+    const accepttedBooking = useMemo(() => {
+        return (getBooking ?? []).filter((booking: IBooking) => booking.status === 'ACCEPT');
     }, [getBooking]);
 
     const rows = useMemo(() => {
-        return pendingBooking.map((booking: IBooking) => ({
+        return accepttedBooking.map((booking: IBooking) => ({
             id: booking.requestId,
             motorName: booking.motor?.motorName,
             certificateNumber: booking.motor?.certificateNumber,
@@ -40,13 +34,12 @@ const PendingBooking = () => {
             note: booking.bookings[0]?.note,
             status: booking.bookings[0]?.status
         }));
-    }, [pendingBooking]);
+    }, [accepttedBooking])
 
     const handleRowDoubleClick = (params: GridRowParams) => {
         setSelectedRow(params.row as IBookingSelectRow);
-        setIsModalOpen(true);
-    };
-
+        setIsModalOpen(true)
+    }
 
     return (
         <Container maxWidth="xl">
@@ -61,6 +54,7 @@ const PendingBooking = () => {
                     disableRowSelectionOnClick
                     onRowDoubleClick={handleRowDoubleClick}
                 />
+
             </Paper>
             <BookingInforModal
                 isOpen={isModalOpen}
@@ -69,7 +63,8 @@ const PendingBooking = () => {
             />
 
         </Container>
+
     )
 }
 
-export default PendingBooking
+export default AcceptBooking

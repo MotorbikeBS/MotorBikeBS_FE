@@ -1,8 +1,8 @@
 import { Box, Tab, Tabs } from '@mui/material';
 import React, { useState } from 'react'
 import PendingBooking from '../Consignment/BookingStatus/PendingBooking';
-import ApproveBooking from '../Consignment/BookingStatus/ApproveBooking';
-import CanncleBooking from '../Consignment/BookingStatus/CanncleBooking';
+import ApproveBooking from '../Consignment/BookingStatus/AcceptBooking';
+import CanncleBooking from '../Consignment/BookingStatus/RejectBooking';
 
 const BookingEarnLiving = () => {
     const [value, setValue] = useState<number>(0)
