@@ -15,6 +15,11 @@ export const columns: GridColDef[] = [
         editable: false,
     },
     {
+        field: 'motorStatus',
+        headerName: 'Trạng thái xe',
+        width: 200,
+    },
+    {
         field: 'storeName',
         headerName: 'Tên cửa hàng',
         width: 200,
@@ -51,6 +56,4 @@ export const columns: GridColDef[] = [
         width: 240,
         editable: false,
     },
-
 ];
-

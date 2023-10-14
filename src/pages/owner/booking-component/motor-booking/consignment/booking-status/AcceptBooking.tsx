@@ -24,7 +24,9 @@ const AcceptBooking = () => {
     }
 
     const accepttedBooking = useMemo(() => {
-        return (getBooking ?? []).filter((booking: IBooking) => booking.status === 'ACCEPT');
+        return (getBooking ?? []).filter((booking: IBooking) => booking.status === 'ACCEPT'
+            && booking.motor.motorStatus.title === 'CONSIGNMENT'
+        );
     }, [getBooking]);
 
     const rows = useMemo(() => {
@@ -32,6 +34,7 @@ const AcceptBooking = () => {
             id: booking?.bookings[0].bookingId,
             motorName: booking.motor?.motorName,
             certificateNumber: booking.motor?.certificateNumber,
+            motorStatus: booking.motor?.motorStatus?.title,
             storeName: booking.sender.storeName,
             storePhone: booking.sender.storePhone,
             address: booking.sender.address,

@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
-import BookingDialog from '../../../customer/booking-dialog-component/BookingDialog';
 import { Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
 import { Item } from '../style/style-root';
-import { FavoriteBorderOutlined } from '@mui/icons-material';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import { useNavigate } from 'react-router';
 import {
@@ -10,6 +8,7 @@ import {
     useAppSelector,
 } from '../../../../services/store/store';
 import { getAllOnStoreExchange } from '../../../../services/features/motorbike/motorbikeSlice';
+import BookingWithOwnerExchange from '../../booking-dialog-store/BookingWithOwnerExchange';
 
 const LivelihoodMotorOwnerExchangeComponent = () => {
     const navigate = useNavigate();
@@ -192,7 +191,7 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
                 </>
             )}
 
-            <BookingDialog
+            <BookingWithOwnerExchange
                 open={isOpenDialog}
                 openSubmit={isOpenSubmitDialog}
                 openCancel={isOpenCancelDialog}

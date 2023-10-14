@@ -1,7 +1,7 @@
 import { Box, Tab, Tabs } from '@mui/material'
 import React, { useState } from 'react'
 import StoreMenuComponent from '../store-menu-component/StoreMenuComponent'
-import OwnerBookingComponent from './owner-booking-component/OwnerBookingComponent'
+import OwnerBookingComponent from './booking-with-owner-component/OwnerBookingComponent'
 import CustomerBookingComponent from './customer-booking-component/CustomerBookingComponent'
 import FooterComponent from '../../../common-components/footer-component/FooterComponent'
 

@@ -39,7 +39,7 @@ const BookingListOwner = () => {
                         centered
                     >
                         <Tab label='Xe Kí Gửi' />
-                        <Tab label='Xe Kiếm Sống' />
+                        <Tab label='Xe Không Kí Gửi' />
                     </Tabs>
                     <Box flexGrow={4} marginTop='3rem'>
                         {value === 0 && <BookingConsignment />}

@@ -3,6 +3,9 @@ import React, { useState } from 'react'
 import PendingBooking from '../consignment/booking-status/PendingBooking';
 import ApproveBooking from '../consignment/booking-status/AcceptBooking';
 import CanncleBooking from '../consignment/booking-status/RejectBooking';
+import PendingBookingEarnLiving from './booking-earnliving-status/PendingBookingEarnLiving';
+import AcceptBookingEarnLiving from './booking-earnliving-status/AcceptBookingEarnLiving';
+import RejectBookingEarnLiving from './booking-earnliving-status/RejectBookingEarnLiving';
 
 const BookingEarnLiving = () => {
     const [value, setValue] = useState<number>(0)
@@ -29,9 +32,9 @@ const BookingEarnLiving = () => {
                 <Tab label='Từ Chối' />
             </Tabs>
             <Box flexGrow={4} marginTop='3rem'>
-                {value === 0 && <PendingBooking />}
-                {value === 1 && <ApproveBooking />}
-                {value === 2 && <CanncleBooking />}
+                {value === 0 && <PendingBookingEarnLiving />}
+                {value === 1 && <AcceptBookingEarnLiving />}
+                {value === 2 && <RejectBookingEarnLiving />}
             </Box>
         </Box>
     );
