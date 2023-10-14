@@ -28,7 +28,7 @@ const MotorbikeByStoreIdComponent = () => {
     const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<number | null>(null)
 
     const handleNavigateDetail = (motorbikeId: number) => {
-        navigate(`/motorbike/${motorbikeId}`);
+        navigate(`/store/motorbike/${motorbikeId}`);
     };
     console.log(motorbikeByStoreId);
 

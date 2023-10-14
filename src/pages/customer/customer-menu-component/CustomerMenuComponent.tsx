@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Search, StyledInputBase, SearchIconWrapper } from './styleMUI/styled';
+// import { Search, StyledInputBase, SearchIconWrapper } from './styleMUI/styled';
 import {
     AppBar,
     Box,
@@ -12,9 +12,11 @@ import {
     Tooltip,
     MenuItem,
     useTheme,
+    TextField,
 } from '@mui/material';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
 import './style/style.scss';
 
 import {
@@ -29,6 +31,8 @@ import './style/style.scss';
 import MenuComponent from '../../../common-components/notify-component/NotifyComponent';
 import { useAppDispatch } from '../../../services/store/store';
 import { logoutUser } from '../../../services/features/auth/accountSlice';
+import { searchMotorByName } from '../../../services/features/motorbike/motorbikeSlice';
+import { toast } from 'react-toastify';
 
 const pages = [
     {
@@ -54,6 +58,11 @@ const CustomerMenuComponent = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useAppDispatch();
+    const [searchTerm, setSearchTerm] = React.useState('');
+
+    const handleSearch = () => {
+        dispatch(searchMotorByName({ motorName: searchTerm }));
+    };
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null,
@@ -206,7 +215,10 @@ const CustomerMenuComponent = () => {
                     <Toolbar disableGutters>
                         <Link
                             to="/customer-home"
-                            style={{ textDecoration: 'none' }}
+                            style={{
+                                textDecoration: 'none',
+                                flexGrow: 1,
+                            }}
                         >
                             <Typography
                                 variant="h4"
@@ -222,19 +234,33 @@ const CustomerMenuComponent = () => {
                                 Motorbike BS
                             </Typography>
                         </Link>
-                        <Search
+                        <Box
                             sx={{
                                 display: { xs: 'none', md: 'flex' },
+                                gap: '5px',
                             }}
                         >
-                            <SearchIconWrapper>
-                                <SearchOutlined />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="Tìm Kiếm…"
-                                inputProps={{ 'aria-label': 'search' }}
+                            <TextField
+                                sx={{
+                                    width: '350px',
+                                    background: '#4389AB',
+                                    '& .MuiInputBase-input': {
+                                        padding: '11.5px 15px',
+                                        color: 'white',
+                                    },
+                                }}
+                                placeholder="Tìm kiếm xe..."
+                                variant="outlined"
+                                fullWidth
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
                             />
-                        </Search>
+                            <Button variant="text" onClick={handleSearch}>
+                                <SearchIcon
+                                    sx={{ color: 'white', fontSize: '26px' }}
+                                />
+                            </Button>
+                        </Box>
 
                         <Box
                             sx={{
@@ -334,17 +360,18 @@ const CustomerMenuComponent = () => {
                                 <Link
                                     key={page.to}
                                     to={page.to}
-                                    className={`link-customer ${isMenuItemActive(page.to)
+                                    className={`link-customer ${
+                                        isMenuItemActive(page.to)
                                             ? 'active'
                                             : ''
-                                        }`}
+                                    }`}
                                 >
                                     {page.name}
                                 </Link>
                             ))}
                         </Box>
 
-                        <Box sx={{ display: 'flex', flexGrow: 0 }}>
+                        <Box sx={{ display: 'flex', flexGrow: 0.5 }}>
                             <Tooltip
                                 title="Yêu Thích"
                                 onClick={() => navigate('/favourite-list')}
@@ -427,15 +454,27 @@ const CustomerMenuComponent = () => {
                         backgroundColor: '#04618f',
                     }}
                 >
-                    <Search sx={{ display: 'flex', flexGrow: 1 }}>
-                        <SearchIconWrapper>
-                            <SearchOutlined />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Tìm Kiếm…"
-                            inputProps={{ 'aria-label': 'search' }}
+                    <Box sx={{ display: 'flex', flexGrow: 1 }}>
+                        <TextField
+                            sx={{
+                                background: '#4389AB',
+                                '& .MuiInputBase-input': {
+                                    padding: '11.5px 15px',
+                                    color: 'white',
+                                },
+                            }}
+                            placeholder="Tìm kiếm xe..."
+                            variant="outlined"
+                            fullWidth
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
                         />
-                    </Search>
+                        <Button variant="text" onClick={handleSearch}>
+                            <SearchIcon
+                                sx={{ color: 'white', fontSize: '26px' }}
+                            />
+                        </Button>
+                    </Box>
                 </Box>
             )}
         </>

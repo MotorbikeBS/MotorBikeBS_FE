@@ -131,10 +131,13 @@ const ListStorageMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                 }}
             >
                 <div style={{ marginBottom: '8px' }}>
-                    <Typography sx={{color: '#e81c1c'}}>
-                        *** Nếu bạn thấy <ReportIcon color="warning" />
-                        <ReportIcon color="warning" />
-                        <ReportIcon color="warning" />. Bạn phải chỉnh sửa xe để thay đổi trạng thái cửa hàng cho xe trước rồi mới được đăng bài.
+                    <Typography sx={{ color: '#e81c1c', fontSize: '14px' }}>
+                        *** Lưu ý{' '}
+                        <ReportIcon color="warning" fontSize="small" />
+                        <ReportIcon color="warning" fontSize="small" />
+                        <ReportIcon color="warning" fontSize="small" />: Bạn
+                        phải chỉnh sửa xe để thay đổi trạng thái cửa hàng cho xe
+                        trước rồi mới được đăng bài.
                     </Typography>
                 </div>
                 <DataGrid

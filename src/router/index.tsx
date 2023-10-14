@@ -30,6 +30,7 @@ import OwnerMotorList from '../pages/owner/owner-motor-list/OwnerMotorList';
 import BookingListOwner from '../pages/owner/booking-component/BookingListOwner';
 import StoreMotorList from '../pages/store/store-motor-list/StoreMotorList';
 import BookingListStore from '../pages/store/booking-list/BookingListStore';
+import MotorBikeDetailForStore from '../pages/customer/motorbike-detail/MotorBikeDetailForStore';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -129,6 +130,10 @@ const AppRoutes = () => {
                         path="/motorbike/:motorbikeId"
                         element={<MotorBikeDetail />}
                     />
+                     <Route
+                        path="/store/motorbike/:motorbikeId"
+                        element={<MotorBikeDetailForStore />}
+                    />
                     <Route path="/owner/motors" element={<OwnerMotorList />} />
 
                     <Route path='/owner/my-booking' element={<BookingListOwner />} />
@@ -149,6 +154,10 @@ const AppRoutes = () => {
                     <Route
                         path="/motorbike/:motorbikeId"
                         element={<MotorBikeDetail />}
+                    />
+                    <Route
+                        path="/store/motorbike/:motorbikeId"
+                        element={<MotorBikeDetailForStore />}
                     />
                     <Route
                         path="/customer/store-owner-signup"

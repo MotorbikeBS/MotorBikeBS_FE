@@ -29,14 +29,13 @@ import { addToWishList } from '../../services/features/motorbike/wishListSlice';
 type motorbikeParams = {
     motorbikeId: number;
 };
-
-const MotorBikeDetailComponent = () => {
+const MotorbikeDetailForStoreComponent = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
     const { motorbikeId } = useParams<motorbikeParams | any>();
     const { account } = useAppSelector((state) => state.account);
-    const { motorbikes } = useAppSelector((state) => state.motorbikes);
+    const { motorbikes, motorbikeByStoreId } = useAppSelector((state) => state.motorbikes);
     const [isOpenDialog, setOpenDialog] = useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = useState(false);
@@ -97,7 +96,7 @@ const MotorBikeDetailComponent = () => {
             </Container>
         );
     }
-    const motorbike = motorbikes?.find(
+    const motorbike = motorbikeByStoreId?.find(
         (mt: IMotorbike) => mt.motorId === Number(motorbikeId),
     );
     
@@ -338,4 +337,4 @@ const MotorBikeDetailComponent = () => {
     );
 };
 
-export default MotorBikeDetailComponent;
+export default MotorbikeDetailForStoreComponent
