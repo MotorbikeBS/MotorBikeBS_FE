@@ -26,6 +26,7 @@ const PendingBooking = () => {
     const pendingBooking = useMemo(() => {
         return (getBooking ?? []).filter(
             (booking: IBooking) => booking.status === 'PENDING'
+                && booking.motor.motorStatus.title === 'CONSIGNMENT'
         );
     }, [getBooking]);
 
@@ -34,6 +35,7 @@ const PendingBooking = () => {
             id: booking?.bookings[0].bookingId,
             motorName: booking.motor?.motorName,
             certificateNumber: booking.motor?.certificateNumber,
+            motorStatus: booking.motor?.motorStatus?.title,
             storeName: booking.sender.storeName,
             storePhone: booking.sender.storePhone,
             address: booking.sender.address,

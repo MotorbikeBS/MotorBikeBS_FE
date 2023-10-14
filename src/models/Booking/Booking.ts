@@ -1,4 +1,6 @@
+import { IMotorStatus } from '../Motorbike/Motorbike';
 import { IStore } from '../Store/Store';
+import { IUser } from '../User/UserInterface';
 
 export interface IMotorBikeBooking {
     motorId: number;
@@ -7,6 +9,8 @@ export interface IMotorBikeBooking {
     odo: number;
     year: Date;
     price: number;
+    owner: IUser;
+    motorStatus: IMotorStatus;
 }
 export interface IBookingSelectRow {
     id: number;
@@ -15,6 +19,18 @@ export interface IBookingSelectRow {
     certificateNumber: string;
     storeName: string;
     storePhone: string;
+    address: string;
+    bookingDate: Date;
+    note: string;
+    status: string;
+}
+export interface IBookingSelectRowWithStore {
+    id: number;
+    motorName: string;
+    certificateNumber: string;
+    motorStatus: string;
+    userName: string;
+    phone: string;
     address: string;
     bookingDate: Date;
     note: string;

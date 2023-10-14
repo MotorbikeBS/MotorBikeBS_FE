@@ -15,12 +15,17 @@ export const columns: GridColDef[] = [
         editable: false,
     },
     {
-        field: 'storeName',
+        field: 'motorStatus',
+        headerName: 'Trạng thái xe',
+        width: 180,
+    },
+    {
+        field: 'userName',
         headerName: 'Tên chủ xe',
         width: 200,
     },
     {
-        field: 'storePhone',
+        field: 'phone',
         headerName: 'Số điện thoại chủ xe',
         width: 250,
         editable: false,
