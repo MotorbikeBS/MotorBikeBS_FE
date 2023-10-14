@@ -33,7 +33,8 @@ const MotorOwnerExchange = () => {
                     centered
                 >
                     <Tab label="Xe kí gởi" />
-                    <Tab label="Xe kiếm sống" />
+                    <Tab label="Xe không kí gởi" />
+                    <Tab label="Xe đang thương lượng" />
                 </Tabs>
                 <Box flexGrow={4} marginTop="3rem">
                     {value === 0 && <ConsignmentMotorOwnerExchangeComponent />}

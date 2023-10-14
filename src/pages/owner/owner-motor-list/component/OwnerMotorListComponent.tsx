@@ -10,6 +10,7 @@ import {
 } from '../../../../services/store/store';
 import ListPostedMotorByOwnerId from './ListPostedMotorByOwnerId';
 import ListStorageMotorByOwnerId from './ListStorageMotorByOwnerId';
+import ListNegotiateMotorByOwner from './ListNegotiateMotorByOwner';
 
 const OwnerMotorListComponent = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -75,6 +76,7 @@ const OwnerMotorListComponent = () => {
             >
                 <Tab label="Xe trong kho" />
                 <Tab label="Xe đã đăng" />
+                <Tab label='Xe đang thương lượng' />
             </Tabs>
             <Box flexGrow={4} marginTop="3rem">
                 {value === 0 && (
@@ -82,6 +84,11 @@ const OwnerMotorListComponent = () => {
                 )}
                 {value === 1 && (
                     <ListPostedMotorByOwnerId loadData={loadData} />
+                )}
+                {(
+                    value === 2 && (
+                        <ListNegotiateMotorByOwner />
+                    )
                 )}
             </Box>
 
