@@ -12,8 +12,8 @@ import {
     useTheme,
 } from '@mui/material';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, SearchIconWrapper, StyledInputBase } from './styleMUI/styled';
-import { AccountCircle, Notifications, SearchOutlined } from '@mui/icons-material';
+// import { Search, SearchIconWrapper, StyledInputBase } from './styleMUI/styled';
+import { AccountCircle, Notifications } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAppDispatch } from '../../../services/store/store';
 import { logoutUser } from '../../../services/features/auth/accountSlice';
@@ -48,7 +48,7 @@ const OwnerMenuComponent = () => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
-    const [searchOpen, setSearchOpen] = React.useState(false);
+    // const [searchOpen, setSearchOpen] = React.useState(false);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -65,9 +65,9 @@ const OwnerMenuComponent = () => {
         setAnchorElUser(null);
     };
 
-    const toggleSearch = () => {
-        setSearchOpen(!searchOpen);
-    };
+    // const toggleSearch = () => {
+    //     setSearchOpen(!searchOpen);
+    // };
     const isMenuItemActive = (to: string) => {
         return location.pathname === to;
     };
@@ -106,7 +106,7 @@ const OwnerMenuComponent = () => {
                                 Motorbike BS
                             </Typography>
                         </Link>
-                        <Search
+                        {/* <Search
                             sx={{
                                 display: { xs: 'none', md: 'flex' },
                             }}
@@ -115,7 +115,7 @@ const OwnerMenuComponent = () => {
                                 <SearchOutlined />
                             </SearchIconWrapper>
                             <StyledInputBase placeholder="Tìm Kiếm…" inputProps={{ 'aria-label': 'search' }} />
-                        </Search>
+                        </Search> */}
 
                         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                             <IconButton
@@ -156,7 +156,7 @@ const OwnerMenuComponent = () => {
                                     </Link>
                                 ))}
                             </Menu>
-                            <IconButton
+                            {/* <IconButton
                                 size="large"
                                 aria-label="account of current user"
                                 aria-controls="menu-appbar"
@@ -165,7 +165,7 @@ const OwnerMenuComponent = () => {
                                 color="inherit"
                             >
                                 <SearchOutlined />
-                            </IconButton>
+                            </IconButton> */}
                         </Box>
 
                         <Link
@@ -251,7 +251,7 @@ const OwnerMenuComponent = () => {
                     </Toolbar>
                 </Container>
             </AppBar>
-            {searchOpen && (
+            {/* {searchOpen && (
                 <Box sx={{ flexGrow: 1, display: 'flex', backgroundColor: '#04618f' }}>
                     <Search sx={{ display: 'flex', flexGrow: 1 }}>
                         <SearchIconWrapper>
@@ -260,7 +260,7 @@ const OwnerMenuComponent = () => {
                         <StyledInputBase placeholder="Tìm Kiếm…" inputProps={{ 'aria-label': 'search' }} />
                     </Search>
                 </Box>
-            )}
+            )} */}
         </>
     );
 };

@@ -95,7 +95,7 @@ export const columns: GridColDef[] = [
             ) : params.row.motorStatus === 'CONSIGNMENT' ? (
                 <Typography sx={{ color: '#E6A160' }}>KÍ GỞI</Typography>
             ) : (
-                <Typography sx={{ color: '#3D609A' }}>KIẾM SỐNG</Typography>
+                <Typography sx={{ color: '#3D609A' }}>KHÔNG KÍ GỞI</Typography>
             ),
     },
 ];

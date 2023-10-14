@@ -2,15 +2,16 @@ import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
     IMotorbike,
-    IMotorbikeDetail,
 } from '../../../models/Motorbike/Motorbike';
 import {
+    filterMotorbikeEndPoint,
     getAllOnExChangeEndPoint,
     getAllOnStoreExChangeEndPoint,
     getMotorByIdEndPoint,
     getMotorByOwnerIdEndPoint,
     getMotorByStoreIdEndPoint,
     postMotorRegisterEndPoint,
+    searchMotorNameEndPoint,
     updateMotorByIdEndPoint,
     updateMotorStatusEndPoint,
 } from '../../config/api-config';
@@ -20,7 +21,7 @@ interface MotorbikeState {
     motorbikes: IMotorbike[] | null;
     motorbikesByOwner: IMotorbike[] | null;
     motorbike: IMotorbike | null;
-    motorbikeByStoreId: IMotorbikeDetail[] | null;
+    motorbikeByStoreId: IMotorbike[] | null;
     error: string[] | unknown;
 }
 
@@ -72,7 +73,7 @@ export const getAllOnStoreExchange = createAsyncThunk<IMotorbike[], void>(
 );
 
 export const getMotorByStoreId = createAsyncThunk<
-    IMotorbikeDetail[],
+    IMotorbike[],
     { storeId: number }
 >('motorbikes/getMotorByStoreId', async ({ storeId }, thunkAPI) => {
     // const {storeId} = data;
@@ -161,17 +162,21 @@ export const createMotorbike = createAsyncThunk<IMotorbike, Object>(
 
 export const updateMotorById = createAsyncThunk<
     IMotorbike,
-    { motorId: number, data: Object },
+    { motorId: number; data: Object },
     Object
 >('motorbike/updateMotorById', async ({ motorId, data }, thunkAPI) => {
     try {
         const token = localStorage.getItem('motorbike_bs');
-        const response = await axios.put(`${updateMotorByIdEndPoint}?motorId=${motorId}`, data, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'multipart/form-data',
+        const response = await axios.put(
+            `${updateMotorByIdEndPoint}?motorId=${motorId}`,
+            data,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data',
+                },
             },
-        });
+        );
         return response.data;
     } catch (error: any) {
         return thunkAPI.rejectWithValue({
@@ -179,7 +184,6 @@ export const updateMotorById = createAsyncThunk<
         });
     }
 });
-
 
 export const updateMotorStatus = createAsyncThunk<
     IMotorbike,
@@ -204,6 +208,53 @@ export const updateMotorStatus = createAsyncThunk<
         });
     }
 });
+
+export const searchMotorByName = createAsyncThunk<
+    IMotorbike[],
+    { motorName: string }
+>('motorbike/searchMotorByName', async ({ motorName }, thunkAPI) => {
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.get(
+            `${searchMotorNameEndPoint}?motorName=${motorName}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return response.data.result;
+    } catch (error: any) {
+        return thunkAPI.rejectWithValue({
+            error: error.response?.data?.errorMessages,
+        });
+    }
+});
+
+export const filterMotor = createAsyncThunk<
+    IMotorbike[],
+    { modelId: number; minPrice: number; maxPrice: number; motorType: number }
+>(
+    'motorbike/searchMotorByName',
+    async ({ modelId, minPrice, maxPrice, motorType }, thunkAPI) => {
+        try {
+            const token = localStorage.getItem('motorbike_bs');
+            const response = await axios.get(
+                `${filterMotorbikeEndPoint}?modelId=${modelId}&minPrice=${minPrice}&maxPrice=${maxPrice}&MotorTypeId=${motorType}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+            );
+            return response.data.result;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue({
+                error: error.response?.data?.errorMessages,
+            });
+        }
+    },
+);
 
 export const motorbikeSlice = createSlice({
     name: 'motorbikes',
@@ -310,6 +361,18 @@ export const motorbikeSlice = createSlice({
             state.error = null;
         });
         builder.addCase(updateMotorStatus.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(searchMotorByName.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(searchMotorByName.fulfilled, (state, action) => {
+            state.loading = false;
+            state.motorbikes = action.payload;
+            state.error = null;
+        });
+        builder.addCase(searchMotorByName.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });

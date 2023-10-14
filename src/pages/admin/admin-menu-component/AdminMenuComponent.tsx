@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Search, StyledInputBase, SearchIconWrapper } from './styledMUI/style';
+// import { Search, StyledInputBase, SearchIconWrapper } from './styledMUI/style';
 import {
     AppBar,
     Box,
@@ -18,7 +18,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {
     AccountCircle,
     Notifications,
-    SearchOutlined,
 } from '@mui/icons-material';
 import { useAppDispatch } from '../../../services/store/store';
 import { logoutUser } from '../../../services/features/auth/accountSlice';
@@ -51,7 +50,7 @@ const AdminMenuComponent = () => {
         null,
     );
 
-    const [searchOpen, setSearchOpen] = React.useState(false);
+    // const [searchOpen, setSearchOpen] = React.useState(false);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -68,9 +67,9 @@ const AdminMenuComponent = () => {
         setAnchorElUser(null);
     };
 
-    const toggleSearch = () => {
-        setSearchOpen(!searchOpen);
-    };
+    // const toggleSearch = () => {
+    //     setSearchOpen(!searchOpen);
+    // };
 
     const isMenuItemActive = (to: string) => {
         return location.pathname === to;
@@ -113,7 +112,7 @@ const AdminMenuComponent = () => {
                                 Motorbike BS
                             </Typography>
                         </Link>
-                        <Search
+                        {/* <Search
                             sx={{
                                 display: { xs: 'none', md: 'flex' },
                             }}
@@ -125,7 +124,7 @@ const AdminMenuComponent = () => {
                                 placeholder="Tìm Kiếm…"
                                 inputProps={{ 'aria-label': 'search' }}
                             />
-                        </Search>
+                        </Search> */}
 
                         <Box
                             sx={{
@@ -180,7 +179,7 @@ const AdminMenuComponent = () => {
                                     </MenuItem>
                                 ))}
                             </Menu>
-                            <IconButton
+                            {/* <IconButton
                                 size="large"
                                 aria-label="account of current user"
                                 aria-controls="menu-appbar"
@@ -189,7 +188,7 @@ const AdminMenuComponent = () => {
                                 color="inherit"
                             >
                                 <SearchOutlined />
-                            </IconButton>
+                            </IconButton> */}
                         </Box>
 
                         <Link
@@ -292,7 +291,7 @@ const AdminMenuComponent = () => {
                     </Toolbar>
                 </Container>
             </AppBar>
-            {searchOpen && (
+            {/* {searchOpen && (
                 <Box
                     sx={{
                         flexGrow: 1,
@@ -310,7 +309,7 @@ const AdminMenuComponent = () => {
                         />
                     </Search>
                 </Box>
-            )}
+            )} */}
         </>
     );
 };

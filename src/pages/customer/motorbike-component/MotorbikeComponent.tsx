@@ -8,7 +8,10 @@ import './style/style.scss';
 import BookingDialog from '../booking-dialog-component/BookingDialog';
 import useFormatCurrency from '../../../hooks/useFormatCurrency';
 import { useAppDispatch, useAppSelector } from '../../../services/store/store';
-import { clearMotor, getAllOnExchange } from '../../../services/features/motorbike/motorbikeSlice';
+import {
+    clearMotor,
+    getAllOnExchange,
+} from '../../../services/features/motorbike/motorbikeSlice';
 import { addToWishList } from '../../../services/features/motorbike/wishListSlice';
 
 const MotorbikeComponent = () => {
@@ -16,18 +19,19 @@ const MotorbikeComponent = () => {
     const dispatch = useAppDispatch();
 
     const { account } = useAppSelector((state) => state.account);
-    const { motorbikes } = useAppSelector((state) => state.motorbikes);
+    const { motorbikes, error } = useAppSelector((state) => state.motorbikes);
 
     const [isOpenDialog, setOpenDialog] = React.useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
-    const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<number | null>(null)
+    const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<
+        number | null
+    >(null);
     const formatCurrency = useFormatCurrency();
 
     const handleNavigateDetail = (motorbikeId: number) => {
         navigate(`/motorbike/${motorbikeId}`);
     };
-
 
     useEffect(() => {
         dispatch(clearMotor());
@@ -40,8 +44,8 @@ const MotorbikeComponent = () => {
     };
 
     const handleAddToWishList = (motorId: number) => {
-        dispatch(addToWishList({ motorId: motorId }))
-    }
+        dispatch(addToWishList({ motorId: motorId }));
+    };
 
     const handleCloseDialog = () => {
         setOpenDialog(false);
@@ -69,9 +73,18 @@ const MotorbikeComponent = () => {
                 margin: '0 48px 0 48px',
             }}
         >
-            {motorbikes && motorbikes.length === 0 ? (
+            {error ? (
                 <>
-                    <Container>
+                    <Container className="wishlist-container-notFound">
+                        <Paper elevation={3} sx={{ padding: 2 }} >
+                            {/* {error?.error[0]} */}
+                            Không tìm thấy xe
+                        </Paper>
+                    </Container>
+                </>
+            ) : motorbikes && motorbikes.length === 0 ? (
+                <>
+                    <Container className="wishlist-container-notFound">
                         <Paper elevation={3} sx={{ padding: 2 }}>
                             Sàn giao dịch hiện không có bài đăng nào.
                         </Paper>
@@ -123,7 +136,7 @@ const MotorbikeComponent = () => {
                                             </Typography>
                                             <div className="product-info-content">
                                                 <Typography>
-                                                    <strong>Cửa Hàng:</strong> {' '}
+                                                    <strong>Cửa Hàng:</strong>{' '}
                                                     {motor.store?.storeName}
                                                 </Typography>
                                                 <Typography>
@@ -157,14 +170,20 @@ const MotorbikeComponent = () => {
                                                 <Button
                                                     variant="outlined"
                                                     onClick={() =>
-                                                        handleOpenDialog(motor.motorId)
+                                                        handleOpenDialog(
+                                                            motor.motorId,
+                                                        )
                                                     }
                                                 >
                                                     Đặt lịch xem xe
                                                 </Button>
                                                 <Button
                                                     className="btn-favorite"
-                                                    onClick={() => handleAddToWishList(motor.motorId)}
+                                                    onClick={() =>
+                                                        handleAddToWishList(
+                                                            motor.motorId,
+                                                        )
+                                                    }
                                                 >
                                                     <FavoriteBorderOutlined />
                                                 </Button>
