@@ -5,17 +5,22 @@ import {
 } from '../../../models/Negotiation/Negotiation';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { startNegotitationEndPoint } from '../../config/api-config';
+import {
+    getNegotiationRequestEndPoint,
+    startNegotitationEndPoint,
+} from '../../config/api-config';
 
 interface INegotiationState {
     loading: boolean;
     error: string[] | unknown;
     startNegotiation: INegotiation | null;
+    getNeotiation: INegotiation[] | null;
 }
 const initialState: INegotiationState = {
     loading: false,
     error: null,
     startNegotiation: null,
+    getNeotiation: null,
 };
 
 export const startNegotiation = createAsyncThunk<
@@ -46,6 +51,28 @@ export const startNegotiation = createAsyncThunk<
     }
 });
 
+export const getNegotiationRequest = createAsyncThunk<INegotiation[], void>(
+    'negotiation/getNegotiationRequest',
+    async (_, thunkAPI) => {
+        try {
+            const token = localStorage.getItem('motorbike_bs');
+            const response = await axios.get(getNegotiationRequestEndPoint, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data.result;
+        } catch (err: any) {
+            if (err.response) {
+                toast.error(`${err.response.data?.errorMessages}`);
+                return thunkAPI.rejectWithValue({
+                    error: err.response?.data?.errorMessages,
+                });
+            }
+        }
+    },
+);
+
 export const negotiationSlice = createSlice({
     name: 'negotiation',
     initialState,
@@ -67,6 +94,17 @@ export const negotiationSlice = createSlice({
             state.error = null;
         });
         builder.addCase(startNegotiation.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(getNegotiationRequest.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(getNegotiationRequest.fulfilled, (state, action) => {
+            state.loading = false;
+            state.getNeotiation = action.payload;
+        });
+        builder.addCase(getNegotiationRequest.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });

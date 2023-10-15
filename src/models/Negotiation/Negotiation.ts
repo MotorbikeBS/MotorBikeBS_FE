@@ -32,6 +32,7 @@ export interface INegotiationRequest {
     description: string;
     status: string;
 }
+
 export interface INegotiation {
     requestId: number;
     motorId: number;
@@ -42,5 +43,5 @@ export interface INegotiation {
     motor: IMotorNegotiation;
     negotiations: INegotiationRequest[];
     receiver: IUser;
-    sender: IStore;
+    sender: IUser;
 }

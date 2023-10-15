@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 export const columns: GridColDef[] = [
-    { field: 'id', headerName: 'Negotiation', width: 100 },
+    { field: 'id', headerName: 'Negotiation ID', width: 100 },
     { field: 'motorName', headerName: 'Tên Xe', width: 100 },
     {
         field: 'images',
@@ -36,12 +36,46 @@ export const columns: GridColDef[] = [
         headerName: 'Giá',
         width: 160,
         editable: false,
+
     },
     {
         field: 'storePrice',
         headerName: 'Giá Store Đưa Ra',
         width: 200,
         editable: false,
+        renderCell: (params) =>
+            <Typography
+                color='red'
+                fontWeight='700'
+            >
+                {params.row.storePrice}
+            </Typography>
+    },
+    {
+        field: 'storeName',
+        headerName: 'Tên cửa hàng',
+        width: 200,
+    },
+    {
+        field: 'storePhone',
+        headerName: 'Số điện thoại cửa hàng',
+        width: 250,
+        editable: false,
+    },
+    {
+        field: 'storeAddress',
+        headerName: 'Địa chỉ cửa hàng',
+        width: 200,
+        editable: false,
+    },
+    {
+        field: 'negotiationStatus',
+        headerName: 'Tình trạng thương lượng',
+        width: 150,
+        editable: false,
+        renderCell: (params) =>
+            params.row.negotiationStatus === 'PENDING' &&
+            <Typography sx={{ color: 'red' }}>Đang Chờ</Typography>
     },
     {
         field: 'motorStatus',
