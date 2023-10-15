@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode } from 'react';
 import {
     Modal,
     Typography,
@@ -35,7 +35,6 @@ const BookingInforModal: React.FC<BookingInforModalProps> = ({
 }) => {
     const dispatch = useAppDispatch()
     const { account } = useAppSelector((state) => state.account)
-    console.log(data?.id)
 
 
 
