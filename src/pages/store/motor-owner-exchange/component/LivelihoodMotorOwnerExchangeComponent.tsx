@@ -8,21 +8,24 @@ import {
     useAppSelector,
 } from '../../../../services/store/store';
 import { getAllOnStoreExchange } from '../../../../services/features/motorbike/motorbikeSlice';
-import BookingWithOwnerExchange from '../../booking-dialog-store/BookingWithOwnerExchange';
+import NegotiationDialog from '../../negotiation-dialog-store/NegotiationDialog';
 
 const LivelihoodMotorOwnerExchangeComponent = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const { account } = useAppSelector((state) => state.account);
     const { motorbikesByOwner } = useAppSelector((state) => state.motorbikes);
 
-    const [isOpenDialog, setOpenDialog] = React.useState(false);
-    const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
-    const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
-    const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<
-        number | null
-    >(null);
+    // const [isOpenDialog, setOpenDialog] = React.useState(false);
+    // const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
+    // const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
+    // const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<
+    //     number | null
+    // >(null);
 
+    const [isOpenDialogNego, setOpenDialogNego] = React.useState(false);
+    const [isOpenSubmitDialogNego, setIsOpenSubmitDialogNego] = React.useState(false);
+    const [isOpenCancelDialogNego, setIsOpenCancelDialogNego] = React.useState(false);
+    const [motorbikeIdForDialogNego, setMotorbikeIdForDialogNego] = React.useState<number | null>(null)
     const formatCurrency = useFormatCurrency();
 
     const handleNavigateDetail = (motorbikeId: number) => {
@@ -33,31 +36,28 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
         dispatch(getAllOnStoreExchange());
     }, [dispatch]);
 
-    const handleOpenDialog = (motorbikeId: number) => {
-        setMotorbikeIdForDialog(motorbikeId);
-        setOpenDialog(true);
-        console.log(motorbikeId);
-    };
-
-    const handleCloseDialog = () => {
-        setOpenDialog(false);
-        setIsOpenSubmitDialog(false);
-        setIsOpenCancelDialog(false);
-    };
-    const handleOpenSubmitDialog = () => {
-        setIsOpenSubmitDialog(true);
-    };
-    const handleCloseSubmitDialog = () => {
-        setIsOpenSubmitDialog(false);
-    };
-
-    const handleOpenCancelDialog = () => {
-        setIsOpenCancelDialog(true);
-    };
-    const handleCloseCancelDialog = () => {
-        setIsOpenCancelDialog(false);
-    };
-
+    //Nego
+    const handleOpenDialogNego = (motorId: number) => {
+        setMotorbikeIdForDialogNego(motorId)
+        setOpenDialogNego(true)
+    }
+    const handleCloseDialogNego = () => {
+        setOpenDialogNego(false)
+        setIsOpenSubmitDialogNego(false)
+        setIsOpenCancelDialogNego(false)
+    }
+    const handleOpenSubmitDialogNego = () => {
+        setIsOpenSubmitDialogNego(true)
+    }
+    const handleCloseSubmitDialogNego = () => {
+        setIsOpenSubmitDialogNego(false)
+    }
+    const handleOpenCancelDialogNego = () => {
+        setIsOpenCancelDialogNego(true)
+    }
+    const handleCloseCancelDialogNego = () => {
+        setIsOpenCancelDialogNego(false)
+    }
     const motorbikesLivelihoodByOwner = motorbikesByOwner?.filter(
         (motor) => motor.motorStatus?.motorStatusId === 5,
     );
@@ -172,12 +172,12 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
                                             <Button
                                                 variant="outlined"
                                                 onClick={() =>
-                                                    handleOpenDialog(
+                                                    handleOpenDialogNego(
                                                         motor.motorId,
                                                     )
                                                 }
                                             >
-                                                Đặt lịch xem xe
+                                                Thương lượng giá cả
                                             </Button>
                                             {/* <Button className="btn-favorite">
                                                   <FavoriteBorderOutlined />
@@ -191,16 +191,16 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
                 </>
             )}
 
-            <BookingWithOwnerExchange
-                open={isOpenDialog}
-                openSubmit={isOpenSubmitDialog}
-                openCancel={isOpenCancelDialog}
-                onOpenSubmitDialog={handleOpenSubmitDialog}
-                onCloseSubmitDialog={handleCloseSubmitDialog}
-                onOpenCancelDialog={handleOpenCancelDialog}
-                onCloseCancelDialog={handleCloseCancelDialog}
-                onClose={handleCloseDialog}
-                motorbikeId={motorbikeIdForDialog}
+            <NegotiationDialog
+                openNego={isOpenDialogNego}
+                openSubmitNego={isOpenSubmitDialogNego}
+                openCancelNego={isOpenCancelDialogNego}
+                onOpenSubmitDialogNego={handleOpenSubmitDialogNego}
+                onCloseSubmitDialogNego={handleCloseSubmitDialogNego}
+                onOpenCancelDialogNego={handleOpenCancelDialogNego}
+                onCloseCancelDialogNego={handleCloseCancelDialogNego}
+                onClose={handleCloseDialogNego}
+                motorIdNego={motorbikeIdForDialogNego}
             />
         </Box>
     );

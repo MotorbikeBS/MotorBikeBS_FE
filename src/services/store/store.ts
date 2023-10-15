@@ -11,6 +11,7 @@ import motorFiledsSlice from '../features/motorbike/motorFields';
 import ownerSlice from '../features/owner/ownerSlice';
 import wishListSlice from '../features/motorbike/wishListSlice';
 import bookingSlice from '../features/booking/bookingSlice';
+import negotiationSlice from '../features/negotiation/negotiationSlice';
 
 // Định nghĩa cấu hình persist
 const persistConfig = {
@@ -24,6 +25,7 @@ const persistConfig = {
         'motorbikes',
         'motorFields',
         'wishlist',
+        'negotiation',
         'booking',
     ],
 };
@@ -36,6 +38,7 @@ const rootReducer = combineReducers({
     motorbikes: motorbikeSlice,
     motorFields: motorFiledsSlice,
     wishlist: wishListSlice,
+    negotiation: negotiationSlice,
     booking: bookingSlice,
 });
 

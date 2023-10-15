@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import { Search, StyledInputBase, SearchIconWrapper } from './styleMUI/styled';
 import {
     AppBar,
     Box,
@@ -32,7 +31,6 @@ import MenuComponent from '../../../common-components/notify-component/NotifyCom
 import { useAppDispatch } from '../../../services/store/store';
 import { logoutUser } from '../../../services/features/auth/accountSlice';
 import { searchMotorByName } from '../../../services/features/motorbike/motorbikeSlice';
-import { toast } from 'react-toastify';
 
 const pages = [
     {
@@ -360,11 +358,10 @@ const CustomerMenuComponent = () => {
                                 <Link
                                     key={page.to}
                                     to={page.to}
-                                    className={`link-customer ${
-                                        isMenuItemActive(page.to)
-                                            ? 'active'
-                                            : ''
-                                    }`}
+                                    className={`link-customer ${isMenuItemActive(page.to)
+                                        ? 'active'
+                                        : ''
+                                        }`}
                                 >
                                     {page.name}
                                 </Link>
