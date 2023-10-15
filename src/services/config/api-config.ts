@@ -57,7 +57,7 @@ export const deleteWishListByMotorIdEndPoint = `${BASE_URL}/api/wishlist/deletew
 
 //Negotiation Price
 export const startNegotitationEndPoint = `${BASE_URL}/api/negotiation/startnegotitaion`;
-
+export const getNegotiationRequestEndPoint = `${BASE_URL}/api/negotiation/getnegotiationrequest`;
 //Booking
 export const storeBookingWithOwnerExchangeEndPoint = `${BASE_URL}/api/booking/storebookingowner`;
 export const getAllBookingByOwnerEndPoint = `${BASE_URL}/api/booking/getbookingrequest`;
