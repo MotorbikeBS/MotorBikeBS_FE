@@ -45,6 +45,10 @@ export interface IBrand {
     motorbikeModels: IModel[]
 }
 
+export interface IBrandTable extends IBrand {
+    id?: number
+}
+
 export interface IMotorStatus {
     motorStatusId: number;
     title: string;

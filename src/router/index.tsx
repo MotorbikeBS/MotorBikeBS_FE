@@ -31,6 +31,7 @@ import BookingListOwner from '../pages/owner/booking-component/BookingListOwner'
 import StoreMotorList from '../pages/store/store-motor-list/StoreMotorList';
 import BookingListStore from '../pages/store/booking-list/BookingListStore';
 import MotorBikeDetailForStore from '../pages/customer/motorbike-detail/MotorBikeDetailForStore';
+import MotorFields from '../pages/admin/motorFields-component/MotorFields';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -81,9 +82,12 @@ const AppRoutes = () => {
                     <Route path="/admin-home" element={<AdminHome />} />
                     <Route path="/list-user" element={<ListUser />} />
                     <Route
-                        path="//store-list-admin"
+                        path="/store-list-admin"
                         element={<StoreListAdmin />}
-                    />
+                    /><Route
+                    path="/motor-fields"
+                    element={<MotorFields />}
+                />
                     <Route path="*" element={<PageNotFound />} />
                 </>
             )}
