@@ -42,6 +42,7 @@ export interface IBrand {
     brandName: string;
     description?: string;
     status: string;
+    motorbikeModels: IModel[]
 }
 
 export interface IMotorStatus {
@@ -96,4 +97,12 @@ export interface IMotorbikeDetail {
         };
     };
     motorbikeImages: IMotorImages[];
+}
+
+export interface IFilter extends IMotorbike{
+    brandId?: number[],
+    modelId?: number[],
+    minPrice?: number,
+    maxPrice?: number,
+    motorTypeId?: number[]
 }

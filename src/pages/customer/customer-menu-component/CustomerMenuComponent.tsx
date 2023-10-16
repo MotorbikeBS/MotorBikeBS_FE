@@ -16,6 +16,7 @@ import {
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import './style/style.scss';
 
 import {
@@ -31,6 +32,7 @@ import MenuComponent from '../../../common-components/notify-component/NotifyCom
 import { useAppDispatch } from '../../../services/store/store';
 import { logoutUser } from '../../../services/features/auth/accountSlice';
 import { searchMotorByName } from '../../../services/features/motorbike/motorbikeSlice';
+import FilterComponent from '../../../common-components/filter-component/FilterComponent';
 
 const pages = [
     {
@@ -57,10 +59,18 @@ const CustomerMenuComponent = () => {
     const location = useLocation();
     const dispatch = useAppDispatch();
     const [searchTerm, setSearchTerm] = React.useState('');
+    const [isButtonDisabled, setIsButtonDisabled] = React.useState(true);
 
     const handleSearch = () => {
         dispatch(searchMotorByName({ motorName: searchTerm }));
     };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = e.target.value;
+        setSearchTerm(newValue);
+        setIsButtonDisabled(newValue.trim() === '');
+    };
+
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null,
@@ -68,6 +78,20 @@ const CustomerMenuComponent = () => {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
         null,
     );
+
+    const [anchorElFilter, setAnchorElFilter] =
+    React.useState<null | HTMLElement>(null);
+
+
+    const handleOpenFilterBox = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElFilter(event.currentTarget);
+    };
+
+    const handleCloseFilterBox = () => {
+        setAnchorElFilter(null);
+    };
+
+
     const [anchorElNotify, setAnchorElNotify] =
         React.useState<null | HTMLElement>(null);
 
@@ -251,13 +275,40 @@ const CustomerMenuComponent = () => {
                                 variant="outlined"
                                 fullWidth
                                 value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
+                                onChange={handleInputChange}
                             />
-                            <Button variant="text" onClick={handleSearch}>
+                            <Button
+                                variant="text"
+                                disabled={isButtonDisabled}
+                                onClick={handleSearch}
+                            >
                                 <SearchIcon
                                     sx={{ color: 'white', fontSize: '26px' }}
                                 />
                             </Button>
+                        </Box>
+
+                        <Box
+                            sx={{
+                                display: { xs: 'none', md: 'flex' },
+                            }}
+                        >
+                            <Tooltip title="Lọc">
+                                <IconButton
+                                    size="large"
+                                    aria-label="account of current user"
+                                    aria-controls="menu-appbar"
+                                    aria-haspopup="true"
+                                    onClick={handleOpenFilterBox}
+                                    color="inherit"
+                                >
+                                    <FilterAltIcon />
+                                </IconButton>
+                            </Tooltip>
+                            <FilterComponent 
+                                anchorElFilter={anchorElFilter}
+                                handleCloseFilter={handleCloseFilterBox}
+                            />
                         </Box>
 
                         <Box
@@ -323,6 +374,16 @@ const CustomerMenuComponent = () => {
                             >
                                 <SearchOutlined />
                             </IconButton>
+                            <IconButton
+                                size="large"
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={handleOpenFilterBox}
+                                color="inherit"
+                            >
+                                <FilterAltIcon />
+                            </IconButton>
                         </Box>
 
                         <Link
@@ -358,10 +419,11 @@ const CustomerMenuComponent = () => {
                                 <Link
                                     key={page.to}
                                     to={page.to}
-                                    className={`link-customer ${isMenuItemActive(page.to)
-                                        ? 'active'
-                                        : ''
-                                        }`}
+                                    className={`link-customer ${
+                                        isMenuItemActive(page.to)
+                                            ? 'active'
+                                            : ''
+                                    }`}
                                 >
                                     {page.name}
                                 </Link>
@@ -464,9 +526,13 @@ const CustomerMenuComponent = () => {
                             variant="outlined"
                             fullWidth
                             value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onChange={handleInputChange}
                         />
-                        <Button variant="text" onClick={handleSearch}>
+                        <Button
+                            variant="text"
+                            disabled={isButtonDisabled}
+                            onClick={handleSearch}
+                        >
                             <SearchIcon
                                 sx={{ color: 'white', fontSize: '26px' }}
                             />

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Box,
     Button,
@@ -8,7 +8,11 @@ import {
     DialogContentText,
     DialogTitle,
     FormControl,
+    InputLabel,
+    MenuItem,
     Paper,
+    Select,
+    SelectChangeEvent,
     Table,
     TableBody,
     TableCell,
@@ -56,6 +60,12 @@ const PostMotorModalByStore: React.FC<PostDialogProps> = ({
     const dispatch = useAppDispatch();
     const { account } = useAppSelector((state) => state.account);
 
+    const [motorStatus, setMotorStatus] = useState('');
+
+    const handleChangeStatus = (event: SelectChangeEvent) => {
+        setMotorStatus(event.target.value);
+    };
+
     useEffect(() => {
         dispatch(getUserByID({ id: Number(account?.userId) }));
         dispatch(getMotorId({ motorId: Number(selectedRow?.id) }));
@@ -76,7 +86,7 @@ const PostMotorModalByStore: React.FC<PostDialogProps> = ({
         dispatch(
             updateMotorStatus({
                 motorId: Number(selectedRow?.id),
-                statusId: 1,
+                statusId: Number(motorStatus),
             }),
         )
             .unwrap()
@@ -250,7 +260,36 @@ const PostMotorModalByStore: React.FC<PostDialogProps> = ({
                                                         </FormControl>
                                                     </TableCell>
                                                 </TableRow>
-                                                
+                                                <TableRow>
+                                                    <TableCell className="header-table">
+                                                        Đăng bán
+                                                    </TableCell>
+                                                    <TableCell className="header-table-content">
+                                                        <FormControl fullWidth>
+                                                            <InputLabel id="motor-status">
+                                                                Trạng thái bán
+                                                                xe
+                                                            </InputLabel>
+                                                            <Select
+                                                                labelId="motor-status"
+                                                                label="Trạng thái bán xe"
+                                                                value={
+                                                                    motorStatus
+                                                                }
+                                                                onChange={
+                                                                    handleChangeStatus
+                                                                }
+                                                            >
+                                                                <MenuItem value="1">
+                                                                    Xe có tại cửa hàng
+                                                                </MenuItem>
+                                                                <MenuItem value="5">
+                                                                    Xe không có ở cửa hàng
+                                                                </MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                    </TableCell>
+                                                </TableRow>
                                             </TableBody>
                                         </Table>
                                     </TableContainer>

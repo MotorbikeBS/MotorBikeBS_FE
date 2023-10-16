@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import {
-    IMotorbike,
-} from '../../../models/Motorbike/Motorbike';
+import { IFilter, IMotorbike } from '../../../models/Motorbike/Motorbike';
 import {
     filterMotorbikeEndPoint,
     getAllOnExChangeEndPoint,
@@ -15,6 +13,7 @@ import {
     updateMotorByIdEndPoint,
     updateMotorStatusEndPoint,
 } from '../../config/api-config';
+import { toast } from 'react-toastify';
 
 interface MotorbikeState {
     loading: boolean;
@@ -153,6 +152,7 @@ export const createMotorbike = createAsyncThunk<IMotorbike, Object>(
             });
             return response.data;
         } catch (error: any) {
+            toast.error(`${error.response.data?.errorMessages}`);
             return thunkAPI.rejectWithValue({
                 error: error.response?.data?.errorMessages,
             });
@@ -231,16 +231,54 @@ export const searchMotorByName = createAsyncThunk<
     }
 });
 
-export const filterMotor = createAsyncThunk<
-    IMotorbike[],
-    { modelId: number; minPrice: number; maxPrice: number; motorType: number }
->(
-    'motorbike/searchMotorByName',
-    async ({ modelId, minPrice, maxPrice, motorType }, thunkAPI) => {
+export const filterMotor = createAsyncThunk<IMotorbike[], Partial<IFilter>>(
+    'motorbike/filterMotorbike',
+    async (params, thunkAPI) => {
         try {
             const token = localStorage.getItem('motorbike_bs');
+            const queryParams = new URLSearchParams();
+
+            if (params.brandId) {
+                if (Array.isArray(params.brandId)) {
+                    for (const brandId of params.brandId) {
+                        queryParams.append('BrandId', brandId.toString());
+                    }
+                } else {
+                    queryParams.set('BrandId', params.brandId);
+                }
+            }
+
+            if (params.modelId) {
+                if (Array.isArray(params.modelId)) {
+                    for (const modelId of params.modelId) {
+                        queryParams.append('ModelId', modelId.toString());
+                    }
+                } else {
+                    queryParams.set('ModelId', params.modelId);
+                }
+            }
+            if (params.minPrice)
+                queryParams.set('minPrice', params.minPrice.toString());
+            if (params.maxPrice)
+                queryParams.set('maxPrice', params.maxPrice.toString());
+
+            if (params.motorTypeId) {
+                if (Array.isArray(params.motorTypeId)) {
+                    for (const motorTypeId of params.motorTypeId) {
+                        queryParams.append(
+                            'MotorTypeId',
+                            motorTypeId.toString(),
+                        );
+                    }
+                } else {
+                    queryParams.set('MotorTypeId', params.motorTypeId);
+                }
+            }
+
+            const queryString = queryParams.toString();
+
             const response = await axios.get(
-                `${filterMotorbikeEndPoint}?modelId=${modelId}&minPrice=${minPrice}&maxPrice=${maxPrice}&MotorTypeId=${motorType}`,
+                `${filterMotorbikeEndPoint}?${queryString}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -373,6 +411,18 @@ export const motorbikeSlice = createSlice({
             state.error = null;
         });
         builder.addCase(searchMotorByName.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(filterMotor.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(filterMotor.fulfilled, (state, action) => {
+            state.loading = false;
+            state.motorbikes = action.payload;
+            state.error = null;
+        });
+        builder.addCase(filterMotor.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });

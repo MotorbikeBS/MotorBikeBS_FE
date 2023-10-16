@@ -87,7 +87,7 @@ const MotorbikeByStoreIdComponent = () => {
                         {motorbikeByStoreId &&
                             motorbikeByStoreId.map((motor) => (
                                 <>
-                                    {motor.motorStatus.motorStatusId === 1 && (
+                                    {/* {motor.motorStatus.motorStatusId === 1 && ( */}
                                         <Grid
                                             item
                                             xs={12}
@@ -204,7 +204,7 @@ const MotorbikeByStoreIdComponent = () => {
                                                 )}
                                             </Item>
                                         </Grid>
-                                    )}
+                                    {/* )} */}
                                 </>
                             ))}
                     </Grid>
