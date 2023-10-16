@@ -8,7 +8,8 @@ import {
     useAppSelector,
 } from '../../../../services/store/store';
 import { getAllOnStoreExchange } from '../../../../services/features/motorbike/motorbikeSlice';
-import NegotiationDialog from '../../negotiation-dialog-store/NegotiationDialog';
+import NegotiationDialog from '../../negotiation-modal-store/NegotiationDialog';
+
 
 const LivelihoodMotorOwnerExchangeComponent = () => {
     const navigate = useNavigate();

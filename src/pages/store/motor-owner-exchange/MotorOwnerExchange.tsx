@@ -4,6 +4,7 @@ import StoreMenuComponent from '../store-menu-component/StoreMenuComponent';
 import ConsignmentMotorOwnerExchangeComponent from './component/ConsignmentMotorOwnerExchangeComponent';
 import FooterComponent from '../../../common-components/footer-component/FooterComponent';
 import LivelihoodMotorOwnerExchangeComponent from './component/LivelihoodMotorOwnerExchangeComponent';
+import ListNegotiationMotorByStore from './list-motor-negotion/ListNegotiationMotorByStore';
 
 const MotorOwnerExchange = () => {
     const [value, setValue] = useState<number>(0);
@@ -39,6 +40,7 @@ const MotorOwnerExchange = () => {
                 <Box flexGrow={4} marginTop="3rem">
                     {value === 0 && <ConsignmentMotorOwnerExchangeComponent />}
                     {value === 1 && <LivelihoodMotorOwnerExchangeComponent />}
+                    {value === 2 && <ListNegotiationMotorByStore />}
                 </Box>
             </Box>
 
