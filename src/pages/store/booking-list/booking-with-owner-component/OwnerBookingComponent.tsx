@@ -4,7 +4,6 @@ import { IBooking, IBookingSelectRowWithStore } from '../../../../models/Booking
 import { clearBooking, getAllBookingByOwner } from '../../../../services/features/booking/bookingSlice'
 import { DataGrid, GridRowParams } from '@mui/x-data-grid'
 import { Container, Paper, Typography } from '@mui/material'
-import BookingInforModal from '../../../owner/booking-component/booking-infor-modal/BookingInforModal'
 import { columns } from '../table/Table'
 import { format } from 'date-fns';
 import BookingInforModalStore from '../../booking-dialog-store/BookingInforModalStore'

@@ -13,14 +13,14 @@ import {
 interface INegotiationState {
     loading: boolean;
     error: string[] | unknown;
-    startNegotiation: INegotiation | null;
-    getNeotiation: INegotiation[] | null;
+    negotiation: INegotiation | null;
+    negotiations: INegotiation[] | null;
 }
 const initialState: INegotiationState = {
     loading: false,
     error: null,
-    startNegotiation: null,
-    getNeotiation: null,
+    negotiation: null,
+    negotiations: [],
 };
 
 export const startNegotiation = createAsyncThunk<
@@ -81,7 +81,7 @@ export const negotiationSlice = createSlice({
             state.error = action.payload;
         },
         clearNegotiation: (state) => {
-            state.startNegotiation = null;
+            state.negotiation = null;
         },
     },
     extraReducers: (builder) => {
@@ -90,7 +90,7 @@ export const negotiationSlice = createSlice({
         });
         builder.addCase(startNegotiation.fulfilled, (state, action) => {
             state.loading = false;
-            // state.startNegotiation = action.payload;
+            state.negotiation = action.payload;
             state.error = null;
         });
         builder.addCase(startNegotiation.rejected, (state, action) => {
@@ -102,7 +102,7 @@ export const negotiationSlice = createSlice({
         });
         builder.addCase(getNegotiationRequest.fulfilled, (state, action) => {
             state.loading = false;
-            state.getNeotiation = action.payload;
+            state.negotiations = action.payload;
         });
         builder.addCase(getNegotiationRequest.rejected, (state, action) => {
             state.loading = false;
