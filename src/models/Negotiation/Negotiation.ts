@@ -7,6 +7,11 @@ export interface INegotiationStore {
     storePrice: number;
     description: string;
 }
+export interface INegotiationOwner {
+    motorId: number;
+    ownerPrice: number;
+    description: string;
+}
 export interface IMotorNegotiation {
     motorId: number;
     certificateNumber: string;
