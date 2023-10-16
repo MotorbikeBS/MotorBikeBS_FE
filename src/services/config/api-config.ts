@@ -45,8 +45,11 @@ export const filterMotorbikeEndPoint = `${BASE_URL}/api/MotorBike/filter`;
 
 //motorbikeField endpoint
 export const getMotorBrandEndPoint = `${BASE_URL}/api/motorbrand`;
+export const createMotorBrandEndPoint = `${BASE_URL}/api/motorbrand/BrandRegister`
 export const getMotorModelEndPoint = `${BASE_URL}/api/motormodel`;
+export const createMotorModelEndPoint = `${BASE_URL}/api/motormodel/modelRegister`;
 export const getMotorTypeEndPoint = `${BASE_URL}/api/motortype`;
+export const createMotorTypeEndPoint = `${BASE_URL}/api/motortype/typeRegister`;
 export const getMotorStatusEndPoint = `${BASE_URL}/api/motorstatus`;
 
 //WishList EndPoint

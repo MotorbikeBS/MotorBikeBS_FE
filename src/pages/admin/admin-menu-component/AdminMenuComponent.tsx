@@ -15,26 +15,27 @@ import {
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 
-import {
-    AccountCircle,
-    Notifications,
-} from '@mui/icons-material';
+import { AccountCircle, Notifications } from '@mui/icons-material';
 import { useAppDispatch } from '../../../services/store/store';
 import { logoutUser } from '../../../services/features/auth/accountSlice';
 
-const pages = [{
-    to: '/dashboard',
-    name: 'Bảng thống kê'
-},
-{
-    to: '/list-user',
-    name: 'DS. Người dùng',
-},
-{
-    to: '/store-list-admin',
-    name: 'DS.Cửa hàng'
-
-}
+const pages = [
+    {
+        to: '/dashboard',
+        name: 'Bảng thống kê',
+    },
+    {
+        to: '/list-user',
+        name: 'DS. Người dùng',
+    },
+    {
+        to: '/store-list-admin',
+        name: 'DS.Cửa hàng',
+    },
+    {
+        to: '/motor-fields',
+        name: 'DS.Motor Fields',
+    },
 ];
 
 const AdminMenuComponent = () => {
@@ -224,10 +225,11 @@ const AdminMenuComponent = () => {
                                 <Link
                                     key={page.to}
                                     to={page.to}
-                                    className={`link-customer ${isMenuItemActive(page.to)
-                                        ? 'active'
-                                        : ''
-                                        }`}
+                                    className={`link-customer ${
+                                        isMenuItemActive(page.to)
+                                            ? 'active'
+                                            : ''
+                                    }`}
                                 >
                                     {page.name}
                                 </Link>
