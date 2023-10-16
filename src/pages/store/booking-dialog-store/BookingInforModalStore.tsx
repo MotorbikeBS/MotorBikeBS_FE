@@ -17,7 +17,6 @@ const BookingInforModalStore: React.FC<BookingInforModalStoreProps> = ({
     data,
     loadingData
 }) => {
-    const dispatch = useAppDispatch()
     const { account } = useAppSelector((state) => state.account)
 
     console.log(data?.id)
