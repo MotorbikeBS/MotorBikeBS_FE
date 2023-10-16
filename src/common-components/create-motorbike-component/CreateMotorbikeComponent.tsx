@@ -146,10 +146,6 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                 loadData();
                 toast.success('Thêm xe thành công.');
                 handleCloseDialog();
-            })
-            .catch((error) => {
-                toast.error(error.error[0]);
-                // handleCloseDialog();
             });
     };
 
@@ -300,7 +296,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                         Số Km đã đi
                                                     </TableCell>
                                                     <TableCell className="header-table-content">
-                                                        <TextField
+                                                        {/* <TextField
                                                             label="Số Km đã đi"
                                                             type="text"
                                                             {...register(
@@ -314,6 +310,41 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                             helperText={
                                                                 errors.odo
                                                                     ?.message
+                                                            }
+                                                            variant="outlined"
+                                                            fullWidth
+                                                        /> */}
+                                                        <TextField
+                                                            label="Số Km đã đi"
+                                                            type="text"
+                                                            {...register(
+                                                                'odo',
+                                                                {
+                                                                    validate: (
+                                                                        value,
+                                                                    ) => {
+                                                                        if (
+                                                                            !value
+                                                                        ) {
+                                                                            return 'Bạn chưa nhập số Km đã đi';
+                                                                        }
+                                                                        if (
+                                                                            isNaN(
+                                                                                value,
+                                                                            )
+                                                                        ) {
+                                                                            return 'Số Km đã đi phải là một số';
+                                                                        }
+                                                                        return true;
+                                                                    },
+                                                                },
+                                                            )}
+                                                            error={!!errors.odo}
+                                                            helperText={
+                                                                errors.odo
+                                                                    ? errors.odo
+                                                                          .message
+                                                                    : ''
                                                             }
                                                             variant="outlined"
                                                             fullWidth
@@ -352,7 +383,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                         Giá
                                                     </TableCell>
                                                     <TableCell className="header-table-content">
-                                                        <TextField
+                                                        {/* <TextField
                                                             label="Giá"
                                                             type="text"
                                                             {...register(
@@ -368,6 +399,44 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                             helperText={
                                                                 errors.price
                                                                     ?.message
+                                                            }
+                                                            variant="outlined"
+                                                            fullWidth
+                                                        /> */}
+                                                        <TextField
+                                                            label="Giá"
+                                                            type="text"
+                                                            {...register(
+                                                                'price',
+                                                                {
+                                                                    validate: (
+                                                                        value,
+                                                                    ) => {
+                                                                        if (
+                                                                            !value
+                                                                        ) {
+                                                                            return 'Bạn chưa nhập giá xe';
+                                                                        }
+                                                                        if (
+                                                                            isNaN(
+                                                                                value,
+                                                                            )
+                                                                        ) {
+                                                                            return 'Giá phải là một số';
+                                                                        }
+                                                                        return true;
+                                                                    },
+                                                                },
+                                                            )}
+                                                            error={
+                                                                !!errors.price
+                                                            }
+                                                            helperText={
+                                                                errors.price
+                                                                    ? errors
+                                                                          .price
+                                                                          .message
+                                                                    : ''
                                                             }
                                                             variant="outlined"
                                                             fullWidth

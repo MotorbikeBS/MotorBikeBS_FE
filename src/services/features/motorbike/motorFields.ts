@@ -16,6 +16,7 @@ import {
 interface MotorFileds {
     loading: boolean;
     motorBrands: IBrand[] | null;
+    motorBrand: IBrand | null;
     motorModels: IModel[] | null;
     motorTypes: IMotorType[] | null;
     motorStatus: IMotorStatus[] | null;
@@ -25,6 +26,7 @@ interface MotorFileds {
 const initialState: MotorFileds = {
     loading: false,
     motorBrands: null,
+    motorBrand: null,
     motorModels: null,
     motorTypes: null,
     motorStatus: null,
@@ -49,6 +51,28 @@ export const getMotorBrand = createAsyncThunk<IBrand[], void>(
         }
     },
 );
+
+export const getMotorBrandById = createAsyncThunk<
+    IBrand,
+    { motorBrandId: number }
+>('motorFields/getMotorBrandById', async ({ motorBrandId }, thunkAPI) => {
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.get(
+            `${getMotorBrandEndPoint}/${motorBrandId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return response.data.result;
+    } catch (error: any) {
+        return thunkAPI.rejectWithValue({
+            error: error.response?.data?.errorMessages,
+        });
+    }
+});
 
 export const getMotorModel = createAsyncThunk<IModel[], void>(
     'motorFields/getMotorModel',
@@ -110,7 +134,15 @@ export const getMotorStatus = createAsyncThunk<IMotorStatus[], void>(
 export const motorFiledsSlice = createSlice({
     name: 'motorFields',
     initialState,
-    reducers: {},
+    reducers: {
+        clearMotorFields: (state) => {
+            state.motorBrands = null;
+            state.motorModels = null;
+            state.motorBrand = null;
+            state.motorTypes = null;
+            state.motorStatus= null;
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(getMotorBrand.pending, (state) => {
             state.loading = true;
@@ -160,7 +192,19 @@ export const motorFiledsSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         });
+        builder.addCase(getMotorBrandById.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(getMotorBrandById.fulfilled, (state, action) => {
+            state.loading = false;
+            state.motorBrand = action.payload;
+            state.error = null;
+        });
+        builder.addCase(getMotorBrandById.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
     },
 });
-
+export const { clearMotorFields } = motorFiledsSlice.actions;
 export default motorFiledsSlice.reducer;
