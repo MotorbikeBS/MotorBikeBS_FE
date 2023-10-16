@@ -1,5 +1,7 @@
 import { Typography } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
+
+
 export const columns: GridColDef[] = [
     { field: 'id', headerName: 'Negotiation ID', width: 100 },
     { field: 'motorName', headerName: 'Tên xe', width: 100 },
@@ -33,7 +35,7 @@ export const columns: GridColDef[] = [
     },
     {
         field: 'price',
-        headerName: 'Giá',
+        headerName: 'Giá ban đầu',
         width: 160,
         editable: false,
 
@@ -44,12 +46,20 @@ export const columns: GridColDef[] = [
         width: 200,
         editable: false,
         renderCell: (params) =>
-            <Typography
-                color='red'
-                fontWeight='700'
-            >
-                {params.row.ownerPrice}
-            </Typography>
+            params.row.onwerPrice > 0 ? (
+                <Typography
+                    color='red'
+                    fontWeight='700'
+                >
+                    {params.row.ownerPrice}
+                </Typography>
+            ) : (
+                <Typography
+                    color='#ad1e02'
+                >
+                    Chưa nhập giá
+                </Typography>
+            )
     },
     {
         field: 'storePrice',
@@ -103,14 +113,16 @@ export const columns: GridColDef[] = [
         width: 150,
         editable: false,
         renderCell: (params) =>
-            params.row.motorStatus === 'POSTING' ? (
+            params.row.motorStatus === 'LIVELIHOOD' ? (
+                <Typography sx={{ color: 'green' }}>KHÔNG KÍ GỞI</Typography>
+            ) : params.row.motorStatus === 'POSTING' ? (
                 <Typography sx={{ color: 'green' }}>POSTING</Typography>
             ) : params.row.motorStatus === 'STORAGE' ? (
                 <Typography sx={{ color: 'orange' }}>KHO XE</Typography>
             ) : params.row.motorStatus === 'CONSIGNMENT' ? (
                 <Typography sx={{ color: '#E6A160' }}>KÍ GỞI</Typography>
             ) : (
-                <Typography sx={{ color: '#3D609A' }}>KHÔNG KÍ GỞI</Typography>
+                <Typography sx={{ color: '#3D609A' }}>CHƯA XÁC ĐỊNH</Typography>
             ),
     },
 ]

@@ -82,6 +82,7 @@ export const negotiationSlice = createSlice({
         },
         clearNegotiation: (state) => {
             state.negotiation = null;
+            state.negotiations = null;
         },
     },
     extraReducers: (builder) => {
