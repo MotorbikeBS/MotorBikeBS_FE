@@ -33,7 +33,7 @@ export const columns: GridColDef[] = [
     },
     {
         field: 'price',
-        headerName: 'Giá',
+        headerName: 'Giá ban đầu',
         width: 160,
         editable: false,
 

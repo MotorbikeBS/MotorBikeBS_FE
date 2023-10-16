@@ -31,7 +31,7 @@ const ListNegotiateMotorByOwner = () => {
         return pendingNegotiation.map((nego: INegotiation) => ({
             id: nego.negotiations[0].negotiationId,
             motorName: nego.motor.motorName,
-            // images: nego.motor.motorbikeImages[0].imageLink,
+            images: nego.motor.motorbikeImages[0].imageLink,
             certificateNumber: nego.motor.certificateNumber,
             year: format(new Date(nego.motor.year), 'dd/MM/yyyy'),
             price: formatCurrency(nego.motor.price),
@@ -44,7 +44,7 @@ const ListNegotiateMotorByOwner = () => {
             motorStatus: nego.motor?.motorStatus.title,
 
         }))
-    }, [pendingNegotiation])
+    }, [pendingNegotiation, formatCurrency])
 
 
     return (
