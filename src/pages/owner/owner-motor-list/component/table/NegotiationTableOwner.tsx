@@ -52,6 +52,28 @@ export const columns: GridColDef[] = [
             </Typography>
     },
     {
+        field: 'ownerPrice',
+        headerName: 'Giá của bạn',
+        width: 200,
+        editable: false,
+        renderCell: (params) =>
+            params.row.ownerPrice > 0 ?
+                (<Typography
+                    color='#fab71b'
+                    fontWeight='700'
+                >
+                    {params.row.ownerPrice}
+                </Typography>) : (
+                    <Typography
+                        color='#ad1e02'
+                    >
+                        Chưa nhập giá
+                    </Typography>
+                )
+
+
+    },
+    {
         field: 'storeName',
         headerName: 'Tên cửa hàng',
         width: 200,
