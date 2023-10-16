@@ -4,9 +4,9 @@ import { clearNegotiation, getNegotiationRequest } from '../../../../services/fe
 import { INegotiation } from '../../../../models/Negotiation/Negotiation'
 import { Container, Paper, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
-import { columns } from './table/NegotiationTableOwner'
 import { format } from 'date-fns'
 import useFormatCurrency from '../../../../hooks/useFormatCurrency'
+import { columns } from './negotiation-table/NegotiationTableOwner'
 
 const ListNegotiateMotorByOwner = () => {
     const dispatch = useAppDispatch()

@@ -10,7 +10,7 @@ import {
 } from '../../../../services/store/store';
 import ListPostedMotorByOwnerId from './ListPostedMotorByOwnerId';
 import ListStorageMotorByOwnerId from './ListStorageMotorByOwnerId';
-import ListNegotiateMotorByOwner from './ListNegotiateMotorByOwner';
+import ListNegotiateMotorByOwner from '../list-negotiation-by-owner/ListNegotiateMotorByOwner';
 
 const OwnerMotorListComponent = () => {
     const { account } = useAppSelector((state) => state.account);
