@@ -56,12 +56,7 @@ const OwnerMotorListComponent = () => {
 
     return (
         <div className="motorlist-container">
-            <div className="motorlist-add-btn">
-                <Button onClick={handleOpenDialog} variant="contained">
-                    <AddIcon />
-                    Thêm xe
-                </Button>
-            </div>
+
 
             <Tabs
                 value={value}
@@ -78,6 +73,15 @@ const OwnerMotorListComponent = () => {
                 <Tab label="Xe đã đăng" />
                 <Tab label='Xe đang thương lượng' />
             </Tabs>
+            {value === 0 || value === 1 ? (
+                <div className="motorlist-add-btn">
+                    <Button onClick={handleOpenDialog} variant="contained">
+                        <AddIcon />
+                        Thêm xe
+                    </Button>
+                </div>
+            ) : <></>}
+
             <Box flexGrow={4} marginTop="3rem">
                 {value === 0 && (
                     <ListStorageMotorByOwnerId loadData={loadData} />

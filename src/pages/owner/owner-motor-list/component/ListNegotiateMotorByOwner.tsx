@@ -12,7 +12,7 @@ const ListNegotiateMotorByOwner = () => {
     const dispatch = useAppDispatch()
     const formatCurrency = useFormatCurrency()
 
-    const { getNeotiation } = useAppSelector((state) => state.negotiation)
+    const { negotiations } = useAppSelector((state) => state.negotiation)
 
     useEffect(() => {
         dispatch(clearNegotiation())
@@ -24,8 +24,8 @@ const ListNegotiateMotorByOwner = () => {
     // }
 
     const pendingNegotiation = useMemo(() => {
-        return (getNeotiation ?? []).filter((nego: INegotiation) => nego.negotiations[0].status === 'PENDING');
-    }, [getNeotiation]);
+        return (negotiations ?? []).filter((nego: INegotiation) => nego.negotiations[0].status === 'PENDING');
+    }, [negotiations]);
 
     const rows = useMemo(() => {
         return pendingNegotiation.map((nego: INegotiation) => ({
