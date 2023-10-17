@@ -22,6 +22,7 @@ import {
     InputLabel,
     TextareaAutosize,
     SelectChangeEvent,
+    Input,
 } from '@mui/material';
 
 import './style/style.scss';
@@ -158,7 +159,9 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
             });
     };
 
-    const motorBrandFilter = motorBrands && motorBrands?.filter(motor => motor.status === 'ACTIVE')
+    const motorBrandFilter =
+        motorBrands &&
+        motorBrands?.filter((motor) => motor.status === 'ACTIVE');
     return (
         <div>
             <Dialog open={open} onClose={handleOpenCancelDialog}>
@@ -208,7 +211,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                         Thêm ảnh đăng ký xe
                                                     </TableCell>
                                                     <TableCell className="header-table-content">
-                                                        <input
+                                                        <Input
                                                             id="registrationImage"
                                                             type="file"
                                                             {...register(
@@ -218,8 +221,17 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                                         'Bạn chưa chọn ảnh đăng ký xe',
                                                                 },
                                                             )}
-                                                            multiple
                                                         />
+                                                        <br />
+                                                        {errors.registrationImage && (
+                                                            <span className="error-message">
+                                                                {
+                                                                    errors
+                                                                        .registrationImage
+                                                                        .message
+                                                                }
+                                                            </span>
+                                                        )}
                                                     </TableCell>
                                                 </TableRow>
                                                 <TableRow>
@@ -302,7 +314,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                         <FormControl fullWidth>
                                                             <InputLabel id="demo-simple-select-label">
                                                                 Model
-                                                            </InputLabel>
+                                                            </InputLabel>                                                     
                                                             <Select
                                                                 labelId="demo-simple-select-label"
                                                                 label="Model"
@@ -318,31 +330,42 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                                     handleChangeModel
                                                                 }
                                                             >
-                                                                {motorBrand &&
-                                                                    motorBrand?.motorbikeModels?.map(
+                                                                {motorBrand?.motorbikeModels
+                                                                    .filter(
+                                                                        (
+                                                                            motorModel,
+                                                                        ) =>
+                                                                            motorModel.status ===
+                                                                            'ACTIVE',
+                                                                    )
+                                                                    .map(
                                                                         (
                                                                             motorModel,
                                                                         ) => (
-                                                                            <>
-                                                                            {motorModel?.status === 'ACTIVE' && (
-                                                                                <MenuItem
+                                                                            <MenuItem
                                                                                 key={
                                                                                     motorModel.modelId
                                                                                 }
                                                                                 value={
                                                                                     motorModel.modelId
                                                                                 }
-                                                                                >
+                                                                            >
                                                                                 {
                                                                                     motorModel.modelName
                                                                                 }
                                                                             </MenuItem>
-                                                                            )}
-                                                                            
-                                                                            </>
-                                                                        )
+                                                                        ),
                                                                     )}
                                                             </Select>
+                                                            {errors.modelId && (
+                                                                <span className="error-message">
+                                                                    {
+                                                                        errors
+                                                                            .modelId
+                                                                            .message
+                                                                    }
+                                                                </span>
+                                                            )}
                                                         </FormControl>
                                                     </TableCell>
                                                 </TableRow>
@@ -351,24 +374,6 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                         Số Km đã đi
                                                     </TableCell>
                                                     <TableCell className="header-table-content">
-                                                        {/* <TextField
-                                                            label="Số Km đã đi"
-                                                            type="text"
-                                                            {...register(
-                                                                'odo',
-                                                                {
-                                                                    required:
-                                                                        'Bạn chưa nhập số km đã đi',
-                                                                },
-                                                            )}
-                                                            error={!!errors.odo}
-                                                            helperText={
-                                                                errors.odo
-                                                                    ?.message
-                                                            }
-                                                            variant="outlined"
-                                                            fullWidth
-                                                        /> */}
                                                         <TextField
                                                             label="Số Km đã đi"
                                                             type="text"
@@ -438,26 +443,6 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                         Giá
                                                     </TableCell>
                                                     <TableCell className="header-table-content">
-                                                        {/* <TextField
-                                                            label="Giá"
-                                                            type="text"
-                                                            {...register(
-                                                                'price',
-                                                                {
-                                                                    required:
-                                                                        'Bạn chưa nhập giá xe',
-                                                                },
-                                                            )}
-                                                            error={
-                                                                !!errors.price
-                                                            }
-                                                            helperText={
-                                                                errors.price
-                                                                    ?.message
-                                                            }
-                                                            variant="outlined"
-                                                            fullWidth
-                                                        /> */}
                                                         <TextField
                                                             label="Giá"
                                                             type="text"
@@ -558,6 +543,15 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                                         ),
                                                                     )}
                                                             </Select>
+                                                            {errors.motorTypeId && (
+                                                                <span className="error-message">
+                                                                    {
+                                                                        errors
+                                                                            .motorTypeId
+                                                                            .message
+                                                                    }
+                                                                </span>
+                                                            )}
                                                         </FormControl>
                                                     </TableCell>
                                                 </TableRow>
@@ -566,7 +560,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                         Thêm ảnh xe
                                                     </TableCell>
                                                     <TableCell className="header-table-content">
-                                                        <input
+                                                        <Input
                                                             id="images"
                                                             type="file"
                                                             {...register(
@@ -576,8 +570,20 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                                         'Bạn chưa chọn ảnh cho xe',
                                                                 },
                                                             )}
-                                                            multiple
+                                                            inputProps={{
+                                                                multiple: true,
+                                                            }}
                                                         />
+                                                        <br />
+                                                        {errors.images && (
+                                                            <span className="error-message">
+                                                                {
+                                                                    errors
+                                                                        .images
+                                                                        .message
+                                                                }
+                                                            </span>
+                                                        )}
                                                     </TableCell>
                                                 </TableRow>
                                             </TableBody>

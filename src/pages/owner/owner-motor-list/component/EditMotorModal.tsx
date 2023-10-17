@@ -22,6 +22,7 @@ import {
     InputLabel,
     TextareaAutosize,
     SelectChangeEvent,
+    Input,
 } from '@mui/material';
 
 import { toast } from 'react-toastify';
@@ -198,12 +199,13 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
                 handleCloseDialog();
             })
             .catch((error) => {
-                console.log(error);
-                // toast.error(error?.error[0]);
+                toast.error(error?.error[0]);
             });
     };
 
-    const motorModelsFilter = motorModels && motorModels?.filter((motor) => motor?.status === 'ACTIVE')
+    const motorModelsFilter =
+        motorModels &&
+        motorModels?.filter((motor) => motor?.status === 'ACTIVE');
 
     return (
         <div>
@@ -254,7 +256,7 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
                                                         Thêm ảnh đăng ký xe
                                                     </TableCell>
                                                     <TableCell className="header-table-content">
-                                                        <input
+                                                        <Input
                                                             id="registrationImage"
                                                             type="file"
                                                             {...register(
@@ -264,8 +266,17 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
                                                                         'Bạn chưa chọn ảnh đăng ký xe',
                                                                 },
                                                             )}
-                                                            multiple
                                                         />
+                                                        <br />
+                                                        {errors.registrationImage && (
+                                                            <span className="error-message">
+                                                                {
+                                                                    errors
+                                                                        .registrationImage
+                                                                        .message
+                                                                }
+                                                            </span>
+                                                        )}
                                                     </TableCell>
                                                 </TableRow>
                                                 <TableRow>
@@ -354,6 +365,15 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
                                                                         ),
                                                                     )}
                                                             </Select>
+                                                            {errors.modelId && (
+                                                                <span className="error-message">
+                                                                    {
+                                                                        errors
+                                                                            .modelId
+                                                                            .message
+                                                                    }
+                                                                </span>
+                                                            )}
                                                         </FormControl>
                                                     </TableCell>
                                                 </TableRow>
@@ -390,8 +410,17 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
                                                         <TextField
                                                             label="Ngày đăng ký cũ"
                                                             // value={motorbike ? formatDate(motorbike?.year.toLocaleString()) : new Date()}
-                                                            value={motorbike && motorbike.year ? formatDate(motorbike.year.toLocaleString()) : new Date().toLocaleString('vi-VN')}
-                                                            type="text"                                                         
+                                                            value={
+                                                                motorbike &&
+                                                                motorbike.year
+                                                                    ? formatDate(
+                                                                          motorbike.year.toLocaleString(),
+                                                                      )
+                                                                    : new Date().toLocaleString(
+                                                                          'vi-VN',
+                                                                      )
+                                                            }
+                                                            type="text"
                                                             variant="outlined"
                                                             fullWidth
                                                             disabled
@@ -572,6 +601,15 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
                                                                         ),
                                                                     )}
                                                             </Select>
+                                                            {errors.motorTypeId && (
+                                                                <span className="error-message">
+                                                                    {
+                                                                        errors
+                                                                            .motorTypeId
+                                                                            .message
+                                                                    }
+                                                                </span>
+                                                            )}
                                                         </FormControl>
                                                     </TableCell>
                                                 </TableRow>
@@ -580,7 +618,7 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
                                                         Thêm ảnh
                                                     </TableCell>
                                                     <TableCell className="header-table-content">
-                                                        <input
+                                                        <Input
                                                             id="images"
                                                             type="file"
                                                             {...register(
@@ -590,8 +628,20 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
                                                                         'Bạn chưa chọn ảnh cho cửa hàng',
                                                                 },
                                                             )}
-                                                            multiple
+                                                            inputProps={{
+                                                                multiple: true,
+                                                            }}
                                                         />
+                                                        <br />
+                                                        {errors.images && (
+                                                            <span className="error-message">
+                                                                {
+                                                                    errors
+                                                                        .images
+                                                                        .message
+                                                                }
+                                                            </span>
+                                                        )}
                                                     </TableCell>
                                                 </TableRow>
                                             </TableBody>

@@ -128,7 +128,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
             PaperProps={{
                 style: {
                     background: '#e9f7ec',
-                    width: '620px',
+                    width: '720px',
                     height: '560px',
                 },
             }}
