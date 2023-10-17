@@ -101,7 +101,7 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
         setModel(event.target.value);
     };
 
-    console.log(model);
+    // console.log(model);
     const handleChangeType = (event: SelectChangeEvent) => {
         setMotorType(event.target.value);
     };
@@ -202,6 +202,8 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
                 // toast.error(error?.error[0]);
             });
     };
+
+    const motorModelsFilter = motorModels && motorModels?.filter((motor) => motor?.status === 'ACTIVE')
 
     return (
         <div>
@@ -332,8 +334,8 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
                                                                     handleChangeModel
                                                                 }
                                                             >
-                                                                {motorModels &&
-                                                                    motorModels.map(
+                                                                {motorModelsFilter &&
+                                                                    motorModelsFilter.map(
                                                                         (
                                                                             motorModel,
                                                                         ) => (

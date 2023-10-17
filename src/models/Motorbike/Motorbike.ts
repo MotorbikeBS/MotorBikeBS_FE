@@ -64,6 +64,7 @@ export interface IMotorType {
     title: string;
     description?: string;
     status: string;
+    motorbikes: IMotorbike[]
 }
 
 export interface IMotorTypeTable extends IMotorType {

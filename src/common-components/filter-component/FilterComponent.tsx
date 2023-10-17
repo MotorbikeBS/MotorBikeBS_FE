@@ -120,6 +120,9 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
         handleCloseFilter();
     };
 
+    const motorBrandsFilter = motorBrands && motorBrands?.filter(motor => motor.status === 'ACTIVE')
+    const motorModelsFilter = motorModels && motorModels?.filter(motor => motor.status === 'ACTIVE')
+
     return (
         <Menu
             PaperProps={{
@@ -165,8 +168,8 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                                     Brand
                                 </TableCell>
                                 <TableCell className="header-table-content-filter">
-                                    {motorBrands &&
-                                        motorBrands.map((option) => (
+                                    {motorBrandsFilter &&
+                                        motorBrandsFilter.map((option) => (
                                             <FormControlLabel
                                                 key={option.brandId}
                                                 control={
@@ -192,8 +195,8 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                                     Model
                                 </TableCell>
                                 <TableCell className="header-table-content-filter">
-                                    {motorModels &&
-                                        motorModels.map((option) => (
+                                    {motorModelsFilter &&
+                                        motorModelsFilter.map((option) => (
                                             <FormControlLabel
                                                 key={option.modelId}
                                                 control={

@@ -112,7 +112,7 @@ const CreateModelModal: React.FC<CreateDialogProps> = ({
             <Dialog open={open} onClose={handleOpenCancelDialog}>
                 <DialogTitle>
                     <Typography variant="h4" textAlign="center">
-                        Thêm Brand
+                        Thêm Model
                     </Typography>
                 </DialogTitle>
                 <DialogContent>

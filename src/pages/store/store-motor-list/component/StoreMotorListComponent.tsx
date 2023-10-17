@@ -9,6 +9,8 @@ import CreateMotorbikeComponent from '../../../../common-components/create-motor
 import { getMotorByOwnerId } from '../../../../services/features/motorbike/motorbikeSlice';
 import ListStorageMotorByStoreId from './ListStorageMotorByStoreId';
 import ListPostedMotorByStoreId from './ListPostedMotorByStoreId';
+import CreateModelModal from '../../../../common-components/create-motorbike-component/create-motorFields-component/CreateModel';
+import CreateBrandModal from '../../../../common-components/create-motorbike-component/create-motorFields-component/CreateBrand';
 
 const StoreMotorListComponent = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -16,6 +18,18 @@ const StoreMotorListComponent = () => {
     const [isOpenDialog, setOpenDialog] = useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = useState(false);
+
+    const [isOpenBrandDialog, setOpenBrandDialog] = useState(false);
+    const [isOpenBrandSubmitDialog, setIsOpenBrandSubmitDialog] =
+        useState(false);
+    const [isOpenBrandCancelDialog, setIsOpenBrandCancelDialog] =
+        useState(false);
+
+    const [isOpenModelDialog, setOpenModelDialog] = useState(false);
+    const [isOpenModelSubmitDialog, setIsOpenModelSubmitDialog] =
+        useState(false);
+    const [isOpenModelCancelDialog, setIsOpenModelCancelDialog] =
+        useState(false);
 
     const [value, setValue] = useState<number>(0);
 
@@ -34,33 +48,80 @@ const StoreMotorListComponent = () => {
     const handleOpenDialog = () => {
         setOpenDialog(true);
     };
+    const handleOpenBrandDialog = () => {
+        setOpenBrandDialog(true);
+    };
+
+    const handleOpenModelDialog = () => {
+        setOpenModelDialog(true);
+    };
+
     const handleCloseDialog = () => {
         setOpenDialog(false);
         setIsOpenSubmitDialog(false);
         setIsOpenCancelDialog(false);
     };
+
+    const handleCloseBrandDialog = () => {
+        setOpenBrandDialog(false);
+        setIsOpenBrandSubmitDialog(false);
+        setIsOpenBrandCancelDialog(false);
+    };
+
+    const handleCloseModelDialog = () => {
+        setOpenModelDialog(false);
+        setIsOpenModelSubmitDialog(false);
+        setIsOpenModelCancelDialog(false);
+    };
     const handleOpenSubmitDialog = () => {
         setIsOpenSubmitDialog(true);
     };
+    const handleOpenBrandSubmitDialog = () => {
+        setIsOpenBrandSubmitDialog(true);
+    };
+    const handleOpenModelSubmitDialog = () => {
+        setIsOpenModelSubmitDialog(true);
+    };
+
     const handleCloseSubmitDialog = () => {
         setIsOpenSubmitDialog(false);
+    };
+
+    const handleCloseBrandSubmitDialog = () => {
+        setIsOpenBrandSubmitDialog(false);
+    };
+    const handleCloseModelSubmitDialog = () => {
+        setIsOpenModelSubmitDialog(false);
     };
 
     const handleOpenCancelDialog = () => {
         setIsOpenCancelDialog(true);
     };
+
+    const handleOpenBrandCancelDialog = () => {
+        setIsOpenBrandCancelDialog(true);
+    };
+    const handleOpenModelCancelDialog = () => {
+        setIsOpenModelCancelDialog(true);
+    };
     const handleCloseCancelDialog = () => {
         setIsOpenCancelDialog(false);
+    };
+    const handleCloseBrandCancelDialog = () => {
+        setIsOpenBrandCancelDialog(false);
+    };
+    const handleCloseModelCancelDialog = () => {
+        setIsOpenModelCancelDialog(false);
     };
 
     return (
         <div className="motorlist-container">
             <div className="motorlist-add-btn">
-                <Button variant="contained">
+                <Button onClick={handleOpenBrandDialog} variant="contained">
                     <AddIcon />
                     Thêm Brand
                 </Button>
-                <Button variant="contained">
+                <Button onClick={handleOpenModelDialog} variant="contained">
                     <AddIcon />
                     Thêm Model
                 </Button>
@@ -103,6 +164,29 @@ const StoreMotorListComponent = () => {
                 onOpenCancelDialog={handleOpenCancelDialog}
                 onCloseCancelDialog={handleCloseCancelDialog}
                 onClose={handleCloseDialog}
+                loadData={loadData}
+            />
+            <CreateBrandModal
+                open={isOpenBrandDialog}
+                openSubmit={isOpenBrandSubmitDialog}
+                openCancel={isOpenBrandCancelDialog}
+                onOpenSubmitDialog={handleOpenBrandSubmitDialog}
+                onCloseSubmitDialog={handleCloseBrandSubmitDialog}
+                onOpenCancelDialog={handleOpenBrandCancelDialog}
+                onCloseCancelDialog={handleCloseBrandCancelDialog}
+                onClose={handleCloseBrandDialog}
+                loadData={loadData}
+            />
+
+            <CreateModelModal
+                open={isOpenModelDialog}
+                openSubmit={isOpenModelSubmitDialog}
+                openCancel={isOpenModelCancelDialog}
+                onOpenSubmitDialog={handleOpenModelSubmitDialog}
+                onCloseSubmitDialog={handleCloseModelSubmitDialog}
+                onOpenCancelDialog={handleOpenModelCancelDialog}
+                onCloseCancelDialog={handleCloseModelCancelDialog}
+                onClose={handleCloseModelDialog}
                 loadData={loadData}
             />
         </div>

@@ -215,6 +215,9 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
             });
     };
 
+    const motorModelsFilter = motorModels && motorModels?.filter((motor) => motor?.status === 'ACTIVE')
+
+
     return (
         <div>
             <Dialog open={open} onClose={handleOpenCancelDialog}>
@@ -344,8 +347,8 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                                     handleChangeModel
                                                                 }
                                                             >
-                                                                {motorModels &&
-                                                                    motorModels.map(
+                                                                {motorModelsFilter &&
+                                                                    motorModelsFilter.map(
                                                                         (
                                                                             motorModel,
                                                                         ) => (

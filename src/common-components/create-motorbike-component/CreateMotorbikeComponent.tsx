@@ -88,7 +88,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
         setModel(event.target.value);
     };
 
-    console.log(model);
+    // console.log(model);
     const handleChangeType = (event: SelectChangeEvent) => {
         setMotorType(event.target.value);
     };
@@ -158,6 +158,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
             });
     };
 
+    const motorBrandFilter = motorBrands && motorBrands?.filter(motor => motor.status === 'ACTIVE')
     return (
         <div>
             <Dialog open={open} onClose={handleOpenCancelDialog}>
@@ -270,8 +271,8 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                                     handleChangeBrand
                                                                 }
                                                             >
-                                                                {motorBrands &&
-                                                                    motorBrands.map(
+                                                                {motorBrandFilter &&
+                                                                    motorBrandFilter.map(
                                                                         (
                                                                             motorBrand,
                                                                         ) => (
@@ -322,19 +323,24 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                                         (
                                                                             motorModel,
                                                                         ) => (
-                                                                            <MenuItem
+                                                                            <>
+                                                                            {motorModel?.status === 'ACTIVE' && (
+                                                                                <MenuItem
                                                                                 key={
                                                                                     motorModel.modelId
                                                                                 }
                                                                                 value={
                                                                                     motorModel.modelId
                                                                                 }
-                                                                            >
+                                                                                >
                                                                                 {
                                                                                     motorModel.modelName
                                                                                 }
                                                                             </MenuItem>
-                                                                        ),
+                                                                            )}
+                                                                            
+                                                                            </>
+                                                                        )
                                                                     )}
                                                             </Select>
                                                         </FormControl>

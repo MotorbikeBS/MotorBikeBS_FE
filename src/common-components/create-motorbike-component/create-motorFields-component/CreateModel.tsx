@@ -6,7 +6,12 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
+    FormControl,
+    InputLabel,
+    MenuItem,
     Paper,
+    Select,
+    SelectChangeEvent,
     Table,
     TableBody,
     TableCell,
@@ -16,11 +21,12 @@ import {
     TextareaAutosize,
     Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '../../../../../services/store/store';
-import { createMotorType } from '../../../../../services/features/motorbike/motorFields';
+
 import { toast } from 'react-toastify';
+import { createMotorModel } from '../../../services/features/motorbike/motorFields';
+import { useAppDispatch, useAppSelector } from '../../../services/store/store';
 
 interface CreateDialogProps {
     open: boolean;
@@ -34,13 +40,14 @@ interface CreateDialogProps {
     loadData: () => void;
 }
 
-interface ICreateType {
-    title: string;
+interface ICreateModel {
+    brandId: number;
+    modelName: string;
     description: string;
     status: string;
 }
 
-const CreateTypeModal: React.FC<CreateDialogProps> = ({
+const CreateModelModal: React.FC<CreateDialogProps> = ({
     open,
     openSubmit,
     openCancel,
@@ -52,12 +59,20 @@ const CreateTypeModal: React.FC<CreateDialogProps> = ({
     loadData,
 }) => {
     const dispatch = useAppDispatch();
+    const { motorBrands } = useAppSelector((state) => state.motorFields);
 
-    const form = useForm<ICreateType>({
+    const [brand, setBrand] = useState('');
+
+    const handleChangeBrand = (event: SelectChangeEvent) => {
+        setBrand(event.target.value);
+    };
+
+    const form = useForm<ICreateModel>({
         defaultValues: {
-            title: '',
+            brandId: undefined,
+            modelName: '',
             description: '',
-            status: '',
+            status: 'PENDING',
         },
     });
 
@@ -75,28 +90,32 @@ const CreateTypeModal: React.FC<CreateDialogProps> = ({
         onOpenCancelDialog();
     };
 
-    const onSubmit = (data: ICreateType) => {
+    const onSubmit = (data: ICreateModel) => {
         dispatch(
-            createMotorType({
-                title: data.title,
+            createMotorModel({
+                modelName: data.modelName,
                 description: data.description,
                 status: data.status,
+                brandId: data.brandId,
             }),
         )
             .unwrap()
             .then(() => {
                 loadData();
-                toast.success('Thêm loại xe thành công!');
+                toast.success('Thêm Model thành công!');
                 handleCloseDialog();
             });
+        // console.log(data);
     };
+
+    const motorBrandFilter = motorBrands && motorBrands?.filter(motor => motor.status === 'ACTIVE')
 
     return (
         <div>
             <Dialog open={open} onClose={handleOpenCancelDialog}>
                 <DialogTitle>
                     <Typography variant="h4" textAlign="center">
-                        Thêm Loại xe
+                        Thêm Model
                     </Typography>
                 </DialogTitle>
                 <DialogContent>
@@ -109,24 +128,72 @@ const CreateTypeModal: React.FC<CreateDialogProps> = ({
                                             <TableBody>
                                                 <TableRow>
                                                     <TableCell className="header-table">
-                                                        Tên Loại xe
+                                                        Brand
+                                                    </TableCell>
+                                                    <TableCell className="header-table-content">
+                                                        <FormControl fullWidth>
+                                                            <InputLabel id="demo-simple-select-label">
+                                                                Brand
+                                                            </InputLabel>
+                                                            <Select
+                                                                labelId="demo-simple-select-label"
+                                                                label="Model"
+                                                                value={brand}
+                                                                {...register(
+                                                                    'brandId',
+                                                                    {
+                                                                        required:
+                                                                            'Bạn chưa chọn brand xe',
+                                                                    },
+                                                                )}
+                                                                onChange={
+                                                                    handleChangeBrand
+                                                                }
+                                                            >
+                                                                {motorBrandFilter &&
+                                                                    motorBrandFilter.map(
+                                                                        (
+                                                                            motorBrand,
+                                                                        ) => (
+                                                                            <MenuItem
+                                                                                key={
+                                                                                    motorBrand.brandId
+                                                                                }
+                                                                                value={
+                                                                                    motorBrand.brandId
+                                                                                }
+                                                                            >
+                                                                                {
+                                                                                    motorBrand.brandName
+                                                                                }
+                                                                            </MenuItem>
+                                                                        ),
+                                                                    )}
+                                                            </Select>
+                                                        </FormControl>
+                                                    </TableCell>
+                                                </TableRow>
+
+                                                <TableRow>
+                                                    <TableCell className="header-table">
+                                                        Tên Model
                                                     </TableCell>
                                                     <TableCell>
                                                         <TextField
-                                                            label="Tên Loại xe"
+                                                            label="Model"
                                                             type="text"
                                                             {...register(
-                                                                'title',
+                                                                'modelName',
                                                                 {
                                                                     required:
-                                                                        'Bạn chưa nhập tên Type',
+                                                                        'Bạn chưa nhập tên model',
                                                                 },
                                                             )}
                                                             error={
-                                                                !!errors.title
+                                                                !!errors.modelName
                                                             }
                                                             helperText={
-                                                                errors.title
+                                                                errors.modelName
                                                                     ?.message
                                                             }
                                                             variant="outlined"
@@ -134,8 +201,7 @@ const CreateTypeModal: React.FC<CreateDialogProps> = ({
                                                         />
                                                     </TableCell>
                                                 </TableRow>
-                                            </TableBody>
-                                            <TableBody>
+
                                                 <TableRow>
                                                     <TableCell className="header-table">
                                                         Mô tả
@@ -182,12 +248,12 @@ const CreateTypeModal: React.FC<CreateDialogProps> = ({
             {/* Dialog Đặt lịch */}
             <Dialog open={openSubmit}>
                 <DialogTitle>
-                    <Typography variant="h5">Xác nhận Thêm brand</Typography>
+                    <Typography variant="h5">Xác nhận Thêm model</Typography>
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         <Typography>
-                            Bạn có chắc chắn muốn thêm brand không ?
+                            Bạn có chắc chắn muốn thêm model không ?
                         </Typography>
                     </DialogContentText>
                 </DialogContent>
@@ -217,7 +283,7 @@ const CreateTypeModal: React.FC<CreateDialogProps> = ({
                 <DialogContent>
                     <DialogContentText>
                         <Typography>
-                            Bạn có chắc chắn muốn hủy bỏ thêm brand không ?
+                            Bạn có chắc chắn muốn hủy bỏ thêm model không ?
                         </Typography>
                     </DialogContentText>
                 </DialogContent>
@@ -242,4 +308,4 @@ const CreateTypeModal: React.FC<CreateDialogProps> = ({
     );
 };
 
-export default CreateTypeModal;
+export default CreateModelModal;

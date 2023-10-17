@@ -1,5 +1,5 @@
 import { DataGrid, GridRowParams } from '@mui/x-data-grid';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
     useAppDispatch,
     useAppSelector,
@@ -38,6 +38,10 @@ const MotorTye = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isOpenSubmitEditDialog, setIsOpenSubmitEditDialog] = useState(false);
     const [isOpenCancelEditDialog, setIsOpenCancelEditDialog] = useState(false);
+
+    useEffect(() => {
+        dispatch(getMotorType());
+    }, [dispatch]);
 
     const loadData = () => {
         dispatch(getMotorType());
@@ -102,10 +106,13 @@ const MotorTye = () => {
             id: type.motorTypeId,
             title: type?.title,
             description:
-                type?.description !== null
+                type?.description !== null && type?.description !== ''
                     ? type?.description
                     : 'Chưa có mô tả.',
-            status: type?.status ? type?.status : 'Chưa có trạng thái.',
+            status:
+                type?.status !== null && type?.status !== ''
+                    ? type?.status
+                    : 'Chưa có trạng thái.',
         }));
     }, [motorTypes]);
 

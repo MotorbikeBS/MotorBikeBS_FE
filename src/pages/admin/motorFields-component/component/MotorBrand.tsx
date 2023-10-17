@@ -1,5 +1,5 @@
 import { DataGrid, GridRowParams } from '@mui/x-data-grid';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { columns } from './table/BrandTable';
 import {
     useAppDispatch,
@@ -36,6 +36,10 @@ const MotorBrand = () => {
     const [isOpenSubmitEditDialog, setIsOpenSubmitEditDialog] = useState(false);
     const [isOpenCancelEditDialog, setIsOpenCancelEditDialog] = useState(false);
 
+    useEffect(() => {
+        dispatch(getMotorBrand());
+    }, [dispatch]);
+
     const loadData = () => {
         dispatch(getMotorBrand());
     };
@@ -54,6 +58,7 @@ const MotorBrand = () => {
     };
     const handleCloseSubmitDialog = () => {
         setIsOpenSubmitDialog(false);
+        loadData();
     };
 
     const handleOpenCancelDialog = () => {
@@ -99,7 +104,7 @@ const MotorBrand = () => {
             id: brand.brandId,
             brandName: brand?.brandName,
             description:
-                brand?.description !== null
+                brand?.description !== null && brand?.description !== ''
                     ? brand?.description
                     : 'Chưa có mô tả.',
             status: brand?.status,

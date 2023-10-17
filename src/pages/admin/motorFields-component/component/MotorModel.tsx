@@ -1,5 +1,5 @@
 import { DataGrid, GridRowParams } from '@mui/x-data-grid';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
     useAppDispatch,
     useAppSelector,
@@ -35,6 +35,10 @@ const MotorModel = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isOpenSubmitEditDialog, setIsOpenSubmitEditDialog] = useState(false);
     const [isOpenCancelEditDialog, setIsOpenCancelEditDialog] = useState(false);
+
+    useEffect(()=>{
+        dispatch(getMotorModel())
+    }, [dispatch])
 
     const loadData = () => {
         dispatch(getMotorModel());
@@ -99,13 +103,15 @@ const MotorModel = () => {
             id: model.modelId,
             modelName: model?.modelName,
             description:
-                model?.description !== null
+                (model?.description !== null && model?.description !== '')
                     ? model?.description
                     : 'Chưa có mô tả.',
             brandName: model?.brand?.brandName,
             status: model?.status,
         }));
     }, [motorModels]);
+
+   
 
     const handleRowDoubleClick = (params: GridRowParams) => {
         setSelectedRow(params.row as IModelTable);

@@ -126,6 +126,7 @@ const EditModelModal: React.FC<EditDialogProps> = ({
                 brandId: data?.brandId,
             })
         ).unwrap().then(()=>{
+            loadData()
             toast.success('Chỉnh sửa thành công!');
             handleCloseDialog()
         })
@@ -249,7 +250,7 @@ const EditModelModal: React.FC<EditDialogProps> = ({
                                                                 'status',
                                                             )}
                                                             variant="outlined"
-                                                            disabled
+                                                            // disabled
                                                             fullWidth
                                                         />
                                                     </TableCell>
