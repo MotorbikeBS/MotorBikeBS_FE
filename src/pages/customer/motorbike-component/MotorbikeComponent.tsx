@@ -76,7 +76,7 @@ const MotorbikeComponent = () => {
             {error ? (
                 <>
                     <Container className="wishlist-container-notFound">
-                        <Paper elevation={3} sx={{ padding: 2 }} >
+                        <Paper elevation={3} sx={{ padding: 2 }}>
                             {/* {error?.error[0]} */}
                             Không tìm thấy xe
                         </Paper>
@@ -134,6 +134,19 @@ const MotorbikeComponent = () => {
                                                 Giá:{' '}
                                                 {formatCurrency(motor.price)}
                                             </Typography>
+                                            {motor?.motorStatus
+                                                ?.motorStatusId === 5 ? (
+                                                <Typography color="blue">
+                                                    <strong>
+                                                        Xe hiện không có ở cửa
+                                                        hàng
+                                                    </strong>
+                                                </Typography>
+                                            ) : (
+                                                <>
+                                                    <br />
+                                                </>
+                                            )}
                                             <div className="product-info-content">
                                                 <Typography>
                                                     <strong>Cửa Hàng:</strong>{' '}
@@ -166,28 +179,46 @@ const MotorbikeComponent = () => {
                                             </div>
                                         </div>
                                         {account?.roleId === 4 && (
-                                            <div className="btn-style">
-                                                <Button
-                                                    variant="outlined"
-                                                    onClick={() =>
-                                                        handleOpenDialog(
-                                                            motor.motorId,
-                                                        )
-                                                    }
-                                                >
-                                                    Đặt lịch xem xe
-                                                </Button>
-                                                <Button
-                                                    className="btn-favorite"
-                                                    onClick={() =>
-                                                        handleAddToWishList(
-                                                            motor.motorId,
-                                                        )
-                                                    }
-                                                >
-                                                    <FavoriteBorderOutlined />
-                                                </Button>
-                                            </div>
+                                            <>
+                                                {motor?.motorStatus
+                                                    ?.motorStatusId === 5 ? (
+                                                    <div className="btn-style">
+                                                        <Button
+                                                            variant="outlined"
+                                                            onClick={() =>
+                                                                handleOpenDialog(
+                                                                    motor.motorId,
+                                                                )
+                                                            }
+                                                        >
+                                                            Đặt lịch xem xe
+                                                        </Button>
+                                                        <Button
+                                                            className="btn-favorite"
+                                                            onClick={() =>
+                                                                handleAddToWishList(
+                                                                    motor.motorId,
+                                                                )
+                                                            }
+                                                        >
+                                                            <FavoriteBorderOutlined />
+                                                        </Button>
+                                                    </div>
+                                                ) : (
+                                                    <div className="btn-style">
+                                                        <Button
+                                                            className="btn-favorite"
+                                                            onClick={() =>
+                                                                handleAddToWishList(
+                                                                    motor.motorId,
+                                                                )
+                                                            }
+                                                        >
+                                                            <FavoriteBorderOutlined />
+                                                        </Button>
+                                                    </div>
+                                                )}
+                                            </>
                                         )}
                                     </Item>
                                 </Grid>

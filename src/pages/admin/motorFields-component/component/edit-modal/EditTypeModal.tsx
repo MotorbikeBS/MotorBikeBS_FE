@@ -67,7 +67,7 @@ const EditTypeModal: React.FC<EditDialogProps> = ({
         if (selectedRow) {
             form.setValue('title', selectedRow?.title);
             form.setValue('description', selectedRow?.description || '');
-            form.setValue('status', selectedRow?.status);
+            form.setValue('status', selectedRow?.status || '');
         }
     }, [selectedRow, form]);
 
@@ -97,6 +97,7 @@ const EditTypeModal: React.FC<EditDialogProps> = ({
         )
             .unwrap()
             .then(() => {
+                loadData();
                 toast.success('Chỉnh sửa thành công!');
                 handleCloseDialog();
             });
@@ -119,7 +120,7 @@ const EditTypeModal: React.FC<EditDialogProps> = ({
                                             <TableBody>
                                                 <TableRow>
                                                     <TableCell className="header-table">
-                                                        Tên Lọai xe
+                                                        Tên Loại xe
                                                     </TableCell>
                                                     <TableCell>
                                                         <TextField
@@ -161,7 +162,7 @@ const EditTypeModal: React.FC<EditDialogProps> = ({
                                                         />
                                                     </TableCell>
                                                 </TableRow>
-                                                {/* <TableRow>
+                                                <TableRow>
                                                     <TableCell className="header-table">
                                                         Trạng thái
                                                     </TableCell>
@@ -173,11 +174,10 @@ const EditTypeModal: React.FC<EditDialogProps> = ({
                                                                 'status',
                                                             )}
                                                             variant="outlined"
-                                                            disabled
                                                             fullWidth
                                                         />
                                                     </TableCell>
-                                                </TableRow> */}
+                                                </TableRow>
                                             </TableBody>
                                         </Table>
                                     </TableContainer>

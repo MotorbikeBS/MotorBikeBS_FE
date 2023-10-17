@@ -376,6 +376,7 @@ export const motorFiledsSlice = createSlice({
             state.motorModels = null;
             state.motorBrand = null;
             state.motorTypes = null;
+            state.motorType = null;
             state.motorStatus = null;
         },
     },

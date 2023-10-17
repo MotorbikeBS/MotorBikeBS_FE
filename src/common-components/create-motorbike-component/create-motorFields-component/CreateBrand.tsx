@@ -18,9 +18,9 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '../../../../../services/store/store';
-import { createMotorType } from '../../../../../services/features/motorbike/motorFields';
 import { toast } from 'react-toastify';
+import { useAppDispatch } from '../../../services/store/store';
+import { createMotorBrand } from '../../../services/features/motorbike/motorFields';
 
 interface CreateDialogProps {
     open: boolean;
@@ -34,13 +34,13 @@ interface CreateDialogProps {
     loadData: () => void;
 }
 
-interface ICreateType {
-    title: string;
+interface ICreateBrand {
+    brandName: string;
     description: string;
     status: string;
 }
 
-const CreateTypeModal: React.FC<CreateDialogProps> = ({
+const CreateBrandModal: React.FC<CreateDialogProps> = ({
     open,
     openSubmit,
     openCancel,
@@ -53,11 +53,11 @@ const CreateTypeModal: React.FC<CreateDialogProps> = ({
 }) => {
     const dispatch = useAppDispatch();
 
-    const form = useForm<ICreateType>({
+    const form = useForm<ICreateBrand>({
         defaultValues: {
-            title: '',
+            brandName: '',
             description: '',
-            status: '',
+            status: 'PENDING',
         },
     });
 
@@ -75,10 +75,10 @@ const CreateTypeModal: React.FC<CreateDialogProps> = ({
         onOpenCancelDialog();
     };
 
-    const onSubmit = (data: ICreateType) => {
+    const onSubmit = (data: ICreateBrand) => {
         dispatch(
-            createMotorType({
-                title: data.title,
+            createMotorBrand({
+                brandName: data.brandName,
                 description: data.description,
                 status: data.status,
             }),
@@ -86,7 +86,8 @@ const CreateTypeModal: React.FC<CreateDialogProps> = ({
             .unwrap()
             .then(() => {
                 loadData();
-                toast.success('Thêm loại xe thành công!');
+                toast.success('Thêm Brand thành công!');
+                toast.warning('Bạn vui lòng chờ admin duyệt!');
                 handleCloseDialog();
             });
     };
@@ -96,7 +97,7 @@ const CreateTypeModal: React.FC<CreateDialogProps> = ({
             <Dialog open={open} onClose={handleOpenCancelDialog}>
                 <DialogTitle>
                     <Typography variant="h4" textAlign="center">
-                        Thêm Loại xe
+                        Thêm Brand
                     </Typography>
                 </DialogTitle>
                 <DialogContent>
@@ -109,24 +110,24 @@ const CreateTypeModal: React.FC<CreateDialogProps> = ({
                                             <TableBody>
                                                 <TableRow>
                                                     <TableCell className="header-table">
-                                                        Tên Loại xe
+                                                        Tên Brand
                                                     </TableCell>
                                                     <TableCell>
                                                         <TextField
-                                                            label="Tên Loại xe"
+                                                            label="Tên Brand"
                                                             type="text"
                                                             {...register(
-                                                                'title',
+                                                                'brandName',
                                                                 {
                                                                     required:
-                                                                        'Bạn chưa nhập tên Type',
+                                                                        'Bạn chưa nhập tên brand',
                                                                 },
                                                             )}
                                                             error={
-                                                                !!errors.title
+                                                                !!errors.brandName
                                                             }
                                                             helperText={
-                                                                errors.title
+                                                                errors.brandName
                                                                     ?.message
                                                             }
                                                             variant="outlined"
@@ -242,4 +243,4 @@ const CreateTypeModal: React.FC<CreateDialogProps> = ({
     );
 };
 
-export default CreateTypeModal;
+export default CreateBrandModal;
