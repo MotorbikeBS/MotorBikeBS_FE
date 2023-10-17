@@ -45,7 +45,7 @@ export const filterMotorbikeEndPoint = `${BASE_URL}/api/MotorBike/filter`;
 
 //motorbikeField endpoint
 export const getMotorBrandEndPoint = `${BASE_URL}/api/motorbrand`;
-export const createMotorBrandEndPoint = `${BASE_URL}/api/motorbrand/BrandRegister`
+export const createMotorBrandEndPoint = `${BASE_URL}/api/motorbrand/BrandRegister`;
 export const getMotorModelEndPoint = `${BASE_URL}/api/motormodel`;
 export const createMotorModelEndPoint = `${BASE_URL}/api/motormodel/modelRegister`;
 export const getMotorTypeEndPoint = `${BASE_URL}/api/motortype`;
@@ -61,6 +61,10 @@ export const deleteWishListByMotorIdEndPoint = `${BASE_URL}/api/wishlist/deletew
 //Negotiation Price
 export const startNegotitationEndPoint = `${BASE_URL}/api/negotiation/startnegotitaion`;
 export const getNegotiationRequestEndPoint = `${BASE_URL}/api/negotiation/getnegotiationrequest`;
+export const cancleNegotiationEndPoint = `${BASE_URL}/api/negotiation/cancle`;
+export const acceptNegotiationEndPoint = `${BASE_URL}/api/negotiation/accept`;
+export const changePriceNegotiationEndPoint = `${BASE_URL}/api/negotiation/change-price`;
+
 //Booking
 export const storeBookingWithOwnerExchangeEndPoint = `${BASE_URL}/api/booking/storebookingowner`;
 export const getAllBookingByOwnerEndPoint = `${BASE_URL}/api/booking/getbookingrequest`;

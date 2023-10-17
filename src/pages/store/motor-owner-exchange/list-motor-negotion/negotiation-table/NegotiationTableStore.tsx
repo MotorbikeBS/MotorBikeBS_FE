@@ -14,7 +14,7 @@ export const columns: GridColDef[] = [
                 {params.row.images && (
                     <img
                         src={params.row.images}
-                        alt='Business License'
+                        alt='Ảnh xe'
                         style={{ width: '30%', height: '30%', objectFit: 'cover' }}
                     />
                 )}

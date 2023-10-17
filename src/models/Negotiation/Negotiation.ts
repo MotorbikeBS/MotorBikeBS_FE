@@ -50,3 +50,21 @@ export interface INegotiation {
     receiver: IUser;
     sender: IUser;
 }
+export interface ISelectRowNegotiation {
+    id: number;
+    motorName: string;
+    images: string;
+    certificateNumber: string;
+    year: Date;
+    price: number;
+    storePrice: number;
+    ownerPrice: number;
+    storeName: string;
+    ownerName: string;
+    ownerPhone: string;
+    storePhone: string;
+    ownerAddress: string;
+    storeAddress: string;
+    negotiationStatus: string;
+    motorStatus: string;
+}
