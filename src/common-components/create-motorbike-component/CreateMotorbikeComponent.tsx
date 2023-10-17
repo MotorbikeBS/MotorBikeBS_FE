@@ -27,7 +27,9 @@ import {
 import './style/style.scss';
 import { useAppDispatch, useAppSelector } from '../../services/store/store';
 import {
-    getMotorModel,
+    clearMotorFields,
+    getMotorBrand,
+    getMotorBrandById,
     getMotorType,
 } from '../../services/features/motorbike/motorFields';
 import { createMotorbike } from '../../services/features/motorbike/motorbikeSlice';
@@ -70,12 +72,17 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
     loadData,
 }) => {
     const dispatch = useAppDispatch();
-    const { motorModels, motorTypes } = useAppSelector(
+    const { motorTypes, motorBrands, motorBrand } = useAppSelector(
         (state) => state.motorFields,
     );
 
     const [model, setModel] = useState('');
+    const [brand, setBrand] = useState('');
     const [motorType, setMotorType] = useState('');
+
+    const handleChangeBrand = (event: SelectChangeEvent) => {
+        setBrand(event.target.value);
+    };
 
     const handleChangeModel = (event: SelectChangeEvent) => {
         setModel(event.target.value);
@@ -87,9 +94,11 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
     };
 
     useEffect(() => {
-        dispatch(getMotorModel());
+        dispatch(clearMotorFields());
+        dispatch(getMotorBrand());
+        dispatch(getMotorBrandById({ motorBrandId: Number(brand) }));
         dispatch(getMotorType());
-    }, [dispatch]);
+    }, [dispatch, brand]);
 
     const form = useForm<ICreateMotorbike>({
         defaultValues: {
@@ -246,6 +255,46 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                 </TableRow>
                                                 <TableRow>
                                                     <TableCell className="header-table">
+                                                        Brand
+                                                    </TableCell>
+                                                    <TableCell className="header-table-content">
+                                                        <FormControl fullWidth>
+                                                            <InputLabel id="demo-simple-select-label">
+                                                                Brand
+                                                            </InputLabel>
+                                                            <Select
+                                                                labelId="demo-simple-select-label"
+                                                                label="Model"
+                                                                value={brand}
+                                                                onChange={
+                                                                    handleChangeBrand
+                                                                }
+                                                            >
+                                                                {motorBrands &&
+                                                                    motorBrands.map(
+                                                                        (
+                                                                            motorBrand,
+                                                                        ) => (
+                                                                            <MenuItem
+                                                                                key={
+                                                                                    motorBrand.brandId
+                                                                                }
+                                                                                value={
+                                                                                    motorBrand.brandId
+                                                                                }
+                                                                            >
+                                                                                {
+                                                                                    motorBrand.brandName
+                                                                                }
+                                                                            </MenuItem>
+                                                                        ),
+                                                                    )}
+                                                            </Select>
+                                                        </FormControl>
+                                                    </TableCell>
+                                                </TableRow>
+                                                <TableRow>
+                                                    <TableCell className="header-table">
                                                         Model
                                                     </TableCell>
                                                     <TableCell className="header-table-content">
@@ -268,8 +317,8 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                                     handleChangeModel
                                                                 }
                                                             >
-                                                                {motorModels &&
-                                                                    motorModels.map(
+                                                                {motorBrand &&
+                                                                    motorBrand?.motorbikeModels?.map(
                                                                         (
                                                                             motorModel,
                                                                         ) => (

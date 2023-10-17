@@ -23,6 +23,7 @@ import {
     getMotorType,
 } from '../../services/features/motorbike/motorFields';
 import { filterMotor } from '../../services/features/motorbike/motorbikeSlice';
+import useFormatCurrency from '../../hooks/useFormatCurrency';
 
 interface FilterComponentProps {
     anchorElFilter: HTMLElement | null;
@@ -37,6 +38,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
     const { motorBrands, motorTypes, motorModels } = useAppSelector(
         (state) => state.motorFields,
     );
+    const formatCurrency = useFormatCurrency();
 
     const [selectedFiltersBrand, setSelectedFiltersBrand] = useState<number[]>(
         [],
@@ -221,7 +223,9 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                                             value={sliderValue}
                                             onChange={handleSliderChange}
                                             valueLabelFormat={(value) =>
-                                                `${value}đ`
+                                                // `${value}đ`
+
+                                                formatCurrency (value)
                                             }
                                             valueLabelDisplay="on"
                                             step={1000000}

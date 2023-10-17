@@ -6,10 +6,7 @@ import {
 import { Box, Button, Tab, Tabs } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import CreateMotorbikeComponent from '../../../../common-components/create-motorbike-component/CreateMotorbikeComponent';
-import {
-
-    getMotorByOwnerId,
-} from '../../../../services/features/motorbike/motorbikeSlice';
+import { getMotorByOwnerId } from '../../../../services/features/motorbike/motorbikeSlice';
 import ListStorageMotorByStoreId from './ListStorageMotorByStoreId';
 import ListPostedMotorByStoreId from './ListPostedMotorByStoreId';
 
@@ -59,12 +56,19 @@ const StoreMotorListComponent = () => {
     return (
         <div className="motorlist-container">
             <div className="motorlist-add-btn">
+                <Button variant="contained">
+                    <AddIcon />
+                    Thêm Brand
+                </Button>
+                <Button variant="contained">
+                    <AddIcon />
+                    Thêm Model
+                </Button>
                 <Button onClick={handleOpenDialog} variant="contained">
                     <AddIcon />
                     Thêm xe
                 </Button>
             </div>
-          
 
             <Tabs
                 value={value}
@@ -80,7 +84,7 @@ const StoreMotorListComponent = () => {
                 <Tab label="Xe trong kho" />
                 <Tab label="Xe đã đăng" />
             </Tabs>
-            
+
             <Box flexGrow={4} marginTop="3rem">
                 {value === 0 && (
                     <ListStorageMotorByStoreId loadData={loadData} />

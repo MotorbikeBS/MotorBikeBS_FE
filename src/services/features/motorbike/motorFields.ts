@@ -76,23 +76,30 @@ export const getMotorBrandById = createAsyncThunk<
         );
         return response.data.result;
     } catch (error: any) {
-        toast.error(`${error.response?.data?.errorMessages}`);
+        // toast.error(`${error.response?.data?.errorMessages}`);
         return thunkAPI.rejectWithValue({
             error: error.response?.data?.errorMessages,
         });
     }
 });
 
-export const createMotorBrand = createAsyncThunk<IBrand, void>(
+export const createMotorBrand = createAsyncThunk<
+    IBrand,
+    { brandName: string; description: string; status: string }
+>(
     'motorFields/createMotorBrand',
-    async (data, thunkAPI) => {
+    async ({ brandName, description, status }, thunkAPI) => {
         try {
             const token = localStorage.getItem('motorbike_bs');
-            const response = await axios.post(createMotorBrandEndPoint, data, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
+            const response = await axios.post(
+                createMotorBrandEndPoint,
+                { brandName, description, status },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 },
-            });
+            );
             return response.data.result;
         } catch (error: any) {
             toast.error(`${error.response?.data?.errorMessages}`);
@@ -283,10 +290,10 @@ export const getMotorTypeById = createAsyncThunk<IMotorType, { id: number }>(
 
 export const createMotorType = createAsyncThunk<
     IMotorType,
-    { id: number; title: string; description: string; status: string }
+    { title: string; description: string; status: string }
 >(
     'motorFields/createMotorType',
-    async ({ id, title, description, status }, thunkAPI) => {
+    async ({ title, description, status }, thunkAPI) => {
         try {
             const token = localStorage.getItem('motorbike_bs');
             const response = await axios.post(

@@ -1,22 +1,22 @@
 import { GridColDef } from '@mui/x-data-grid';
 
 export const columns: GridColDef[] = [
-    { field: 'id', headerName: 'Type ID', width: 100 },
+    { field: 'id', headerName: 'Type ID', width: 300 },
     {
         field: 'title',
         headerName: 'Tên loại',
-        width: 200,
+        width: 300,
     },
     {
         field: 'description',
         headerName: 'Mô tả',
-        width: 250,
+        width: 436,
         editable: false,
     },
     {
         field: 'status',
         headerName: 'Trạng thái',
-        width: 240,
+        width: 450,
         editable: false,
     },
 ];
