@@ -113,13 +113,6 @@ const NegotiationDialog: React.FC<NegotiationDialogProps> = ({
                                 >
                                     Trả giá
                                 </Button>
-                                <Button
-                                    variant="contained"
-                                    color="success"
-                                // onClick={handleOpenSubmitDialogNego}
-                                >
-                                    Chấp nhận
-                                </Button>
                             </div>
                         </form>
                     </Box>

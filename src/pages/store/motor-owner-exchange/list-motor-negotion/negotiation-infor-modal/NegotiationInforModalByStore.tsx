@@ -1,10 +1,10 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useState } from 'react'
 import { ISelectRowNegotiation } from '../../../../../models/Negotiation/Negotiation';
 import { Box, Button, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from '@mui/material';
 import { ClearRounded } from '@mui/icons-material';
-import useFormatCurrency from '../../../../../hooks/useFormatCurrency';
 import './style/_style.scss'
-import { useAppSelector } from '../../../../../services/store/store';
+import { useAppDispatch } from '../../../../../services/store/store';
+import { cancleNegotiation } from '../../../../../services/features/negotiation/negotiationSlice';
 
 interface NegotiationInforModalProps {
 
@@ -21,14 +21,18 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
     data,
 
 }) => {
+    const dispatch = useAppDispatch()
+    const [storePrice, setStorePrice] = useState<number>(data?.storePrice || 0);
+
     // const formattedCurrency = useFormatCurrency()
-    const { account } = useAppSelector((state) => state.account)
+    // const { account } = useAppSelector((state) => state.account)
 
     const createData = (label: string, value: ReactNode | string) => ({
         label,
         value,
     });
     const rows = [
+
         createData('Tên Xe', data?.motorName),
         createData('Số đăng ký', data?.certificateNumber),
         createData('Năm đăng ký', data?.year ? data.year.toLocaleString() : 'N/A'),
@@ -78,9 +82,44 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
         createData('Tên chủ xe', data?.ownerName),
         createData('Số điện thoại chủ xe', data?.ownerPhone),
         createData('Địa chỉ chủ xe', data?.ownerAddress),
-        createData('Trạng thái thương lượng', data?.negotiationStatus),
+        createData('Trạng thái thương lượng',
+            data?.negotiationStatus === 'PENDING' ? (
+                <Typography
+                    color='red'
+                    fontWeight='700'
+                >
+                    Đang Chờ
+                </Typography>
+            ) : data?.negotiationStatus === 'ACCEPT' ? (
+                <Typography
+                    color='green'
+                    fontWeight='700'
+                >
+                    Đã Duyệt
+                </Typography>
+            ) : (
+                <Typography
+                    color='black'
+                    fontWeight='700'
+                >
+                    Chưa Xác Định
+                </Typography>
+            )
+        ),
         createData('Trạng thái xe', data?.motorStatus),
     ]
+
+    const handleCancleNegotiation = () => {
+        if (data && data.id) {
+            dispatch(cancleNegotiation({ negotiationId: data.id }))
+                .then(() => {
+                    loadingData()
+                    setTimeout(() => {
+                        onClose()
+                    }, 1000)
+                })
+        }
+    }
 
     return (
         <Modal open={isOpen} onClose={onClose}>
@@ -122,7 +161,7 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                             <Button
                                 variant="contained"
                                 color="error"
-                            // onClick={handleReActive}
+                                onClick={handleCancleNegotiation}
                             >
                                 Hủy giao dịch
                             </Button>

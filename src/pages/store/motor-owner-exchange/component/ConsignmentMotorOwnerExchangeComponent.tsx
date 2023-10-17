@@ -203,17 +203,32 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
                                             </Button>
 
                                         </div> */}
-                                        <div className="btn-style-1">
+                                        <Box sx={{
+                                            display: 'flex',
+                                            flexDirection: 'row',
+                                            justifyContent: 'space-around',
+                                            margin: '6px 0px 6px 0px '
+                                        }}>
                                             <Button
-                                                variant="outlined"
+                                                color='success'
+                                                variant="contained"
                                                 onClick={() =>
                                                     handleOpenDialogNego(motor.motorId)
                                                 }
                                             >
-                                                Thương lượng giá
+                                                Thương lượng
+                                            </Button>
+                                            <Button
+                                                color='warning'
+                                                variant="contained"
+                                            // onClick={() =>
+                                            //     handleOpenDialogNego(motor.motorId)
+                                            // }
+                                            >
+                                                Mua giá hiện tại
                                             </Button>
 
-                                        </div>
+                                        </Box>
 
                                     </Item>
                                 </Grid>

@@ -61,9 +61,11 @@ export const deleteWishListByMotorIdEndPoint = `${BASE_URL}/api/wishlist/deletew
 //Negotiation Price
 export const startNegotitationEndPoint = `${BASE_URL}/api/negotiation/startnegotitaion`;
 export const getNegotiationRequestEndPoint = `${BASE_URL}/api/negotiation/getnegotiationrequest`;
-export const cancleNegotiationEndPoint = `${BASE_URL}/api/negotiation/cancle`;
+export const acceptDefaultPriceEndPoint = `${BASE_URL}/api/negotiation/acceptdefaultPrice`;
+export const cancleNegotiationEndPoint = `${BASE_URL}/api/negotiation/cancel`;
+
 export const acceptNegotiationEndPoint = `${BASE_URL}/api/negotiation/accept`;
-export const changePriceNegotiationEndPoint = `${BASE_URL}/api/negotiation/change-price`;
+export const changePriceNegotiationEndPoint = `${BASE_URL}/api/negotiation/changeprice`;
 
 //Booking
 export const storeBookingWithOwnerExchangeEndPoint = `${BASE_URL}/api/booking/storebookingowner`;
