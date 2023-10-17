@@ -24,8 +24,10 @@ const ListNegotiationMotorByStore = () => {
     }, [dispatch])
 
     const loadingData = () => {
+        dispatch(clearNegotiation())
         dispatch(getNegotiationRequest())
     }
+
     const pendingNegotiation = useMemo(() => {
         return (negotiations ?? []).filter((
             nego: INegotiation) => nego.negotiations[0].status === 'PENDING')
@@ -49,6 +51,7 @@ const ListNegotiationMotorByStore = () => {
 
         }))
     }, [pendingNegotiation, formatCurrency])
+
 
     const handleRowDoubleClick = (params: GridRowParams) => {
         setSelectedRow(params.row as ISelectRowNegotiation);

@@ -169,21 +169,32 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
                                             </div>
                                         </div>
                                         {/* {account?.roleId === 4 && ( */}
-                                        <div className="btn-style-1">
+                                        <Box sx={{
+                                            display: 'flex',
+                                            flexDirection: 'row',
+                                            justifyContent: 'space-around',
+                                            margin: '6px 0px 6px 0px '
+                                        }}>
                                             <Button
-                                                variant="outlined"
+                                                color='success'
+                                                variant="contained"
                                                 onClick={() =>
-                                                    handleOpenDialogNego(
-                                                        motor.motorId,
-                                                    )
+                                                    handleOpenDialogNego(motor.motorId)
                                                 }
                                             >
-                                                Thương lượng giá cả
+                                                Thương lượng
                                             </Button>
-                                            {/* <Button className="btn-favorite">
-                                                  <FavoriteBorderOutlined />
-                                              </Button> */}
-                                        </div>
+                                            <Button
+                                                color='warning'
+                                                variant="contained"
+                                            // onClick={() =>
+                                            //     handleOpenDialogNego(motor.motorId)
+                                            // }
+                                            >
+                                                Mua giá hiện tại
+                                            </Button>
+
+                                        </Box>
                                         {/*  )} */}
                                     </Item>
                                 </Grid>
