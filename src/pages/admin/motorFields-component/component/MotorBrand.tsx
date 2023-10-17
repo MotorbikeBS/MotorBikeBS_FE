@@ -1,5 +1,5 @@
 import { DataGrid, GridRowParams } from '@mui/x-data-grid';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { columns } from './table/BrandTable';
 import {
     useAppDispatch,
@@ -19,6 +19,7 @@ import { IBrand, IBrandTable } from '../../../../models/Motorbike/Motorbike';
 import AddIcon from '@mui/icons-material/Add';
 import '../style/style.scss';
 import EditBrandModal from './edit-modal/EditBrandModal';
+import CreateBrandModal from './create-modal/CreateBrandModal';
 
 const MotorBrand = () => {
     const dispatch = useAppDispatch();
@@ -26,6 +27,10 @@ const MotorBrand = () => {
 
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
     const [selectedRow, setSelectedRow] = useState<IBrand | null>(null);
+
+    const [isOpenDialog, setOpenDialog] = useState(false);
+    const [isOpenSubmitDiaglog, setIsOpenSubmitDialog] = useState(false);
+    const [isOpenCancelDialog, setIsOpenCancelDialog] = useState(false);
 
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isOpenSubmitEditDialog, setIsOpenSubmitEditDialog] = useState(false);
@@ -39,6 +44,23 @@ const MotorBrand = () => {
         setIsDetailModalOpen(false);
         setIsEditModalOpen(true);
         setSelectedRow(selectedRow);
+    };
+    const handleOpenDialog = () => {
+        setOpenDialog(true);
+    };
+
+    const handleOpenSubmitDialog = () => {
+        setIsOpenSubmitDialog(true);
+    };
+    const handleCloseSubmitDialog = () => {
+        setIsOpenSubmitDialog(false);
+    };
+
+    const handleOpenCancelDialog = () => {
+        setIsOpenCancelDialog(true);
+    };
+    const handleCloseCancelDialog = () => {
+        setIsOpenCancelDialog(false);
     };
 
     const handleOpenSubmitEditDialog = () => {
@@ -54,28 +76,32 @@ const MotorBrand = () => {
         setIsOpenCancelEditDialog(false);
     };
 
+    const handleCloseCreateDialog = () => {
+        setOpenDialog(false);
+        setIsOpenSubmitDialog(false);
+        setIsOpenCancelDialog(false);
+    };
+
     const handleCloseDialog = () => {
         setIsEditModalOpen(false);
         setIsOpenSubmitEditDialog(false);
         setIsOpenCancelEditDialog(false);
-        // setIsPostModalOpen(false);
-        // setIsOpenSubmitPostDialog(false);
-        // setIsOpenCancelPostDialog(false);
+        // setOpenDialog(false);
+        // setIsOpenSubmitDialog(false);
+        // setIsOpenCancelDialog(false);
     };
     const closeDetailModal = () => {
         setIsDetailModalOpen(false);
     };
 
-    useEffect(() => {
-        // dispatch(getMotorBrand());
-        loadData()
-    }, [dispatch]);
-
     const rows = useMemo(() => {
         return (motorBrands ?? []).map((brand: IBrand) => ({
             id: brand.brandId,
             brandName: brand?.brandName,
-            description: brand?.description,
+            description:
+                brand?.description !== null
+                    ? brand?.description
+                    : 'Chưa có mô tả.',
             status: brand?.status,
         }));
     }, [motorBrands]);
@@ -94,7 +120,7 @@ const MotorBrand = () => {
                 }}
             >
                 <div className="motorlist-add-btn">
-                    <Button variant="contained">
+                    <Button onClick={handleOpenDialog} variant="contained">
                         <AddIcon />
                         Thêm Brand
                     </Button>
@@ -129,16 +155,13 @@ const MotorBrand = () => {
                     {selectedRow && (
                         <>
                             <Typography variant="subtitle1" textAlign="center">
-                                Tên xe: {selectedRow.brandName}
+                                Tên brand: {selectedRow.brandName}
                             </Typography>
                         </>
                     )}
                 </DialogContent>
                 <DialogActions>
-                    <Button
-                        onClick={openEditModal}
-                        color="info"
-                    >
+                    <Button onClick={openEditModal} color="info">
                         Sửa thông tin
                     </Button>
                 </DialogActions>
@@ -157,18 +180,17 @@ const MotorBrand = () => {
                 loadData={loadData}
             />
 
-            {/* <PostMotorModal
-                open={isPostModalOpen}
-                openSubmit={isOpenSubmitPostDialog}
-                openCancel={isOpenCancelPostDialog}
-                onOpenSubmitDialog={handleOpenSubmitPostDialog}
-                onCloseSubmitDialog={handleCloseSubmitPostDialog}
-                onOpenCancelDialog={handleOpenCancelPostDialog}
-                onCloseCancelDialog={handleCloseCancelPostDialog}
-                onClose={handleCloseDialog}
-                selectedRow={selectedRow}
+            <CreateBrandModal
+                open={isOpenDialog}
+                openSubmit={isOpenSubmitDiaglog}
+                openCancel={isOpenCancelDialog}
+                onOpenSubmitDialog={handleOpenSubmitDialog}
+                onCloseSubmitDialog={handleCloseSubmitDialog}
+                onOpenCancelDialog={handleOpenCancelDialog}
+                onCloseCancelDialog={handleCloseCancelDialog}
+                onClose={handleCloseCreateDialog}
                 loadData={loadData}
-            /> */}
+            />
         </Container>
     );
 };

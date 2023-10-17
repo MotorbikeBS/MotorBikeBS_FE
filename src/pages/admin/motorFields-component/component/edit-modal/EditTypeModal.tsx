@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { IBrandTable } from '../../../../../models/Motorbike/Motorbike';
+import { IMotorTypeTable } from '../../../../../models/Motorbike/Motorbike';
 import { useForm } from 'react-hook-form';
 import {
     Box,
@@ -20,7 +20,7 @@ import {
     Typography,
 } from '@mui/material';
 import { useAppDispatch } from '../../../../../services/store/store';
-import { updateMotorBrandById } from '../../../../../services/features/motorbike/motorFields';
+import { updateMotorTypeById } from '../../../../../services/features/motorbike/motorFields';
 import { toast } from 'react-toastify';
 
 interface EditDialogProps {
@@ -32,17 +32,17 @@ interface EditDialogProps {
     onOpenCancelDialog: () => void;
     onCloseCancelDialog: () => void;
     onClose: () => void;
-    selectedRow: IBrandTable | null;
+    selectedRow: IMotorTypeTable | null;
     loadData: () => void;
 }
 
-interface ICreateBrand {
-    brandName: string;
+interface ICreateType {
+    title: string;
     description: string;
     status: string;
 }
 
-const EditBrandModal: React.FC<EditDialogProps> = ({
+const EditTypeModal: React.FC<EditDialogProps> = ({
     open,
     openSubmit,
     openCancel,
@@ -55,9 +55,9 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
     loadData,
 }) => {
     const dispatch = useAppDispatch();
-    const form = useForm<ICreateBrand>({
+    const form = useForm<ICreateType>({
         defaultValues: {
-            brandName: '',
+            title: '',
             description: '',
             status: '',
         },
@@ -65,7 +65,7 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
 
     useEffect(() => {
         if (selectedRow) {
-            form.setValue('brandName', selectedRow?.brandName);
+            form.setValue('title', selectedRow?.title);
             form.setValue('description', selectedRow?.description || '');
             form.setValue('status', selectedRow?.status);
         }
@@ -86,25 +86,27 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
         onClose();
     };
 
-    const onSubmit = (data: ICreateBrand) => {
+    const onSubmit = (data: ICreateType) => {
         dispatch(
-            updateMotorBrandById({
+            updateMotorTypeById({
                 id: Number(selectedRow?.id),
-                brandName: data.brandName,
+                title: data.title,
                 description: data.description,
                 status: data.status,
             }),
-        ).unwrap().then(()=>{
-            toast.success('Chỉnh sửa thành công!')
-            handleCloseDialog()
-        })
+        )
+            .unwrap()
+            .then(() => {
+                toast.success('Chỉnh sửa thành công!');
+                handleCloseDialog();
+            });
     };
     return (
         <div>
             <Dialog open={open} onClose={handleOpenCancelDialog}>
                 <DialogTitle>
                     <Typography variant="h4" textAlign="center">
-                        Chỉnh Sửa Brand
+                        Chỉnh Sửa Loại xe
                     </Typography>
                 </DialogTitle>
                 <DialogContent>
@@ -117,24 +119,24 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
                                             <TableBody>
                                                 <TableRow>
                                                     <TableCell className="header-table">
-                                                        Tên Brand
+                                                        Tên Lọai xe
                                                     </TableCell>
                                                     <TableCell>
                                                         <TextField
-                                                            label="Brand"
+                                                            label="Loại xe"
                                                             type="text"
                                                             {...register(
-                                                                'brandName',
+                                                                'title',
                                                                 {
                                                                     required:
-                                                                        'Bạn chưa nhập brand',
+                                                                        'Bạn chưa nhập loại xe',
                                                                 },
                                                             )}
                                                             error={
-                                                                !!errors.brandName
+                                                                !!errors.title
                                                             }
                                                             helperText={
-                                                                errors.brandName
+                                                                errors.title
                                                                     ?.message
                                                             }
                                                             variant="outlined"
@@ -159,7 +161,7 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
                                                         />
                                                     </TableCell>
                                                 </TableRow>
-                                                <TableRow>
+                                                {/* <TableRow>
                                                     <TableCell className="header-table">
                                                         Trạng thái
                                                     </TableCell>
@@ -175,7 +177,7 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
                                                             fullWidth
                                                         />
                                                     </TableCell>
-                                                </TableRow>
+                                                </TableRow> */}
                                             </TableBody>
                                         </Table>
                                     </TableContainer>
@@ -205,13 +207,13 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
             <Dialog open={openSubmit}>
                 <DialogTitle>
                     <Typography variant="h5">
-                        Xác nhận Chỉnh sửa brand
+                        Xác nhận Chỉnh sửa Loại xe
                     </Typography>
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         <Typography>
-                            Bạn có chắc chắn muốn chỉnh sửa brand không ?
+                            Bạn có chắc chắn muốn chỉnh sửa loại xe không ?
                         </Typography>
                     </DialogContentText>
                 </DialogContent>
@@ -240,7 +242,8 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
                 <DialogContent>
                     <DialogContentText>
                         <Typography>
-                            Bạn có chắc chắn muốn hủy bỏ chỉnh sửa brand không ?
+                            Bạn có chắc chắn muốn hủy bỏ chỉnh sửa loại xe không
+                            ?
                         </Typography>
                     </DialogContentText>
                 </DialogContent>
@@ -265,4 +268,4 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
     );
 };
 
-export default EditBrandModal;
+export default EditTypeModal;

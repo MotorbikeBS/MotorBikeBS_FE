@@ -56,8 +56,6 @@ const OwnerMotorListComponent = () => {
 
     return (
         <div className="motorlist-container">
-
-
             <Tabs
                 value={value}
                 onChange={handleChangeTabs}
@@ -71,16 +69,26 @@ const OwnerMotorListComponent = () => {
             >
                 <Tab label="Xe trong kho" />
                 <Tab label="Xe đã đăng" />
-                <Tab label='Xe đang thương lượng' />
+                <Tab label="Xe đang thương lượng" />
             </Tabs>
             {value === 0 || value === 1 ? (
                 <div className="motorlist-add-btn">
+                    <Button variant="contained">
+                        <AddIcon />
+                        Thêm Brand
+                    </Button>
+                    <Button variant="contained">
+                        <AddIcon />
+                        Thêm Model
+                    </Button>
                     <Button onClick={handleOpenDialog} variant="contained">
                         <AddIcon />
                         Thêm xe
                     </Button>
                 </div>
-            ) : <></>}
+            ) : (
+                <></>
+            )}
 
             <Box flexGrow={4} marginTop="3rem">
                 {value === 0 && (
@@ -89,11 +97,7 @@ const OwnerMotorListComponent = () => {
                 {value === 1 && (
                     <ListPostedMotorByOwnerId loadData={loadData} />
                 )}
-                {(
-                    value === 2 && (
-                        <ListNegotiateMotorByOwner />
-                    )
-                )}
+                {value === 2 && <ListNegotiateMotorByOwner />}
             </Box>
 
             {/* <ListMotorByOwnerId loadData={loadData} /> */}

@@ -37,16 +37,20 @@ export interface IModel {
     status: string;
     brand: IBrand;
 }
+
+export interface IModelTable extends IModel {
+    id?: number;
+}
 export interface IBrand {
     brandId: number;
     brandName: string;
     description?: string;
     status: string;
-    motorbikeModels: IModel[]
+    motorbikeModels: IModel[];
 }
 
 export interface IBrandTable extends IBrand {
-    id?: number
+    id?: number;
 }
 
 export interface IMotorStatus {
@@ -60,6 +64,10 @@ export interface IMotorType {
     title: string;
     description?: string;
     status: string;
+}
+
+export interface IMotorTypeTable extends IMotorType {
+    id?: number;
 }
 
 export interface IMotorImages {
@@ -103,10 +111,10 @@ export interface IMotorbikeDetail {
     motorbikeImages: IMotorImages[];
 }
 
-export interface IFilter extends IMotorbike{
-    brandId?: number[],
-    modelId?: number[],
-    minPrice?: number,
-    maxPrice?: number,
-    motorTypeId?: number[]
+export interface IFilter extends IMotorbike {
+    brandId?: number[];
+    modelId?: number[];
+    minPrice?: number;
+    maxPrice?: number;
+    motorTypeId?: number[];
 }

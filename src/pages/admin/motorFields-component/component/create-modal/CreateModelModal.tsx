@@ -1,6 +1,3 @@
-import React, { useEffect } from 'react';
-import { IBrandTable } from '../../../../../models/Motorbike/Motorbike';
-import { useForm } from 'react-hook-form';
 import {
     Box,
     Button,
@@ -9,7 +6,12 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
+    FormControl,
+    InputLabel,
+    MenuItem,
     Paper,
+    Select,
+    SelectChangeEvent,
     Table,
     TableBody,
     TableCell,
@@ -19,11 +21,13 @@ import {
     TextareaAutosize,
     Typography,
 } from '@mui/material';
-import { useAppDispatch } from '../../../../../services/store/store';
-import { updateMotorBrandById } from '../../../../../services/features/motorbike/motorFields';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useAppDispatch, useAppSelector } from '../../../../../services/store/store';
 import { toast } from 'react-toastify';
+import { createMotorModel } from '../../../../../services/features/motorbike/motorFields';
 
-interface EditDialogProps {
+interface CreateDialogProps {
     open: boolean;
     openSubmit: boolean;
     openCancel: boolean;
@@ -32,17 +36,17 @@ interface EditDialogProps {
     onOpenCancelDialog: () => void;
     onCloseCancelDialog: () => void;
     onClose: () => void;
-    selectedRow: IBrandTable | null;
     loadData: () => void;
 }
 
-interface ICreateBrand {
-    brandName: string;
+interface ICreateModel {
+    brandId: number;
+    modelName: string;
     description: string;
     status: string;
 }
 
-const EditBrandModal: React.FC<EditDialogProps> = ({
+const CreateModelModal: React.FC<CreateDialogProps> = ({
     open,
     openSubmit,
     openCancel,
@@ -51,29 +55,32 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
     onCloseSubmitDialog,
     onCloseCancelDialog,
     onClose,
-    selectedRow,
     loadData,
 }) => {
     const dispatch = useAppDispatch();
-    const form = useForm<ICreateBrand>({
+    const { motorBrands} = useAppSelector((state) => state.motorFields)
+
+    const [brand, setBrand ] = useState('')
+
+    const handleChangeBrand = (event: SelectChangeEvent) => {
+        setBrand(event.target.value)
+    }    
+
+    const form = useForm<ICreateModel>({
         defaultValues: {
-            brandName: '',
+            brandId: undefined,
+            modelName: '',
             description: '',
-            status: '',
+            status: 'ACTIVE',
         },
     });
-
-    useEffect(() => {
-        if (selectedRow) {
-            form.setValue('brandName', selectedRow?.brandName);
-            form.setValue('description', selectedRow?.description || '');
-            form.setValue('status', selectedRow?.status);
-        }
-    }, [selectedRow, form]);
 
     const { formState, handleSubmit, register } = form;
     const { errors } = formState;
 
+    const handleCloseDialog = () => {
+        onClose();
+    };
     const handleOpenSubmitDialog = () => {
         onOpenSubmitDialog();
     };
@@ -82,29 +89,30 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
         onOpenCancelDialog();
     };
 
-    const handleCloseDialog = () => {
-        onClose();
-    };
-
-    const onSubmit = (data: ICreateBrand) => {
+    const onSubmit = (data: ICreateModel) => {
         dispatch(
-            updateMotorBrandById({
-                id: Number(selectedRow?.id),
-                brandName: data.brandName,
+            createMotorModel({
+                modelName: data.modelName,
                 description: data.description,
                 status: data.status,
+                brandId: data.brandId,
             }),
-        ).unwrap().then(()=>{
-            toast.success('Chỉnh sửa thành công!')
-            handleCloseDialog()
-        })
+        )
+            .unwrap()
+            .then(() => {
+                loadData();
+                toast.success('Thêm Model thành công!');
+                handleCloseDialog();
+            });
+        console.log(data);
     };
+
     return (
         <div>
             <Dialog open={open} onClose={handleOpenCancelDialog}>
                 <DialogTitle>
                     <Typography variant="h4" textAlign="center">
-                        Chỉnh Sửa Brand
+                        Thêm Brand
                     </Typography>
                 </DialogTitle>
                 <DialogContent>
@@ -115,26 +123,74 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
                                     <TableContainer component={Paper}>
                                         <Table>
                                             <TableBody>
+                                            <TableRow>
+                                                    <TableCell className="header-table">
+                                                        Brand
+                                                    </TableCell>
+                                                    <TableCell className="header-table-content">
+                                                        <FormControl fullWidth>
+                                                            <InputLabel id="demo-simple-select-label">
+                                                                Brand
+                                                            </InputLabel>
+                                                            <Select
+                                                                labelId="demo-simple-select-label"
+                                                                label="Model"
+                                                                value={brand}
+                                                                {...register(
+                                                                    'brandId',
+                                                                    {
+                                                                        required:
+                                                                            'Bạn chưa chọn brand xe',
+                                                                    },
+                                                                )}
+                                                                onChange={
+                                                                    handleChangeBrand
+                                                                }
+                                                            >
+                                                                {motorBrands &&
+                                                                    motorBrands.map(
+                                                                        (
+                                                                            motorBrand,
+                                                                        ) => (
+                                                                            <MenuItem
+                                                                                key={
+                                                                                    motorBrand.brandId
+                                                                                }
+                                                                                value={
+                                                                                    motorBrand.brandId
+                                                                                }
+                                                                            >
+                                                                                {
+                                                                                    motorBrand.brandName
+                                                                                }
+                                                                            </MenuItem>
+                                                                        ),
+                                                                    )}
+                                                            </Select>
+                                                        </FormControl>
+                                                    </TableCell>
+                                                </TableRow>
+
                                                 <TableRow>
                                                     <TableCell className="header-table">
-                                                        Tên Brand
+                                                        Tên Model
                                                     </TableCell>
                                                     <TableCell>
                                                         <TextField
-                                                            label="Brand"
+                                                            label="Model"
                                                             type="text"
                                                             {...register(
-                                                                'brandName',
+                                                                'modelName',
                                                                 {
                                                                     required:
-                                                                        'Bạn chưa nhập brand',
+                                                                        'Bạn chưa nhập tên model',
                                                                 },
                                                             )}
                                                             error={
-                                                                !!errors.brandName
+                                                                !!errors.modelName
                                                             }
                                                             helperText={
-                                                                errors.brandName
+                                                                errors.modelName
                                                                     ?.message
                                                             }
                                                             variant="outlined"
@@ -142,6 +198,7 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
                                                         />
                                                     </TableCell>
                                                 </TableRow>
+                                           
                                                 <TableRow>
                                                     <TableCell className="header-table">
                                                         Mô tả
@@ -159,23 +216,6 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
                                                         />
                                                     </TableCell>
                                                 </TableRow>
-                                                <TableRow>
-                                                    <TableCell className="header-table">
-                                                        Trạng thái
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        <TextField
-                                                            label="Trạng thái"
-                                                            type="text"
-                                                            {...register(
-                                                                'status',
-                                                            )}
-                                                            variant="outlined"
-                                                            disabled
-                                                            fullWidth
-                                                        />
-                                                    </TableCell>
-                                                </TableRow>
                                             </TableBody>
                                         </Table>
                                     </TableContainer>
@@ -186,7 +226,7 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
                                 color="primary"
                                 onClick={handleOpenSubmitDialog}
                             >
-                                Chỉnh sửa
+                                Thêm xe
                             </Button>
                         </form>
                     </Box>
@@ -202,16 +242,15 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
                 </DialogContent>
             </Dialog>
 
+            {/* Dialog Đặt lịch */}
             <Dialog open={openSubmit}>
                 <DialogTitle>
-                    <Typography variant="h5">
-                        Xác nhận Chỉnh sửa brand
-                    </Typography>
+                    <Typography variant="h5">Xác nhận Thêm model</Typography>
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         <Typography>
-                            Bạn có chắc chắn muốn chỉnh sửa brand không ?
+                            Bạn có chắc chắn muốn thêm model không ?
                         </Typography>
                     </DialogContentText>
                 </DialogContent>
@@ -233,6 +272,7 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
                     </Button>
                 </DialogActions>
             </Dialog>
+            {/* Dialog Hủy */}
             <Dialog open={openCancel}>
                 <DialogTitle>
                     <Typography variant="h5">Xác nhận hủy bỏ</Typography>
@@ -240,7 +280,7 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
                 <DialogContent>
                     <DialogContentText>
                         <Typography>
-                            Bạn có chắc chắn muốn hủy bỏ chỉnh sửa brand không ?
+                            Bạn có chắc chắn muốn hủy bỏ thêm model không ?
                         </Typography>
                     </DialogContentText>
                 </DialogContent>
@@ -265,4 +305,4 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
     );
 };
 
-export default EditBrandModal;
+export default CreateModelModal;
