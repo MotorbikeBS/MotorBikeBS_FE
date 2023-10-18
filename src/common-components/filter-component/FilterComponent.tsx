@@ -120,8 +120,12 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
         handleCloseFilter();
     };
 
-    const motorBrandsFilter = motorBrands && motorBrands?.filter(motor => motor.status === 'ACTIVE')
-    const motorModelsFilter = motorModels && motorModels?.filter(motor => motor.status === 'ACTIVE')
+    const motorBrandsFilter =
+        motorBrands &&
+        motorBrands?.filter((motor) => motor.status === 'ACTIVE');
+    const motorModelsFilter =
+        motorModels &&
+        motorModels?.filter((motor) => motor.status === 'ACTIVE');
 
     return (
         <Menu
@@ -221,14 +225,12 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                                     Giá
                                 </TableCell>
                                 <TableCell className="header-table-content-filter">
-                                    <Box sx={{ width: 350 }}>
+                                    <Box sx={{ width: 450 }}>
                                         <Slider
                                             value={sliderValue}
                                             onChange={handleSliderChange}
                                             valueLabelFormat={(value) =>
-                                                // `${value}đ`
-
-                                                formatCurrency (value)
+                                                formatCurrency(value)
                                             }
                                             valueLabelDisplay="on"
                                             step={1000000}
