@@ -1,9 +1,3 @@
-import {
-    acceptDefaultPriceEndPoint,
-    acceptNegotiationEndPoint,
-    cancleNegotiationEndPoint,
-    changePriceNegotiationEndPoint,
-} from './../../config/api-config';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
     INegotiation,
@@ -12,8 +6,12 @@ import {
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import {
-    getNegotiationRequestEndPoint,
     startNegotitationEndPoint,
+    getNegotiationRequestEndPoint,
+    acceptDefaultPriceEndPoint,
+    acceptEnemyPriceEndPoint,
+    cancleNegotiationEndPoint,
+    changePriceNegotiationEndPoint,
 } from '../../config/api-config';
 
 interface INegotiationState {
@@ -106,7 +104,7 @@ export const acceptDefaultPrice = createAsyncThunk<
         }
     }
 });
-export const acceptNegotiation = createAsyncThunk<
+export const acceptEnemyPrice = createAsyncThunk<
     INegotiation,
     { negotiationId: number }
 >('negotiation/acceptNegotiation', async (data, thunkAPI) => {
@@ -114,7 +112,7 @@ export const acceptNegotiation = createAsyncThunk<
     try {
         const token = localStorage.getItem('motorbike_bs');
         const response = await axios.put(
-            `${acceptNegotiationEndPoint}?negotiationId=${negotiationId}`,
+            `${acceptEnemyPriceEndPoint}?negotiationId=${negotiationId}`,
             {},
             {
                 headers: {
@@ -209,14 +207,14 @@ export const negotiationSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         });
-        builder.addCase(acceptNegotiation.pending, (state, action) => {
+        builder.addCase(acceptEnemyPrice.pending, (state, action) => {
             state.loading = true;
         });
-        builder.addCase(acceptNegotiation.fulfilled, (state, action) => {
+        builder.addCase(acceptEnemyPrice.fulfilled, (state, action) => {
             state.loading = false;
             state.negotiation = action.payload;
         });
-        builder.addCase(acceptNegotiation.rejected, (state, action) => {
+        builder.addCase(acceptEnemyPrice.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });
