@@ -230,7 +230,7 @@ const MotorbikeByStoreIdComponent = () => {
                                                             </Button>
                                                         </div>
                                                     ) : (
-                                                        <div className="btn-style">
+                                                        <div className="btn-style-1">
                                                             <Button
                                                                 className="btn-favorite"
                                                                 onClick={() =>
