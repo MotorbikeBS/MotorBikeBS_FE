@@ -1,18 +1,21 @@
-import React, { useEffect } from 'react'
-import { Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react'
+import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Paper, Typography } from '@mui/material';
 import { Item } from '../style/style-root';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
 import { getAllOnStoreExchange } from '../../../../services/features/motorbike/motorbikeSlice';
 import NegotiationDialog from '../../negotiation-modal-store/NegotiationDialog';
+import { acceptDefaultPrice } from '../../../../services/features/negotiation/negotiationSlice';
 
 const ConsignmentMotorOwnerExchangeComponent = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-
     const { motorbikesByOwner } = useAppSelector((state) => state.motorbikes);
 
+
+    const [isOpenPriceDefaultDialog, setIsOpenPriceDefaultDialog] = useState(false);
+    const [motorbikeIdForBuyDialog, setMotorbikeIdForBuyDialog] = useState<number | null>(null);
     // const [isOpenDialog, setOpenDialog] = React.useState(false);
     // const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
     // const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
@@ -42,6 +45,17 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
         setMotorbikeIdForDialogNego(motorId)
         setOpenDialogNego(true)
     }
+    const handleOpenDialogPriceDefault = (motorId: number) => {
+        setMotorbikeIdForBuyDialog(motorId);
+        setIsOpenPriceDefaultDialog(true);
+    }
+
+    const handleAcceptDefaultPrice = (motorId: number | null) => {
+        if (motorId !== null) {
+            dispatch(acceptDefaultPrice({ motorId }));
+            setIsOpenPriceDefaultDialog(false);
+        }
+    };
 
     // const handleCloseDialog = () => {
     //     setOpenDialog(false);
@@ -62,6 +76,11 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
     const handleOpenSubmitDialogNego = () => {
         setIsOpenSubmitDialogNego(true)
     }
+    const handleCloseDialogPriceDefault = () => {
+        setIsOpenPriceDefaultDialog(false);
+    }
+
+
 
     // const handleCloseSubmitDialog = () => {
     //     setIsOpenSubmitDialog(false);
@@ -212,6 +231,7 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
                                             <Button
                                                 color='success'
                                                 variant="contained"
+                                                size='small'
                                                 onClick={() =>
                                                     handleOpenDialogNego(motor.motorId)
                                                 }
@@ -219,13 +239,14 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
                                                 Thương lượng
                                             </Button>
                                             <Button
+                                                size='small'
                                                 color='warning'
                                                 variant="contained"
-                                            // onClick={() =>
-                                            //     handleOpenDialogNego(motor.motorId)
-                                            // }
+                                                onClick={() =>
+                                                    handleOpenDialogPriceDefault(motor.motorId)
+                                                }
                                             >
-                                                Mua giá hiện tại
+                                                Mua giá mặc định
                                             </Button>
 
                                         </Box>
@@ -259,6 +280,31 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
                 onClose={handleCloseDialogNego}
                 motorIdNego={motorbikeIdForDialogNego}
             />
+            <Dialog
+                open={isOpenPriceDefaultDialog}
+                onClose={handleCloseDialogPriceDefault}
+            >
+                <DialogTitle>Mua với giá hiện tại</DialogTitle>
+                <DialogContent>
+                    <Typography>
+                        Bạn có chắc muốn mua với giá hiện tại?
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={handleCloseDialogPriceDefault}
+                        color="error"
+                    >
+                        Hủy
+                    </Button>
+                    <Button
+                        onClick={() => handleAcceptDefaultPrice(motorbikeIdForBuyDialog)}
+                        color="success"
+                    >
+                        Xác nhận
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 }

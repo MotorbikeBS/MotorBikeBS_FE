@@ -4,7 +4,7 @@ import { Box, Button, Modal, Paper, Table, TableBody, TableCell, TableContainer,
 import { ClearRounded } from '@mui/icons-material';
 import './style/_style.scss'
 import { useAppDispatch } from '../../../../../services/store/store';
-import { cancleNegotiation } from '../../../../../services/features/negotiation/negotiationSlice';
+import { acceptEnemyPrice, cancleNegotiation } from '../../../../../services/features/negotiation/negotiationSlice';
 
 interface NegotiationInforModalProps {
 
@@ -31,6 +31,17 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
         label,
         value,
     });
+    const handleAcceptEnemyPrice = () => {
+        if (data && data.id) {
+            dispatch(acceptEnemyPrice({ negotiationId: data.id }))
+                .then(() => {
+                    loadingData()
+                    setTimeout(() => {
+                        onClose()
+                    }, 1000)
+                })
+        }
+    }
     const rows = [
 
         createData('Tên Xe', data?.motorName),
@@ -56,6 +67,7 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                         variant="contained"
                         color="success"
                         className='btn-accept-price'
+                        onClick={handleAcceptEnemyPrice}
                     >
                         Chấp nhận
                     </Button>
@@ -106,7 +118,25 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                 </Typography>
             )
         ),
-        createData('Trạng thái xe', data?.motorStatus),
+        createData('Trạng thái xe',
+
+            data?.motorStatus === 'CONSIGNMENT'
+                || data?.motorStatus === 4 ? (
+                <Typography
+                    color='#E6A160'
+                    fontWeight='700'
+                >
+                    KÝ GỞI
+                </Typography>
+            ) : data?.motorStatus === 'LIVELIHOOD'
+                || data?.motorStatus === 5 ? (
+                <Typography sx={{ color: 'green' }}>KHÔNG KÍ GỞI</Typography>
+
+            ) : (
+                <Typography sx={{ color: '#3D609A' }}>CHƯA XÁC ĐỊNH</Typography>
+            )
+
+        ),
     ]
 
     const handleCancleNegotiation = () => {
@@ -120,6 +150,7 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                 })
         }
     }
+
 
     return (
         <Modal open={isOpen} onClose={onClose}>

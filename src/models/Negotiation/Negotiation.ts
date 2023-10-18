@@ -1,4 +1,4 @@
-import { IMotorImages, IMotorStatus } from '../Motorbike/Motorbike';
+import { IMotorImages, IMotorStatus, IMotorType } from '../Motorbike/Motorbike';
 import { IStore } from '../Store/Store';
 import { IUser } from '../User/UserInterface';
 
@@ -12,6 +12,7 @@ export interface INegotiationOwner {
     ownerPrice: number;
     description: string;
 }
+
 export interface IMotorNegotiation {
     motorId: number;
     certificateNumber: string;
@@ -21,7 +22,7 @@ export interface IMotorNegotiation {
     price: number;
     description?: string;
     motorStatusId: number;
-    motorTypeId: number;
+    motorType: IMotorType;
     ownerId: number;
     motorStatus: IMotorStatus;
     registrationImage: string;
@@ -36,6 +37,7 @@ export interface INegotiationRequest {
     endTime: Date;
     description: string;
     status: string;
+    finalPrice: number;
 }
 
 export interface INegotiation {
@@ -66,5 +68,5 @@ export interface ISelectRowNegotiation {
     ownerAddress: string;
     storeAddress: string;
     negotiationStatus: string;
-    motorStatus: string;
+    motorStatus: string | number;
 }
