@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Search, StyledInputBase, SearchIconWrapper } from './styledMUI/styled';
+// import { Search, StyledInputBase, SearchIconWrapper } from './styledMUI/styled';
 import {
     AppBar,
     Box,
@@ -124,7 +124,7 @@ const StoreMenuComponent = () => {
                                 Motorbike BS
                             </Typography>
                         </Link>
-                        <Search
+                        {/* <Search
                             sx={{
                                 display: { xs: 'none', md: 'flex' },
                             }}
@@ -136,7 +136,7 @@ const StoreMenuComponent = () => {
                                 placeholder="Tìm Kiếm…"
                                 inputProps={{ 'aria-label': 'search' }}
                             />
-                        </Search>
+                        </Search> */}
 
                         <Box
                             sx={{
@@ -191,7 +191,7 @@ const StoreMenuComponent = () => {
                                     </Link>
                                 ))}
                             </Menu>
-                            <IconButton
+                            {/* <IconButton
                                 size="large"
                                 aria-label="account of current user"
                                 aria-controls="menu-appbar"
@@ -200,7 +200,7 @@ const StoreMenuComponent = () => {
                                 color="inherit"
                             >
                                 <SearchOutlined />
-                            </IconButton>
+                            </IconButton> */}
                         </Box>
 
                         <Link
@@ -324,7 +324,7 @@ const StoreMenuComponent = () => {
                     </Toolbar>
                 </Container>
             </AppBar>
-            {searchOpen && (
+            {/* {searchOpen && (
                 <Box
                     sx={{
                         flexGrow: 1,
@@ -342,7 +342,7 @@ const StoreMenuComponent = () => {
                         />
                     </Search>
                 </Box>
-            )}
+            )} */}
         </>
     );
 };

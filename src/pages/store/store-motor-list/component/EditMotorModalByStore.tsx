@@ -153,8 +153,6 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
         }
     }, [motorbike, form, user]);
 
-    console.log('usernef', user?.storeDesciptions[0]?.storeId);
-
     const { formState, handleSubmit, register } = form;
     const { errors } = formState;
 

@@ -1,6 +1,13 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { Box, Button, Container, Paper, Typography } from '@mui/material';
+import {
+    Box,
+    Button,
+    CircularProgress,
+    Container,
+    Paper,
+    Typography,
+} from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { FavoriteBorderOutlined } from '@mui/icons-material';
 import { Item } from './style/style-root';
@@ -19,7 +26,9 @@ const MotorbikeComponent = () => {
     const dispatch = useAppDispatch();
 
     const { account } = useAppSelector((state) => state.account);
-    const { motorbikes, error } = useAppSelector((state) => state.motorbikes);
+    const { motorbikes, error, loading } = useAppSelector(
+        (state) => state.motorbikes,
+    );
 
     const [isOpenDialog, setOpenDialog] = React.useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
@@ -73,157 +82,188 @@ const MotorbikeComponent = () => {
                 margin: '0 48px 0 48px',
             }}
         >
-            {error ? (
-                <>
-                    <Container className="wishlist-container-notFound">
-                        <Paper elevation={3} sx={{ padding: 2 }}>
-                            {/* {error?.error[0]} */}
-                            Không tìm thấy xe
-                        </Paper>
-                    </Container>
-                </>
-            ) : motorbikes && motorbikes.length === 0 ? (
-                <>
-                    <Container className="wishlist-container-notFound">
-                        <Paper elevation={3} sx={{ padding: 2 }}>
-                            Sàn giao dịch hiện không có bài đăng nào.
-                        </Paper>
-                    </Container>
-                </>
+            {loading === true ? (
+                <Box textAlign="center">
+                    <CircularProgress />
+                </Box>
             ) : (
                 <>
-                    <Grid container spacing={2} className="product-grid">
-                        {motorbikes &&
-                            motorbikes.map((motor) => (
-                                <Grid
-                                    item
-                                    xs={12}
-                                    sm={6}
-                                    md={4}
-                                    lg={3}
-                                    key={motor.motorId}
-                                >
-                                    <Item className="product-item">
-                                        <div
-                                            className="product-image"
-                                            onClick={() =>
-                                                handleNavigateDetail(
-                                                    motor.motorId,
-                                                )
-                                            }
+                    {error ? (
+                        <>
+                            <Container className="wishlist-container-notFound">
+                                <Paper elevation={3} sx={{ padding: 2 }}>
+                                    {/* {error?.error[0]} */}
+                                    Không tìm thấy xe
+                                </Paper>
+                            </Container>
+                        </>
+                    ) : motorbikes && motorbikes.length === 0 ? (
+                        <>
+                            <Container className="wishlist-container-notFound">
+                                <Paper elevation={3} sx={{ padding: 2 }}>
+                                    Sàn giao dịch hiện không có bài đăng nào.
+                                </Paper>
+                            </Container>
+                        </>
+                    ) : (
+                        <>
+                            <Grid
+                                container
+                                spacing={2}
+                                className="product-grid"
+                            >
+                                {motorbikes &&
+                                    motorbikes.map((motor) => (
+                                        <Grid
+                                            item
+                                            xs={12}
+                                            sm={6}
+                                            md={4}
+                                            lg={3}
+                                            key={motor.motorId}
                                         >
-                                            {motor.motorbikeImages && (
-                                                <img
-                                                    src={
-                                                        motor.motorbikeImages[0]
-                                                            ?.imageLink || ''
+                                            <Item className="product-item">
+                                                <div
+                                                    className="product-image"
+                                                    onClick={() =>
+                                                        handleNavigateDetail(
+                                                            motor.motorId,
+                                                        )
                                                     }
-                                                    alt="Đây là ảnh sản phẩm"
-                                                />
-                                            )}
-                                        </div>
-                                        <div className="product-information">
-                                            <Typography variant="h6">
-                                                {motor.motorName}
-                                            </Typography>
-                                            <Typography
-                                                color="red"
-                                                fontWeight="700"
-                                                fontSize="18px"
-                                            >
-                                                Giá:{' '}
-                                                {formatCurrency(motor.price)}
-                                            </Typography>
-                                            {motor?.motorStatus
-                                                ?.motorStatusId === 5 ? (
-                                                <Typography color="blue">
-                                                    <strong>
-                                                        Xe hiện không có ở cửa
-                                                        hàng
-                                                    </strong>
-                                                </Typography>
-                                            ) : (
-                                                <>
-                                                    <br />
-                                                </>
-                                            )}
-                                            <div className="product-info-content">
-                                                <Typography>
-                                                    <strong>Cửa Hàng:</strong>{' '}
-                                                    {motor.store?.storeName}
-                                                </Typography>
-                                                <Typography>
-                                                    <strong>Loại Xe: </strong>
-                                                    {motor.motorType?.title}
-                                                </Typography>
-                                                <Typography>
-                                                    <strong>Odo: </strong>
-                                                    {motor.odo} Km
-                                                </Typography>
-                                                {/* <Typography>
+                                                >
+                                                    {motor.motorbikeImages && (
+                                                        <img
+                                                            src={
+                                                                motor
+                                                                    .motorbikeImages[0]
+                                                                    ?.imageLink ||
+                                                                ''
+                                                            }
+                                                            alt="Đây là ảnh sản phẩm"
+                                                        />
+                                                    )}
+                                                </div>
+                                                <div className="product-information">
+                                                    <Typography variant="h6">
+                                                        {motor.motorName}
+                                                    </Typography>
+                                                    <Typography
+                                                        color="red"
+                                                        fontWeight="700"
+                                                        fontSize="18px"
+                                                    >
+                                                        Giá:{' '}
+                                                        {formatCurrency(
+                                                            motor.price,
+                                                        )}
+                                                    </Typography>
+                                                    {motor?.motorStatus
+                                                        ?.motorStatusId ===
+                                                    5 ? (
+                                                        <Typography color="blue">
+                                                            <strong>
+                                                                Xe hiện không có
+                                                                ở cửa hàng
+                                                            </strong>
+                                                        </Typography>
+                                                    ) : (
+                                                        <>
+                                                            <br />
+                                                        </>
+                                                    )}
+                                                    <div className="product-info-content">
+                                                        <Typography>
+                                                            <strong>
+                                                                Cửa Hàng:
+                                                            </strong>{' '}
+                                                            {
+                                                                motor.store
+                                                                    ?.storeName
+                                                            }
+                                                        </Typography>
+                                                        <Typography>
+                                                            <strong>
+                                                                Loại Xe:{' '}
+                                                            </strong>
+                                                            {
+                                                                motor.motorType
+                                                                    ?.title
+                                                            }
+                                                        </Typography>
+                                                        <Typography>
+                                                            <strong>
+                                                                Odo:{' '}
+                                                            </strong>
+                                                            {motor.odo} Km
+                                                        </Typography>
+                                                        {/* <Typography>
                                             <strong>Tình trạng: </strong>
                                             {motor.motorStatus.title}
                                         </Typography> */}
-                                                <Typography>
-                                                    <strong>
-                                                        Đăng ký mới:
-                                                    </strong>{' '}
-                                                    {new Date(
-                                                        motor.year,
-                                                    ).toLocaleDateString()}
-                                                </Typography>
-                                                {/* <Typography>
+                                                        <Typography>
+                                                            <strong>
+                                                                Đăng ký mới:
+                                                            </strong>{' '}
+                                                            {new Date(
+                                                                motor.year,
+                                                            ).toLocaleDateString()}
+                                                        </Typography>
+                                                        {/* <Typography>
                                         <strong>Ngày đăng bài:</strong>{' '}
                                         {motor.postDate.toLocaleDateString()}
                                     </Typography> */}
-                                            </div>
-                                        </div>
-                                        {account?.roleId === 4 && (
-                                            <>
-                                                {motor?.motorStatus
-                                                    ?.motorStatusId === 5 ? (
-                                                    <div className="btn-style">
-                                                        <Button
-                                                            variant="outlined"
-                                                            onClick={() =>
-                                                                handleOpenDialog(
-                                                                    motor.motorId,
-                                                                )
-                                                            }
-                                                        >
-                                                            Đặt lịch xem xe
-                                                        </Button>
-                                                        <Button
-                                                            className="btn-favorite"
-                                                            onClick={() =>
-                                                                handleAddToWishList(
-                                                                    motor.motorId,
-                                                                )
-                                                            }
-                                                        >
-                                                            <FavoriteBorderOutlined />
-                                                        </Button>
                                                     </div>
-                                                ) : (
-                                                    <div className="btn-style-1">
-                                                        <Button
-                                                            className="btn-favorite"
-                                                            onClick={() =>
-                                                                handleAddToWishList(
-                                                                    motor.motorId,
-                                                                )
-                                                            }
-                                                        >
-                                                            <FavoriteBorderOutlined />
-                                                        </Button>
-                                                    </div>
+                                                </div>
+                                                {account?.roleId === 4 && (
+                                                    <>
+                                                        {motor?.motorStatus
+                                                            ?.motorStatusId ===
+                                                        5 ? (
+                                                            <div className="btn-style">
+                                                                <Button
+                                                                    variant="outlined"
+                                                                    onClick={() =>
+                                                                        handleOpenDialog(
+                                                                            motor.motorId,
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    Đặt lịch xem
+                                                                    xe
+                                                                </Button>
+                                                                <Button
+                                                                    className="btn-favorite"
+                                                                    onClick={() =>
+                                                                        handleAddToWishList(
+                                                                            motor.motorId,
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    <FavoriteBorderOutlined />
+                                                                </Button>
+                                                            </div>
+                                                        ) : (
+                                                            <div className="btn-style-1">
+                                                                <Button
+                                                                    className="btn-favorite"
+                                                                    onClick={() =>
+                                                                        handleAddToWishList(
+                                                                            motor.motorId,
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    <FavoriteBorderOutlined />
+                                                                </Button>
+                                                            </div>
+                                                        )}
+                                                    </>
                                                 )}
-                                            </>
-                                        )}
-                                    </Item>
-                                </Grid>
-                            ))}
-                    </Grid>
+                                            </Item>
+                                        </Grid>
+                                    ))}
+                            </Grid>
+                        </>
+                    )}
                 </>
             )}
 

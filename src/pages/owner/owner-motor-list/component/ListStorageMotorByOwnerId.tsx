@@ -15,7 +15,7 @@ import {
     useAppSelector,
 } from '../../../../services/store/store';
 import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
-import { getMotorByOwnerId } from '../../../../services/features/motorbike/motorbikeSlice';
+import { clearMotor, getMotorByOwnerId } from '../../../../services/features/motorbike/motorbikeSlice';
 import EditMotorModal from './EditMotorModal';
 import PostMotorModal from './PostMotorModal';
 
@@ -91,6 +91,7 @@ const ListStorageMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
     };
 
     React.useEffect(() => {
+        dispatch(clearMotor());
         dispatch(getMotorByOwnerId({ ownerId: Number(account?.userId) }));
     }, [dispatch, account?.userId]);
 
