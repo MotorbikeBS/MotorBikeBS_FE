@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
+    IChangePriceNegotiation,
     INegotiation,
     INegotiationStore,
 } from '../../../models/Negotiation/Negotiation';
@@ -159,7 +160,33 @@ export const cancleNegotiation = createAsyncThunk<
         }
     }
 });
-
+export const changePriceNegotiation = createAsyncThunk<
+    INegotiation,
+    IChangePriceNegotiation
+>('negotiation/changePriceNegotiation', async (data, thunkAPI) => {
+    const { negotiationId, price } = data;
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.put(
+            `${changePriceNegotiationEndPoint}?negotiationId=${negotiationId}`,
+            { price },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        toast.success(`${response.data.message}`);
+        return response.data;
+    } catch (err: any) {
+        if (err.response) {
+            toast.error(`${err.response.data?.errorMessages}`);
+            return thunkAPI.rejectWithValue({
+                error: err.response?.data?.errorMessages,
+            });
+        }
+    }
+});
 export const negotiationSlice = createSlice({
     name: 'negotiation',
     initialState,
@@ -215,6 +242,28 @@ export const negotiationSlice = createSlice({
             state.negotiation = action.payload;
         });
         builder.addCase(acceptEnemyPrice.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(acceptDefaultPrice.pending, (state, action) => {
+            state.loading = true;
+        });
+        builder.addCase(acceptDefaultPrice.fulfilled, (state, action) => {
+            state.loading = false;
+            state.negotiation = action.payload;
+        });
+        builder.addCase(acceptDefaultPrice.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(changePriceNegotiation.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(changePriceNegotiation.fulfilled, (state, action) => {
+            state.loading = false;
+            state.negotiation = action.payload;
+        });
+        builder.addCase(changePriceNegotiation.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });
