@@ -259,21 +259,21 @@ const OwnerMotorDetailComponent = () => {
                         </TableContainer>
                     </Box>
                     {/* {account?.roleId === 4 && ( */}
-                        <Box
-                            flexGrow={2}
-                            marginTop="10%"
-                            maxWidth="50%"
-                            marginLeft="26%"
+                    <Box
+                        flexGrow={2}
+                        marginTop="10%"
+                        maxWidth="50%"
+                        marginLeft="26%"
+                    >
+                        <Button
+                            variant="outlined"
+                            onClick={() =>
+                                handleOpenDialog(motorbike.motorId)
+                            }
                         >
-                            <Button
-                                variant="outlined"
-                                onClick={() =>
-                                    handleOpenDialog(motorbike.motorId)
-                                }
-                            >
-                                Đặt lịch xem xe
-                            </Button>
-                        </Box>
+                            Đặt lịch xem xe
+                        </Button>
+                    </Box>
                     {/* )} */}
                 </Box>
             </Box>

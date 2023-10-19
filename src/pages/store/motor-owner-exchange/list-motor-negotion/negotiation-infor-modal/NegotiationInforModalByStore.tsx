@@ -4,7 +4,8 @@ import { Box, Button, Modal, Paper, Table, TableBody, TableCell, TableContainer,
 import { ClearRounded } from '@mui/icons-material';
 import './style/_style.scss'
 import { useAppDispatch } from '../../../../../services/store/store';
-import { acceptEnemyPrice, cancleNegotiation } from '../../../../../services/features/negotiation/negotiationSlice';
+import { acceptEnemyPrice, cancleNegotiation, changePriceNegotiation } from '../../../../../services/features/negotiation/negotiationSlice';
+import { useForm } from 'react-hook-form';
 
 interface NegotiationInforModalProps {
 
@@ -12,6 +13,9 @@ interface NegotiationInforModalProps {
     onClose: () => void;
     loadingData: () => void;
     data: ISelectRowNegotiation | null;
+}
+interface IFormOwnerPriceValues {
+    price: number
 }
 
 const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
@@ -22,11 +26,30 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
 
 }) => {
     const dispatch = useAppDispatch()
-    const [storePrice, setStorePrice] = useState<number>(data?.storePrice || 0);
+    const [storePrice, setStorePrice] = useState<number | null>(data?.storePrice || null);
 
-    // const formattedCurrency = useFormatCurrency()
-    // const { account } = useAppSelector((state) => state.account)
+    const form = useForm<IFormOwnerPriceValues>({
+        defaultValues: {
+            price: data?.storePrice ?? 0,
+        }
+    });
+    const { register, handleSubmit, formState } = form;
+    const onSubmit = (formData: IFormOwnerPriceValues) => {
+        if (data && data.id) {
+            dispatch(changePriceNegotiation({
+                negotiationId: data.id,
+                price: formData.price
+            }))
+                .then(() => {
+                    setStorePrice(formData.price)
+                    loadingData()
+                    setTimeout(() => {
+                        onClose()
+                    }, 1000)
+                })
 
+        }
+    };
 
     const handleAcceptEnemyPrice = () => {
         if (data && data.id) {
@@ -79,20 +102,26 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
         createData('Giá của bạn',
 
             <div className='price-value'>
-                <TextField
-                    value={data?.storePrice
-                        ? data?.storePrice
-                        : 'Bạn chưa trả giá'
-                    }
-
-                />
-                <Button
-                    variant="contained"
-                    color="warning"
-                    className='btn-again-price'
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    noValidate
                 >
-                    Trả giá lại
-                </Button>
+                    <TextField
+                        {...register('price')}
+                        defaultValue={
+                            data?.storePrice ?? ''
+                        }
+                    />
+                    <Button
+                        type='submit'
+                        variant="contained"
+                        color="warning"
+                        className='btn-again-price'
+                    >
+                        Trả giá lại
+                    </Button>
+
+                </form>
             </div>
         ),
         createData('Tên chủ xe', data?.ownerName),

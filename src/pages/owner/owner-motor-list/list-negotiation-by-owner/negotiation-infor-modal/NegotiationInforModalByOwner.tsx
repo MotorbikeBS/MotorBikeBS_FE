@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useState } from 'react'
 import { ISelectRowNegotiation } from '../../../../../models/Negotiation/Negotiation';
 import {
     Box,
@@ -12,20 +12,24 @@ import {
     TableRow,
     TextField,
     Typography
-}
-    from '@mui/material';
+} from '@mui/material';
 import { ClearRounded } from '@mui/icons-material';
 import './style/_style.scss'
 import { useAppDispatch } from '../../../../../services/store/store';
-import { acceptEnemyPrice } from '../../../../../services/features/negotiation/negotiationSlice';
+import { acceptEnemyPrice, changePriceNegotiation } from '../../../../../services/features/negotiation/negotiationSlice';
+import { useForm } from 'react-hook-form';
 
 interface NegotiationInforModalProps {
-
     isOpen: boolean;
     onClose: () => void;
     loadingData: () => void;
     data: ISelectRowNegotiation | null;
 }
+
+interface IFormOwnerPriceValues {
+    price: number
+}
+
 const NegotiationInforModalByOwner: React.FC<NegotiationInforModalProps> = ({
     isOpen,
     onClose,
@@ -33,6 +37,15 @@ const NegotiationInforModalByOwner: React.FC<NegotiationInforModalProps> = ({
     data,
 }) => {
     const dispatch = useAppDispatch()
+
+    const [ownerPrice, setOwnerPrice] = useState<number | null>(data?.storePrice || null);
+
+    const form = useForm<IFormOwnerPriceValues>({
+        defaultValues: {
+            price: data?.ownerPrice ?? 0,
+        }
+    });
+    const { register, handleSubmit, formState } = form;
 
     const handleAcceptEnemyPrice = () => {
         if (data && data.id) {
@@ -45,6 +58,23 @@ const NegotiationInforModalByOwner: React.FC<NegotiationInforModalProps> = ({
                 })
         }
     }
+    const onSubmit = (formData: IFormOwnerPriceValues) => {
+        if (data && data.id) {
+            dispatch(changePriceNegotiation({
+                negotiationId: data.id,
+                price: formData.price
+            }))
+                .then(() => {
+                    setOwnerPrice(formData.price)
+                    loadingData()
+                    setTimeout(() => {
+                        onClose()
+                    }, 1000)
+                })
+
+        }
+    };
+
     const createData = (label: string, value: ReactNode | string) => ({
         label,
         value,
@@ -83,18 +113,25 @@ const NegotiationInforModalByOwner: React.FC<NegotiationInforModalProps> = ({
         ),
         createData('Giá của bạn',
             <div className='price-value'>
-                <TextField
-                    value={data?.ownerPrice
-                        ? data?.ownerPrice
-                        : 'Bạn chưa trả giá'}
-                />
-                <Button
-                    variant="contained"
-                    color="warning"
-                    className='btn-again-price'
-                >
-                    Trả giá lại
-                </Button>
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    noValidate>
+                    <TextField
+                        {...register('price')}
+                        defaultValue={data?.ownerPrice ?? ''}
+                        onChange={(e) => {
+                            const inputValue = e.target.value;
+                        }}
+                    />
+                    <Button
+                        type='submit'
+                        variant="contained"
+                        color="warning"
+                        className='btn-again-price'
+                    >
+                        Trả giá lại
+                    </Button>
+                </form>
             </div>
 
         ),

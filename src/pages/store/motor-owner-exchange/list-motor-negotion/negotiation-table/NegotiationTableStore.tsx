@@ -46,7 +46,7 @@ export const columns: GridColDef[] = [
         width: 200,
         editable: false,
         renderCell: (params) =>
-            params.row.onwerPrice > 0 ? (
+            params.row.ownerPrice > 0 ? (
                 <Typography
                     color='red'
                     fontWeight='700'

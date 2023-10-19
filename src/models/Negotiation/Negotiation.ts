@@ -7,6 +7,10 @@ export interface INegotiationStore {
     storePrice: number;
     description: string;
 }
+export interface IChangePriceNegotiation {
+    negotiationId: number;
+    price: number;
+}
 export interface INegotiationOwner {
     motorId: number;
     ownerPrice: number;
