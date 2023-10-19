@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Container, Grid, Paper, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Item } from '../../pages/customer/store-list/style/style-root';
 import { FavoriteBorderOutlined } from '@mui/icons-material';
@@ -27,7 +27,7 @@ const MotorbikeByStoreIdComponent = () => {
 
     const { storeId } = useParams<storeParams | any>();
     const { account } = useAppSelector((state) => state.account);
-    const { motorbikeByStoreId } = useAppSelector((state) => state.motorbikes);
+    const { motorbikeByStoreId, loading } = useAppSelector((state) => state.motorbikes);
     const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<
         number | null
     >(null);
@@ -85,6 +85,12 @@ const MotorbikeByStoreIdComponent = () => {
                 margin: '0 48px 0 48px',
             }}
         >
+            {loading === true ? (
+                <Box textAlign='center'>
+                    <CircularProgress />
+                </Box>
+            ) : (
+            <>
             {motorbikeByStoreIdFIlter &&
             motorbikeByStoreIdFIlter.length === 0 ? (
                 <>
@@ -253,6 +259,9 @@ const MotorbikeByStoreIdComponent = () => {
                     </Grid>
                 </>
             )}
+            </>
+            )}
+
 
             <BookingDialog
                 open={isOpenDialog}

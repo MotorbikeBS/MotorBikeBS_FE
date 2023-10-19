@@ -15,7 +15,7 @@ import {
     useAppSelector,
 } from '../../../../services/store/store';
 import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
-import { getMotorByOwnerId } from '../../../../services/features/motorbike/motorbikeSlice';
+import { clearMotor, getMotorByOwnerId } from '../../../../services/features/motorbike/motorbikeSlice';
 import PostMotorModalByStore from './PostMotorModalByStore';
 import EditMotorModalByStore from './EditMotorModalByStore';
 import ReportIcon from '@mui/icons-material/Report';
@@ -92,6 +92,7 @@ const ListStorageMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
     };
 
     React.useEffect(() => {
+        dispatch(clearMotor());
         dispatch(getMotorByOwnerId({ ownerId: Number(account?.userId) }));
     }, [dispatch, account?.userId]);
 

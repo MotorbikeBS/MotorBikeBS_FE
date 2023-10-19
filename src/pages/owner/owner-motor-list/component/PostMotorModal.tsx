@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Box,
     Button,
@@ -271,7 +271,7 @@ const PostMotorModal: React.FC<PostDialogProps> = ({
                                                                     Kí gởi
                                                                 </MenuItem>
                                                                 <MenuItem value="5">
-                                                                    Kiếm sống
+                                                                    Không kí gởi
                                                                 </MenuItem>
                                                             </Select>
                                                         </FormControl>

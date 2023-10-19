@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import CreateMotorbikeComponent from '../../../../common-components/create-motorbike-component/CreateMotorbikeComponent';
 import '../style/style.scss';
-import { getMotorByOwnerId } from '../../../../services/features/motorbike/motorbikeSlice';
+import { clearMotor, getMotorByOwnerId } from '../../../../services/features/motorbike/motorbikeSlice';
 import {
     useAppDispatch,
     useAppSelector,
@@ -41,6 +41,7 @@ const OwnerMotorListComponent = () => {
     };
 
     const loadData = () => {
+        dispatch(clearMotor());
         dispatch(getMotorByOwnerId({ ownerId: Number(account?.userId) }));
     };
 

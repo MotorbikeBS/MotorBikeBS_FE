@@ -16,6 +16,7 @@ import {
 } from '../../../../services/store/store';
 import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
 import {
+    clearMotor,
     getMotorByOwnerId,
     updateMotorStatus,
 } from '../../../../services/features/motorbike/motorbikeSlice';
@@ -68,6 +69,7 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
     };
 
     React.useEffect(() => {
+        dispatch(clearMotor());
         dispatch(getMotorByOwnerId({ ownerId: Number(account?.userId) }));
     }, [dispatch, account?.userId]);
 

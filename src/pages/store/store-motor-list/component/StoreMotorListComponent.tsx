@@ -6,7 +6,7 @@ import {
 import { Box, Button, Tab, Tabs } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import CreateMotorbikeComponent from '../../../../common-components/create-motorbike-component/CreateMotorbikeComponent';
-import { getMotorByOwnerId } from '../../../../services/features/motorbike/motorbikeSlice';
+import { clearMotor, getMotorByOwnerId } from '../../../../services/features/motorbike/motorbikeSlice';
 import ListStorageMotorByStoreId from './ListStorageMotorByStoreId';
 import ListPostedMotorByStoreId from './ListPostedMotorByStoreId';
 import CreateModelModal from '../../../../common-components/create-motorbike-component/create-motorFields-component/CreateModel';
@@ -41,7 +41,7 @@ const StoreMotorListComponent = () => {
     };
 
     const loadData = () => {
-        // dispatch(clearMotor())
+        dispatch(clearMotor())
         dispatch(getMotorByOwnerId({ ownerId: Number(account?.userId) }));
     };
 
