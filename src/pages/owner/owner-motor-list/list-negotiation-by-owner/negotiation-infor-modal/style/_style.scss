@@ -1,0 +1,60 @@
+.modal-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 40%;
+    max-width: 60%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    overflow-y: visible;
+    z-index: 9999;
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .btn-negotiation-status {
+        flex-direction: row;
+        align-content: flex-end;
+        align-items: flex-end;
+        display: flex;
+        position: relative;
+        bottom: 3rem;
+        left: 6.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .modal-container {
+        min-width: 60%;
+        max-width: 80%;
+    }
+}
+
+.price-value {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+price-value TextField {
+    width: 100px;
+}
+
+.price-value {
+    .btn-again-price {
+        margin-left: 10px;
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+}
+
+.price-value {
+    .btn-accept-price {
+        margin-left: 10px;
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+}

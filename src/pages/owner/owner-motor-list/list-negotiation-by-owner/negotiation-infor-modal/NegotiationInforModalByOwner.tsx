@@ -1,10 +1,23 @@
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode } from 'react'
 import { ISelectRowNegotiation } from '../../../../../models/Negotiation/Negotiation';
-import { Box, Button, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from '@mui/material';
+import {
+    Box,
+    Button,
+    Modal,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableRow,
+    TextField,
+    Typography
+}
+    from '@mui/material';
 import { ClearRounded } from '@mui/icons-material';
 import './style/_style.scss'
 import { useAppDispatch } from '../../../../../services/store/store';
-import { acceptEnemyPrice, cancleNegotiation } from '../../../../../services/features/negotiation/negotiationSlice';
+import { acceptEnemyPrice } from '../../../../../services/features/negotiation/negotiationSlice';
 
 interface NegotiationInforModalProps {
 
@@ -13,20 +26,13 @@ interface NegotiationInforModalProps {
     loadingData: () => void;
     data: ISelectRowNegotiation | null;
 }
-
-const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
+const NegotiationInforModalByOwner: React.FC<NegotiationInforModalProps> = ({
     isOpen,
     onClose,
     loadingData,
     data,
-
 }) => {
     const dispatch = useAppDispatch()
-    const [storePrice, setStorePrice] = useState<number>(data?.storePrice || 0);
-
-    // const formattedCurrency = useFormatCurrency()
-    // const { account } = useAppSelector((state) => state.account)
-
 
     const handleAcceptEnemyPrice = () => {
         if (data && data.id) {
@@ -44,7 +50,6 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
         value,
     });
     const rows = [
-
         createData('Tên Xe', data?.motorName),
         createData('Số đăng ký', data?.certificateNumber),
         createData('Năm đăng ký', data?.year ? data.year.toLocaleString() : 'N/A'),
@@ -55,12 +60,13 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                 {data?.price}
             </Typography>
         ),
-        createData('Giá chủ xe',
+        createData('Giá Store đưa ra',
             <div className='price-value'>
                 <TextField
-                    value={data?.ownerPrice
-                        ? data?.ownerPrice
-                        : 'Chưa nhập'}
+                    value={data?.storePrice
+                        ? data?.storePrice
+                        : 'Chưa trả giá'
+                    }
                     disabled
                 />
                 <Box>
@@ -74,17 +80,13 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                     </Button>
                 </Box>
             </div>
-
         ),
         createData('Giá của bạn',
-
             <div className='price-value'>
                 <TextField
-                    value={data?.storePrice
-                        ? data?.storePrice
-                        : 'Bạn chưa trả giá'
-                    }
-
+                    value={data?.ownerPrice
+                        ? data?.ownerPrice
+                        : 'Bạn chưa trả giá'}
                 />
                 <Button
                     variant="contained"
@@ -94,10 +96,11 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                     Trả giá lại
                 </Button>
             </div>
+
         ),
-        createData('Tên chủ xe', data?.ownerName),
-        createData('Số điện thoại chủ xe', data?.ownerPhone),
-        createData('Địa chỉ chủ xe', data?.ownerAddress),
+        createData('Tên cửa hàng', data?.storeName),
+        createData('Số điện thoại cửa hàng', data?.storePhone),
+        createData('Địa chỉ cửa hàng', data?.storeAddress),
         createData('Trạng thái thương lượng',
             data?.negotiationStatus === 'PENDING' ? (
                 <Typography
@@ -142,20 +145,6 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
 
         ),
     ]
-
-    const handleCancleNegotiation = () => {
-        if (data && data.id) {
-            dispatch(cancleNegotiation({ negotiationId: data.id }))
-                .then(() => {
-                    loadingData()
-                    setTimeout(() => {
-                        onClose()
-                    }, 1000)
-                })
-        }
-    }
-
-
     return (
         <Modal open={isOpen} onClose={onClose}>
             <div className='modal-container'>
@@ -196,7 +185,7 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                             <Button
                                 variant="contained"
                                 color="error"
-                                onClick={handleCancleNegotiation}
+                            // onClick={handleCancleNegotiation}
                             >
                                 Hủy giao dịch
                             </Button>
@@ -207,4 +196,4 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
     )
 }
 
-export default NegotiationInforModalByStore
+export default NegotiationInforModalByOwner

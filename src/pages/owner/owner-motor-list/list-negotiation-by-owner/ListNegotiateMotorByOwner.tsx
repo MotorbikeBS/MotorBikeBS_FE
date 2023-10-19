@@ -1,27 +1,31 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store'
 import { clearNegotiation, getNegotiationRequest } from '../../../../services/features/negotiation/negotiationSlice'
-import { INegotiation } from '../../../../models/Negotiation/Negotiation'
+import { INegotiation, ISelectRowNegotiation } from '../../../../models/Negotiation/Negotiation'
 import { Container, Paper, Typography } from '@mui/material'
-import { DataGrid } from '@mui/x-data-grid'
+import { DataGrid, GridRowParams } from '@mui/x-data-grid'
 import { format } from 'date-fns'
 import useFormatCurrency from '../../../../hooks/useFormatCurrency'
 import { columns } from './negotiation-table/NegotiationTableOwner'
+import NegotiationInforModalByOwner from './negotiation-infor-modal/NegotiationInforModalByOwner'
 
 const ListNegotiateMotorByOwner = () => {
     const dispatch = useAppDispatch()
     const formatCurrency = useFormatCurrency()
 
     const { negotiations } = useAppSelector((state) => state.negotiation)
+    const [selectedRow, setSelectedRow] = useState<ISelectRowNegotiation | null>(null)
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         dispatch(clearNegotiation())
         dispatch(getNegotiationRequest())
     }, [dispatch])
 
-    // const loadingData = () => {
-    //     dispatch(getNegotiationRequest())
-    // }
+    const loadingData = () => {
+        dispatch(clearNegotiation())
+        dispatch(getNegotiationRequest())
+    }
 
     const pendingNegotiation = useMemo(() => {
         return (negotiations ?? []).filter((nego: INegotiation) => nego.negotiations[0].status === 'PENDING');
@@ -47,6 +51,10 @@ const ListNegotiateMotorByOwner = () => {
     }, [pendingNegotiation, formatCurrency])
 
 
+    const handleRowDoubleClick = (params: GridRowParams) => {
+        setSelectedRow(params.row as ISelectRowNegotiation);
+        setIsModalOpen(true)
+    }
     return (
         <Container maxWidth="xl">
             <Paper style={{ marginBottom: '20px', padding: '20px' }}>
@@ -61,12 +69,17 @@ const ListNegotiateMotorByOwner = () => {
                     columns={columns}
                     pageSizeOptions={[5, 10, 100]}
                     disableRowSelectionOnClick
-                // onRowDoubleClick={handleRowDoubleClick}
+                    onRowDoubleClick={handleRowDoubleClick}
                 />
 
             </Paper>
 
-
+            <NegotiationInforModalByOwner
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                data={selectedRow}
+                loadingData={loadingData}
+            />
         </Container>
     )
 }
