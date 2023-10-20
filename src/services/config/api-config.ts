@@ -66,6 +66,9 @@ export const acceptEnemyPriceEndPoint = `${BASE_URL}/api/negotiation/accept`;
 export const cancleNegotiationEndPoint = `${BASE_URL}/api/negotiation/cancel`;
 export const changePriceNegotiationEndPoint = `${BASE_URL}/api/negotiation/changePrice`;
 
+//Store Booking On Owner Exchange
+export const storeBookingEndPoint = `${BASE_URL}/api/booking/storeBookingOwner`;
+
 //Booking
 export const storeBookingWithOwnerExchangeEndPoint = `${BASE_URL}/api/booking/storebookingowner`;
 export const getAllBookingByOwnerEndPoint = `${BASE_URL}/api/booking/getbookingrequest`;

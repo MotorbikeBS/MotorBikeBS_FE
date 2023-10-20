@@ -2,6 +2,8 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, D
 import React from 'react'
 import { format } from 'date-fns';
 import { Controller, useForm } from 'react-hook-form';
+import { useAppDispatch } from '../../../../../../services/store/store';
+import { storeBookingOwnerExchange } from '../../../../../../services/features/booking/storeBookingSlice';
 
 // import { useAppDispatch } from '../../../services/store/store';
 // import { storeBookingOwnerExchange } from '../../../services/features/booking/bookingSlice';
@@ -18,7 +20,7 @@ interface BookingDialogProps {
     onClose: () => void;
 }
 
-interface IBookingViewMotorbike {
+interface IBookingField {
     bookingDate: Date;
     note: string;
 }
@@ -33,9 +35,9 @@ const BookingAcceptNegotiationDialog: React.FC<BookingDialogProps> = ({
     onCloseSubmitDialog,
     onCloseCancelDialog,
     onClose, }) => {
-    // const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch()
 
-    const form = useForm<IBookingViewMotorbike>({
+    const form = useForm<IBookingField>({
         defaultValues: {
             bookingDate: new Date(),
             note: '',
@@ -56,13 +58,13 @@ const BookingAcceptNegotiationDialog: React.FC<BookingDialogProps> = ({
 
     };
 
-    const onSubmit = (data: IBookingViewMotorbike) => {
+    const onSubmit = (data: IBookingField) => {
         if (negotiationId !== null) {
-            // dispatch(storeBookingOwnerExchange({
-            //     motorId: motorbikeId,
-            //     bookingDate: data.bookingDate,
-            //     note: data.note,
-            // }));
+            dispatch(storeBookingOwnerExchange({
+                negotiationId: negotiationId,
+                bookingDate: data.bookingDate,
+                note: data.note,
+            }));
             handleCloseDialog();
         } else {
         }
