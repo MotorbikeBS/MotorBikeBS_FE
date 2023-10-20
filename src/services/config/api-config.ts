@@ -68,7 +68,7 @@ export const changePriceNegotiationEndPoint = `${BASE_URL}/api/negotiation/chang
 
 //Store Booking On Owner Exchange
 export const storeBookingEndPoint = `${BASE_URL}/api/booking/storeBookingOwner`;
-
+export const getAllStoreBookingOwnerEndPoind = `${BASE_URL}/api/booking`;
 //Booking
 export const storeBookingWithOwnerExchangeEndPoint = `${BASE_URL}/api/booking/storebookingowner`;
 export const getAllBookingByOwnerEndPoint = `${BASE_URL}/api/booking/getbookingrequest`;

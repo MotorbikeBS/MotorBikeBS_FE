@@ -7,7 +7,7 @@ import { Button, Grid, Stack, TextField, Typography } from '@mui/material';
 import Background from '../../common-components/background-component/BackgroundComponent';
 
 import './style/style.scss';
-import { useAppDispatch, useAppSelector } from '../../services/store/store';
+import { useAppDispatch } from '../../services/store/store';
 import { forgotPassword, setError } from '../../services/features/auth/accountSlice';
 
 type FormValues = {
@@ -24,8 +24,7 @@ const ForgotPassword = () => {
     const { errors } = formState;
 
     const dispatch = useAppDispatch()
-    // const { error } = useAppSelector((state) => state.account)
-    // const errorData: any = error;
+
 
     const onSubmit = (data: FormValues) => {
         dispatch(forgotPassword(data))

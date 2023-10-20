@@ -15,7 +15,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Background from '../../common-components/background-component/BackgroundComponent';
 
 import './login-style/login-style.scss';
-import { useAppDispatch, useAppSelector } from '../../services/store/store';
+import { useAppDispatch } from '../../services/store/store';
 import { loginUser, setError } from '../../services/features/auth/accountSlice';
 
 type FormValues = {
@@ -27,8 +27,6 @@ const LoginComponent = () => {
     const navigave = useNavigate();
     const dispatch = useAppDispatch();
 
-    // const { error } = useAppSelector((state) => state.account);
-    // const errorData: any = error;
 
     const form = useForm<FormValues>({
         defaultValues: {

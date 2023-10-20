@@ -6,7 +6,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Background from '../../common-components/background-component/BackgroundComponent';
 
 import './styles/style.scss';
-import { useAppDispatch, useAppSelector } from '../../services/store/store';
+import { useAppDispatch } from '../../services/store/store';
 import { registerUser, setError } from '../../services/features/auth/accountSlice';
 
 type FormValues = {
