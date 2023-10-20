@@ -7,6 +7,7 @@ import { Item } from '../../style/style-root';
 import './style/_style.scss'
 import useFormatCurrency from '../../../../../hooks/useFormatCurrency';
 import BookingAcceptNegotiationDialog from './booking-accept-negotiatin-dialog/BookingAcceptNegotiationDialog';
+
 const ListMotorAcceptNegotiation = () => {
     const navigate = useNavigate();
     const formatCurrency = useFormatCurrency()
@@ -27,6 +28,11 @@ const ListMotorAcceptNegotiation = () => {
     const acceptPriceNegotiation = negotiations?.filter(
         nego => nego.negotiations[0]?.status === 'ACCEPT'
     )
+
+    // const handleNavigateDetail = (motorbikeId: number) => {
+    //     navigate(`/motorbike/${motorbikeId}`);
+    // };
+
 
     const handleOpenBookingDialog = (motorbikeId: number) => {
         setMotorbikeIdForDialog(motorbikeId);
@@ -91,6 +97,7 @@ const ListMotorAcceptNegotiation = () => {
                                     >
                                         <div
                                             className='product-image-accept-negotiation'
+                                        // onClick={() => handleNavigateDetail(negoMoto.motorId)}
                                         >
                                             {negoMoto.motor?.motorbikeImages &&
                                                 negoMoto.motor?.motorbikeImages.length === 0 ? (
