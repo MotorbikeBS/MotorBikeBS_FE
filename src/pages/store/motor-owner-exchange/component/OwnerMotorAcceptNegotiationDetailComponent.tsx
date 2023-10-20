@@ -1,26 +1,55 @@
-import React, { useState } from 'react'
-import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
-import { FmdGoodOutlined, MonetizationOnOutlined, Phone, Accessibility } from '@mui/icons-material';
+import React, { useEffect, useState } from 'react';
+import {
+    Box,
+    Button,
+    Container,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableRow,
+    Typography,
+} from '@mui/material';
+import {
+    FmdGoodOutlined,
+    MonetizationOnOutlined,
+    Phone,
+    Accessibility,
+} from '@mui/icons-material';
 import { useParams } from 'react-router';
-import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../../../../services/store/store';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
-import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
 import Carousel from 'react-material-ui-carousel';
 import BookingDialog from '../../../customer/booking-dialog-component/BookingDialog';
 import NegotiationDialog from '../../negotiation-modal-store/NegotiationDialog';
 import { acceptDefaultPrice } from '../../../../services/features/negotiation/negotiationSlice';
+import { INegotiation } from '../../../../models/Negotiation/Negotiation';
 import './style/_style.scss'
+import { getMotorModelById } from '../../../../services/features/motorbike/motorFields';
 
 type motorbikeParams = {
     motorbikeId: number;
 };
 
-const OwnerMotorDetailComponent = () => {
-
+const OwnerMotorAcceptNegotiationDetailComponent = () => {
     const dispatch = useAppDispatch();
     const { motorbikeId } = useParams<motorbikeParams | any>();
-    const { motorbikesByOwner } = useAppSelector((state) => state.motorbikes);
+    const { negotiations } = useAppSelector(state=>state.negotiation)
+    const { motorModel } = useAppSelector(state=>state.motorFields)
 
+    useEffect(() => {
+        if (motorbike) {
+            dispatch(getMotorModelById({ id: Number(motorbike.motor.modelId) }))
+        }
+    }, [dispatch]);
 
     const [isOpenPriceDefaultDialog, setIsOpenPriceDefaultDialog] =
         useState(false);
@@ -35,17 +64,16 @@ const OwnerMotorDetailComponent = () => {
     const [motorbikeIdForDialogNego, setMotorbikeIdForDialogNego] =
         React.useState<number | null>(null);
 
-
     const formatPrice = useFormatCurrency();
 
-    const handleOpenDialogNego = (motorId: number) => {
-        setMotorbikeIdForDialogNego(motorId);
-        setOpenDialogNego(true);
-    };
-    const handleOpenDialogPriceDefault = (motorId: number) => {
-        setMotorbikeIdForBuyDialog(motorId);
-        setIsOpenPriceDefaultDialog(true);
-    };
+    // const handleOpenDialogNego = (motorId: number) => {
+    //     setMotorbikeIdForDialogNego(motorId);
+    //     setOpenDialogNego(true);
+    // };
+    // const handleOpenDialogPriceDefault = (motorId: number) => {
+    //     setMotorbikeIdForBuyDialog(motorId);
+    //     setIsOpenPriceDefaultDialog(true);
+    // };
 
     const handleAcceptDefaultPrice = (motorId: number | null) => {
         if (motorId !== null) {
@@ -87,7 +115,7 @@ const OwnerMotorDetailComponent = () => {
         );
     }
 
-    if (!motorbikesByOwner) {
+    if (!negotiations) {
         return (
             <Container>
                 <Paper elevation={3} sx={{ padding: 2 }}>
@@ -96,8 +124,10 @@ const OwnerMotorDetailComponent = () => {
             </Container>
         );
     }
-    const motorbike = motorbikesByOwner.find(
-        (mt: IMotorbike) => mt.motorId === Number(motorbikeId),
+
+  
+    const motorbike = negotiations.find(
+        (mt: INegotiation) => mt.motorId === Number(motorbikeId),
     );
 
     if (!motorbike) {
@@ -109,6 +139,8 @@ const OwnerMotorDetailComponent = () => {
             </Container>
         );
     }
+
+
     return (
         <Container>
             <Box
@@ -124,9 +156,9 @@ const OwnerMotorDetailComponent = () => {
                 >
                     <Box flexGrow={4} marginBottom="30px">
                         <Carousel>
-                            {motorbike.motorbikeImages &&
-                                motorbike.motorbikeImages.length > 0 ? (
-                                motorbike.motorbikeImages.map((image) => (
+                            {motorbike.motor.motorbikeImages &&
+                            motorbike.motor.motorbikeImages.length > 0 ? (
+                                motorbike.motor.motorbikeImages.map((image) => (
                                     <div
                                         className="nego-motorbike-detail-images"
                                         key={image.imageId}
@@ -137,11 +169,11 @@ const OwnerMotorDetailComponent = () => {
                                         />
                                     </div>
                                 ))
-                            ) : motorbike.motorbikeImages ? (
+                            ) : motorbike.motor.motorbikeImages ? (
                                 <div className="nego-motorbike-detail-images">
                                     <img
                                         src={
-                                            motorbike.motorbikeImages[0]
+                                            motorbike.motor.motorbikeImages[0]
                                                 ?.imageLink
                                         }
                                         alt={`Hình ảnh`}
@@ -156,39 +188,39 @@ const OwnerMotorDetailComponent = () => {
                                 fontWeight="bold"
                                 margin="10px 0 20px 0"
                             >
-                                {motorbike.motorName}
+                                {motorbike.motor.motorName}
                             </Typography>
-                            <div className="nego-icon-infomation">
-                                <MonetizationOnOutlined />
-                                <Typography
-                                    variant="h6"
-                                    textAlign="left"
-                                    color="red"
-                                    fontWeight="bold"
-                                >
-                                    {formatPrice(motorbike.price)}
-                                </Typography>
-                            </div>
+                          
+                                <div className="nego-icon-infomation">
+                                    <MonetizationOnOutlined />
+                                    <Typography
+                                        variant="h6"
+                                        textAlign="left"
+                                        color="red"
+                                        fontWeight="bold"
+                                    >
+                                        {formatPrice(motorbike.negotiations[0].finalPrice)}
+                                    </Typography>
+                                </div>
+                        
                             <div className="nego-icon-infomation">
                                 <Accessibility />
-                                <div
-                                    className='nego-store-detail-navigate'
-                                >
+                                <div className="nego-store-detail-navigate">
                                     <Typography>
-                                        {motorbike.owner.userName}
+                                        {motorbike.receiver?.userName}
                                     </Typography>
                                 </div>
                             </div>
                             <div className="nego-icon-infomation">
                                 <Phone />
                                 <Typography variant="body1">
-                                    {motorbike.owner?.phone}
+                                    {motorbike.receiver?.phone}
                                 </Typography>
                             </div>
                             <div className="nego-icon-infomation">
                                 <FmdGoodOutlined />
                                 <Typography variant="body1">
-                                    {motorbike.owner.address}
+                                    {motorbike.receiver?.address}
                                 </Typography>
                             </div>
                         </div>
@@ -201,7 +233,7 @@ const OwnerMotorDetailComponent = () => {
                         >
                             Mô tả chi tiết:
                         </Typography>
-                        <Typography>{motorbike.description}</Typography>
+                        <Typography>{motorbike.motor?.description}</Typography>
                     </Box>
                 </Box>
 
@@ -223,8 +255,8 @@ const OwnerMotorDetailComponent = () => {
                                         <TableCell className="nego-header-table">
                                             Hãng xe
                                         </TableCell>
-                                        <TableCell>
-                                            {motorbike.model.brand.brandName}
+                                        <TableCell>                              
+                                            {motorModel?.brand.brandName}
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>
@@ -235,46 +267,32 @@ const OwnerMotorDetailComponent = () => {
                                         </TableCell>
                                         <TableCell>
                                             {new Date(
-                                                motorbike.year,
+                                                motorbike.motor.year,
                                             ).toLocaleDateString()}
                                         </TableCell>
                                     </TableRow>
-                                    {/* <TableRow>
-                                        <TableCell className="header-table">
-                                            Tình trạng
-                                        </TableCell>
-                                        <TableCell>
-                                            {motorbike.status}
-                                        </TableCell>
-                                    </TableRow> */}
-                                    {/* <TableRow>
-                                        <TableCell className="header-table">
-                                            Dung tích
-                                        </TableCell>
-                                        <TableCell>
-                                            {motorbike.vehicleCapacity} cc
-                                        </TableCell>
-                                    </TableRow> */}
+                                
                                     <TableRow>
                                         <TableCell className="nego-header-table">
                                             Model
                                         </TableCell>
                                         <TableCell>
-                                            {motorbike.model.modelName}
+                                  
+                                            {motorModel?.modelName}
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>
                                         <TableCell className="nego-header-table">
                                             Số Km đã đi
                                         </TableCell>
-                                        <TableCell>{motorbike.odo}</TableCell>
+                                        <TableCell>{motorbike.motor.odo}</TableCell>
                                     </TableRow>
                                     <TableRow>
                                         <TableCell className="nego-header-table">
                                             Loại Xe
                                         </TableCell>
                                         <TableCell>
-                                            {motorbike.motorType.title}
+                                            {motorbike.motor.motorType.title}
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>
@@ -287,43 +305,26 @@ const OwnerMotorDetailComponent = () => {
                             </Table>
                         </TableContainer>
                     </Box>
-                    {/* {account?.roleId === 4 && ( */}
                     <Box
                         sx={{
                             display: 'flex',
-                            flexDirection:
-                                'row',
-                            justifyContent:
-                                'space-around',
+                            flexDirection: 'row',
+                            justifyContent: 'space-around',
                             margin: '24px 0px 6px 0px ',
                         }}
                     >
+                        
                         <Button
+                            size="large"
                             color="success"
                             variant="contained"
-                            size="large"
-                            onClick={() =>
-                                handleOpenDialogNego(
-                                    motorbike.motorId,
-                                )
-                            }
+                            // onClick={() =>
+                            //     handleOpenDialogPriceDefault(motorbike.motorId)
+                            // }
                         >
-                            Thương lượng
+                            Đặt lịch xem xe
                         </Button>
-                        <Button
-                            size="large"
-                            color="warning"
-                            variant="contained"
-                            onClick={() =>
-                                handleOpenDialogPriceDefault(
-                                    motorbike.motorId,
-                                )
-                            }
-                        >
-                            Mua giá mặc định
-                        </Button>
-                    </Box>
-                    {/* )} */}
+                    </Box>     
                 </Box>
             </Box>
             <NegotiationDialog
@@ -366,6 +367,6 @@ const OwnerMotorDetailComponent = () => {
             </Dialog>
         </Container>
     );
-}
+};
 
-export default OwnerMotorDetailComponent
+export default OwnerMotorAcceptNegotiationDetailComponent;
