@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-import { Box, Button, Container, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
+import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
 import { FmdGoodOutlined, MonetizationOnOutlined, Phone, Accessibility } from '@mui/icons-material';
 import { useParams } from 'react-router';
-import { useAppSelector } from '../../../../services/store/store';
+import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
 import Carousel from 'react-material-ui-carousel';
 import BookingDialog from '../../../customer/booking-dialog-component/BookingDialog';
+import NegotiationDialog from '../../negotiation-modal-store/NegotiationDialog';
+import { acceptDefaultPrice } from '../../../../services/features/negotiation/negotiationSlice';
 
 type motorbikeParams = {
     motorbikeId: number;
@@ -14,40 +16,66 @@ type motorbikeParams = {
 
 const OwnerMotorDetailComponent = () => {
 
+    const dispatch = useAppDispatch();
     const { motorbikeId } = useParams<motorbikeParams | any>();
-    const { account } = useAppSelector((state) => state.account);
     const { motorbikesByOwner } = useAppSelector((state) => state.motorbikes);
-    const [isOpenDialog, setOpenDialog] = useState(false);
-    const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false);
-    const [isOpenCancelDialog, setIsOpenCancelDialog] = useState(false);
-    const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<number | null>(null)
+
+
+    const [isOpenPriceDefaultDialog, setIsOpenPriceDefaultDialog] =
+        useState(false);
+    const [motorbikeIdForBuyDialog, setMotorbikeIdForBuyDialog] = useState<
+        number | null
+    >(null);
+    const [isOpenDialogNego, setOpenDialogNego] = React.useState(false);
+    const [isOpenSubmitDialogNego, setIsOpenSubmitDialogNego] =
+        React.useState(false);
+    const [isOpenCancelDialogNego, setIsOpenCancelDialogNego] =
+        React.useState(false);
+    const [motorbikeIdForDialogNego, setMotorbikeIdForDialogNego] =
+        React.useState<number | null>(null);
+
 
     const formatPrice = useFormatCurrency();
 
-    const handleOpenDialog = (motorbikeId: number) => {
-        setMotorbikeIdForDialog(motorbikeId);
-        setOpenDialog(true);
-        console.log(motorbikeId)
+    const handleOpenDialogNego = (motorId: number) => {
+        setMotorbikeIdForDialogNego(motorId);
+        setOpenDialogNego(true);
+    };
+    const handleOpenDialogPriceDefault = (motorId: number) => {
+        setMotorbikeIdForBuyDialog(motorId);
+        setIsOpenPriceDefaultDialog(true);
     };
 
-    const handleCloseDialog = () => {
-        setOpenDialog(false);
-        setIsOpenSubmitDialog(false);
-        setIsOpenCancelDialog(false);
-    };
-    const handleOpenSubmitDialog = () => {
-        setIsOpenSubmitDialog(true);
-    };
-    const handleCloseSubmitDialog = () => {
-        setIsOpenSubmitDialog(false);
+    const handleAcceptDefaultPrice = (motorId: number | null) => {
+        if (motorId !== null) {
+            dispatch(acceptDefaultPrice({ motorId }));
+            setIsOpenPriceDefaultDialog(false);
+        }
     };
 
-    const handleOpenCancelDialog = () => {
-        setIsOpenCancelDialog(true);
+    const handleCloseDialogNego = () => {
+        setOpenDialogNego(false);
+        setIsOpenSubmitDialogNego(false);
+        setIsOpenCancelDialogNego(false);
     };
-    const handleCloseCancelDialog = () => {
-        setIsOpenCancelDialog(false);
+
+    const handleOpenSubmitDialogNego = () => {
+        setIsOpenSubmitDialogNego(true);
     };
+    const handleCloseDialogPriceDefault = () => {
+        setIsOpenPriceDefaultDialog(false);
+    };
+
+    const handleCloseSubmitDialogNego = () => {
+        setIsOpenSubmitDialogNego(false);
+    };
+    const handleOpenCancelDialogNego = () => {
+        setIsOpenCancelDialogNego(true);
+    };
+    const handleCloseCancelDialogNego = () => {
+        setIsOpenCancelDialogNego(false);
+    };
+
     if (!motorbikeId) {
         return (
             <Container>
@@ -260,34 +288,81 @@ const OwnerMotorDetailComponent = () => {
                     </Box>
                     {/* {account?.roleId === 4 && ( */}
                     <Box
-                        flexGrow={2}
-                        marginTop="10%"
-                        maxWidth="50%"
-                        marginLeft="26%"
+                        sx={{
+                            display: 'flex',
+                            flexDirection:
+                                'row',
+                            justifyContent:
+                                'space-around',
+                            margin: '24px 0px 6px 0px ',
+                        }}
                     >
                         <Button
-                            variant="outlined"
+                            color="success"
+                            variant="contained"
+                            size="large"
                             onClick={() =>
-                                handleOpenDialog(motorbike.motorId)
+                                handleOpenDialogNego(
+                                    motorbike.motorId,
+                                )
                             }
                         >
-                            Đặt lịch xem xe
+                            Thương lượng
+                        </Button>
+                        <Button
+                            size="large"
+                            color="warning"
+                            variant="contained"
+                            onClick={() =>
+                                handleOpenDialogPriceDefault(
+                                    motorbike.motorId,
+                                )
+                            }
+                        >
+                            Mua giá mặc định
                         </Button>
                     </Box>
                     {/* )} */}
                 </Box>
             </Box>
-            <BookingDialog
-                open={isOpenDialog}
-                openSubmit={isOpenSubmitDialog}
-                openCancel={isOpenCancelDialog}
-                onOpenSubmitDialog={handleOpenSubmitDialog}
-                onCloseSubmitDialog={handleCloseSubmitDialog}
-                onOpenCancelDialog={handleOpenCancelDialog}
-                onCloseCancelDialog={handleCloseCancelDialog}
-                onClose={handleCloseDialog}
-                motorbikeId={motorbikeIdForDialog}
+            <NegotiationDialog
+                openNego={isOpenDialogNego}
+                openSubmitNego={isOpenSubmitDialogNego}
+                openCancelNego={isOpenCancelDialogNego}
+                onOpenSubmitDialogNego={handleOpenSubmitDialogNego}
+                onCloseSubmitDialogNego={handleCloseSubmitDialogNego}
+                onOpenCancelDialogNego={handleOpenCancelDialogNego}
+                onCloseCancelDialogNego={handleCloseCancelDialogNego}
+                onClose={handleCloseDialogNego}
+                motorIdNego={motorbikeIdForDialogNego}
             />
+            <Dialog
+                open={isOpenPriceDefaultDialog}
+                onClose={handleCloseDialogPriceDefault}
+            >
+                <DialogTitle>Mua với giá hiện tại</DialogTitle>
+                <DialogContent>
+                    <Typography>
+                        Bạn có chắc muốn mua với giá hiện tại?
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={handleCloseDialogPriceDefault}
+                        color="error"
+                    >
+                        Hủy
+                    </Button>
+                    <Button
+                        onClick={() =>
+                            handleAcceptDefaultPrice(motorbikeIdForBuyDialog)
+                        }
+                        color="success"
+                    >
+                        Xác nhận
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Container>
     );
 }
