@@ -15,7 +15,7 @@ const ListMotorAcceptNegotiation = () => {
     const dispatch = useAppDispatch();
     const { negotiations } = useAppSelector((state) => state.negotiation)
 
-    const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<number | null>(null)
+    const [negotiationIdForDialog, setNegotiationIdForDialog] = React.useState<number | null>(null)
     const [isOpenBookingDialog, setOpenBookingDialog] = React.useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
@@ -34,8 +34,8 @@ const ListMotorAcceptNegotiation = () => {
     // };
 
 
-    const handleOpenBookingDialog = (motorbikeId: number) => {
-        setMotorbikeIdForDialog(motorbikeId);
+    const handleOpenBookingDialog = (negotiationId: number) => {
+        setNegotiationIdForDialog(negotiationId);
         setOpenBookingDialog(true);
     };
 
@@ -185,7 +185,7 @@ const ListMotorAcceptNegotiation = () => {
                                                 size='small'
                                                 variant="contained"
                                                 onClick={() =>
-                                                    handleOpenBookingDialog(negoMoto.motorId)
+                                                    handleOpenBookingDialog(negoMoto.negotiations[0].negotiationId)
                                                 }
                                             >
                                                 Đặt lịch xem xe
@@ -209,7 +209,7 @@ const ListMotorAcceptNegotiation = () => {
                 onOpenCancelDialog={handleOpenCancelDialog}
                 onCloseCancelDialog={handleCloseCancelDialog}
                 onClose={handleCloseDialog}
-                motorbikeId={motorbikeIdForDialog}
+                negotiationId={negotiationIdForDialog}
             />
         </Box>
     )

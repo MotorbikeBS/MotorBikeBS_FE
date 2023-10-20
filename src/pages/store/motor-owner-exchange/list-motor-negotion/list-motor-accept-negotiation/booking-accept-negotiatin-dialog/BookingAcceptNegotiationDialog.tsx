@@ -8,7 +8,7 @@ import { Controller, useForm } from 'react-hook-form';
 
 interface BookingDialogProps {
     open: boolean;
-    motorbikeId: number | null;
+    negotiationId: number | null;
     openSubmit: boolean;
     openCancel: boolean;
     onOpenSubmitDialog: () => void;
@@ -25,7 +25,7 @@ interface IBookingViewMotorbike {
 
 const BookingAcceptNegotiationDialog: React.FC<BookingDialogProps> = ({
     open,
-    motorbikeId,
+    negotiationId,
     openSubmit,
     openCancel,
     onOpenCancelDialog,
@@ -57,7 +57,7 @@ const BookingAcceptNegotiationDialog: React.FC<BookingDialogProps> = ({
     };
 
     const onSubmit = (data: IBookingViewMotorbike) => {
-        if (motorbikeId !== null) {
+        if (negotiationId !== null) {
             // dispatch(storeBookingOwnerExchange({
             //     motorId: motorbikeId,
             //     bookingDate: data.bookingDate,
