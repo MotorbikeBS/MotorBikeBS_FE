@@ -35,6 +35,7 @@ import {
 } from '../../services/features/motorbike/motorFields';
 import { createMotorbike } from '../../services/features/motorbike/motorbikeSlice';
 import { toast } from 'react-toastify';
+import { error } from 'console';
 
 interface CreateDialogProps {
     open: boolean;
@@ -149,6 +150,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                 formData.append('images', data.images[i]);
             }
         }
+        
         console.log(data);
         dispatch(createMotorbike(formData))
             .unwrap()
@@ -156,8 +158,11 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                 loadData();
                 toast.success('Thêm xe thành công.');
                 handleCloseDialog();
-            });
+            }).catch(error=>{
+                onCloseSubmitDialog()
+            })
     };
+
 
     const motorBrandFilter =
         motorBrands &&
@@ -214,6 +219,9 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                         <Input
                                                             id="registrationImage"
                                                             type="file"
+                                                            inputProps={{
+                                                                accept: '.png, .jpg, .jpeg, .gif',
+                                                            }}
                                                             {...register(
                                                                 'registrationImage',
                                                                 {
@@ -314,7 +322,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                         <FormControl fullWidth>
                                                             <InputLabel id="demo-simple-select-label">
                                                                 Model
-                                                            </InputLabel>                                                     
+                                                            </InputLabel>
                                                             <Select
                                                                 labelId="demo-simple-select-label"
                                                                 label="Model"
@@ -572,6 +580,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                             )}
                                                             inputProps={{
                                                                 multiple: true,
+                                                                accept: '.png, .jpg, .jpeg, .gif',
                                                             }}
                                                         />
                                                         <br />
@@ -612,7 +621,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                 </DialogContent>
             </Dialog>
 
-            {/* Dialog Đặt lịch */}
+            {/* Dialog Thêm xe */}
             <Dialog open={openSubmit}>
                 <DialogTitle>
                     <Typography variant="h5">Xác nhận Thêm xe</Typography>

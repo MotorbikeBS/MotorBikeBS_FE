@@ -1,0 +1,48 @@
+$primary-favorite: #f76157;
+.nego-motorbike-detail-image {
+    max-width: 100%;
+    max-height: 420px;
+}
+
+.nego-motorbike-detail-images {
+    max-width: 100%;
+    max-height: 400px;
+    border: 1px solid #ddd;
+    margin: 0 auto;
+}
+
+.nego-motorbike-detail-images img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+.nego-information-detail-motorbike {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    align-items: flex-start;
+    margin-top: 20px;
+    border: 1px solid gray;
+    max-width: 100%;
+    background-color: rgba(156, 158, 161, 0.3);
+    border-radius: 10px;
+    padding: 0 0 10px 10px;
+    .nego-icon-infomation {
+        display: flex;
+        margin: 0px 0px 10px 0px;
+         :nth-child(1) {
+            margin-right: 10px;
+        }
+        .nego-store-detail-navigate {
+            cursor: pointer;
+        }
+    }
+}
+
+table {
+    .nego-header-table {
+        font-weight: bold;
+    }
+}

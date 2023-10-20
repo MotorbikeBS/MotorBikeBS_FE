@@ -1,38 +1,45 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { useAppDispatch, useAppSelector } from '../../../../../services/store/store';
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../../../../../services/store/store';
 import { Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
-import { clearNegotiation, getNegotiationRequest } from '../../../../../services/features/negotiation/negotiationSlice';
+import {
+    clearNegotiation,
+    getNegotiationRequest,
+} from '../../../../../services/features/negotiation/negotiationSlice';
 import { Item } from '../../style/style-root';
-import './style/_style.scss'
+import './style/_style.scss';
 import useFormatCurrency from '../../../../../hooks/useFormatCurrency';
 import BookingAcceptNegotiationDialog from './booking-accept-negotiatin-dialog/BookingAcceptNegotiationDialog';
 
 const ListMotorAcceptNegotiation = () => {
     const navigate = useNavigate();
-    const formatCurrency = useFormatCurrency()
+    const formatCurrency = useFormatCurrency();
 
     const dispatch = useAppDispatch();
-    const { negotiations } = useAppSelector((state) => state.negotiation)
+    const { negotiations } = useAppSelector((state) => state.negotiation);
 
-    const [negotiationIdForDialog, setNegotiationIdForDialog] = React.useState<number | null>(null)
+    const [negotiationIdForDialog, setNegotiationIdForDialog] = React.useState<
+        number | null
+    >(null);
     const [isOpenBookingDialog, setOpenBookingDialog] = React.useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
 
     useEffect(() => {
-        dispatch(clearNegotiation())
-        dispatch(getNegotiationRequest())
-    }, [dispatch])
+        dispatch(clearNegotiation());
+        dispatch(getNegotiationRequest());
+    }, [dispatch]);
 
     const acceptPriceNegotiation = negotiations?.filter(
-        nego => nego.negotiations[0]?.status === 'ACCEPT'
-    )
+        (nego) => nego.negotiations[0]?.status === 'ACCEPT',
+    );
 
-    // const handleNavigateDetail = (motorbikeId: number) => {
-    //     navigate(`/motorbike/${motorbikeId}`);
-    // };
-
+    const handleNavigateDetail = (motorbikeId: number) => {
+        navigate(`/negotiation/motorbike/${motorbikeId}`);
+    };
 
     const handleOpenBookingDialog = (negotiationId: number) => {
         setNegotiationIdForDialog(negotiationId);
@@ -64,12 +71,11 @@ const ListMotorAcceptNegotiation = () => {
                 margin: '0 48px 0 48px',
             }}
         >
-            {acceptPriceNegotiation
-                && acceptPriceNegotiation.length === 0 ? (
+            {acceptPriceNegotiation && acceptPriceNegotiation.length === 0 ? (
                 <>
                     <Container className="accept-negotiation-notFound">
                         <Paper elevation={3} sx={{ padding: 2 }}>
-                            <Typography variant='h5'>
+                            <Typography variant="h5">
                                 Chưa có xe mà bạn có thể tiến hành mua bán
                             </Typography>
                         </Paper>
@@ -80,7 +86,7 @@ const ListMotorAcceptNegotiation = () => {
                     <Grid
                         container
                         spacing={2}
-                        className='product-grid-accept-negotiation'
+                        className="product-grid-accept-negotiation"
                     >
                         {acceptPriceNegotiation &&
                             acceptPriceNegotiation.map((negoMoto) => (
@@ -92,15 +98,18 @@ const ListMotorAcceptNegotiation = () => {
                                     lg={3}
                                     key={negoMoto?.motorId}
                                 >
-                                    <Item
-                                        className='product-item-accept-negotiation'
-                                    >
+                                    <Item className="product-item-accept-negotiation">
                                         <div
-                                            className='product-image-accept-negotiation'
-                                        // onClick={() => handleNavigateDetail(negoMoto.motorId)}
+                                            className="product-image-accept-negotiation"
+                                            onClick={() =>
+                                                handleNavigateDetail(
+                                                    negoMoto.motorId,
+                                                )
+                                            }
                                         >
                                             {negoMoto.motor?.motorbikeImages &&
-                                                negoMoto.motor?.motorbikeImages.length === 0 ? (
+                                            negoMoto.motor?.motorbikeImages
+                                                .length === 0 ? (
                                                 <>
                                                     <img
                                                         src="https://png.pngtree.com/element_origin_min_pic/16/10/21/277448a877a33e8d0efc778025291c86.jpg"
@@ -109,15 +118,16 @@ const ListMotorAcceptNegotiation = () => {
                                                 </>
                                             ) : (
                                                 <img
-                                                    src={negoMoto.motor?.motorbikeImages[0]?.imageLink}
+                                                    src={
+                                                        negoMoto.motor
+                                                            ?.motorbikeImages[0]
+                                                            ?.imageLink
+                                                    }
                                                     alt="Đây là ảnh sản phẩm"
-
                                                 />
                                             )}
                                         </div>
-                                        <div
-                                            className='product-information-accept-negotiation'
-                                        >
+                                        <div className="product-information-accept-negotiation">
                                             <Typography variant="h6">
                                                 {negoMoto.motor?.motorName}
                                             </Typography>
@@ -127,17 +137,25 @@ const ListMotorAcceptNegotiation = () => {
                                                 fontSize="18px"
                                             >
                                                 Giá:{' '}
-                                                {formatCurrency(negoMoto.negotiations[0]?.finalPrice)}
+                                                {formatCurrency(
+                                                    negoMoto.negotiations[0]
+                                                        ?.finalPrice,
+                                                )}
                                             </Typography>
                                             <div className="info-content-accept-negotiation">
                                                 <Typography>
                                                     <strong>Người dùng:</strong>{' '}
-                                                    {negoMoto.receiver?.userName}
+                                                    {
+                                                        negoMoto.receiver
+                                                            ?.userName
+                                                    }
                                                 </Typography>
                                                 <Typography>
                                                     <strong>Loại Xe: </strong>
-                                                    {negoMoto.motor?.motorType?.title}
-
+                                                    {
+                                                        negoMoto.motor
+                                                            ?.motorType?.title
+                                                    }
                                                 </Typography>
                                                 <Typography>
                                                     <strong>Odo: </strong>
@@ -150,52 +168,65 @@ const ListMotorAcceptNegotiation = () => {
                                                     </strong>{' '}
                                                     {new Date(
                                                         negoMoto.motor?.year,
-                                                    ).toLocaleDateString('vi-VN', {
-                                                        year: 'numeric',
-                                                        month: '2-digit',
-                                                        day: '2-digit'
-                                                    })}
+                                                    ).toLocaleDateString(
+                                                        'vi-VN',
+                                                        {
+                                                            year: 'numeric',
+                                                            month: '2-digit',
+                                                            day: '2-digit',
+                                                        },
+                                                    )}
                                                 </Typography>
                                                 <Typography>
-                                                    <strong>Ngày thỏa thuận:</strong>{' '}
+                                                    <strong>
+                                                        Ngày thỏa thuận:
+                                                    </strong>{' '}
                                                     {new Date(
                                                         negoMoto.negotiations[0]?.startTime,
-                                                    ).toLocaleDateString('vi-VN', {
-                                                        year: 'numeric',
-                                                        month: '2-digit',
-                                                        day: '2-digit'
-                                                    })}
+                                                    ).toLocaleDateString(
+                                                        'vi-VN',
+                                                        {
+                                                            year: 'numeric',
+                                                            month: '2-digit',
+                                                            day: '2-digit',
+                                                        },
+                                                    )}
                                                 </Typography>
                                                 <Typography>
-                                                    <strong>Thỏa thuận thông qua:</strong>{' '}
+                                                    <strong>
+                                                        Thỏa thuận thông qua:
+                                                    </strong>{' '}
                                                     {new Date(
                                                         negoMoto.negotiations[0]?.endTime,
                                                     ).toLocaleDateString(
-                                                        'vi-VN', {
-                                                        year: 'numeric',
-                                                        month: '2-digit',
-                                                        day: '2-digit'
-                                                    })}
+                                                        'vi-VN',
+                                                        {
+                                                            year: 'numeric',
+                                                            month: '2-digit',
+                                                            day: '2-digit',
+                                                        },
+                                                    )}
                                                 </Typography>
                                             </div>
                                         </div>
                                         <div className="btn-style-booking">
                                             <Button
-                                                color='success'
-                                                size='small'
+                                                color="success"
+                                                size="small"
                                                 variant="contained"
                                                 onClick={() =>
-                                                    handleOpenBookingDialog(negoMoto.negotiations[0].negotiationId)
+                                                    handleOpenBookingDialog(
+                                                        negoMoto.negotiations[0]
+                                                            .negotiationId,
+                                                    )
                                                 }
                                             >
                                                 Đặt lịch xem xe
                                             </Button>
-
                                         </div>
                                     </Item>
                                 </Grid>
-                            ))
-                        }
+                            ))}
                     </Grid>
                 </>
             )}
@@ -212,7 +243,7 @@ const ListMotorAcceptNegotiation = () => {
                 negotiationId={negotiationIdForDialog}
             />
         </Box>
-    )
-}
+    );
+};
 
-export default ListMotorAcceptNegotiation
+export default ListMotorAcceptNegotiation;

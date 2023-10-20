@@ -21,6 +21,7 @@ export interface IMotorNegotiation {
     motorId: number;
     certificateNumber: string;
     motorName: string;
+    modelId:number;
     odo: number;
     year: Date;
     price: number;

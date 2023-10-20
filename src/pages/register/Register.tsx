@@ -19,8 +19,8 @@ type FormValues = {
 const Register = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const { error } = useAppSelector((state) => state.account);
-    const errorData: any = error;
+    // const { error } = useAppSelector((state) => state.account);
+    // const errorData: any = error;
 
     const form = useForm<FormValues>({
         defaultValues: {
@@ -71,7 +71,7 @@ const Register = () => {
                         <Typography variant='h4' className='txt-heading' align='center'>
                             Đăng Ký
                         </Typography>
-                        {errorData?.error && (
+                        {/* {errorData?.error && (
                             <div className="error-message">
                                 {Object.keys(errorData?.error).map((key) => (
                                     <Typography key={key} color='red' marginBottom='20px'>
@@ -79,7 +79,7 @@ const Register = () => {
                                     </Typography>
                                 ))}
                             </div>
-                        )}
+                        )} */}
                         <form onSubmit={handleSubmit(onSubmit)} noValidate>
 
                             <Stack spacing={2} sx={{ width: 350, marginLeft: 'auto', marginRight: 'auto' }}>

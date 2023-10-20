@@ -24,8 +24,8 @@ const ForgotPassword = () => {
     const { errors } = formState;
 
     const dispatch = useAppDispatch()
-    const { error } = useAppSelector((state) => state.account)
-    const errorData: any = error;
+    // const { error } = useAppSelector((state) => state.account)
+    // const errorData: any = error;
 
     const onSubmit = (data: FormValues) => {
         dispatch(forgotPassword(data))
@@ -48,7 +48,7 @@ const ForgotPassword = () => {
                         <Typography variant='h4' className='txt-heading' align='center'>
                             Khôi Phục Mật Khẩu
                         </Typography>
-                        {errorData?.error && (
+                        {/* {errorData?.error && (
                             <div className="error-message">
                                 {Object.keys(errorData?.error).map((key) => (
                                     <Typography key={key} color='red' marginBottom='20px'>
@@ -56,7 +56,7 @@ const ForgotPassword = () => {
                                     </Typography>
                                 ))}
                             </div>
-                        )}
+                        )} */}
                         <form onSubmit={handleSubmit(onSubmit)} noValidate>
                             <Stack spacing={4} sx={{ width: 350, marginLeft: 'auto', marginRight: 'auto' }}>
 

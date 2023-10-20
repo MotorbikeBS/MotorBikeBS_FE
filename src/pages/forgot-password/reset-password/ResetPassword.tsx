@@ -7,7 +7,7 @@ import {
     resetPassword,
     setError,
 } from '../../../services/features/auth/accountSlice';
-import { useAppDispatch, useAppSelector } from '../../../services/store/store';
+import { useAppDispatch } from '../../../services/store/store';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 
 type FormValues = {
@@ -18,9 +18,9 @@ type FormValues = {
 const ResetPassword = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate()
-    const { error } = useAppSelector((state) => state.account);
+    // const { error } = useAppSelector((state) => state.account);
 
-    const errorData: any = error;
+    // const errorData: any = error;
     const form = useForm({
         defaultValues: {
             password: '',
@@ -72,7 +72,7 @@ const ResetPassword = () => {
                         >
                             Khôi Phục Mật Khẩu
                         </Typography>
-                        {errorData?.error && (
+                        {/* {errorData?.error && (
                             <div className="error-message">
                                 {Object.keys(errorData?.error).map((key) => (
                                     <Typography
@@ -84,7 +84,7 @@ const ResetPassword = () => {
                                     </Typography>
                                 ))}
                             </div>
-                        )}
+                        )} */}
                         <form onSubmit={handleSubmit(onSubmit)} noValidate>
                             <Stack
                                 spacing={4}

@@ -27,8 +27,8 @@ const LoginComponent = () => {
     const navigave = useNavigate();
     const dispatch = useAppDispatch();
 
-    const { error } = useAppSelector((state) => state.account);
-    const errorData: any = error;
+    // const { error } = useAppSelector((state) => state.account);
+    // const errorData: any = error;
 
     const form = useForm<FormValues>({
         defaultValues: {
@@ -87,7 +87,7 @@ const LoginComponent = () => {
                         >
                             Đăng Nhập
                         </Typography>
-                        {errorData?.error && (
+                        {/* {errorData?.error && (
                             <div className="error-message">
                                 {Object.keys(errorData?.error).map((key) => (
                                     <Typography key={key} color='red' marginBottom='20px'>
@@ -95,7 +95,7 @@ const LoginComponent = () => {
                                     </Typography>
                                 ))}
                             </div>
-                        )}
+                        )} */}
                         <form onSubmit={handleSubmit(onSubmit)} noValidate>
                             <Stack
                                 spacing={4}
