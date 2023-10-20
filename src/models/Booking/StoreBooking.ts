@@ -1,10 +1,54 @@
-export interface IMotorbikeBookingByStore {}
-export interface IBookingRequestByStore {}
+import { IMotorStatus } from '../Motorbike/Motorbike';
+import { IUser } from '../User/UserInterface';
+
+export interface IMotorbikeBookingByStore {
+    motorId: number;
+    certificateNumber: string;
+    registrationImage: File;
+    motorName: string;
+    odo: number;
+    year: Date;
+    price: number;
+    owner: IUser;
+    motorStatus: IMotorStatus;
+}
+export interface INegotiation {
+    negotiationId: number;
+    requestId: number;
+    storePrice: number;
+    ownerPrice: number;
+    startTime: Date;
+    endTime: Date;
+    description: string;
+    status: string;
+    finalPrice: number;
+    baseRequestId: number;
+    lastChangeUserId: number;
+}
+export interface IBookingRequestByStore {
+    bookingId: number;
+    dateCreate: Date;
+    bookingDate: Date;
+    note: string;
+    status: string;
+}
 
 export interface IBookingFieldByStore {
     negotiationId: number;
-    booking: Date;
+    bookingDate: Date;
     note: string;
 }
 
-export interface IBookingByStore {}
+export interface IBookingByStore {
+    requestId: number;
+    motorId: number;
+    receiverId: number;
+    senderId: number;
+    requestTypeId: number;
+    status: string;
+    motor: IMotorbikeBookingByStore;
+    negotiations: INegotiation[];
+    bookings: IBookingRequestByStore[];
+    receiver: IUser;
+    sender: IUser;
+}
