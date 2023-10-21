@@ -226,7 +226,7 @@ const CreateModelModal: React.FC<CreateDialogProps> = ({
                                 color="primary"
                                 onClick={handleOpenSubmitDialog}
                             >
-                                Thêm xe
+                                Thêm Model
                             </Button>
                         </form>
                     </Box>

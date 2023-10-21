@@ -127,15 +127,15 @@ const MotorbikeComponent = () => {
                                                     className="product-image"
                                                     onClick={() =>
                                                         handleNavigateDetail(
-                                                            motor.motorId,
+                                                            motor?.motorId,
                                                         )
                                                     }
                                                 >
-                                                    {motor.motorbikeImages && (
+                                                    {motor?.motorbikeImages && (
                                                         <img
                                                             src={
                                                                 motor
-                                                                    .motorbikeImages[0]
+                                                                    ?.motorbikeImages[0]
                                                                     ?.imageLink ||
                                                                 ''
                                                             }
@@ -145,7 +145,7 @@ const MotorbikeComponent = () => {
                                                 </div>
                                                 <div className="product-information">
                                                     <Typography variant="h6">
-                                                        {motor.motorName}
+                                                        {motor?.motorName}
                                                     </Typography>
                                                     <Typography
                                                         color="red"
@@ -154,7 +154,7 @@ const MotorbikeComponent = () => {
                                                     >
                                                         Giá:{' '}
                                                         {formatCurrency(
-                                                            motor.price,
+                                                            motor?.price,
                                                         )}
                                                     </Typography>
                                                     {motor?.motorStatus
@@ -177,7 +177,7 @@ const MotorbikeComponent = () => {
                                                                 Cửa Hàng:
                                                             </strong>{' '}
                                                             {
-                                                                motor.store
+                                                                motor?.store
                                                                     ?.storeName
                                                             }
                                                         </Typography>
@@ -186,7 +186,7 @@ const MotorbikeComponent = () => {
                                                                 Loại Xe:{' '}
                                                             </strong>
                                                             {
-                                                                motor.motorType
+                                                                motor?.motorType
                                                                     ?.title
                                                             }
                                                         </Typography>
@@ -194,24 +194,29 @@ const MotorbikeComponent = () => {
                                                             <strong>
                                                                 Odo:{' '}
                                                             </strong>
-                                                            {motor.odo} Km
+                                                            {motor?.odo} Km
                                                         </Typography>
-                                                        {/* <Typography>
-                                            <strong>Tình trạng: </strong>
-                                            {motor.motorStatus.title}
-                                        </Typography> */}
+
                                                         <Typography>
                                                             <strong>
                                                                 Đăng ký mới:
                                                             </strong>{' '}
                                                             {new Date(
-                                                                motor.year,
-                                                            ).toLocaleDateString()}
+                                                                motor?.year,
+                                                            ).toLocaleDateString(
+                                                                'vi-VN',
+                                                            )}
                                                         </Typography>
-                                                        {/* <Typography>
-                                        <strong>Ngày đăng bài:</strong>{' '}
-                                        {motor.postDate.toLocaleDateString()}
-                                    </Typography> */}
+                                                        <Typography>
+                                                            <strong>
+                                                                Ngày đăng bài:
+                                                            </strong>{' '}
+                                                            {new Date(
+                                                                motor?.postingAt,
+                                                            ).toLocaleDateString(
+                                                                'vi-VN',
+                                                            )}
+                                                        </Typography>
                                                     </div>
                                                 </div>
                                                 {account?.roleId === 4 && (
@@ -224,7 +229,7 @@ const MotorbikeComponent = () => {
                                                                     variant="outlined"
                                                                     onClick={() =>
                                                                         handleOpenDialog(
-                                                                            motor.motorId,
+                                                                            motor?.motorId,
                                                                         )
                                                                     }
                                                                 >
@@ -235,7 +240,7 @@ const MotorbikeComponent = () => {
                                                                     className="btn-favorite"
                                                                     onClick={() =>
                                                                         handleAddToWishList(
-                                                                            motor.motorId,
+                                                                            motor?.motorId,
                                                                         )
                                                                     }
                                                                 >
@@ -248,7 +253,7 @@ const MotorbikeComponent = () => {
                                                                     className="btn-favorite"
                                                                     onClick={() =>
                                                                         handleAddToWishList(
-                                                                            motor.motorId,
+                                                                            motor?.motorId,
                                                                         )
                                                                     }
                                                                 >

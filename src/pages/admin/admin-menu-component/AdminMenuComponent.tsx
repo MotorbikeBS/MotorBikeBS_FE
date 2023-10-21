@@ -34,7 +34,7 @@ const pages = [
     },
     {
         to: '/motor-fields',
-        name: 'DS.Motor Fields',
+        name: 'DS.Cấu hình xe',
     },
 ];
 

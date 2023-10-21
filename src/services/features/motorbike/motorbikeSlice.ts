@@ -303,7 +303,7 @@ export const cancelPosting = createAsyncThunk<IMotorbike, { motorId: number }>(
         try {
             const token = localStorage.getItem('motorbike_bs');
             const response = await axios.put(
-                `${cancelPostingEndPoint}?motorId=${motorId}`,
+                `${cancelPostingEndPoint}?MotorID=${motorId}`, {},
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -457,7 +457,7 @@ export const motorbikeSlice = createSlice({
         });
         builder.addCase(cancelPosting.fulfilled, (state, action) => {
             state.loading = false;
-            // state.motorbikes = action.payload;
+            state.motorbike = action.payload;
             state.error = null;
         });
         builder.addCase(cancelPosting.rejected, (state, action) => {

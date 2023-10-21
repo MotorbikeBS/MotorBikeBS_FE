@@ -19,7 +19,6 @@ import {
     cancelPosting,
     clearMotor,
     getMotorByOwnerId,
-    updateMotorStatus,
 } from '../../../../services/features/motorbike/motorbikeSlice';
 import { toast } from 'react-toastify';
 

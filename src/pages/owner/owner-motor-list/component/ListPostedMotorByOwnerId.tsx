@@ -64,7 +64,7 @@ const ListPostedMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
                 handleCloseDialog();
             })
             .catch((error) => {
-                toast.error(error?.error[0]);
+                // toast.error(error?.error[0]);
                 // console.log(error);
             });
     };
@@ -75,21 +75,21 @@ const ListPostedMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
     }, [dispatch, account?.userId]);
 
     const motorbikesByOwnerStorage = motorbikesByOwner && motorbikesByOwner?.filter(
-        (motor) => motor?.motorStatus.motorStatusId !== 3,
+        (motor) => motor?.motorStatus?.motorStatusId !== 3,
     );
 
     const rows = useMemo(() => {
         return (motorbikesByOwnerStorage ?? []).map((motor: IMotorbike) => ({
             id: motor.motorId,
             certificateNumber: motor?.certificateNumber,
-            images: motor.motorbikeImages[0]?.imageLink,
+            images: motor?.motorbikeImages[0]?.imageLink,
             motorName: motor?.motorName,
             odo: motor?.odo,
             year: motor?.year,
             price: motor?.price,
-            modelName: motor.model?.modelName,
-            motorTypeName: motor.motorType?.title,
-            motorStatus: motor.motorStatus?.title,
+            modelName: motor?.model?.modelName,
+            motorTypeName: motor?.motorType?.title,
+            motorStatus: motor?.motorStatus?.title,
         }));
     }, [motorbikesByOwnerStorage]);
 
@@ -135,7 +135,7 @@ const ListPostedMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
                     {selectedRow && (
                         <>
                             <Typography variant="subtitle1" textAlign="center">
-                                Tên xe: {selectedRow.motorName}
+                                Tên xe: {selectedRow?.motorName}
                             </Typography>
                         </>
                     )}

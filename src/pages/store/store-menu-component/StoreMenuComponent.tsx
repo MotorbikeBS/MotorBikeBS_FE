@@ -20,7 +20,7 @@ import {
     AccountCircle,
     DriveFileRenameOutline,
     Notifications,
-    SearchOutlined,
+    // SearchOutlined,
 } from '@mui/icons-material';
 import './style/style.scss';
 import { useAppDispatch } from '../../../services/store/store';
@@ -63,7 +63,7 @@ const StoreMenuComponent = () => {
         null,
     );
 
-    const [searchOpen, setSearchOpen] = React.useState(false);
+    // const [searchOpen, setSearchOpen] = React.useState(false);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -80,9 +80,9 @@ const StoreMenuComponent = () => {
         setAnchorElUser(null);
     };
 
-    const toggleSearch = () => {
-        setSearchOpen(!searchOpen);
-    };
+    // const toggleSearch = () => {
+    //     setSearchOpen(!searchOpen);
+    // };
     const isMenuItemActive = (to: string) => {
         return location.pathname === to;
     };
@@ -176,6 +176,7 @@ const StoreMenuComponent = () => {
                                     <Link
                                         to={page.to}
                                         style={{ textDecoration: 'none' }}
+                                        key={page.to}
                                     >
                                         <MenuItem
                                             key={page.to}
