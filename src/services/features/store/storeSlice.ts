@@ -214,6 +214,10 @@ export const storeSlice = createSlice({
         setError: (state, action) => {
             state.error = action.payload;
         },
+        clearStore: (state) => {
+            state.stores = null;
+            state.store = null;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(registerStore.pending, (state) => {
@@ -302,5 +306,5 @@ export const storeSlice = createSlice({
     },
 });
 
-export const { setError } = storeSlice.actions;
+export const { setError, clearStore } = storeSlice.actions;
 export default storeSlice.reducer;

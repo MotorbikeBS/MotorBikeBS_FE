@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 import { Item } from './style/style-root';
 import "./style/style.scss";
 import { useAppDispatch, useAppSelector } from "../../../services/store/store";
-import { getAllStore } from "../../../services/features/store/storeSlice";
+import { clearStore, getAllStore } from "../../../services/features/store/storeSlice";
 import { IStore } from "../../../models/Store/Store";
 
 const StoreListComponent = () => {
@@ -18,11 +18,11 @@ const StoreListComponent = () => {
   const { stores } = useAppSelector((state) => state.store)
 
   React.useEffect(() => {
+    dispatch(clearStore())
     dispatch(getAllStore());
   }, [dispatch]);
-  console.log(stores)
-  return (
 
+  return (
     <Box
       sx={{
         flexGrow: 1,
