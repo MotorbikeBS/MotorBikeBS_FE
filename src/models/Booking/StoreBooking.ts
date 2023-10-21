@@ -4,7 +4,7 @@ import { IUser } from '../User/UserInterface';
 export interface IMotorbikeBookingByStore {
     motorId: number;
     certificateNumber: string;
-    registrationImage: File;
+    registrationImage: string;
     motorName: string;
     odo: number;
     year: Date;
@@ -24,6 +24,7 @@ export interface INegotiation {
     finalPrice: number;
     baseRequestId: number;
     lastChangeUserId: number;
+    bookings: IBookingRequestByStore[];
 }
 export interface IBookingRequestByStore {
     bookingId: number;
@@ -48,7 +49,6 @@ export interface IBookingByStore {
     status: string;
     motor: IMotorbikeBookingByStore;
     negotiations: INegotiation[];
-    bookings: IBookingRequestByStore[];
     receiver: IUser;
     sender: IUser;
 }

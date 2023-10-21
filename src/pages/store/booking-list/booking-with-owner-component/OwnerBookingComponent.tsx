@@ -1,81 +1,138 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../../../../services/store/store'
-import { IBooking, IBookingSelectRowWithStore } from '../../../../models/Booking/Booking'
-import { clearBooking, getAllBookingByOwner } from '../../../../services/features/booking/bookingSlice'
-import { DataGrid, GridRowParams } from '@mui/x-data-grid'
-import { Container, Paper, Typography } from '@mui/material'
-import { columns } from '../table/Table'
-import { format } from 'date-fns';
-import BookingInforModalStore from '../../booking-dialog-store/BookingInforModalStore'
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
+import { Box, Container, Paper, Typography } from '@mui/material';
+import { clearStoreBooking, getAllBookingOwnerExchange } from '../../../../services/features/booking/storeBookingSlice';
+import './style/_style.scss';
+import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 
 const OwnerBookingComponent = () => {
-    const dispatch = useAppDispatch()
-    const { getBooking } = useAppSelector((state) => state.booking)
-
-    const [selectedRow, setSelectedRow] = useState<IBookingSelectRowWithStore | null>(null)
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const dispatch = useAppDispatch();
+    const formettedCurrency = useFormatCurrency()
+    const { getAllBooking } = useAppSelector((state) => state.storeBooking);
 
     useEffect(() => {
-        dispatch(clearBooking())
-        dispatch(getAllBookingByOwner());
-
-    }, [dispatch])
+        dispatch(clearStoreBooking());
+        dispatch(getAllBookingOwnerExchange());
+    }, [dispatch]);
 
     const loadingData = () => {
-        dispatch(getAllBookingByOwner())
-    }
-
-    const handleRowDoubleClick = (params: GridRowParams) => {
-        setSelectedRow(params.row as IBookingSelectRowWithStore);
-        setIsModalOpen(true);
+        dispatch(getAllBookingOwnerExchange());
     };
 
-    const getBookingByStore = useMemo(() => {
-        return (getBooking ?? [])
-    }, [getBooking])
-
-
-    const rows = useMemo(() => {
-        return getBookingByStore.map((booking: IBooking) => ({
-            id: booking?.bookings[0].bookingId,
-            motorName: booking.motor?.motorName,
-            certificateNumber: booking.motor?.certificateNumber,
-            motorStatus: booking.motor?.motorStatus?.title,
-            userName: booking.motor?.owner?.userName,
-            phone: booking.motor?.owner?.phone,
-            address: booking.motor?.owner?.address,
-            bookingDate: format(new Date(booking.bookings[0].bookingDate), 'dd/MM/yyyy HH:mm'),
-            note: booking.bookings[0]?.note,
-            status: booking.bookings[0]?.status
-
-        }))
-    }, [getBookingByStore])
-    console.log(rows)
     return (
-        <Container maxWidth="xl">
-            <Paper style={{ marginBottom: '20px', padding: '20px' }}>
-                <Typography variant="h4" gutterBottom>
-                    Danh sách lịch hẹn của tôi
-                </Typography>
-                <Typography fontSize='12px' gutterBottom color='red'>
-                    <strong>Lưu ý: </strong>Vui lòng nhấn đúp vào 1 hàng để xem thông tin người đặt và cập nhật trạng thái
-                </Typography>
-                <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    pageSizeOptions={[5, 10, 100]}
-                    disableRowSelectionOnClick
-                    onRowDoubleClick={handleRowDoubleClick}
-                />
-            </Paper>
-            <BookingInforModalStore
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                data={selectedRow}
-                loadingData={loadingData}
-            />
-        </Container>
-    )
-}
+        <Container className="container-xl" maxWidth="lg">
+            <Typography className="h4-heading" variant="h4" gutterBottom>
+                Danh sách lịch hẹn của tôi
+            </Typography>
+            {getAllBooking?.map((booking) => (
 
-export default OwnerBookingComponent
+                <Paper className="paper-booking-list">
+                    <Box
+                        className="booking-row"
+                        display="flex"
+                    >
+                        <Box className="left-box" flexGrow={5}>
+                            <div className="image-booking-product">
+                                <img src={booking.motor?.registrationImage} alt="Motor Image" />
+                            </div>
+                            <div className="product-booking">
+                                <Typography
+                                    variant='h5'
+                                    fontWeight='700'
+                                    alignContent='center'
+                                    textAlign='center'
+                                >
+                                    {booking?.motor?.motorName}
+                                </Typography>
+                                <Typography
+                                    variant='h6'
+                                    fontWeight='700'
+                                    alignContent='center'
+                                    textAlign='center'
+                                    color='red'
+                                >
+
+                                    {formettedCurrency(booking?.negotiations[0].finalPrice)}
+                                </Typography>
+                            </div>
+                            <div className="product-content">
+                                <Typography>
+                                    <strong>Số KM: </strong>
+                                    {booking?.motor?.odo} KM</Typography>
+                                <div className='register-date'>
+                                    <Typography>
+                                        Ngày Đăng Ký:
+                                    </Typography>
+                                    <Typography>
+
+                                        {new Date(booking?.motor?.year).toLocaleDateString('vi-VN')}
+                                    </Typography>
+                                </div>
+                                <div className='tag-motorbike-status'>
+                                    <Typography
+                                        variant='subtitle1'
+                                    >
+                                        {booking?.motor?.motorStatus.title === 'CONSIGNMENT' ? 'KÝ GỬI' :
+                                            booking?.motor?.motorStatus.title === 'LIVELIHOOD' ? 'KHÔNG KÝ GỬI'
+                                                : 'KHÔNG XÁC ĐỊNH'}
+                                    </Typography>
+                                </div>
+                            </div>
+                        </Box>
+                        <Box className="right-box" flexGrow={5} display='flex'>
+                            <div className="motorbike-owner-info">
+                                <div className="motorbike-owner-info-header">
+                                    <Typography
+                                        variant='h5'
+                                        color='#f0c413'
+                                    >Thông tin chủ xe:</Typography>
+                                </div>
+                                <div className="motorbike-owner-info-content">
+                                    <Typography>Tên chủ xe: {booking?.receiver.userName}</Typography>
+                                    <Typography>Số điện thoại : {booking?.receiver.phone}</Typography>
+                                    <Typography>Email: {booking?.receiver.email}</Typography>
+                                    <Typography>Địa chỉ: {booking?.receiver.address}</Typography>
+                                </div>
+                            </div>
+                            <div className="booking-owner-info">
+                                <div className="booking-owner-info-header">
+                                    <Typography
+                                        variant='h5'
+                                        color='#35c206'
+                                    >Thông tin đặt lịch:</Typography>
+                                </div>
+                                <div className="booking-owner-info-content">
+                                    <Typography>
+                                        Ngày đặt lịch:
+                                        {new Date(booking?.negotiations[0]?.bookings[0].bookingDate).toLocaleDateString('vi-VN')}
+                                    </Typography>
+                                    <Typography>Chú ý: {booking?.negotiations[0]?.bookings[0].note}</Typography>
+                                    <div style={{
+                                        display: 'flex'
+                                    }}>
+                                        <Typography
+                                            fontWeight='700'
+                                        >
+                                            Trạng thái:
+                                        </Typography>
+                                        <Typography
+                                            sx={{
+                                                fontWeight: 'bold',
+                                                textShadow: '2px 2px 4px rgba(255, 0, 0, 0.5)',
+                                                color: 'red',
+                                            }}
+                                        >
+                                            {booking?.negotiations[0]?.bookings[0]?.status}
+                                        </Typography>                                    </div>
+                                </div>
+                            </div>
+                        </Box>
+                    </Box>
+                </Paper>
+
+            ))}
+        </Container>
+    );
+};
+
+export default OwnerBookingComponent;
