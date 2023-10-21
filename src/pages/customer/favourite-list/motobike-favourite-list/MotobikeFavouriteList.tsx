@@ -36,7 +36,6 @@ const MotobikeFavouriteList = () => {
 
     const [openDelete, setOpenDelete] = React.useState(false);
 
-
     const handleNavigateDetail = (motorbikeId: number) => {
         navigate(`/motorbike/${motorbikeId}`);
     };
@@ -76,7 +75,7 @@ const MotobikeFavouriteList = () => {
                 loadingData();
             });
         },
-        [dispatch, loadingData]
+        [dispatch, loadingData],
     );
 
     return (
@@ -159,6 +158,18 @@ const MotobikeFavouriteList = () => {
                                         Giá:{' '}
                                         {formatCurrency(wishlist.motor.price)}
                                     </Typography>
+                                    {wishlist.motor?.motorStatus
+                                        ?.motorStatusId === 5 ? (
+                                        <Typography color="blue">
+                                            <strong>
+                                                Xe hiện không có ở cửa hàng
+                                            </strong>
+                                        </Typography>
+                                    ) : (
+                                        <>
+                                            <br />
+                                        </>
+                                    )}
                                     <div className="product-info-content">
                                         <Typography>
                                             <strong>Cửa Hàng:</strong>{' '}
@@ -190,7 +201,39 @@ const MotobikeFavouriteList = () => {
                                     </div>
                                 </div>
 
-                                <div className="btn-style">
+                                {wishlist.motor.motorStatus?.motorStatusId ===
+                                5 ? (
+                                    <div className="btn-style">
+                                        <Button variant="outlined">
+                                            Đặt lịch xem xe
+                                        </Button>
+                                        <Button
+                                            className="btn-favorite"
+                                            onClick={() =>
+                                                handleDeleteFavouriteByID(
+                                                    wishlist.motorId,
+                                                )
+                                            }
+                                        >
+                                            <Favorite />
+                                        </Button>
+                                    </div>
+                                ) : (
+                                    <div className="btn-style-1">
+                                        <Button
+                                            className="btn-favorite"
+                                            onClick={() =>
+                                                handleDeleteFavouriteByID(
+                                                    wishlist.motorId,
+                                                )
+                                            }
+                                        >
+                                            <Favorite />
+                                        </Button>
+                                    </div>
+                                )}
+
+                                {/* <div className="btn-style">
                                     <Button variant="outlined">
                                         Đặt lịch xem xe
                                     </Button>
@@ -204,7 +247,7 @@ const MotobikeFavouriteList = () => {
                                     >
                                         <Favorite />
                                     </Button>
-                                </div>
+                                </div> */}
                             </Item>
                         </Grid>
                     ))}

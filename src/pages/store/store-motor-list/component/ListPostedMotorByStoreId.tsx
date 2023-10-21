@@ -16,6 +16,7 @@ import {
 } from '../../../../services/store/store';
 import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
 import {
+    cancelPosting,
     clearMotor,
     getMotorByOwnerId,
     updateMotorStatus,
@@ -52,9 +53,8 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
 
     const handleSubmitConfirmCancelPost = () => {
         dispatch(
-            updateMotorStatus({
+            cancelPosting({
                 motorId: Number(selectedRow?.id),
-                statusId: 3,
             }),
         )
             .unwrap()

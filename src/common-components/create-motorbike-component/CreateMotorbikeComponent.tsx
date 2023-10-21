@@ -135,7 +135,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
         const year = new Date(data.year);
         formData.append('certificateNumber', data.certificateNumber);
         if (data.registrationImage && data.registrationImage.length > 0) {
-            formData.append('registrationImage', data.images[0]);
+            formData.append('registrationImage', data.registrationImage[0]);
         }
         formData.append('motorName', data.motorName);
         formData.append('modelId', data.modelId.toString());
@@ -219,7 +219,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                             id="registrationImage"
                                                             type="file"
                                                             inputProps={{
-                                                                accept: '.png, .jpg, .jpeg, .gif',
+                                                                accept: '.png, .jpg, .jpeg, .gif, .svg',
                                                             }}
                                                             {...register(
                                                                 'registrationImage',
@@ -579,7 +579,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                             )}
                                                             inputProps={{
                                                                 multiple: true,
-                                                                accept: '.png, .jpg, .jpeg, .gif',
+                                                                accept: '.png, .jpg, .jpeg, .gif, .svg',
                                                             }}
                                                         />
                                                         <br />

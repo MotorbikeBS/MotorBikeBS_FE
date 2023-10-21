@@ -16,9 +16,10 @@ import {
 } from '../../../../services/store/store';
 import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
 import {
+    cancelPosting,
     clearMotor,
     getMotorByOwnerId,
-    updateMotorStatus,
+    // updateMotorStatus,
 } from '../../../../services/features/motorbike/motorbikeSlice';
 import { toast } from 'react-toastify';
 
@@ -52,9 +53,8 @@ const ListPostedMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
 
     const handleSubmitConfirmCancelPost = () => {
         dispatch(
-            updateMotorStatus({
+            cancelPosting({
                 motorId: Number(selectedRow?.id),
-                statusId: 3,
             }),
         )
             .unwrap()
