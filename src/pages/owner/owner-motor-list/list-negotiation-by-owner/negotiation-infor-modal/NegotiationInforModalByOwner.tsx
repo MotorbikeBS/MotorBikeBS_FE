@@ -16,7 +16,7 @@ import {
 import { ClearRounded } from '@mui/icons-material';
 import './style/_style.scss'
 import { useAppDispatch } from '../../../../../services/store/store';
-import { acceptEnemyPrice, changePriceNegotiation } from '../../../../../services/features/negotiation/negotiationSlice';
+import { acceptEnemyPrice, cancleNegotiation, changePriceNegotiation } from '../../../../../services/features/negotiation/negotiationSlice';
 import { useForm } from 'react-hook-form';
 
 interface NegotiationInforModalProps {
@@ -74,6 +74,17 @@ const NegotiationInforModalByOwner: React.FC<NegotiationInforModalProps> = ({
 
         }
     };
+    const handleCancleNegotiation = () => {
+        if (data && data.id) {
+            dispatch(cancleNegotiation({ negotiationId: data.id }))
+                .then(() => {
+                    loadingData()
+                    setTimeout(() => {
+                        onClose()
+                    }, 1000)
+                })
+        }
+    }
 
     const createData = (label: string, value: ReactNode | string) => ({
         label,
@@ -222,7 +233,7 @@ const NegotiationInforModalByOwner: React.FC<NegotiationInforModalProps> = ({
                             <Button
                                 variant="contained"
                                 color="error"
-                            // onClick={handleCancleNegotiation}
+                                onClick={handleCancleNegotiation}
                             >
                                 Hủy giao dịch
                             </Button>
