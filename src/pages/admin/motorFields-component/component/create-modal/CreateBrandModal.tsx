@@ -163,7 +163,7 @@ const CreateBrandModal: React.FC<CreateDialogProps> = ({
                                 color="primary"
                                 onClick={handleOpenSubmitDialog}
                             >
-                                Thêm xe
+                                Thêm Brand
                             </Button>
                         </form>
                     </Box>

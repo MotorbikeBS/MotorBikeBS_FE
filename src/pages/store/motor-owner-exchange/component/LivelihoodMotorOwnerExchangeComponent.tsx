@@ -100,7 +100,7 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
         setIsOpenCancelDialogNego(false);
     };
     const motorbikesLivelihoodByOwner = motorbikesByOwner?.filter(
-        (motor) => motor.motorStatus?.motorStatusId === 5,
+        (motor) => motor?.motorStatus?.motorStatusId === 5,
     );
 
     return (
@@ -111,7 +111,7 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
             }}
         >
             {loading === true ? (
-                <Box textAlign='center'>
+                <Box textAlign="center">
                     <CircularProgress />
                 </Box>
             ) : (
@@ -142,19 +142,19 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
                                             sm={6}
                                             md={4}
                                             lg={3}
-                                            key={motor.motorId}
+                                            key={motor?.motorId}
                                         >
                                             <Item className="product-item">
                                                 <div
                                                     className="product-image"
                                                     onClick={() =>
                                                         handleNavigateDetail(
-                                                            motor.motorId,
+                                                            motor?.motorId,
                                                         )
                                                     }
                                                 >
-                                                    {motor.motorbikeImages &&
-                                                    motor.motorbikeImages
+                                                    {motor?.motorbikeImages &&
+                                                    motor?.motorbikeImages
                                                         .length === 0 ? (
                                                         <>
                                                             <img
@@ -167,8 +167,8 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
                                                             <img
                                                                 src={
                                                                     motor
-                                                                        .motorbikeImages[0]
-                                                                        .imageLink
+                                                                    ?.motorbikeImages[0]
+                                                                    ?.imageLink
                                                                 }
                                                                 alt="Đây là ảnh sản phẩm"
                                                             />
@@ -186,7 +186,7 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
                                                     >
                                                         Giá:{' '}
                                                         {formatCurrency(
-                                                            motor.price,
+                                                            motor?.price,
                                                         )}
                                                     </Typography>
                                                     <div className="product-info-content">
@@ -195,8 +195,8 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
                                                                 Người dùng:
                                                             </strong>{' '}
                                                             {
-                                                                motor.owner
-                                                                    .userName
+                                                                motor?.owner
+                                                                ?.userName
                                                             }
                                                         </Typography>
                                                         <Typography>
@@ -204,32 +204,35 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
                                                                 Loại Xe:{' '}
                                                             </strong>
                                                             {
-                                                                motor.motorType
-                                                                    .title
+                                                                motor?.motorType
+                                                                ?.title
                                                             }
                                                         </Typography>
                                                         <Typography>
                                                             <strong>
                                                                 Odo:{' '}
                                                             </strong>
-                                                            {motor.odo} Km
+                                                            {motor?.odo} Km
                                                         </Typography>
-                                                        {/* <Typography>
-                                          <strong>Tình trạng: </strong>
-                                          {motor.motorStatus.title}
-                                      </Typography> */}
+
                                                         <Typography>
                                                             <strong>
                                                                 Đăng ký mới:
                                                             </strong>{' '}
                                                             {new Date(
-                                                                motor.year,
+                                                                motor?.year,
                                                             ).toLocaleDateString()}
                                                         </Typography>
-                                                        {/* <Typography>
-                                      <strong>Ngày đăng bài:</strong>{' '}
-                                      {motor.postDate.toLocaleDateString()}
-                                  </Typography> */}
+                                                        <Typography>
+                                                            <strong>
+                                                                Ngày đăng bài:
+                                                            </strong>{' '}
+                                                            {new Date(
+                                                                motor?.postingAt,
+                                                            ).toLocaleDateString(
+                                                                'vi-VN',
+                                                            )}
+                                                        </Typography>
                                                     </div>
                                                 </div>
                                                 {/* {account?.roleId === 4 && ( */}
@@ -249,7 +252,7 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
                                                         size="small"
                                                         onClick={() =>
                                                             handleOpenDialogNego(
-                                                                motor.motorId,
+                                                                motor?.motorId,
                                                             )
                                                         }
                                                     >
@@ -261,7 +264,7 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
                                                         variant="contained"
                                                         onClick={() =>
                                                             handleOpenDialogPriceDefault(
-                                                                motor.motorId,
+                                                                motor?.motorId,
                                                             )
                                                         }
                                                     >

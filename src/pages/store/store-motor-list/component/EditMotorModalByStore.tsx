@@ -256,7 +256,7 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                             }
                                                             helperText={
                                                                 errors
-                                                                    .certificateNumber
+                                                                    ?.certificateNumber
                                                                     ?.message
                                                             }
                                                             variant="outlined"
@@ -285,8 +285,8 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                             <span className="error-message">
                                                                 {
                                                                     errors
-                                                                        .registrationImage
-                                                                        .message
+                                                                        ?.registrationImage
+                                                                        ?.message
                                                                 }
                                                             </span>
                                                         )}
@@ -313,10 +313,10 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                                 },
                                                             )}
                                                             error={
-                                                                !!errors.motorName
+                                                                !!errors?.motorName
                                                             }
                                                             helperText={
-                                                                errors.motorName
+                                                                errors?.motorName
                                                                     ?.message
                                                             }
                                                             variant="outlined"
@@ -365,14 +365,14 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                                         ) => (
                                                                             <MenuItem
                                                                                 key={
-                                                                                    motorModel.modelId
+                                                                                    motorModel?.modelId
                                                                                 }
                                                                                 value={
-                                                                                    motorModel.modelId
+                                                                                    motorModel?.modelId
                                                                                 }
                                                                             >
                                                                                 {
-                                                                                    motorModel.modelName
+                                                                                    motorModel?.modelName
                                                                                 }
                                                                             </MenuItem>
                                                                         ),
@@ -382,8 +382,8 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                                 <span className="error-message">
                                                                     {
                                                                         errors
-                                                                            .modelId
-                                                                            .message
+                                                                            ?.modelId
+                                                                            ?.message
                                                                     }
                                                                 </span>
                                                             )}
@@ -405,9 +405,9 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                                         'Bạn chưa nhập số km đã đi',
                                                                 },
                                                             )}
-                                                            error={!!errors.odo}
+                                                            error={!!errors?.odo}
                                                             helperText={
-                                                                errors.odo
+                                                                errors?.odo
                                                                     ?.message
                                                             }
                                                             variant="outlined"
@@ -425,9 +425,9 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                             // value={motorbike ? formatDate(motorbike?.year.toLocaleString()) : new Date()}
                                                             value={
                                                                 motorbike &&
-                                                                motorbike.year
+                                                                motorbike?.year
                                                                     ? formatDate(
-                                                                          motorbike.year.toLocaleString(),
+                                                                          motorbike?.year.toLocaleString(),
                                                                       )
                                                                     : new Date().toLocaleString(
                                                                           'vi-VN',
@@ -456,10 +456,10 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                                 },
                                                             )}
                                                             error={
-                                                                !!errors.year
+                                                                !!errors?.year
                                                             }
                                                             helperText={
-                                                                errors.year
+                                                                errors?.year
                                                                     ?.message
                                                             }
                                                             variant="outlined"
@@ -483,10 +483,10 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                                 },
                                                             )}
                                                             error={
-                                                                !!errors.price
+                                                                !!errors?.price
                                                             }
                                                             helperText={
-                                                                errors.price
+                                                                errors?.price
                                                                     ?.message
                                                             }
                                                             variant="outlined"
@@ -526,8 +526,8 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                                 value={
                                                                     motorbike?.motorStatus &&
                                                                     motorbike
-                                                                        .motorStatus
-                                                                        .motorStatusId
+                                                                        ?.motorStatus
+                                                                        ?.motorStatusId
                                                                         ? motorbike
                                                                               .motorStatus
                                                                               .motorStatusId
@@ -542,21 +542,21 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                                     value={
                                                                         motorbike?.motorStatus &&
                                                                         motorbike
-                                                                            .motorStatus
-                                                                            .motorStatusId
+                                                                            ?.motorStatus
+                                                                            ?.motorStatusId
                                                                             ? motorbike
-                                                                                  .motorStatus
-                                                                                  .motorStatusId
+                                                                                  ?.motorStatus
+                                                                                  ?.motorStatusId
                                                                             : ''
                                                                     }
                                                                 >
                                                                     {motorbike?.motorStatus &&
                                                                     motorbike
-                                                                        .motorStatus
-                                                                        .title
+                                                                        ?.motorStatus
+                                                                        ?.title
                                                                         ? motorbike
-                                                                              .motorStatus
-                                                                              .title
+                                                                              ?.motorStatus
+                                                                              ?.title
                                                                         : ''}
                                                                 </MenuItem>
                                                             </Select>
@@ -604,11 +604,11 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                                         ) => (
                                                                             <MenuItem
                                                                                 value={
-                                                                                    motorType.motorTypeId
+                                                                                    motorType?.motorTypeId
                                                                                 }
                                                                             >
                                                                                 {
-                                                                                    motorType.title
+                                                                                    motorType?.title
                                                                                 }
                                                                             </MenuItem>
                                                                         ),
@@ -618,8 +618,8 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                                 <span className="error-message">
                                                                     {
                                                                         errors
-                                                                            .motorTypeId
-                                                                            .message
+                                                                            ?.motorTypeId
+                                                                            ?.message
                                                                     }
                                                                 </span>
                                                             )}
@@ -650,8 +650,8 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                             <span className="error-message">
                                                                 {
                                                                     errors
-                                                                        .images
-                                                                        .message
+                                                                        ?.images
+                                                                        ?.message
                                                                 }
                                                             </span>
                                                         )}

@@ -163,7 +163,7 @@ const CreateTypeModal: React.FC<CreateDialogProps> = ({
                                 color="primary"
                                 onClick={handleOpenSubmitDialog}
                             >
-                                Thêm xe
+                                Thêm loại xe
                             </Button>
                         </form>
                     </Box>

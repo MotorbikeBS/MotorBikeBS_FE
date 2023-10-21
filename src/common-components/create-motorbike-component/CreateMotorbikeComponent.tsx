@@ -300,11 +300,11 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                                                     motorBrand.brandId
                                                                                 }
                                                                                 value={
-                                                                                    motorBrand.brandId
+                                                                                    motorBrand?.brandId
                                                                                 }
                                                                             >
                                                                                 {
-                                                                                    motorBrand.brandName
+                                                                                    motorBrand?.brandName
                                                                                 }
                                                                             </MenuItem>
                                                                         ),
@@ -342,7 +342,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                                         (
                                                                             motorModel,
                                                                         ) =>
-                                                                            motorModel.status ===
+                                                                            motorModel?.status ===
                                                                             'ACTIVE',
                                                                     )
                                                                     .map(
@@ -354,11 +354,11 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                                                     motorModel.modelId
                                                                                 }
                                                                                 value={
-                                                                                    motorModel.modelId
+                                                                                    motorModel?.modelId
                                                                                 }
                                                                             >
                                                                                 {
-                                                                                    motorModel.modelName
+                                                                                    motorModel?.modelName
                                                                                 }
                                                                             </MenuItem>
                                                                         ),
@@ -368,8 +368,8 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                                 <span className="error-message">
                                                                     {
                                                                         errors
-                                                                            .modelId
-                                                                            .message
+                                                                            ?.modelId
+                                                                            ?.message
                                                                     }
                                                                 </span>
                                                             )}
@@ -408,9 +408,9 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                             )}
                                                             error={!!errors.odo}
                                                             helperText={
-                                                                errors.odo
-                                                                    ? errors.odo
-                                                                        .message
+                                                                errors?.odo
+                                                                    ? errors?.odo
+                                                                        ?.message
                                                                     : ''
                                                             }
                                                             variant="outlined"
@@ -434,10 +434,10 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                                 },
                                                             )}
                                                             error={
-                                                                !!errors.year
+                                                                !!errors?.year
                                                             }
                                                             helperText={
-                                                                errors.year
+                                                                errors?.year
                                                                     ?.message
                                                             }
                                                             variant="outlined"
@@ -476,13 +476,13 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                                 },
                                                             )}
                                                             error={
-                                                                !!errors.price
+                                                                !!errors?.price
                                                             }
                                                             helperText={
-                                                                errors.price
+                                                                errors?.price
                                                                     ? errors
-                                                                        .price
-                                                                        .message
+                                                                        ?.price
+                                                                        ?.message
                                                                     : ''
                                                             }
                                                             variant="outlined"
@@ -544,18 +544,18 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                                                 }
                                                                             >
                                                                                 {
-                                                                                    motorType.title
+                                                                                    motorType?.title
                                                                                 }
                                                                             </MenuItem>
                                                                         ),
                                                                     )}
                                                             </Select>
-                                                            {errors.motorTypeId && (
+                                                            {errors?.motorTypeId && (
                                                                 <span className="error-message">
                                                                     {
                                                                         errors
-                                                                            .motorTypeId
-                                                                            .message
+                                                                            ?.motorTypeId
+                                                                            ?.message
                                                                     }
                                                                 </span>
                                                             )}
@@ -583,12 +583,12 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                             }}
                                                         />
                                                         <br />
-                                                        {errors.images && (
+                                                        {errors?.images && (
                                                             <span className="error-message">
                                                                 {
                                                                     errors
-                                                                        .images
-                                                                        .message
+                                                                        ?.images
+                                                                        ?.message
                                                                 }
                                                             </span>
                                                         )}

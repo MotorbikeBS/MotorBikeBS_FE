@@ -29,7 +29,9 @@ import { acceptDefaultPrice } from '../../../../services/features/negotiation/ne
 const ConsignmentMotorOwnerExchangeComponent = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const { motorbikesByOwner, loading } = useAppSelector((state) => state.motorbikes);
+    const { motorbikesByOwner, loading } = useAppSelector(
+        (state) => state.motorbikes,
+    );
 
     const [isOpenPriceDefaultDialog, setIsOpenPriceDefaultDialog] =
         useState(false);
@@ -171,19 +173,19 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
                                                 sm={6}
                                                 md={4}
                                                 lg={3}
-                                                key={motor.motorId}
+                                                key={motor?.motorId}
                                             >
                                                 <Item className="product-item">
                                                     <div
                                                         className="product-image"
                                                         onClick={() =>
                                                             handleNavigateDetail(
-                                                                motor.motorId,
+                                                                motor?.motorId,
                                                             )
                                                         }
                                                     >
-                                                        {motor.motorbikeImages &&
-                                                        motor.motorbikeImages
+                                                        {motor?.motorbikeImages &&
+                                                        motor?.motorbikeImages
                                                             .length === 0 ? (
                                                             <>
                                                                 <img
@@ -196,8 +198,8 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
                                                                 <img
                                                                     src={
                                                                         motor
-                                                                            .motorbikeImages[0]
-                                                                            .imageLink
+                                                                        ?.motorbikeImages[0]
+                                                                        ?.imageLink
                                                                     }
                                                                     alt="Đây là ảnh sản phẩm"
                                                                 />
@@ -206,7 +208,7 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
                                                     </div>
                                                     <div className="product-information">
                                                         <Typography variant="h6">
-                                                            {motor.motorName}
+                                                            {motor?.motorName}
                                                         </Typography>
                                                         <Typography
                                                             color="red"
@@ -215,7 +217,7 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
                                                         >
                                                             Giá:{' '}
                                                             {formatCurrency(
-                                                                motor.price,
+                                                                motor?.price,
                                                             )}
                                                         </Typography>
                                                         <div className="product-info-content">
@@ -224,8 +226,8 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
                                                                     Người dùng:
                                                                 </strong>{' '}
                                                                 {
-                                                                    motor.owner
-                                                                        .userName
+                                                                    motor?.owner
+                                                                    ?.userName
                                                                 }
                                                             </Typography>
                                                             <Typography>
@@ -234,32 +236,33 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
                                                                 </strong>
                                                                 {
                                                                     motor
-                                                                        .motorType
-                                                                        .title
+                                                                    ?.motorType
+                                                                    ?.title
                                                                 }
                                                             </Typography>
                                                             <Typography>
                                                                 <strong>
                                                                     Odo:{' '}
                                                                 </strong>
-                                                                {motor.odo} Km
+                                                                {motor?.odo} Km
                                                             </Typography>
-                                                            {/* <Typography>
-                                                <strong>Tình trạng: </strong>
-                                                {motor.motorStatus.title}
-                                            </Typography> */}
                                                             <Typography>
                                                                 <strong>
                                                                     Đăng ký mới:
                                                                 </strong>{' '}
                                                                 {new Date(
-                                                                    motor.year,
-                                                                ).toLocaleDateString()}
+                                                                    motor?.year,
+                                                                ).toLocaleDateString('vi-VN')}
                                                             </Typography>
-                                                            {/* <Typography>
-                                            <strong>Ngày đăng bài:</strong>{' '}
-                                            {motor.postDate.toLocaleDateString()}
-                                        </Typography> */}
+                                                            <Typography>
+                                                                <strong>
+                                                                    Ngày đăng
+                                                                    bài:
+                                                                </strong>{' '}
+                                                                {new Date(
+                                                                    motor?.postingAt,
+                                                                ).toLocaleDateString('vi-VN')}
+                                                            </Typography>
                                                         </div>
                                                     </div>
                                                     {/* <div className="btn-style-1">
@@ -289,7 +292,7 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
                                                             size="small"
                                                             onClick={() =>
                                                                 handleOpenDialogNego(
-                                                                    motor.motorId,
+                                                                    motor?.motorId,
                                                                 )
                                                             }
                                                         >
@@ -301,7 +304,7 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
                                                             variant="contained"
                                                             onClick={() =>
                                                                 handleOpenDialogPriceDefault(
-                                                                    motor.motorId,
+                                                                    motor?.motorId,
                                                                 )
                                                             }
                                                         >
