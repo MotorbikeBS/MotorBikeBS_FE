@@ -172,7 +172,7 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
         const year = new Date(data.year);
         formData.append('certificateNumber', data.certificateNumber);
         if (data.registrationImage && data.registrationImage.length > 0) {
-            formData.append('registrationImage', data.images[0]);
+            formData.append('registrationImage', data.registrationImage[0]);
         }
         formData.append('motorName', data.motorName);
         formData.append('modelId', data.modelId.toString());

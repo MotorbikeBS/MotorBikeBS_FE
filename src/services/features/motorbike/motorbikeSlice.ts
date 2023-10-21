@@ -2,6 +2,7 @@ import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { IFilter, IMotorbike } from '../../../models/Motorbike/Motorbike';
 import {
+    cancelPostingEndPoint,
     filterMotorbikeEndPoint,
     getAllOnExChangeEndPoint,
     getAllOnStoreExChangeEndPoint,
@@ -179,6 +180,7 @@ export const updateMotorById = createAsyncThunk<
         );
         return response.data;
     } catch (error: any) {
+        // toast.error(`${error.response.data?.errorMessages}`);
         return thunkAPI.rejectWithValue({
             error: error.response?.data?.errorMessages,
         });
@@ -191,7 +193,6 @@ export const updateMotorStatus = createAsyncThunk<
 >('motorbike/updateMotorStatus', async ({ motorId, statusId }, thunkAPI) => {
     try {
         const token = localStorage.getItem('motorbike_bs');
-        console.log(token);
         const response = await axios.put(
             `${updateMotorStatusEndPoint}?motorId=${motorId}&statusId=${statusId}`,
             {},
@@ -203,6 +204,7 @@ export const updateMotorStatus = createAsyncThunk<
         );
         return response.data.result;
     } catch (error: any) {
+        // toast.error(`${error.response.data?.errorMessages}`);
         return thunkAPI.rejectWithValue({
             error: error.response?.data?.errorMessages,
         });
@@ -225,6 +227,7 @@ export const searchMotorByName = createAsyncThunk<
         );
         return response.data.result;
     } catch (error: any) {
+        // toast.error(`${error.response.data?.errorMessages}`);
         return thunkAPI.rejectWithValue({
             error: error.response?.data?.errorMessages,
         });
@@ -287,6 +290,29 @@ export const filterMotor = createAsyncThunk<IMotorbike[], Partial<IFilter>>(
             );
             return response.data.result;
         } catch (error: any) {
+            return thunkAPI.rejectWithValue({
+                error: error.response?.data?.errorMessages,
+            });
+        }
+    },
+);
+
+export const cancelPosting = createAsyncThunk<IMotorbike, { motorId: number }>(
+    'motorbikes/cancelPosting',
+    async ({ motorId }, thunkAPI) => {
+        try {
+            const token = localStorage.getItem('motorbike_bs');
+            const response = await axios.put(
+                `${cancelPostingEndPoint}?motorId=${motorId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+            );
+            return response.data.result;
+        } catch (error: any) {
+            toast.error(`${error.response.data?.errorMessages}`);
             return thunkAPI.rejectWithValue({
                 error: error.response?.data?.errorMessages,
             });
@@ -423,6 +449,18 @@ export const motorbikeSlice = createSlice({
             state.error = null;
         });
         builder.addCase(filterMotor.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(cancelPosting.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(cancelPosting.fulfilled, (state, action) => {
+            state.loading = false;
+            // state.motorbikes = action.payload;
+            state.error = null;
+        });
+        builder.addCase(cancelPosting.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });

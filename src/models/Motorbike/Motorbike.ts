@@ -28,6 +28,7 @@ export interface IMotorbike {
     };
     registrationImage: string;
     motorbikeImages: IMotorImages[];
+    postingAt: Date
 }
 
 export interface IModel {
