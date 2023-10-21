@@ -84,6 +84,7 @@ export const storeBookingSlice = createSlice({
         },
         clearStoreBooking: (state) => {
             state.storeBooking = null;
+            state.getAllBooking = null;
         },
     },
     extraReducers: (builder) => {
