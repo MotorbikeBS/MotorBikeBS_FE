@@ -55,13 +55,13 @@
             .right-box {
                 flex: 9;
                 padding: 10px;
-                border: 1px solid #ccc;
+                border: 2px solid #eedcdc;
                 display: flex;
                 justify-content: space-evenly;
                 .motorbike-owner-info {
-                    max-width: 100%;
-                    margin-right: 20%;
-                    margin-left: 10%;
+                    max-width: 80%;
+                    margin-right: 10%;
+                    margin-left: 5%;
                     text-align: left;
                 }
                 .booking-owner-info {
