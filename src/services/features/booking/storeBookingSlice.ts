@@ -4,25 +4,30 @@ import {
     IBookingFieldByStore,
 } from '../../../models/Booking/StoreBooking';
 import axios from 'axios';
-import { storeBookingEndPoint } from '../../config/api-config';
+import {
+    getAllStoreBookingOwnerEndPoind,
+    storeBookingEndPoint,
+} from '../../config/api-config';
 import { toast } from 'react-toastify';
 
 interface StoreBookingState {
     loading: boolean;
     error: string[] | unknown;
     storeBooking: IBookingByStore | null;
+    getAllBooking: IBookingByStore[] | null;
 }
 const initialState: StoreBookingState = {
     loading: false,
     error: null,
     storeBooking: null,
+    getAllBooking: null,
 };
 
 export const storeBookingOwnerExchange = createAsyncThunk<
     IBookingByStore,
     IBookingFieldByStore
 >(
-    'storeBooking/storeBookingWithOwnerExchange',
+    'booking/storeBookingWithOwnerExchange',
     async (data: IBookingFieldByStore, thunkAPI) => {
         const { negotiationId, bookingDate, note } = data;
         try {
@@ -48,6 +53,27 @@ export const storeBookingOwnerExchange = createAsyncThunk<
         }
     },
 );
+export const getAllBookingOwnerExchange = createAsyncThunk<
+    IBookingByStore[],
+    void
+>('booking/getAllBookingOnOwnerExchange', async (_, thunkAPI) => {
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.get(getAllStoreBookingOwnerEndPoind, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data.result;
+    } catch (error: any) {
+        if (error.response) {
+            toast.warning(`${error.response.data?.errorMessages}`);
+            return thunkAPI.rejectWithValue({
+                error: error.response?.data?.errorMessages,
+            });
+        }
+    }
+});
 
 export const storeBookingSlice = createSlice({
     name: 'storeBooking',
@@ -75,6 +101,23 @@ export const storeBookingSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         });
+        builder.addCase(getAllBookingOwnerExchange.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(
+            getAllBookingOwnerExchange.fulfilled,
+            (state, action) => {
+                state.loading = false;
+                state.getAllBooking = action.payload;
+            },
+        );
+        builder.addCase(
+            getAllBookingOwnerExchange.rejected,
+            (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            },
+        );
     },
 });
 

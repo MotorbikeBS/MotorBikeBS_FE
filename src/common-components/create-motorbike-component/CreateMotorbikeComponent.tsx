@@ -35,7 +35,6 @@ import {
 } from '../../services/features/motorbike/motorFields';
 import { createMotorbike } from '../../services/features/motorbike/motorbikeSlice';
 import { toast } from 'react-toastify';
-import { error } from 'console';
 
 interface CreateDialogProps {
     open: boolean;
@@ -150,7 +149,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                 formData.append('images', data.images[i]);
             }
         }
-        
+
         console.log(data);
         dispatch(createMotorbike(formData))
             .unwrap()
@@ -158,7 +157,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                 loadData();
                 toast.success('Thêm xe thành công.');
                 handleCloseDialog();
-            }).catch(error=>{
+            }).catch(error => {
                 onCloseSubmitDialog()
             })
     };
@@ -411,7 +410,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                             helperText={
                                                                 errors.odo
                                                                     ? errors.odo
-                                                                          .message
+                                                                        .message
                                                                     : ''
                                                             }
                                                             variant="outlined"
@@ -482,8 +481,8 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                             helperText={
                                                                 errors.price
                                                                     ? errors
-                                                                          .price
-                                                                          .message
+                                                                        .price
+                                                                        .message
                                                                     : ''
                                                             }
                                                             variant="outlined"

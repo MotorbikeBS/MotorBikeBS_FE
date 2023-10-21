@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from '../../../../services/store/store
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
 import Carousel from 'react-material-ui-carousel';
-import BookingDialog from '../../../customer/booking-dialog-component/BookingDialog';
 import NegotiationDialog from '../../negotiation-modal-store/NegotiationDialog';
 import { acceptDefaultPrice } from '../../../../services/features/negotiation/negotiationSlice';
 import './style/_style.scss'
