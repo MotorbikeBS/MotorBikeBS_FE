@@ -1,4 +1,4 @@
-import { IMotorStatus } from '../Motorbike/Motorbike';
+import { IMotorImages, IMotorStatus } from '../Motorbike/Motorbike';
 import { IUser } from '../User/UserInterface';
 
 export interface IMotorbikeBookingByStore {
@@ -11,6 +11,7 @@ export interface IMotorbikeBookingByStore {
     price: number;
     owner: IUser;
     motorStatus: IMotorStatus;
+    motorbikeImages: IMotorImages[];
 }
 export interface INegotiation {
     negotiationId: number;

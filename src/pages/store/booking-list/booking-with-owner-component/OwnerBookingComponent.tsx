@@ -15,9 +15,7 @@ const OwnerBookingComponent = () => {
         dispatch(getAllBookingOwnerExchange());
     }, [dispatch]);
 
-    const loadingData = () => {
-        dispatch(getAllBookingOwnerExchange());
-    };
+
 
     return (
         <Container className="container-xl" maxWidth="lg">
@@ -33,7 +31,9 @@ const OwnerBookingComponent = () => {
                     >
                         <Box className="left-box" flexGrow={5}>
                             <div className="image-booking-product">
-                                <img src={booking.motor?.registrationImage} alt="Motor Image" />
+                                <img src={booking?.motor?.motorbikeImages[0]?.imageLink ?
+                                    booking?.motor?.motorbikeImages[0]?.imageLink
+                                    : ''} alt="Motor Image" />
                             </div>
                             <div className="product-booking">
                                 <Typography
@@ -52,7 +52,7 @@ const OwnerBookingComponent = () => {
                                     color='red'
                                 >
 
-                                    {formettedCurrency(booking?.negotiations[0].finalPrice)}
+                                    {formettedCurrency(booking?.negotiations[0]?.finalPrice)}
                                 </Typography>
                             </div>
                             <div className="product-content">
@@ -72,8 +72,8 @@ const OwnerBookingComponent = () => {
                                     <Typography
                                         variant='subtitle1'
                                     >
-                                        {booking?.motor?.motorStatus.title === 'CONSIGNMENT' ? 'KÝ GỬI' :
-                                            booking?.motor?.motorStatus.title === 'LIVELIHOOD' ? 'KHÔNG KÝ GỬI'
+                                        {booking?.motor?.motorStatus?.title === 'CONSIGNMENT' ? 'KÝ GỬI' :
+                                            booking?.motor?.motorStatus?.title === 'LIVELIHOOD' ? 'KHÔNG KÝ GỬI'
                                                 : 'KHÔNG XÁC ĐỊNH'}
                                     </Typography>
                                 </div>
@@ -88,10 +88,10 @@ const OwnerBookingComponent = () => {
                                     >Thông tin chủ xe:</Typography>
                                 </div>
                                 <div className="motorbike-owner-info-content">
-                                    <Typography>Tên chủ xe: {booking?.receiver.userName}</Typography>
-                                    <Typography>Số điện thoại : {booking?.receiver.phone}</Typography>
-                                    <Typography>Email: {booking?.receiver.email}</Typography>
-                                    <Typography>Địa chỉ: {booking?.receiver.address}</Typography>
+                                    <Typography>Tên chủ xe: {booking?.receiver?.userName}</Typography>
+                                    <Typography>Số điện thoại : {booking?.receiver?.phone}</Typography>
+                                    <Typography>Email: {booking?.receiver?.email}</Typography>
+                                    <Typography>Địa chỉ: {booking?.receiver?.address}</Typography>
                                 </div>
                             </div>
                             <div className="booking-owner-info">
@@ -104,9 +104,9 @@ const OwnerBookingComponent = () => {
                                 <div className="booking-owner-info-content">
                                     <Typography>
                                         Ngày đặt lịch:
-                                        {new Date(booking?.negotiations[0]?.bookings[0].bookingDate).toLocaleDateString('vi-VN')}
+                                        {new Date(booking?.negotiations[0]?.bookings[0]?.bookingDate).toLocaleDateString('vi-VN')}
                                     </Typography>
-                                    <Typography>Chú ý: {booking?.negotiations[0]?.bookings[0].note}</Typography>
+                                    <Typography>Chú ý: {booking?.negotiations[0]?.bookings[0]?.note}</Typography>
                                     <div style={{
                                         display: 'flex'
                                     }}>
@@ -123,7 +123,8 @@ const OwnerBookingComponent = () => {
                                             }}
                                         >
                                             {booking?.negotiations[0]?.bookings[0]?.status}
-                                        </Typography>                                    </div>
+                                        </Typography>
+                                    </div>
                                 </div>
                             </div>
                         </Box>
