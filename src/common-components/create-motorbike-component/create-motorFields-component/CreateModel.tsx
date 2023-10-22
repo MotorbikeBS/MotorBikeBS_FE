@@ -109,7 +109,9 @@ const CreateModelModal: React.FC<CreateDialogProps> = ({
         // console.log(data);
     };
 
-    const motorBrandFilter = motorBrands && motorBrands?.filter(motor => motor.status === 'ACTIVE')
+    const motorBrandFilter =
+        motorBrands &&
+        motorBrands?.filter((motor) => motor.status === 'ACTIVE');
 
     return (
         <div>
@@ -171,6 +173,15 @@ const CreateModelModal: React.FC<CreateDialogProps> = ({
                                                                         ),
                                                                     )}
                                                             </Select>
+                                                            {errors?.brandId && (
+                                                                <span className="error-message">
+                                                                    {
+                                                                        errors
+                                                                            ?.brandId
+                                                                            ?.message
+                                                                    }
+                                                                </span>
+                                                            )}
                                                         </FormControl>
                                                     </TableCell>
                                                 </TableRow>

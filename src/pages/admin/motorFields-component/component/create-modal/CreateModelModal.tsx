@@ -167,6 +167,15 @@ const CreateModelModal: React.FC<CreateDialogProps> = ({
                                                                         ),
                                                                     )}
                                                             </Select>
+                                                            {errors?.brandId && (
+                                                                <span className="error-message">
+                                                                    {
+                                                                        errors
+                                                                            ?.brandId
+                                                                            ?.message
+                                                                    }
+                                                                </span>
+                                                            )}
                                                         </FormControl>
                                                     </TableCell>
                                                 </TableRow>

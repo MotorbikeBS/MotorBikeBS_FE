@@ -31,6 +31,7 @@ import {
     useAppSelector,
 } from '../../../../../services/store/store';
 import {
+    getMotorModelById,
     updateMotorModelById,
 } from '../../../../../services/features/motorbike/motorFields';
 import { toast } from 'react-toastify';
@@ -77,11 +78,9 @@ const EditModelModal: React.FC<EditDialogProps> = ({
         setBrand(event.target.value);
     };
 
-    // useEffect(() => {
-    //     dispatch(getMotorModelById({ id: Number(selectedRow?.id) }));
-    // }, [dispatch, selectedRow]);
-
-    // console.log(motorModel);
+    useEffect(() => {
+        dispatch(getMotorModelById({ id: Number(selectedRow?.id) }));
+    }, [dispatch, selectedRow]);
 
     const form = useForm<ICreateModel>({
         defaultValues: {
@@ -129,6 +128,8 @@ const EditModelModal: React.FC<EditDialogProps> = ({
             loadData()
             toast.success('Chỉnh sửa thành công!');
             handleCloseDialog()
+        }).catch(e => {
+
         })
     };
     return (
@@ -191,6 +192,15 @@ const EditModelModal: React.FC<EditDialogProps> = ({
                                                                         ),
                                                                     )}
                                                             </Select>
+                                                            {errors?.brandId && (
+                                                                <span className="error-message">
+                                                                    {
+                                                                        errors
+                                                                            ?.brandId
+                                                                            ?.message
+                                                                    }
+                                                                </span>
+                                                            )}
                                                         </FormControl>
                                                     </TableCell>
                                                 </TableRow>
