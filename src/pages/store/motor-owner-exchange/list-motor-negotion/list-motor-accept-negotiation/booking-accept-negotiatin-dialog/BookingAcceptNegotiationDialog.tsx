@@ -1,4 +1,16 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack, TextField, TextareaAutosize, Typography } from '@mui/material';
+import {
+    Box,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Stack,
+    TextField,
+    TextareaAutosize,
+    Typography
+} from '@mui/material';
 import React from 'react'
 import { format } from 'date-fns';
 import { Controller, useForm } from 'react-hook-form';
@@ -82,9 +94,7 @@ const BookingAcceptNegotiationDialog: React.FC<BookingDialogProps> = ({
                                 color='red'
                                 fontWeight='700'
                             >Chú ý:</Typography>
-                            <Typography>
-                                Lịch hẹn chỉ có hiệu lực trong vòng 3 ngày từ ngày thỏa thuận đươc hai bên đồng ý.
-                            </Typography>
+                            <Typography>Vui lòng thể hiện thái độ nghiêm túc trong quá trình ddatwsh lịch, để tránh tốn thời gian đôi bên.</Typography>
                         </div>
                     </DialogContentText>
                     <Box textAlign="center">
@@ -96,21 +106,22 @@ const BookingAcceptNegotiationDialog: React.FC<BookingDialogProps> = ({
                                     render={({ field }) => (
                                         <TextField
                                             label="Lịch hẹn"
-                                            type="datetime-local"
+                                            type="date"
                                             {...field}
                                             inputProps={{
-                                                min: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
+                                                min: format(new Date(), "yyyy-MM-dd"),
                                             }}
                                         />
                                     )}
                                 />
                                 <TextareaAutosize
-                                    className="aria-note custom-textarea"
+                                    placeholder='Lưu ý của bạn....'
                                     aria-label="Lưu ý của bạn"
                                     {...register('note')}
                                     style={{
                                         width: '345px',
                                         height: '50px',
+                                        display: 'block'
                                     }}
                                 />
                             </Stack>

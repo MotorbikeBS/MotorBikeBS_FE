@@ -86,9 +86,9 @@ const AppRoutes = () => {
                         path="/store-list-admin"
                         element={<StoreListAdmin />}
                     /><Route
-                    path="/motor-fields"
-                    element={<MotorFields />}
-                />
+                        path="/motor-fields"
+                        element={<MotorFields />}
+                    />
                     <Route path="*" element={<PageNotFound />} />
                 </>
             )}
@@ -110,7 +110,7 @@ const AppRoutes = () => {
                         element={<OwnerMotorDetail />}
                     />
                     <Route
-                        path="/negotiation/motorbike/:motorbikeId"
+                        path="/negotiation/detail/:negotiationId"
                         element={<OwnerMotorAcceptNegotitationDetail />}
                     />
                     <Route
@@ -139,7 +139,7 @@ const AppRoutes = () => {
                         path="/motorbike/:motorbikeId"
                         element={<MotorBikeDetail />}
                     />
-                     <Route
+                    <Route
                         path="/store/motorbike/:motorbikeId"
                         element={<MotorBikeDetailForStore />}
                     />
