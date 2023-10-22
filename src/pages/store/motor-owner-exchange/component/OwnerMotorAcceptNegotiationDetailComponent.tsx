@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Box,
     Button,
@@ -19,13 +19,15 @@ import {
 } from '@mui/icons-material';
 import { useParams } from 'react-router';
 import {
+    useAppDispatch,
     useAppSelector,
 } from '../../../../services/store/store';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import Carousel from 'react-material-ui-carousel';
 import { INegotiation } from '../../../../models/Negotiation/Negotiation';
-import './style/_style.scss'
+import './style/_style.scss';
 import BookingAcceptNegotiationDialog from '../list-motor-negotion/list-motor-accept-negotiation/booking-accept-negotiatin-dialog/BookingAcceptNegotiationDialog';
+import { getMotorModelById } from '../../../../services/features/motorbike/motorFields';
 
 type motorbikeParams = {
     negotiationId: number;
@@ -34,8 +36,10 @@ type motorbikeParams = {
 const OwnerMotorAcceptNegotiationDetailComponent = () => {
     const formatPrice = useFormatCurrency();
 
+    const dispatch = useAppDispatch();
     const { negotiationId } = useParams<motorbikeParams | any>();
-    const { negotiations } = useAppSelector(state => state.negotiation)
+    const { negotiations } = useAppSelector((state) => state.negotiation);
+    const { motorModel } = useAppSelector((state) => state.motorFields);
 
     const [negotiationIdForDialog, setNegotiationIdForDialog] = React.useState<
         number | null
@@ -44,11 +48,15 @@ const OwnerMotorAcceptNegotiationDetailComponent = () => {
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
 
-    // useEffect(() => {
-    //     if (negotiation) {
-    //         dispatch(getMotorModelById({ id: Number(negotiation?.motor?.modelId) }));
-    //     }
-    // }, [dispatch, negotiation]);
+    useEffect(() => {
+        if (negoMotorDetails) {
+            dispatch(
+                getMotorModelById({
+                    id: Number(negoMotorDetails?.motor?.modelId),
+                }),
+            );
+        }
+    }, [dispatch]);
 
     if (!negotiationId) {
         return (
@@ -70,9 +78,9 @@ const OwnerMotorAcceptNegotiationDetailComponent = () => {
         );
     }
 
-
     const negoMotorDetails = negotiations.find(
-        (mt: INegotiation) => mt.negotiations[0].negotiationId === Number(negotiationId),
+        (mt: INegotiation) =>
+            mt.negotiations[0].negotiationId === Number(negotiationId),
     );
 
     if (!negoMotorDetails) {
@@ -125,24 +133,27 @@ const OwnerMotorAcceptNegotiationDetailComponent = () => {
                     <Box flexGrow={4} marginBottom="30px">
                         <Carousel>
                             {negoMotorDetails.motor.motorbikeImages &&
-                                negoMotorDetails.motor.motorbikeImages.length > 0 ? (
-                                negoMotorDetails.motor.motorbikeImages.map((image) => (
-                                    <div
-                                        className="nego-motorbike-detail-images"
-                                        key={image.imageId}
-                                    >
-                                        <img
-                                            src={image?.imageLink}
-                                            alt={`Hình ảnh thêm ${image.imageId}`}
-                                        />
-                                    </div>
-                                ))
+                            negoMotorDetails.motor.motorbikeImages.length >
+                                0 ? (
+                                negoMotorDetails.motor.motorbikeImages.map(
+                                    (image) => (
+                                        <div
+                                            className="nego-motorbike-detail-images"
+                                            key={image.imageId}
+                                        >
+                                            <img
+                                                src={image?.imageLink}
+                                                alt={`Hình ảnh thêm ${image.imageId}`}
+                                            />
+                                        </div>
+                                    ),
+                                )
                             ) : negoMotorDetails.motor.motorbikeImages ? (
                                 <div className="nego-motorbike-detail-images">
                                     <img
                                         src={
-                                            negoMotorDetails?.motor?.motorbikeImages[0]
-                                                ?.imageLink
+                                            negoMotorDetails?.motor
+                                                ?.motorbikeImages[0]?.imageLink
                                         }
                                         alt={`Hình ảnh`}
                                     />
@@ -156,7 +167,7 @@ const OwnerMotorAcceptNegotiationDetailComponent = () => {
                                 fontWeight="bold"
                                 margin="10px 0 20px 0"
                             >
-                                {negoMotorDetails.motor.motorName}
+                                {negoMotorDetails?.motor?.motorName}
                             </Typography>
 
                             <div className="nego-icon-infomation">
@@ -167,7 +178,10 @@ const OwnerMotorAcceptNegotiationDetailComponent = () => {
                                     color="red"
                                     fontWeight="bold"
                                 >
-                                    {formatPrice(negoMotorDetails.negotiations[0].finalPrice)}
+                                    {formatPrice(
+                                        negoMotorDetails?.negotiations[0]
+                                            ?.finalPrice,
+                                    )}
                                 </Typography>
                             </div>
 
@@ -182,13 +196,13 @@ const OwnerMotorAcceptNegotiationDetailComponent = () => {
                             <div className="nego-icon-infomation">
                                 <Phone />
                                 <Typography variant="body1">
-                                    {negoMotorDetails.receiver?.phone}
+                                    {negoMotorDetails?.receiver?.phone}
                                 </Typography>
                             </div>
                             <div className="nego-icon-infomation">
                                 <FmdGoodOutlined />
                                 <Typography variant="body1">
-                                    {negoMotorDetails.receiver?.address}
+                                    {negoMotorDetails?.receiver?.address}
                                 </Typography>
                             </div>
                         </div>
@@ -201,7 +215,9 @@ const OwnerMotorAcceptNegotiationDetailComponent = () => {
                         >
                             Mô tả chi tiết:
                         </Typography>
-                        <Typography>{negoMotorDetails.motor?.description}</Typography>
+                        <Typography>
+                            {negoMotorDetails?.motor?.description}
+                        </Typography>
                     </Box>
                 </Box>
 
@@ -224,7 +240,7 @@ const OwnerMotorAcceptNegotiationDetailComponent = () => {
                                             Hãng xe
                                         </TableCell>
                                         <TableCell>
-                                            chưa get
+                                            {motorModel?.brand?.brandName}
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>
@@ -245,21 +261,26 @@ const OwnerMotorAcceptNegotiationDetailComponent = () => {
                                             Model
                                         </TableCell>
                                         <TableCell>
-                                            Chưa get
+                                            {motorModel?.modelName}
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>
                                         <TableCell className="nego-header-table">
                                             Số Km đã đi
                                         </TableCell>
-                                        <TableCell>{negoMotorDetails.motor.odo}</TableCell>
+                                        <TableCell>
+                                            {negoMotorDetails.motor.odo}
+                                        </TableCell>
                                     </TableRow>
                                     <TableRow>
                                         <TableCell className="nego-header-table">
                                             Loại Xe
                                         </TableCell>
                                         <TableCell>
-                                            {negoMotorDetails.motor.motorType.title}
+                                            {
+                                                negoMotorDetails.motor.motorType
+                                                    .title
+                                            }
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>
@@ -280,13 +301,15 @@ const OwnerMotorAcceptNegotiationDetailComponent = () => {
                             margin: '24px 0px 6px 0px ',
                         }}
                     >
-
                         <Button
                             size="large"
                             color="success"
                             variant="contained"
                             onClick={() =>
-                                handleOpenBookingDialog(negoMotorDetails?.negotiations[0].negotiationId)
+                                handleOpenBookingDialog(
+                                    negoMotorDetails?.negotiations[0]
+                                        ?.negotiationId,
+                                )
                             }
                         >
                             Đặt lịch xem xe
