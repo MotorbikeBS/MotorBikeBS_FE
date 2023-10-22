@@ -96,8 +96,8 @@ const NegotiationDialog: React.FC<NegotiationDialogProps> = ({
                                     )}
                                 />
                                 <TextareaAutosize
+                                    placeholder='Nhập mô tả của bạn.....'
                                     className="aria-note custom-textarea"
-                                    aria-label="Mô tả"
                                     {...register('description')}
                                     style={{
                                         width: '345px',

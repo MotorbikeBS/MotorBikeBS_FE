@@ -37,8 +37,8 @@ const ListMotorAcceptNegotiation = () => {
         (nego) => nego.negotiations[0]?.status === 'ACCEPT',
     );
 
-    const handleNavigateDetail = (motorbikeId: number) => {
-        navigate(`/negotiation/motorbike/${motorbikeId}`);
+    const handleNavigateDetail = (negotiationId: number) => {
+        navigate(`/negotiation/detail/${negotiationId}`);
     };
 
     const handleOpenBookingDialog = (negotiationId: number) => {
@@ -103,13 +103,13 @@ const ListMotorAcceptNegotiation = () => {
                                             className="product-image-accept-negotiation"
                                             onClick={() =>
                                                 handleNavigateDetail(
-                                                    negoMoto.motorId,
+                                                    negoMoto.negotiations[0].negotiationId,
                                                 )
                                             }
                                         >
                                             {negoMoto.motor?.motorbikeImages &&
-                                            negoMoto.motor?.motorbikeImages
-                                                .length === 0 ? (
+                                                negoMoto.motor?.motorbikeImages
+                                                    .length === 0 ? (
                                                 <>
                                                     <img
                                                         src="https://png.pngtree.com/element_origin_min_pic/16/10/21/277448a877a33e8d0efc778025291c86.jpg"
