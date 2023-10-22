@@ -147,7 +147,7 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
             ) : (
                 <>
                     {motorbikesConsignmentByOwner &&
-                    motorbikesConsignmentByOwner.length === 0 ? (
+                        motorbikesConsignmentByOwner.length === 0 ? (
                         <>
                             <Container className="wishlist-container-notFound">
                                 <Paper elevation={3} sx={{ padding: 2 }}>
@@ -185,8 +185,8 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
                                                         }
                                                     >
                                                         {motor?.motorbikeImages &&
-                                                        motor?.motorbikeImages
-                                                            .length === 0 ? (
+                                                            motor?.motorbikeImages
+                                                                .length === 0 ? (
                                                             <>
                                                                 <img
                                                                     src="https://png.pngtree.com/element_origin_min_pic/16/10/21/277448a877a33e8d0efc778025291c86.jpg"
@@ -198,8 +198,8 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
                                                                 <img
                                                                     src={
                                                                         motor
-                                                                        ?.motorbikeImages[0]
-                                                                        ?.imageLink
+                                                                            ?.motorbikeImages[0]
+                                                                            ?.imageLink
                                                                     }
                                                                     alt="Đây là ảnh sản phẩm"
                                                                 />
@@ -227,7 +227,7 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
                                                                 </strong>{' '}
                                                                 {
                                                                     motor?.owner
-                                                                    ?.userName
+                                                                        ?.userName
                                                                 }
                                                             </Typography>
                                                             <Typography>
@@ -236,8 +236,8 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
                                                                 </strong>
                                                                 {
                                                                     motor
-                                                                    ?.motorType
-                                                                    ?.title
+                                                                        ?.motorType
+                                                                        ?.title
                                                                 }
                                                             </Typography>
                                                             <Typography>
