@@ -94,7 +94,7 @@ const BookingAcceptNegotiationDialog: React.FC<BookingDialogProps> = ({
                                 color='red'
                                 fontWeight='700'
                             >Chú ý:</Typography>
-                            <Typography>Vui lòng thể hiện thái độ nghiêm túc trong quá trình ddatwsh lịch, để tránh tốn thời gian đôi bên.</Typography>
+                            <Typography>Vui lòng thể hiện thái độ nghiêm túc trong quá trình đặt lịch, để tránh tốn thời gian đôi bên.</Typography>
                         </div>
                     </DialogContentText>
                     <Box textAlign="center">
