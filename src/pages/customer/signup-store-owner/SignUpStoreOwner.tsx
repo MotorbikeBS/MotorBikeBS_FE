@@ -27,8 +27,6 @@ interface ISignupStore {
 const SignUpStoreOwner = () => {
 
     const dispatch = useAppDispatch();
-    const { error } = useAppSelector((state) => state.store);
-    const errorData: any = error;
 
     const form = useForm<ISignupStore>({
         defaultValues: {
@@ -92,21 +90,6 @@ const SignUpStoreOwner = () => {
                         </Typography>
                     </div>
                     <div className="signup-storeOwner-header">
-                        {errorData?.error && (
-                            <div className="error-message">
-                                {Object.keys(errorData?.error).map((key) => (
-                                    <Typography
-                                        key={key}
-                                        color="red"
-                                        marginBottom="20px"
-                                        alignContent="center"
-                                        textAlign='center'
-                                    >
-                                        {errorData.error[key]}
-                                    </Typography>
-                                ))}
-                            </div>
-                        )}
                     </div>
                     <div className="form-signup-storeOwner">
                         <form
