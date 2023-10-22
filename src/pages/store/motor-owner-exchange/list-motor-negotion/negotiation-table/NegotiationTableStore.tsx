@@ -1,6 +1,11 @@
 import { Typography } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 
+const currencyFormatter = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+});
+
 
 export const columns: GridColDef[] = [
     { field: 'id', headerName: 'Nego ID', width: 100 },
@@ -51,7 +56,8 @@ export const columns: GridColDef[] = [
                     color='red'
                     fontWeight='700'
                 >
-                    {params.row.ownerPrice}
+                    {/* {params.row.ownerPrice} */}
+                    {currencyFormatter.format(params.row.ownerPrice)}
                 </Typography>
             ) : (
                 <Typography
@@ -59,7 +65,7 @@ export const columns: GridColDef[] = [
                 >
                     Chưa nhập giá
                 </Typography>
-            )
+            ),
     },
     {
         field: 'storePrice',
@@ -72,14 +78,15 @@ export const columns: GridColDef[] = [
                     color='#fab71b'
                     fontWeight='700'
                 >
-                    {params.row.storePrice}
+                    {/* {params.row.storePrice} */}
+                    {currencyFormatter.format(params.row.storePrice)}
                 </Typography>) : (
                     <Typography
                         color='#ad1e02'
                     >
                         Chưa nhập giá
                     </Typography>
-                )
+                ),
     },
     {
         field: 'ownerName',
