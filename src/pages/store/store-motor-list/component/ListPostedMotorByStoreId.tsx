@@ -18,7 +18,7 @@ import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
 import {
     cancelPosting,
     clearMotor,
-    getMotorByOwnerId,
+    getMotorByStoreId,
 } from '../../../../services/features/motorbike/motorbikeSlice';
 import { toast } from 'react-toastify';
 
@@ -28,8 +28,8 @@ interface ListMotorProps {
 
 const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
     const dispatch = useAppDispatch();
-    const { motorbikesByOwner } = useAppSelector((state) => state.motorbikes);
-    const { account } = useAppSelector((state) => state.account);
+    const { motorbikeByStoreId } = useAppSelector((state) => state.motorbikes);
+    const { user } = useAppSelector((state) => state.users);
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
     const [isConfirmCancelPost, setIsConfirmCancelPost] = useState(false);
@@ -69,15 +69,21 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
 
     React.useEffect(() => {
         dispatch(clearMotor());
-        dispatch(getMotorByOwnerId({ ownerId: Number(account?.userId) }));
-    }, [dispatch, account?.userId]);
+        dispatch(
+            getMotorByStoreId({
+                storeId: Number(user?.storeDesciptions[0]?.storeId),
+            }),
+        );
+    }, [dispatch, user]);
 
-    const motorbikesByOwnerStorage = motorbikesByOwner && motorbikesByOwner?.filter(
-        (motor) => motor?.motorStatus.motorStatusId !== 3,
-    );
+    const motorbikesByStoreStorage =
+        motorbikeByStoreId &&
+        motorbikeByStoreId?.filter(
+            (motor) => motor?.motorStatus.motorStatusId !== 3,
+        );
 
     const rows = useMemo(() => {
-        return (motorbikesByOwnerStorage ?? []).map((motor: IMotorbike) => ({
+        return (motorbikesByStoreStorage ?? []).map((motor: IMotorbike) => ({
             id: motor.motorId,
             storeId: motor?.storeId,
             certificateNumber: motor?.certificateNumber,
@@ -90,7 +96,7 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
             motorTypeName: motor.motorType?.title,
             motorStatus: motor.motorStatus?.title,
         }));
-    }, [motorbikesByOwnerStorage]);
+    }, [motorbikesByStoreStorage]);
 
     const handleRowDoubleClick = (params: GridRowParams) => {
         setSelectedRow(params.row as IMotorbike);
@@ -161,7 +167,10 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                     <Button onClick={handleCloseDialog} color="error">
                         Hủy bỏ
                     </Button>
-                    <Button onClick={handleSubmitConfirmCancelPost} color="info">
+                    <Button
+                        onClick={handleSubmitConfirmCancelPost}
+                        color="info"
+                    >
                         Xác nhận
                     </Button>
                 </DialogActions>

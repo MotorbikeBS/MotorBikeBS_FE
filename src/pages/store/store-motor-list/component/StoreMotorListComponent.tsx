@@ -6,14 +6,15 @@ import {
 import { Box, Button, Tab, Tabs } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import CreateMotorbikeComponent from '../../../../common-components/create-motorbike-component/CreateMotorbikeComponent';
-import { clearMotor, getMotorByOwnerId } from '../../../../services/features/motorbike/motorbikeSlice';
+import { clearMotor, getMotorByStoreId } from '../../../../services/features/motorbike/motorbikeSlice';
 import ListStorageMotorByStoreId from './ListStorageMotorByStoreId';
 import ListPostedMotorByStoreId from './ListPostedMotorByStoreId';
 import CreateModelModal from '../../../../common-components/create-motorbike-component/create-motorFields-component/CreateModel';
 import CreateBrandModal from '../../../../common-components/create-motorbike-component/create-motorFields-component/CreateBrand';
 
 const StoreMotorListComponent = () => {
-    const { account } = useAppSelector((state) => state.account);
+    // const { account } = useAppSelector((state) => state.account);
+    const { user} = useAppSelector((state)=>state.users)
     const dispatch = useAppDispatch();
     const [isOpenDialog, setOpenDialog] = useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false);
@@ -38,11 +39,11 @@ const StoreMotorListComponent = () => {
         newValue: number,
     ) => {
         setValue(newValue);
-    };
+    };        
 
     const loadData = () => {
         dispatch(clearMotor())
-        dispatch(getMotorByOwnerId({ ownerId: Number(account?.userId) }));
+        dispatch(getMotorByStoreId({storeId: Number(user?.storeDesciptions[0]?.storeId)}))
     };
 
     const handleOpenDialog = () => {

@@ -15,10 +15,12 @@ import {
     useAppSelector,
 } from '../../../../services/store/store';
 import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
-import { clearMotor, getMotorByOwnerId } from '../../../../services/features/motorbike/motorbikeSlice';
+import {
+    clearMotor,
+    getMotorByStoreId,
+} from '../../../../services/features/motorbike/motorbikeSlice';
 import PostMotorModalByStore from './PostMotorModalByStore';
 import EditMotorModalByStore from './EditMotorModalByStore';
-import ReportIcon from '@mui/icons-material/Report';
 
 interface ListMotorProps {
     loadData: () => void;
@@ -26,8 +28,8 @@ interface ListMotorProps {
 
 const ListStorageMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
     const dispatch = useAppDispatch();
-    const { motorbikesByOwner } = useAppSelector((state) => state.motorbikes);
-    const { account } = useAppSelector((state) => state.account);
+    const { motorbikeByStoreId } = useAppSelector((state) => state.motorbikes);
+    const { user } = useAppSelector((state) => state.users);
 
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
@@ -91,19 +93,25 @@ const ListStorageMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
         setIsPostModalOpen(true);
     };
 
+    console.log(motorbikeByStoreId && motorbikeByStoreId);
+
     React.useEffect(() => {
         dispatch(clearMotor());
-        dispatch(getMotorByOwnerId({ ownerId: Number(account?.userId) }));
-    }, [dispatch, account?.userId]);
+        dispatch(
+            getMotorByStoreId({
+                storeId: Number(user?.storeDesciptions[0]?.storeId),
+            }),
+        );
+    }, [dispatch, user]);
 
-    const motorbikesByOwnerStorage =
-        motorbikesByOwner &&
-        motorbikesByOwner?.filter(
+    const motorbikesByStoreIdStorage =
+        motorbikeByStoreId &&
+        motorbikeByStoreId?.filter(
             (motor) => motor?.motorStatus.motorStatusId === 3,
         );
 
     const rows = useMemo(() => {
-        return (motorbikesByOwnerStorage ?? []).map((motor: IMotorbike) => ({
+        return (motorbikesByStoreIdStorage ?? []).map((motor: IMotorbike) => ({
             id: motor.motorId,
             storeId: motor?.storeId,
             certificateNumber: motor?.certificateNumber,
@@ -116,7 +124,7 @@ const ListStorageMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
             motorTypeName: motor.motorType?.title,
             motorStatus: motor.motorStatus?.title,
         }));
-    }, [motorbikesByOwnerStorage]);
+    }, [motorbikesByStoreIdStorage]);
 
     const handleRowDoubleClick = (params: GridRowParams) => {
         setSelectedRow(params.row as IMotorbike);
@@ -131,7 +139,7 @@ const ListStorageMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                     width: '100%',
                 }}
             >
-                <div style={{ marginBottom: '8px' }}>
+                {/* <div style={{ marginBottom: '8px' }}>
                     <Typography sx={{ color: '#e81c1c', fontSize: '14px' }}>
                         *** Lưu ý{' '}
                         <ReportIcon color="warning" fontSize="small" />
@@ -140,7 +148,7 @@ const ListStorageMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                         phải chỉnh sửa xe để thay đổi trạng thái cửa hàng cho xe
                         trước rồi mới được đăng bài.
                     </Typography>
-                </div>
+                </div> */}
                 <DataGrid
                     sx={{
                         '& .css-gl260s-MuiDataGrid-columnHeadersInner': {
@@ -179,11 +187,10 @@ const ListStorageMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                     <Button onClick={openEditModal} color="info">
                         Sửa thông tin
                     </Button>
-                    {selectedRow && selectedRow.storeId !== null && (
-                        <Button onClick={openPostModal} color="warning">
-                            Đăng bài
-                        </Button>
-                    )}
+
+                    <Button onClick={openPostModal} color="warning">
+                        Đăng bài
+                    </Button>
                 </DialogActions>
             </Dialog>
 

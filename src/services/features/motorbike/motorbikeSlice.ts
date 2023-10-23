@@ -163,8 +163,7 @@ export const createMotorbike = createAsyncThunk<IMotorbike, Object>(
 
 export const updateMotorById = createAsyncThunk<
     IMotorbike,
-    { motorId: number; data: Object },
-    Object
+    { motorId: number; data: Object }
 >('motorbike/updateMotorById', async ({ motorId, data }, thunkAPI) => {
     try {
         const token = localStorage.getItem('motorbike_bs');
