@@ -1,7 +1,7 @@
 import { Box, Tab, Tabs } from '@mui/material'
 import React, { useState } from 'react'
 import StoreMenuComponent from '../store-menu-component/StoreMenuComponent'
-import OwnerBookingComponent from './booking-with-owner-component/OwnerBookingComponent'
+import OwnerBookingListComponent from './booking-with-owner-component/OwnerBookingComponentList'
 import CustomerBookingComponent from './customer-booking-component/CustomerBookingComponent'
 import FooterComponent from '../../../common-components/footer-component/FooterComponent'
 
@@ -43,7 +43,7 @@ const BookingListStore = () => {
                         <Tab label='Lịch Hẹn Với Khách Mua' />
                     </Tabs>
                     <Box flexGrow={4} marginTop='3rem'>
-                        {value === 0 && <OwnerBookingComponent />}
+                        {value === 0 && <OwnerBookingListComponent />}
                         {value === 1 && <CustomerBookingComponent />}
 
                     </Box>

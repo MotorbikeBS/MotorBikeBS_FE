@@ -6,25 +6,21 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
+    Input,
     Stack,
     TextField,
     TextareaAutosize,
     Typography
 } from '@mui/material';
 import React from 'react'
-import { format } from 'date-fns';
 import { Controller, useForm } from 'react-hook-form';
-import { useAppDispatch } from '../../../../../../services/store/store';
-import { storeBookingOwnerExchange } from '../../../../../../services/features/booking/storeBookingSlice';
+import './style/_style.scss';
 
-// import { useAppDispatch } from '../../../services/store/store';
-// import { storeBookingOwnerExchange } from '../../../services/features/booking/bookingSlice';
-
-interface BookingDialogProps {
+interface CreateContractDialogProps {
     open: boolean;
-    negotiationId: number | null;
+    bookingId: number | null
     openSubmit: boolean;
-    openCancel: boolean;
+    openCancle: boolean;
     onOpenSubmitDialog: () => void;
     onCloseSubmitDialog: () => void;
     onOpenCancelDialog: () => void;
@@ -32,30 +28,30 @@ interface BookingDialogProps {
     onClose: () => void;
 }
 
-interface IBookingField {
-    bookingDate: Date;
-    note: string;
+interface ICreateContractForm {
+    content: string
+    images: FileList
 }
 
-const BookingAcceptNegotiationDialog: React.FC<BookingDialogProps> = ({
+const CreateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
     open,
-    negotiationId,
+    bookingId,
     openSubmit,
-    openCancel,
+    openCancle,
     onOpenCancelDialog,
     onOpenSubmitDialog,
     onCloseSubmitDialog,
     onCloseCancelDialog,
-    onClose, }) => {
-    const dispatch = useAppDispatch()
+    onClose
+}) => {
 
-    const form = useForm<IBookingField>({
+    const form = useForm<ICreateContractForm>({
         defaultValues: {
-            bookingDate: new Date(),
-            note: '',
-        },
-
+            content: '',
+            images: undefined
+        }
     });
+
     const { control, handleSubmit, register } = form;
 
     const handleCloseDialog = () => {
@@ -69,22 +65,31 @@ const BookingAcceptNegotiationDialog: React.FC<BookingDialogProps> = ({
         onOpenCancelDialog();
     };
 
-    const onSubmit = (data: IBookingField) => {
-        if (negotiationId !== null) {
-            dispatch(storeBookingOwnerExchange({
-                negotiationId: negotiationId,
-                bookingDate: data.bookingDate,
-                note: data.note,
-            }));
-            handleCloseDialog();
-        } else {
-        }
-    };
+    const onSubmit = (data: ICreateContractForm) => {
+        // const formData = new FormData()
+        // formData.append('content', data.content)
+        // if (data.images && data.images.length > 0) {
+        //     for (let i = 0; i < data.images.length; i++) {
+        //         formData.append('images', data.images[i])
+        //     }
+        // }
+        console.log(bookingId)
+        handleCloseDialog();
+
+    }
+
     return (
         <div>
-            <Dialog open={open} onClose={handleOpenCancelDialog}>
+            <Dialog
+                open={open}
+                onClose={handleOpenCancelDialog}
+            >
                 <DialogTitle>
-                    <Typography variant="h4">Đặt lịch cho chủ xe</Typography>
+                    <Typography
+                        variant='h4'
+                    >
+                        Tạo hợp đồng (bảng mềm)
+                    </Typography>
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
@@ -92,45 +97,61 @@ const BookingAcceptNegotiationDialog: React.FC<BookingDialogProps> = ({
                             <Typography
                                 color='red'
                                 fontWeight='700'
-                            >Chú ý:</Typography>
-                            <Typography>Vui lòng thể hiện thái độ nghiêm túc trong quá trình đặt lịch, để tránh tốn thời gian đôi bên.</Typography>
+                            >
+                                Chú ý:
+                            </Typography>
+                            <Typography>Vui lòng tải lên hợp đồng (bản mềm) 1 cách rõ ràng đê thuận tiện cho việc quản lý </Typography>
                         </div>
                     </DialogContentText>
-                    <Box textAlign="center">
-                        <form noValidate>
-                            <Stack spacing={2} className="booking-form-style">
+                    <Box textAlign='center' >
+                        <form encType='multipart/form-data' noValidate>
+                            <Stack
+                                spacing={2}
+                                sx={{
+                                    width: 350,
+                                    marginLeft: 'auto',
+                                    marginRight: 'auto',
+                                    marginTop: '20px',
+                                }}
+                            >
+                                <TextareaAutosize
+                                    className="aria-note custom-textarea"
+                                    aria-label="Lưu ý của bạn"
+                                    {...register('content')}
+                                    style={{
+                                        width: '345px',
+                                        height: '50px',
+                                    }}
+                                />
                                 <Controller
-                                    name="bookingDate"
+                                    name="images"
                                     control={control}
                                     render={({ field }) => (
-                                        <TextField
-                                            label="Lịch hẹn"
-                                            type="date"
-                                            {...field}
+                                        <Input
+                                            id="images"
+                                            type="file"
+                                            {...register(
+                                                'images',
+                                                {
+                                                    required:
+                                                        'Bạn chưa chọn ảnh  hợp đồng',
+                                                },
+                                            )}
                                             inputProps={{
-                                                min: format(new Date(), "yyyy-MM-dd"),
+                                                multiple: true,
+                                                accept: '.png, .jpg, .jpeg, .gif, .svg',
                                             }}
                                         />
                                     )}
                                 />
-                                <TextareaAutosize
-                                    placeholder='Lưu ý của bạn....'
-                                    aria-label="Lưu ý của bạn"
-                                    {...register('note')}
-                                    style={{
-                                        width: '345px',
-                                        height: '50px',
-                                        display: 'block'
-                                    }}
-                                />
                             </Stack>
                             <Button
                                 variant="contained"
-                                color="primary"
-                                className="btn-booking"
+                                color="success"
+                                className="btn-create-contract"
                                 onClick={handleOpenSubmitDialog}
                             >
-                                Đặt lịch
+                                Tạo Hợp Đồng
                             </Button>
                         </form>
                     </Box>
@@ -141,15 +162,13 @@ const BookingAcceptNegotiationDialog: React.FC<BookingDialogProps> = ({
                     </DialogActions>
                 </DialogContent>
             </Dialog>
-
-            {/* Dialog Đặt lịch */}
             <Dialog open={openSubmit}>
                 <DialogTitle>
-                    <Typography variant="h5">Xác nhận Đặt lịch</Typography>
+                    <Typography variant="h5">Xác nhận tạo hợp đồng</Typography>
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        <Typography>Bạn có chắc chắn muốn đặt lịch xem xe không ?</Typography>
+                        <Typography>Bạn có chắc chắn muốn tạo hợp đồng mua bán xe ?</Typography>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -162,7 +181,7 @@ const BookingAcceptNegotiationDialog: React.FC<BookingDialogProps> = ({
                 </DialogActions>
             </Dialog>
             {/* Dialog Hủy */}
-            <Dialog open={openCancel}>
+            <Dialog open={openCancle}>
                 <DialogTitle>
                     <Typography variant="h5">Xác nhận hủy bỏ</Typography>
                 </DialogTitle>
@@ -181,7 +200,7 @@ const BookingAcceptNegotiationDialog: React.FC<BookingDialogProps> = ({
                 </DialogActions>
             </Dialog>
         </div>
-    );
+    )
 }
 
-export default BookingAcceptNegotiationDialog
+export default CreateContractDialogByStore
