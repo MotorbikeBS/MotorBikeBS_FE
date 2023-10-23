@@ -15,6 +15,9 @@ import {
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import './style/_style.scss';
+import { useAppDispatch } from '../../../services/store/store';
+import { createContractByStore } from '../../../services/features/contract/contractSlice';
+import { ICreateContract } from '../../../models/Contract/Contract';
 
 interface CreateContractDialogProps {
     open: boolean;
@@ -29,6 +32,7 @@ interface CreateContractDialogProps {
 }
 
 interface ICreateContractForm {
+    bookingId: number | null
     content: string
     images: FileList
 }
@@ -44,15 +48,18 @@ const CreateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
     onCloseCancelDialog,
     onClose
 }) => {
+    const dispatch = useAppDispatch()
 
     const form = useForm<ICreateContractForm>({
         defaultValues: {
+            bookingId: null,
             content: '',
             images: undefined
         }
     });
 
-    const { control, handleSubmit, register } = form;
+    const { formState, handleSubmit, register } = form;
+    const { errors } = formState;
 
     const handleCloseDialog = () => {
         onClose();
@@ -66,16 +73,25 @@ const CreateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
     };
 
     const onSubmit = (data: ICreateContractForm) => {
-        // const formData = new FormData()
-        // formData.append('content', data.content)
-        // if (data.images && data.images.length > 0) {
-        //     for (let i = 0; i < data.images.length; i++) {
-        //         formData.append('images', data.images[i])
-        //     }
-        // }
-        console.log(bookingId)
-        handleCloseDialog();
-
+        const formData = new FormData();
+        formData.append('content', data.content);
+        if (data.images && data.images.length > 0) {
+            for (let i = 0; i < data.images.length; i++) {
+                formData.append('images', data.images[i]);
+            }
+        }
+        dispatch(createContractByStore({
+            bookingId: Number(bookingId),
+            data: formData
+        }))
+            .unwrap()
+            .then(() => {
+                // loadData();
+                handleCloseDialog();
+            })
+            .catch((error) => {
+                onCloseSubmitDialog()
+            })
     }
 
     return (
@@ -123,27 +139,31 @@ const CreateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
                                         height: '50px',
                                     }}
                                 />
-                                <Controller
-                                    name="images"
-                                    control={control}
-                                    render={({ field }) => (
-                                        <Input
-                                            id="images"
-                                            type="file"
-                                            {...register(
-                                                'images',
-                                                {
-                                                    required:
-                                                        'Bạn chưa chọn ảnh  hợp đồng',
-                                                },
-                                            )}
-                                            inputProps={{
-                                                multiple: true,
-                                                accept: '.png, .jpg, .jpeg, .gif, .svg',
-                                            }}
-                                        />
+                                <Input
+                                    id="images"
+                                    type="file"
+                                    {...register(
+                                        'images',
+                                        {
+                                            required:
+                                                'Bạn chưa chọn ảnh cho hợp đồng',
+                                        },
                                     )}
+                                    inputProps={{
+                                        multiple: true,
+                                    }}
+
                                 />
+                                <br />
+                                {errors.images && (
+                                    <span className="error-message">
+                                        {
+                                            errors
+                                                .images
+                                                .message
+                                        }
+                                    </span>
+                                )}
                             </Stack>
                             <Button
                                 variant="contained"
