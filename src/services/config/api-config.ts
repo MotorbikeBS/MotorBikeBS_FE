@@ -70,6 +70,13 @@ export const changePriceNegotiationEndPoint = `${BASE_URL}/api/negotiation/chang
 //Store Booking On Owner Exchange
 export const storeBookingEndPoint = `${BASE_URL}/api/booking/storeBookingOwner`;
 export const getAllStoreBookingOwnerEndPoind = `${BASE_URL}/api/booking`;
+
+// Contract between store owner and vehicle owner
+export const createContractByStoreEndPoint = `${BASE_URL}/api/contract/createcontract`;
+export const getAllContractEndPoint = `${BASE_URL}/api/contract/getcontract`;
+export const acceptContractEndPoint = `${BASE_URL}/api/contract/acceptcontract`;
+export const cancelContractEndPoint = `${BASE_URL}/api/contract/cancelcontract`;
+
 //Booking
 export const storeBookingWithOwnerExchangeEndPoint = `${BASE_URL}/api/booking/storebookingowner`;
 export const getAllBookingByOwnerEndPoint = `${BASE_URL}/api/booking/getbookingrequest`;
