@@ -1,18 +1,12 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import {
-    useAppDispatch,
-    useAppSelector,
-} from '../../../../../services/store/store';
 import { Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
-import {
-    clearNegotiation,
-    getNegotiationRequest,
-} from '../../../../../services/features/negotiation/negotiationSlice';
-import { Item } from '../../style/style-root';
-import './style/_style.scss';
-import useFormatCurrency from '../../../../../hooks/useFormatCurrency';
 import BookingAcceptNegotiationDialog from './booking-accept-negotiatin-dialog/BookingAcceptNegotiationDialog';
+import useFormatCurrency from '../../../../hooks/useFormatCurrency';
+import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
+import { clearNegotiation, getNegotiationRequest } from '../../../../services/features/negotiation/negotiationSlice';
+import { Item } from '../../motor-owner-exchange/style/style-root';
+import './style/_style.scss'
 
 const ListMotorAcceptNegotiation = () => {
     const navigate = useNavigate();

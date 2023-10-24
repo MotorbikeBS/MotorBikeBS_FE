@@ -14,8 +14,9 @@ import {
 import React from 'react'
 import { format } from 'date-fns';
 import { Controller, useForm } from 'react-hook-form';
-import { useAppDispatch } from '../../../../../../services/store/store';
-import { storeBookingOwnerExchange } from '../../../../../../services/features/booking/storeBookingSlice';
+import { useAppDispatch } from '../../../../../services/store/store';
+import { storeBookingOwnerExchange } from '../../../../../services/features/booking/storeBookingSlice';
+
 
 // import { useAppDispatch } from '../../../services/store/store';
 // import { storeBookingOwnerExchange } from '../../../services/features/booking/bookingSlice';

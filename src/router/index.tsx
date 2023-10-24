@@ -33,7 +33,7 @@ import BookingListStore from '../pages/store/booking-list/BookingListStore';
 import MotorBikeDetailForStore from '../pages/customer/motorbike-detail/MotorBikeDetailForStore';
 import MotorFields from '../pages/admin/motorFields-component/MotorFields';
 import OwnerMotorAcceptNegotitationDetail from '../pages/store/motor-owner-exchange/OwnerMotorAcceptNegotiationDetail';
-import TradeHistoryList from '../pages/store/motor-owner-exchange/trade-history-list/TradeHistoryList';
+import TradeHistoryList from '../pages/store/trade-history-list/TradeHistoryList';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
