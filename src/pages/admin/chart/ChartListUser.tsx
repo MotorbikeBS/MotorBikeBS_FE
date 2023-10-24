@@ -9,30 +9,31 @@ const ChartListUser = () => {
     const { users } = useAppSelector((state) => state.users);
 
     const activeAccount = useMemo(() => {
-      return (users ?? []).filter((user: IUser) => user.status === 'ACTIVE');
-  }, [users])
+        return (users ?? []).filter((user: IUser) => user.status === 'ACTIVE');
+    }, [users])
 
     const countRoleIdAdmin = activeAccount?.reduce((count, user) => {
-        if (user?.roleId === 1) {
+        if (user?.roleId === 1 || user?.roleTitle === 'Admin') {
             return count + 1;
         }
         return count;
     }, 0);
+
     const countRoleIdStore = activeAccount?.reduce((count, user) => {
-        if (user?.roleId === 2) {
+        if (user?.roleId === 2 || user?.roleTitle === 'Store') {
             return count + 1;
         }
         return count;
     }, 0);
 
     const countRoleIdOwner = activeAccount?.reduce((count, user) => {
-        if (user?.roleId === 3) {
+        if (user?.roleId === 3 || user?.roleTitle === 'Owner') {
             return count + 1;
         }
         return count;
     }, 0);
     const countRoleIdCustomer = activeAccount?.reduce((count, user) => {
-        if (user?.roleId === 4) {
+        if (user?.roleId === 4 || user?.roleTitle === 'Customer') {
             return count + 1;
         }
         return count;
@@ -57,7 +58,7 @@ const ChartListUser = () => {
                     'rgba(255, 206, 86, 1)',
                     'rgba(75, 192, 192, 1)',
                 ],
-                borderWidth: 1,
+                borderWidth: 1.5,
             },
         ],
     };

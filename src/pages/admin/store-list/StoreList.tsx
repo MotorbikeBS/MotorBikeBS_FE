@@ -24,7 +24,7 @@ const StoreListAdmin: React.FC = () => {
                 <Box flexGrow={1} >
                     <AdminMenuComponent />
                 </Box>
-                <Box flexGrow={10} marginTop='4%' marginBottom='4%'>
+                <Box flexGrow={10} marginBottom='4%'>
 
                     <Tabs
                         value={value}

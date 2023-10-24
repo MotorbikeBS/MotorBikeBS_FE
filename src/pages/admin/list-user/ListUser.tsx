@@ -24,7 +24,7 @@ const ListUser = () => {
                     <AdminMenuComponent />
                 </Box>
 
-                <Box flexGrow={10} marginTop='5%' marginBottom='5%'>
+                <Box flexGrow={10} marginBottom='5%'>
                     <Tabs
                         value={value}
                         onChange={handleChangeTabs}
