@@ -76,7 +76,7 @@ export interface IContract {
     requestTypeId: number;
     status: string;
     motor: IMotorbikeContract;
-    negotiation: INegotiationContract[];
+    negotiations: INegotiationContract[];
     receiver: IUser;
     sender: IUser;
 }

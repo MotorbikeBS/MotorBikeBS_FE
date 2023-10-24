@@ -48,6 +48,10 @@ const pages = [
         to: '/booking-list',
         name: 'DS. Lịch hẹn',
     },
+    {
+        to: '/store/trade-history',
+        name: 'Lịch Sử Giao Dịch',
+    },
 ];
 
 const StoreMenuComponent = () => {
@@ -238,8 +242,8 @@ const StoreMenuComponent = () => {
                                     key={page.to}
                                     to={page.to}
                                     className={`link-customer ${isMenuItemActive(page.to)
-                                            ? 'active'
-                                            : ''
+                                        ? 'active'
+                                        : ''
                                         }`}
                                 >
                                     {page.name}

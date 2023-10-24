@@ -1,16 +1,15 @@
 import { Box, Tab, Tabs } from '@mui/material'
 import React, { useState } from 'react'
-import StoreMenuComponent from '../store-menu-component/StoreMenuComponent'
-import CustomerBookingComponent from './customer-booking-component/CustomerBookingComponent'
-import FooterComponent from '../../../common-components/footer-component/FooterComponent'
-import OwnerBookingListComponent from './booking-with-owner-component/OwnerBookingListComponent'
+import StoreMenuComponent from '../../store-menu-component/StoreMenuComponent'
+import TradeListWithOwner from './trade-with-owner/TradeListWithOwner'
+import TradeListWithCustomer from './trade-with-customer/TradeListWithCustomer'
+import FooterComponent from '../../../../common-components/footer-component/FooterComponent'
 
-const BookingListStore = () => {
+const TradeHistoryList = () => {
     const [value, setValue] = useState<number>(0)
     const handleChangeTabs = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue)
     }
-
     return (
         <>
             <Box
@@ -22,7 +21,6 @@ const BookingListStore = () => {
                 <Box flexGrow={1}>
                     <StoreMenuComponent />
                 </Box>
-
                 <Box
                     flexGrow={10}
                     marginTop='0.5rem'
@@ -39,13 +37,12 @@ const BookingListStore = () => {
                         }}
                         centered
                     >
-                        <Tab label='Lịch Hẹn Với Chủ Xe' />
-                        <Tab label='Lịch Hẹn Với Khách Mua' />
+                        <Tab label='Giao dịch với chủ xe' />
+                        <Tab label='Giao dịch với khách mua' />
                     </Tabs>
                     <Box flexGrow={4} marginTop='3rem'>
-                        {value === 0 && <OwnerBookingListComponent />}
-                        {value === 1 && <CustomerBookingComponent />}
-
+                        {value === 0 && <TradeListWithOwner />}
+                        {value === 1 && <TradeListWithCustomer />}
                     </Box>
                 </Box>
                 <Box flexGrow={1} className="footer-style">
@@ -56,4 +53,4 @@ const BookingListStore = () => {
     )
 }
 
-export default BookingListStore
+export default TradeHistoryList

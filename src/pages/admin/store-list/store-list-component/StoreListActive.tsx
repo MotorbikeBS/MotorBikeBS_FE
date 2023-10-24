@@ -58,7 +58,11 @@ const StoreListActive = () => {
                     onRowDoubleClick={handleRowDoubleClick}
                 />
             </Paper>
-            <StoreModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} data={selectedRow} loadData={loadData} />
+            <StoreModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                data={selectedRow}
+                loadData={loadData} />
         </Container>
     );
 };
