@@ -98,7 +98,7 @@ const ListStorageMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
     const motorbikesByOwnerStorage =
         motorbikesByOwner &&
         motorbikesByOwner?.filter(
-            (motor) => motor?.motorStatus.motorStatusId === 3,
+            (motor) => motor?.storeId === null && motor?.motorStatus.motorStatusId === 3,
         );
 
     const rows = useMemo(() => {
