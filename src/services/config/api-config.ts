@@ -73,7 +73,7 @@ export const getAllStoreBookingOwnerEndPoind = `${BASE_URL}/api/booking`;
 
 // Contract between store owner and vehicle owner
 export const createContractByStoreEndPoint = `${BASE_URL}/api/contract/createcontract`;
-export const getAllContractEndPoint = `${BASE_URL}/api/contract/getcontract`;
+export const getAllContractEndPoint = `${BASE_URL}/api/Contract/GetContract`;
 export const acceptContractEndPoint = `${BASE_URL}/api/contract/acceptcontract`;
 export const cancelContractEndPoint = `${BASE_URL}/api/contract/cancelcontract`;
 

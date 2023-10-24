@@ -1,3 +1,4 @@
+import { getAllContractEndPoint } from './../../config/api-config';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { IContract, ICreateContract } from '../../../models/Contract/Contract';
 import { toast } from 'react-toastify';
@@ -6,13 +7,15 @@ import { createContractByStoreEndPoint } from '../../config/api-config';
 
 interface IContractState {
     loading: boolean;
-    createContract: IContract | null;
     error: string[] | unknown;
+    createContract: IContract | null;
+    getContracts: IContract[] | null;
 }
 const initialState: IContractState = {
     loading: false,
     error: null,
     createContract: null,
+    getContracts: null,
 };
 
 export const createContractByStore = createAsyncThunk<
@@ -42,6 +45,27 @@ export const createContractByStore = createAsyncThunk<
         }
     }
 });
+export const getAllContract = createAsyncThunk<IContract[], void>(
+    'contract/getAllContract',
+    async (_, thunkAPI) => {
+        try {
+            const token = localStorage.getItem('motorbike_bs');
+            const response = await axios.get(getAllContractEndPoint, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data.result;
+        } catch (err: any) {
+            if (err.response) {
+                toast.warning(`${err.response.data?.errorMessages}`);
+                return thunkAPI.rejectWithValue({
+                    error: err.response?.data?.errorMessages,
+                });
+            }
+        }
+    },
+);
 
 export const contractSlice = createSlice({
     name: 'contract',
@@ -52,6 +76,7 @@ export const contractSlice = createSlice({
         },
         clearContract: (state) => {
             state.createContract = null;
+            state.getContracts = null;
         },
     },
     extraReducers: (builder) => {
@@ -63,6 +88,17 @@ export const contractSlice = createSlice({
             state.createContract = action.payload;
         });
         builder.addCase(createContractByStore.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(getAllContract.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(getAllContract.fulfilled, (state, action) => {
+            state.loading = false;
+            state.getContracts = action.payload;
+        });
+        builder.addCase(getAllContract.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });

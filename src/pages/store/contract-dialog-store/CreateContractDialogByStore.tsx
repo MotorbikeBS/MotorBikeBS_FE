@@ -17,7 +17,6 @@ import { Controller, useForm } from 'react-hook-form';
 import './style/_style.scss';
 import { useAppDispatch } from '../../../services/store/store';
 import { createContractByStore } from '../../../services/features/contract/contractSlice';
-import { ICreateContract } from '../../../models/Contract/Contract';
 
 interface CreateContractDialogProps {
     open: boolean;
@@ -92,6 +91,8 @@ const CreateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
             .catch((error) => {
                 onCloseSubmitDialog()
             })
+        console.log(bookingId)
+
     }
 
     return (
