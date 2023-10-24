@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../../services/store/store
 import useFormatCurrency from '../../../../hooks/useFormatCurrency'
 import { clearContract, getAllContract } from '../../../../services/features/contract/contractSlice'
 import CreateContractDialogByStore from '../../contract-dialog-store/CreateContractDialogByStore'
-import TradeHistoryImgeDialog from '../trade-history-img-dialog/TradeHistoryImgeDialog'
+import TradeHistoryImgeDialog from '../../../../common-components/trade-history-img-dialog/TradeHistoryImgeDialog'
 
 const TradeListWithOwner = () => {
     const dispatch = useAppDispatch()

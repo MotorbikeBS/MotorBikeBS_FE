@@ -34,6 +34,7 @@ import MotorBikeDetailForStore from '../pages/customer/motorbike-detail/MotorBik
 import MotorFields from '../pages/admin/motorFields-component/MotorFields';
 import OwnerMotorAcceptNegotitationDetail from '../pages/store/motor-owner-exchange/OwnerMotorAcceptNegotiationDetail';
 import TradeHistoryList from '../pages/store/trade-history-list/TradeHistoryList';
+import ListTradeHistory from '../pages/owner/trade-history-with-store/ListTradeHistory';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -149,8 +150,8 @@ const AppRoutes = () => {
                         element={<MotorBikeDetailForStore />}
                     />
                     <Route path="/owner/motors" element={<OwnerMotorList />} />
-
                     <Route path='/owner/my-booking' element={<BookingListOwner />} />
+                    <Route path='/owner/my-trade-history' element={<ListTradeHistory />} />
                 </>
             )}
             {/* ============================================== ROUTE CUSTOMER ================================================== */}

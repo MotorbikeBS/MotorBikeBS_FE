@@ -1,4 +1,7 @@
-import { getAllContractEndPoint } from './../../config/api-config';
+import {
+    cancelContractEndPoint,
+    getAllContractEndPoint,
+} from './../../config/api-config';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { IContract, ICreateContract } from '../../../models/Contract/Contract';
 import { toast } from 'react-toastify';
@@ -10,12 +13,14 @@ interface IContractState {
     error: string[] | unknown;
     createContract: IContract | null;
     getContracts: IContract[] | null;
+    cancelContract: IContract | null;
 }
 const initialState: IContractState = {
     loading: false,
     error: null,
     createContract: null,
     getContracts: null,
+    cancelContract: null,
 };
 
 export const createContractByStore = createAsyncThunk<
@@ -66,6 +71,33 @@ export const getAllContract = createAsyncThunk<IContract[], void>(
         }
     },
 );
+export const cancelContractByOwner = createAsyncThunk<
+    IContract,
+    { contractId: number }
+>('contract/cancelContractByOwner', async (data, thunkAPI) => {
+    const { contractId } = data;
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.put(
+            `${cancelContractEndPoint}?contractId=${contractId}`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        toast.success(`${response.data.message}`);
+        return response.data;
+    } catch (error: any) {
+        if (error.response) {
+            toast.error(`${error.response.data?.errorMessages}`);
+            return thunkAPI.rejectWithValue({
+                error: error.response?.data?.errorMessages,
+            });
+        }
+    }
+});
 
 export const contractSlice = createSlice({
     name: 'contract',
@@ -99,6 +131,16 @@ export const contractSlice = createSlice({
             state.getContracts = action.payload;
         });
         builder.addCase(getAllContract.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(cancelContractByOwner.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(cancelContractByOwner.fulfilled, (state) => {
+            state.loading = false;
+        });
+        builder.addCase(cancelContractByOwner.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });

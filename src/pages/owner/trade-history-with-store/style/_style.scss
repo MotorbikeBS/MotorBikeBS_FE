@@ -1,5 +1,5 @@
 .container-xl {
-    max-width: 1200px;
+    max-width: 2100px;
     .h4-heading {
         font-size: 30px;
         font-weight: 700;
@@ -58,37 +58,43 @@
                 max-width: 90%;
                 justify-content: space-evenly;
                 .motorbike-owner-info {
-                    max-width: 50%;
+                    max-width: 37%;
                     text-align: left;
                     margin-right: 30px;
-                    margin-left: 50px;
                 }
                 .booking-owner-info {
-                    max-width: 100%;
+                    max-width: 37%;
                     text-align: left;
                     margin-left: 10px;
                 }
-                .motorbike-owner-info,
-                .booking-owner-info,
                 .image-contract {
-                    flex: 1;
-                    .motorbike-owner-info-header,
-                    .image-owner-info-header,
-                    .motorbike-owner-info-content,
-                    .booking-owner-info-header,
-                    .booking-owner-btn-contract {
-                        margin-top: 20px;
-                        &:nth-child(1) {
-                            margin-bottom: 10px;
+                    max-width: 25%;
+                    text-align: left;
+                    margin-left: 10px;
+                    img {
+                        max-width: 60%;
+                        max-height: 1200px;
+                        max-height: auto;
+                    }
+                    .motorbike-owner-info,
+                    .booking-owner-info,
+                    .image-contract {
+                        flex: 1;
+                        .motorbike-owner-info-header,
+                        .image-owner-info-header,
+                        .motorbike-owner-info-content,
+                        .booking-owner-info-header,
+                        .booking-owner-btn-contract {
+                            margin-top: 20px;
+                            &:nth-child(1) {
+                                margin-bottom: 10px;
+                            }
                         }
-                    }
-                    .booking-owner-info-content {
-                        margin-top: 10px;
-                    }
-                    .motorbike-owner-info-header,
-                    .booking-owner-info-header,
-                    .image-owner-info-header {
-                        font-weight: bold;
+                        .motorbike-owner-info-header,
+                        .booking-owner-info-header,
+                        .image-owner-info-header {
+                            font-weight: bold;
+                        }
                     }
                 }
             }

@@ -1,7 +1,7 @@
 // StoreListNotVerify.js
 import React, { useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
-import { getAllStore } from '../../../../services/features/store/storeSlice';
+import { clearStore, getAllStore } from '../../../../services/features/store/storeSlice';
 import { IStore } from '../../../../models/Store/Store';
 import { Container, Typography, Paper } from '@mui/material';
 import { DataGrid, GridRowParams } from '@mui/x-data-grid';
@@ -15,11 +15,12 @@ const StoreListNotVerify = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const loadData = () => {
+        dispatch(clearStore())
         dispatch(getAllStore())
     }
 
     useEffect(() => {
-        dispatch(getAllStore());
+        loadData()
     }, [dispatch]);
 
 
@@ -51,7 +52,7 @@ const StoreListNotVerify = () => {
         <Container maxWidth="xl">
             <Paper style={{ marginBottom: '20px', padding: '20px' }}>
                 <Typography variant="h4" gutterBottom>
-                    Danh sách cửa hàng chưa xác thực
+                    Danh sách cửa hàng chưa xác minh
                 </Typography>
                 <DataGrid
                     rows={rows}
