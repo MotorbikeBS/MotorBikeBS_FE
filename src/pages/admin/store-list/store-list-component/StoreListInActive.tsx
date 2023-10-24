@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store'
 import { IStore } from '../../../../models/Store/Store'
-import { getAllStore } from '../../../../services/features/store/storeSlice'
+import { clearStore, getAllStore } from '../../../../services/features/store/storeSlice'
 import { DataGrid, GridRowParams } from '@mui/x-data-grid'
 import { Container, Paper, Typography } from '@mui/material'
 import { columns } from './table/TableStoreList'
@@ -13,12 +13,13 @@ const StoreListInActive = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const loadData = () => {
+        dispatch(clearStore())
         dispatch(getAllStore())
     }
 
     useEffect(() => {
-        dispatch(getAllStore())
-    }, [dispatch])
+        loadData()
+    }, [dispatch]);
 
     const unActiveStores = useMemo(() => {
         return (stores ?? []).filter((store: IStore) => store.status === 'INACTIVE');

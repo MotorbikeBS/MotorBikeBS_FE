@@ -23,6 +23,7 @@ const TradeHistoryImgeDialog: React.FC<IFullScreenImageDialogProps> = ({
             <DialogTitle>
                 <Typography
                     variant="h5"
+                    fontWeight='700'
                 >
                     Hình ảnh hợp đồng đầy đủ
                 </Typography>

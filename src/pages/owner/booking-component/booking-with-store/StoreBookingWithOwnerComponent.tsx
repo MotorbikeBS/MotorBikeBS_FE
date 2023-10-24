@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 import {
     Box,
-    Button,
     Container,
     Paper,
     Typography
@@ -130,37 +129,7 @@ const StoreBookingWithOwnerComponent = () => {
                                     marginTop: '20px',
 
                                 }}>
-                                    <div className='booking-owner-btn-contract'
-                                        style={{
-                                            marginBottom: '20px'
-                                        }}
-                                    >
-                                        <Button
-                                            variant='contained'
-                                            size='small'
-                                            color='success'
-                                        >
-                                            Đạt thỏa thuận
-                                        </Button>
-
-                                    </div>
-                                    <div className='booking-store-btn-reContract'>
-                                        <Button
-                                            variant='contained'
-                                            size='small'
-                                            color='error'
-                                        >
-                                            Sai hợp đồng
-                                        </Button>
-                                    </div>
                                 </div>
-                            </div>
-                            <div className='image-contract'>
-                                <div className="image-owner-info-header">
-                                    <Typography variant='h5' sx={{ color: '#f0c413' }}>
-                                        Hợp đồng</Typography>
-                                </div>
-                                <img src='https://i0.wp.com/www.dichthuatsms.com/wp-content/uploads/2021/11/Hop-dong-thi-cong-xay-dung-song-ngu-Anh-Viet-1.jpg?fit=1654%2C2339&ssl=1' alt='Hợp đồng' />
                             </div>
                         </Box>
                     </Box>

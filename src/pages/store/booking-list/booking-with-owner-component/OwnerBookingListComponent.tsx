@@ -130,11 +130,22 @@ const OwnerBookingListComponent = () => {
                                         variant='contained'
                                         size='small'
                                         color='success'
+                                        sx={{ marginRight: '10px' }}
                                         onClick={() => handleOpenCreateContractDialog(
                                             booking?.negotiations[0]?.bookings[0]?.bookingId
                                         )}
                                     >
                                         Tải hợp đồng
+                                    </Button>
+                                    <Button
+                                        variant='contained'
+                                        size='small'
+                                        color='error'
+                                    // onClick={() => handleOpenCreateContractDialog(
+                                    //     booking?.negotiations[0]?.bookings[0]?.bookingId
+                                    // )}
+                                    >
+                                        Hủy Đặt Lịch
                                     </Button>
                                 </div>
                             </div>

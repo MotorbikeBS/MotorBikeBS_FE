@@ -36,7 +36,7 @@ interface ICreateContractForm {
     images: FileList
 }
 
-const CreateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
+const ReUpdateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
     open,
     bookingId,
     openSubmit,
@@ -225,4 +225,4 @@ const CreateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
     )
 }
 
-export default CreateContractDialogByStore
+export default ReUpdateContractDialogByStore
