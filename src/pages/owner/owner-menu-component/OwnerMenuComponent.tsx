@@ -25,6 +25,10 @@ const pages = [
         name: 'Trang chủ',
     },
     {
+        to: '/owner/dashboard',
+        name: 'Bảng điều khiển',
+    },
+    {
         to: '/owner/motors',
         name: 'Kho xe',
     },
@@ -33,9 +37,10 @@ const pages = [
         name: 'Lịch hẹn',
     },
     {
-        to: '/owner/dashboard',
-        name: 'Bảng điều khiển',
+        to: '/owner/my-trade-history',
+        name: 'Lịch sử giao dịch',
     },
+
 ];
 
 const OwnerMenuComponent = () => {

@@ -26,8 +26,8 @@ import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import Carousel from 'react-material-ui-carousel';
 import { INegotiation } from '../../../../models/Negotiation/Negotiation';
 import './style/_style.scss';
-import BookingAcceptNegotiationDialog from '../list-motor-negotion/list-motor-accept-negotiation/booking-accept-negotiatin-dialog/BookingAcceptNegotiationDialog';
 import { getMotorModelById } from '../../../../services/features/motorbike/motorFields';
+import BookingAcceptNegotiationDialog from '../../list-motor-negotion/list-motor-accept-negotiation/booking-accept-negotiatin-dialog/BookingAcceptNegotiationDialog';
 
 type motorbikeParams = {
     negotiationId: number;
@@ -133,7 +133,7 @@ const OwnerMotorAcceptNegotiationDetailComponent = () => {
                     <Box flexGrow={4} marginBottom="30px">
                         <Carousel>
                             {negoMotorDetails.motor.motorbikeImages &&
-                            negoMotorDetails.motor.motorbikeImages.length >
+                                negoMotorDetails.motor.motorbikeImages.length >
                                 0 ? (
                                 negoMotorDetails.motor.motorbikeImages.map(
                                     (image) => (

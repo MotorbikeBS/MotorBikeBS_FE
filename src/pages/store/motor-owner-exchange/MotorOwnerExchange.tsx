@@ -4,8 +4,9 @@ import StoreMenuComponent from '../store-menu-component/StoreMenuComponent';
 import ConsignmentMotorOwnerExchangeComponent from './component/ConsignmentMotorOwnerExchangeComponent';
 import FooterComponent from '../../../common-components/footer-component/FooterComponent';
 import LivelihoodMotorOwnerExchangeComponent from './component/LivelihoodMotorOwnerExchangeComponent';
-import ListNegotiationMotorByStore from './list-motor-negotion/ListNegotiationMotorByStore';
-import ListMotorAcceptNegotiation from './list-motor-negotion/list-motor-accept-negotiation/ListMotorAcceptNegotiation';
+import ListNegotiationMotorByStore from '../list-motor-negotion/ListNegotiationMotorByStore';
+import ListMotorAcceptNegotiation from '../list-motor-negotion/list-motor-accept-negotiation/ListMotorAcceptNegotiation';
+
 
 const MotorOwnerExchange = () => {
     const [value, setValue] = useState<number>(0);

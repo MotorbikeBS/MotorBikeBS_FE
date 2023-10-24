@@ -1,9 +1,9 @@
 import { Box, Tab, Tabs } from '@mui/material'
 import React, { useState } from 'react'
-import StoreMenuComponent from '../../store-menu-component/StoreMenuComponent'
 import TradeListWithOwner from './trade-with-owner/TradeListWithOwner'
 import TradeListWithCustomer from './trade-with-customer/TradeListWithCustomer'
-import FooterComponent from '../../../../common-components/footer-component/FooterComponent'
+import StoreMenuComponent from '../store-menu-component/StoreMenuComponent'
+import FooterComponent from '../../../common-components/footer-component/FooterComponent'
 
 const TradeHistoryList = () => {
     const [value, setValue] = useState<number>(0)
