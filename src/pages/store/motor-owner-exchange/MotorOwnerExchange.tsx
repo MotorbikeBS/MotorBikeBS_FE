@@ -23,7 +23,7 @@ const MotorOwnerExchange = () => {
             <Box flexGrow={1} zIndex={2}>
                 <StoreMenuComponent />
             </Box>
-            <Box flexGrow={9} marginTop="0.5rem" marginBottom="5%">
+            <Box flexGrow={9}>
                 <Tabs
                     value={value}
                     onChange={handleChangeTabs}
@@ -40,7 +40,7 @@ const MotorOwnerExchange = () => {
                     <Tab label="Xe đang thương lượng" />
                     <Tab label="Có thể đặt lịch" />
                 </Tabs>
-                <Box flexGrow={4} marginTop="3rem">
+                <Box>
                     {value === 0 && <ConsignmentMotorOwnerExchangeComponent />}
                     {value === 1 && <LivelihoodMotorOwnerExchangeComponent />}
                     {value === 2 && <ListNegotiationMotorByStore />}
@@ -51,7 +51,7 @@ const MotorOwnerExchange = () => {
             <Box flexGrow={1} className="footer-style">
                 <FooterComponent />
             </Box>
-        </Box>
+        </Box >
     );
 };
 

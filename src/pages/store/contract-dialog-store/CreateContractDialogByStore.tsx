@@ -91,7 +91,6 @@ const CreateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
             .catch((error) => {
                 onCloseSubmitDialog()
             })
-        console.log(bookingId)
 
     }
 

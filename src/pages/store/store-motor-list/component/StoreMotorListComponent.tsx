@@ -14,7 +14,7 @@ import CreateBrandModal from '../../../../common-components/create-motorbike-com
 
 const StoreMotorListComponent = () => {
     // const { account } = useAppSelector((state) => state.account);
-    const { user} = useAppSelector((state)=>state.users)
+    const { user } = useAppSelector((state) => state.users)
     const dispatch = useAppDispatch();
     const [isOpenDialog, setOpenDialog] = useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false);
@@ -39,11 +39,11 @@ const StoreMotorListComponent = () => {
         newValue: number,
     ) => {
         setValue(newValue);
-    };        
+    };
 
     const loadData = () => {
         dispatch(clearMotor())
-        dispatch(getMotorByStoreId({storeId: Number(user?.storeDesciptions[0]?.storeId)}))
+        dispatch(getMotorByStoreId({ storeId: Number(user?.storeDesciptions[0]?.storeId) }))
     };
 
     const handleOpenDialog = () => {

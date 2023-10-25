@@ -118,7 +118,7 @@ const TradeHistoryWithStoreComponent = () => {
                                 <div className='tag-motorbike-status'>
                                     <Typography variant='subtitle1'>
                                         {contractOwner?.motor?.motorStatus?.title === 'CONSIGNMENT' ? 'KÝ GỬI' :
-                                            contractOwner?.motor?.motorStatus?.title === 'LIVELIHOOD' ? 'KHÔNG KÝ GỬI' : 'KHÔNG XÁC ĐỊNH'}
+                                            contractOwner?.motor?.motorStatus?.title === 'LIVELIHOOD' ? 'KHÔNG KÝ GỬI' : 'Đã thỏa thuận'}
                                     </Typography>
                                 </div>
                             </div>
@@ -178,39 +178,47 @@ const TradeHistoryWithStoreComponent = () => {
                                     marginTop: '20px',
 
                                 }}>
-                                    <div className='booking-owner-btn-contract'
-                                        style={{
-                                            marginBottom: '20px'
-                                        }}
-                                    >
-                                        <Button
-                                            variant='contained'
-                                            size='small'
-                                            color='success'
-                                            onClick={
-                                                () => handleAcceptContract(
-                                                    contractOwner?.negotiations[0]?.bookings[0]
-                                                        ?.contracts[0]?.contractId
-                                                )
-                                            }
-                                        >
-                                            Đạt thỏa thuận
-                                        </Button>
-                                    </div>
-                                    <div className='booking-store-btn-reContract'>
-                                        <Button
-                                            variant='contained'
-                                            size='small'
-                                            color='error'
-                                            onClick={
-                                                () => handleErrorContract(
-                                                    contractOwner?.negotiations[0]?.bookings[0]?.contracts[0]?.contractId
-                                                )
-                                            }
-                                        >
-                                            Sai hợp đồng
-                                        </Button>
-                                    </div>
+                                    {contractOwner?.negotiations[0]?.bookings[0]?.contracts[0].status === 'PENDING' ? (
+                                        <>
+                                            <div className='booking-owner-btn-contract'
+                                                style={{
+                                                    marginBottom: '20px'
+                                                }}
+                                            >
+                                                <Button
+                                                    variant='contained'
+                                                    size='small'
+                                                    color='success'
+                                                    onClick={
+                                                        () => handleAcceptContract(
+                                                            contractOwner?.negotiations[0]?.bookings[0]
+                                                                ?.contracts[0]?.contractId
+                                                        )
+                                                    }
+                                                >
+                                                    Đạt thỏa thuận
+                                                </Button>
+                                            </div>
+
+                                            <div className='booking-store-btn-reContract'>
+                                                <Button
+                                                    variant='contained'
+                                                    size='small'
+                                                    color='error'
+                                                    onClick={
+                                                        () => handleErrorContract(
+                                                            contractOwner?.negotiations[0]?.bookings[0]?.contracts[0]?.contractId
+                                                        )
+                                                    }
+                                                >
+                                                    Sai hợp đồng
+                                                </Button>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <></>
+                                    )}
+
                                 </div>
                             </div>
                             <div className='image-contract'>

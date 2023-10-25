@@ -7,9 +7,9 @@ import StoreMotorListComponent from './component/StoreMotorListComponent';
 const StoreMotorList = () => {
     return (
         <Box display="flex" flexDirection="column" height="100vh" width="100%">
-            {/* <Box flexGrow={1} zIndex={2}> */}
-            <StoreMenuComponent />
-            {/* </Box> */}
+            <Box flexGrow={1} zIndex={2}>
+                <StoreMenuComponent />
+            </Box>
             <Box flexGrow={10}>
                 <StoreMotorListComponent />
             </Box>

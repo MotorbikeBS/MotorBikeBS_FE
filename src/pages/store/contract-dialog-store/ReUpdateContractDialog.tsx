@@ -16,13 +16,14 @@ import React from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import './style/_style.scss';
 import { useAppDispatch } from '../../../services/store/store';
-import { createContractByStore } from '../../../services/features/contract/contractSlice';
+import { createContractByStore, reUpdateContractByStore } from '../../../services/features/contract/contractSlice';
 
-interface CreateContractDialogProps {
+interface ReupdateContractDialogProps {
     open: boolean;
-    bookingId: number | null
+    contractId: number | null
     openSubmit: boolean;
     openCancle: boolean;
+    loadData: () => void
     onOpenSubmitDialog: () => void;
     onCloseSubmitDialog: () => void;
     onOpenCancelDialog: () => void;
@@ -30,17 +31,18 @@ interface CreateContractDialogProps {
     onClose: () => void;
 }
 
-interface ICreateContractForm {
-    bookingId: number | null
+interface IReUpdateContractForm {
+    contractId: number | null
     content: string
     images: FileList
 }
 
-const ReUpdateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
+const ReUpdateContractDialogByStore: React.FC<ReupdateContractDialogProps> = ({
     open,
-    bookingId,
+    contractId,
     openSubmit,
     openCancle,
+    loadData,
     onOpenCancelDialog,
     onOpenSubmitDialog,
     onCloseSubmitDialog,
@@ -49,9 +51,9 @@ const ReUpdateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
 }) => {
     const dispatch = useAppDispatch()
 
-    const form = useForm<ICreateContractForm>({
+    const form = useForm<IReUpdateContractForm>({
         defaultValues: {
-            bookingId: null,
+            contractId: null,
             content: '',
             images: undefined
         }
@@ -71,7 +73,7 @@ const ReUpdateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
         onOpenCancelDialog();
     };
 
-    const onSubmit = (data: ICreateContractForm) => {
+    const onSubmit = (data: IReUpdateContractForm) => {
         const formData = new FormData();
         formData.append('content', data.content);
         if (data.images && data.images.length > 0) {
@@ -79,19 +81,18 @@ const ReUpdateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
                 formData.append('images', data.images[i]);
             }
         }
-        dispatch(createContractByStore({
-            bookingId: Number(bookingId),
+        dispatch(reUpdateContractByStore({
+            contractId: Number(contractId),
             data: formData
         }))
             .unwrap()
             .then(() => {
-                // loadData();
+                loadData();
                 handleCloseDialog();
             })
             .catch((error) => {
                 onCloseSubmitDialog()
             })
-        console.log(bookingId)
 
     }
 
@@ -105,7 +106,7 @@ const ReUpdateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
                     <Typography
                         variant='h4'
                     >
-                        Tạo hợp đồng (bảng mềm)
+                        Cập nhậthợp đồng (bảng mềm)
                     </Typography>
                 </DialogTitle>
                 <DialogContent>
@@ -173,7 +174,7 @@ const ReUpdateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
                                 className="btn-create-contract"
                                 onClick={handleOpenSubmitDialog}
                             >
-                                Tạo Hợp Đồng
+                                Cập nhật hợp đồng
                             </Button>
                         </form>
                     </Box>

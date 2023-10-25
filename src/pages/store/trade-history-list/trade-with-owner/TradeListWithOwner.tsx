@@ -4,39 +4,47 @@ import './style/_style.scss'
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store'
 import useFormatCurrency from '../../../../hooks/useFormatCurrency'
 import { clearContract, getAllContract } from '../../../../services/features/contract/contractSlice'
-import CreateContractDialogByStore from '../../contract-dialog-store/CreateContractDialogByStore'
 import TradeHistoryImgeDialog from '../../../../common-components/trade-history-img-dialog/TradeHistoryImgeDialog'
+import ReUpdateContractDialogByStore from '../../contract-dialog-store/ReUpdateContractDialog'
 
 const TradeListWithOwner = () => {
     const dispatch = useAppDispatch()
     const formattedCurrency = useFormatCurrency()
     const { getContracts } = useAppSelector((state) => state.contract)
 
-    const [bookingIdDialog, setBookingIdDialog] = React.useState<number | null>(null)
-    const [isOpenContractDialog, setIsOpenContractDialog] = React.useState(false)
-    const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false)
-    const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
-
     const [fullImageContract, setFullImageContract] = React.useState(false);
     const [imageArray, setImageArray] = React.useState<string[]>([]);
 
 
-    React.useEffect(() => {
+    const [contractIdDialog, setContractIdDialog] = React.useState<number | null>(null)
+    const [isOpenContractDialog, setIsOpenContractDialog] = React.useState(false)
+    const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false)
+    const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
+
+
+    const loadData = () => {
         dispatch(clearContract())
         dispatch(getAllContract())
+    }
+    React.useEffect(() => {
+        loadData()
     }, [dispatch])
 
-    const handleOpenCreateContractDialog = (bookingId: number) => {
-        setBookingIdDialog(bookingId)
-        setIsOpenContractDialog(true)
-        console.log(bookingId)
-    }
-    const handleCloseCreateContractDialog = () => {
-        setIsOpenContractDialog(false)
-        setIsOpenSubmitDialog(false);
-        setIsOpenCancelDialog(false);
+    const handleOpenFullImage = (imageUrls: string[]) => {
+        setImageArray(imageUrls);
+        setFullImageContract(true);
     };
 
+    const handleOpenReUpdateContractDialog = (contractId: number) => {
+        setContractIdDialog(contractId)
+        setIsOpenContractDialog(true)
+        console.log(contractId)
+    }
+    const handleCloseReUpdateContractDialog = () => {
+        setIsOpenContractDialog(false);
+        setIsOpenSubmitDialog(false)
+        setIsOpenCancelDialog(false)
+    }
     const handleOpenSubmitDialog = () => {
         setIsOpenSubmitDialog(true);
     };
@@ -49,11 +57,6 @@ const TradeListWithOwner = () => {
     };
     const handleCloseCancelDialog = () => {
         setIsOpenCancelDialog(false);
-    };
-
-    const handleOpenFullImage = (imageUrls: string[]) => {
-        setImageArray(imageUrls);
-        setFullImageContract(true);
     };
 
 
@@ -104,7 +107,7 @@ const TradeListWithOwner = () => {
                                 <div className='tag-motorbike-status'>
                                     <Typography variant='subtitle1'>
                                         {contract?.motor?.motorStatus?.title === 'CONSIGNMENT' ? 'KÝ GỬI' :
-                                            contract?.motor?.motorStatus?.title === 'LIVELIHOOD' ? 'KHÔNG KÝ GỬI' : 'KHÔNG XÁC ĐỊNH'}
+                                            contract?.motor?.motorStatus?.title === 'LIVELIHOOD' ? 'KHÔNG KÝ GỬI' : 'ĐÃ CHUYỂN VÀO KHO'}
                                     </Typography>
                                 </div>
                             </div>
@@ -170,9 +173,12 @@ const TradeListWithOwner = () => {
                                             variant='contained'
                                             size='small'
                                             color='warning'
-                                            onClick={() => handleOpenCreateContractDialog(
-                                                contract?.negotiations[0]?.bookings[0]?.bookingId
-                                            )}
+                                            onClick={() =>
+                                                handleOpenReUpdateContractDialog(
+                                                    contract?.negotiations[0]?.bookings[0]?.contracts[0]?.contractId
+                                                )
+
+                                            }
                                         >
                                             Tải Lại hợp đồng
                                         </Button>
@@ -203,7 +209,12 @@ const TradeListWithOwner = () => {
                     </Box>
                 </Paper>
             ))}
-            <CreateContractDialogByStore
+            <TradeHistoryImgeDialog
+                isOpen={fullImageContract}
+                onClose={() => setFullImageContract(false)}
+                imageUrls={imageArray}
+            />
+            <ReUpdateContractDialogByStore
                 open={isOpenContractDialog}
                 openSubmit={isOpenSubmitDialog}
                 openCancle={isOpenCancelDialog}
@@ -211,13 +222,9 @@ const TradeListWithOwner = () => {
                 onCloseSubmitDialog={handleCloseSubmitDialog}
                 onOpenCancelDialog={handleOpenCancelDialog}
                 onCloseCancelDialog={handleCloseCancelDialog}
-                onClose={handleCloseCreateContractDialog}
-                bookingId={bookingIdDialog}
-            />
-            <TradeHistoryImgeDialog
-                isOpen={fullImageContract}
-                onClose={() => setFullImageContract(false)}
-                imageUrls={imageArray}
+                onClose={handleCloseReUpdateContractDialog}
+                contractId={contractIdDialog}
+                loadData={loadData}
             />
         </Container >
     )
