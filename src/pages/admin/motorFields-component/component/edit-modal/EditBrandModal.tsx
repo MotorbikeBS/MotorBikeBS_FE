@@ -100,7 +100,8 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
                 loadData();
                 toast.success('Chỉnh sửa thành công!');
                 handleCloseDialog();
-            });
+            })
+            .catch((e) => {});
     };
     return (
         <div>

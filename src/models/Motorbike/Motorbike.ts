@@ -25,6 +25,7 @@ export interface IMotorbike {
         dob: Date;
         idCard: string;
         address: string;
+        roleId?: number;
     };
     registrationImage: string;
     motorbikeImages: IMotorImages[];
