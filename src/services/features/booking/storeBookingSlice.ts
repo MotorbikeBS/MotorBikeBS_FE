@@ -7,6 +7,7 @@ import axios from 'axios';
 import {
     getAllStoreBookingOwnerEndPoind,
     storeBookingEndPoint,
+    storeCancelBookingEndPoint,
 } from '../../config/api-config';
 import { toast } from 'react-toastify';
 
@@ -75,6 +76,34 @@ export const getAllBookingOwnerExchange = createAsyncThunk<
     }
 });
 
+export const cancleBookingByStore = createAsyncThunk<
+    IBookingByStore,
+    { bookingId: number }
+>('booking/cancelBookingByStore', async (data, thunkAPI) => {
+    const { bookingId } = data;
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.put(
+            `${storeCancelBookingEndPoint}?bookingId=${bookingId}`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        toast.success(`${response.data.message}`);
+        return response.data;
+    } catch (error: any) {
+        if (error.response) {
+            toast.error(`${error.response.data?.errorMessages}`);
+            return thunkAPI.rejectWithValue({
+                error: error.response?.data?.errorMessages,
+            });
+        }
+    }
+});
+
 export const storeBookingSlice = createSlice({
     name: 'storeBooking',
     initialState,
@@ -91,13 +120,10 @@ export const storeBookingSlice = createSlice({
         builder.addCase(storeBookingOwnerExchange.pending, (state) => {
             state.loading = true;
         });
-        builder.addCase(
-            storeBookingOwnerExchange.fulfilled,
-            (state, action) => {
-                state.loading = false;
-                state.storeBooking = action.payload;
-            },
-        );
+        builder.addCase(storeBookingOwnerExchange.fulfilled, (state) => {
+            state.loading = false;
+            state.error = null;
+        });
         builder.addCase(storeBookingOwnerExchange.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
@@ -119,6 +145,17 @@ export const storeBookingSlice = createSlice({
                 state.error = action.payload;
             },
         );
+        builder.addCase(cancleBookingByStore.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(cancleBookingByStore.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = null;
+        });
+        builder.addCase(cancleBookingByStore.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
     },
 });
 

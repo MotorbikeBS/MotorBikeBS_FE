@@ -7,7 +7,7 @@ import './style/_style.scss'
 import { EmailOutlined, PhoneIphoneOutlined, PlaceOutlined, StoreOutlined } from '@mui/icons-material'
 import TradeHistoryImgeDialog from '../../../common-components/trade-history-img-dialog/TradeHistoryImgeDialog'
 
-const TradeHistoryWithStoreComponent = () => {
+const ContractListWithStoreComponent = () => {
     const dispatch = useAppDispatch()
     const { getContracts } = useAppSelector((state) => state.contract)
     const formattedCurrency = useFormatCurrency()
@@ -312,4 +312,4 @@ const TradeHistoryWithStoreComponent = () => {
     )
 }
 
-export default TradeHistoryWithStoreComponent
+export default ContractListWithStoreComponent

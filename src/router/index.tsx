@@ -33,8 +33,8 @@ import BookingListStore from '../pages/store/booking-list/BookingListStore';
 import MotorBikeDetailForStore from '../pages/customer/motorbike-detail/MotorBikeDetailForStore';
 import MotorFields from '../pages/admin/motorFields-component/MotorFields';
 import OwnerMotorAcceptNegotitationDetail from '../pages/store/motor-owner-exchange/OwnerMotorAcceptNegotiationDetail';
-import TradeHistoryList from '../pages/store/trade-history-list/TradeHistoryList';
-import ListTradeHistory from '../pages/owner/trade-history-with-store/ListTradeHistory';
+import ContractHistoryList from '../pages/store/contract-list/ContractHistoryList';
+import ContractHistoryWithStore from '../pages/owner/contract-list-with-store/ContractHistoryWithStore';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -124,8 +124,8 @@ const AppRoutes = () => {
                         element={<BookingListStore />}
                     />
                     <Route
-                        path='/store/trade-history'
-                        element={<TradeHistoryList />}
+                        path='/store/contract'
+                        element={<ContractHistoryList />}
                     />
                     <Route path="*" element={<PageNotFound />} />
                 </>
@@ -151,7 +151,7 @@ const AppRoutes = () => {
                     />
                     <Route path="/owner/motors" element={<OwnerMotorList />} />
                     <Route path='/owner/my-booking' element={<BookingListOwner />} />
-                    <Route path='/owner/my-trade-history' element={<ListTradeHistory />} />
+                    <Route path='/owner/contract' element={<ContractHistoryWithStore />} />
                 </>
             )}
             {/* ============================================== ROUTE CUSTOMER ================================================== */}

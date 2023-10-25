@@ -6,9 +6,8 @@ import FooterComponent from '../../../common-components/footer-component/FooterC
 const StoreHome = () => {
     return (
         <Box display="flex" flexDirection="column" height="100vh" width="100%">
-            {/* <Box flexGrow={1} zIndex={2}> */}
-                <StoreMenuComponent />
-            {/* </Box> */}
+            <StoreMenuComponent />
+
             <Box flexGrow={10} sx={{ background: 'yellow' }}>
                 <Typography variant="h5">Store Home</Typography>
             </Box>

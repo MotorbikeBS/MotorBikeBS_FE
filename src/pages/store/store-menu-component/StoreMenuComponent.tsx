@@ -39,18 +39,13 @@ const pages = [
         to: '/motorbike-list',
         name: 'DS.Xe',
     },
-
-    {
-        to: '/request-list',
-        name: 'DS. Yêu cầu',
-    },
     {
         to: '/booking-list',
         name: 'DS. Lịch hẹn',
     },
     {
-        to: '/store/trade-history',
-        name: 'Lịch Sử Giao Dịch',
+        to: '/store/contract',
+        name: 'Hợp đồng',
     },
 ];
 

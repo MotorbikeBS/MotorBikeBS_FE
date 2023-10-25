@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
-import { Box, Button, Container, Paper, Typography } from '@mui/material';
-import { clearStoreBooking, getAllBookingOwnerExchange } from '../../../../services/features/booking/storeBookingSlice';
+import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, Paper, Typography } from '@mui/material';
+import { cancleBookingByStore, clearStoreBooking, getAllBookingOwnerExchange } from '../../../../services/features/booking/storeBookingSlice';
 import './style/_style.scss';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import CreateContractDialogByStore from '../../contract-dialog-store/CreateContractDialogByStore';
@@ -16,10 +16,16 @@ const OwnerBookingListComponent = () => {
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false)
     const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
 
+    const [isOpenCancelBookingDialog, setIsOpenCancelBookingDialog] = React.useState(false);
+
     useEffect(() => {
+        loadData();
+    }, [dispatch]);
+
+    const loadData = () => {
         dispatch(clearStoreBooking());
         dispatch(getAllBookingOwnerExchange());
-    }, [dispatch]);
+    }
 
     const handleOpenCreateContractDialog = (bookingId: number) => {
         setBookingIdDialog(bookingId)
@@ -45,6 +51,27 @@ const OwnerBookingListComponent = () => {
     const handleCloseCancelDialog = () => {
         setIsOpenCancelDialog(false);
     };
+
+    const handleOpenCancleBooking = (bookingId: number) => {
+        setBookingIdDialog(bookingId)
+        setIsOpenCancelBookingDialog(true)
+    }
+    const handleCloseCancelBookingDialog = () => {
+        setIsOpenCancelBookingDialog(false)
+    }
+    const handleConfirmCancelBooking = (bookingId: number | null) => {
+        if (bookingId !== null) {
+            dispatch(cancleBookingByStore({ bookingId }))
+                .then(() => {
+                    loadData()
+                    setTimeout(() => {
+                        setIsOpenCancelBookingDialog(false)
+                    }, 1000)
+                })
+        }
+    }
+
+
     return (
         <Container className="container-xl" maxWidth="lg">
             <Typography className="h4-heading" variant="h4" gutterBottom>
@@ -141,21 +168,17 @@ const OwnerBookingListComponent = () => {
                                         variant='contained'
                                         size='small'
                                         color='error'
-                                    // onClick={() => handleOpenCreateContractDialog(
-                                    //     booking?.negotiations[0]?.bookings[0]?.bookingId
-                                    // )}
+                                        onClick={
+                                            () => handleOpenCancleBooking(
+                                                booking?.negotiations[0]?.bookings[0]?.bookingId
+                                            )
+                                        }
                                     >
                                         Hủy Đặt Lịch
                                     </Button>
                                 </div>
                             </div>
-                            {/* <div className='image-contract'>
-                                <div className="image-owner-info-header">
-                                    <Typography variant='h5' sx={{ color: '#f0c413' }}>
-                                        Hợp đồng</Typography>
-                                </div>
-                                <img src='https://i0.wp.com/www.dichthuatsms.com/wp-content/uploads/2021/11/Hop-dong-thi-cong-xay-dung-song-ngu-Anh-Viet-1.jpg?fit=1654%2C2339&ssl=1' alt='Hợp đồng' />
-                            </div> */}
+
                         </Box>
                     </Box>
                 </Paper>
@@ -171,6 +194,43 @@ const OwnerBookingListComponent = () => {
                 onClose={handleCloseCreateContractDialog}
                 bookingId={bookingIdDialog}
             />
+            <Dialog
+                open={isOpenCancelBookingDialog}
+                onClose={handleCloseCancelBookingDialog}
+            >
+                <DialogTitle fontWeight='700'>
+                    Xác nhận hủy lịch hẹn
+                </DialogTitle>
+                <DialogContent>
+                    <Typography
+                        variant='h5'
+
+                    >
+                        Bạn có chắc chắn muốn hủy lịch hay không?
+                    </Typography>
+                    <Typography
+                        variant='h6'
+                        color='red'
+                    >
+                        Hãy thông báo cho chủ xe
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={handleCloseCancelBookingDialog}
+                        color='error'
+                    >
+                        Hủy
+                    </Button>
+                    <Button
+                        onClick={() =>
+                            handleConfirmCancelBooking(bookingIdDialog)}
+                        color='success'
+                    >
+                        Xác nhận
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Container>
     );
 };

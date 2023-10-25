@@ -37,8 +37,8 @@ const pages = [
         name: 'Lịch hẹn',
     },
     {
-        to: '/owner/my-trade-history',
-        name: 'Lịch sử giao dịch',
+        to: '/owner/contract',
+        name: 'Hợp đồng',
     },
 
 ];

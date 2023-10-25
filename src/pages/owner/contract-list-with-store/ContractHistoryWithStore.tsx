@@ -4,7 +4,7 @@ import OwnerMenuComponent from '../owner-menu-component/OwnerMenuComponent'
 import TradeHistoryWithStoreComponent from './TradeHistoryWithStoreComponent'
 import FooterComponent from '../../../common-components/footer-component/FooterComponent'
 
-const ListTradeHistory = () => {
+const ContractHistoryWithStore = () => {
     return (
         <>
             <Box
@@ -31,4 +31,4 @@ const ListTradeHistory = () => {
     )
 }
 
-export default ListTradeHistory
+export default ContractHistoryWithStore

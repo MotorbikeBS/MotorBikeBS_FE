@@ -7,7 +7,7 @@ import { clearContract, getAllContract } from '../../../../services/features/con
 import TradeHistoryImgeDialog from '../../../../common-components/trade-history-img-dialog/TradeHistoryImgeDialog'
 import ReUpdateContractDialogByStore from '../../contract-dialog-store/ReUpdateContractDialog'
 
-const TradeListWithOwner = () => {
+const ContractListWithOwner = () => {
     const dispatch = useAppDispatch()
     const formattedCurrency = useFormatCurrency()
     const { getContracts } = useAppSelector((state) => state.contract)
@@ -66,7 +66,7 @@ const TradeListWithOwner = () => {
                 variant="h4"
                 gutterBottom
             >
-                Danh sách giao dịch với chủ xe
+                Danh sách hợp đồng với chủ xe
             </Typography>
             {getContracts?.map((contract) => (
                 <Paper
@@ -230,4 +230,4 @@ const TradeListWithOwner = () => {
     )
 }
 
-export default TradeListWithOwner
+export default ContractListWithOwner;
