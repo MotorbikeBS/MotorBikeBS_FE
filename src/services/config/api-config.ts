@@ -84,3 +84,11 @@ export const getBookingByIDEndPoint = `${BASE_URL}/api/booking`;
 export const acceptBookingEndPoint = `${BASE_URL}/api/booking/acceptbooking`;
 export const rejectBookingEndPoint = `${BASE_URL}/api/booking/rejectbooking`;
 export const cancelBookingEndPoint = `${BASE_URL}/api/booking/cancelbooking`;
+
+//Bill
+export const getBillByStoreIdEndPoint = `${BASE_URL}/api/bill/getByStoreid`;
+export const getBillByUserIDEndPoint = `${BASE_URL}/api/bill/getByUserId`;
+export const getBillByIdEndPoint = `${BASE_URL}/api/bill/getBillId`;
+export const createBillInStockEndPoint = `${BASE_URL}/api/bill/CreateBill-InStock`;
+export const createBillConsignmentEndPoint = `${BASE_URL}/api/bill/CreateBill-Consignment`;
+export const createBillNonConsignmentEndPoint = `${BASE_URL}/api/bill/CreateBill-nonConsignment`;
