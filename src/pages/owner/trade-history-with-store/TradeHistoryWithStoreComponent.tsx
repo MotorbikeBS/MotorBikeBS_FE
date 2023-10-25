@@ -2,7 +2,7 @@ import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogTit
 import React from 'react'
 import { useAppDispatch, useAppSelector } from '../../../services/store/store'
 import useFormatCurrency from '../../../hooks/useFormatCurrency'
-import { cancelContractByOwner, clearContract, getAllContract } from '../../../services/features/contract/contractSlice'
+import { acceptContractByOwner, cancelContractByOwner, clearContract, getAllContract } from '../../../services/features/contract/contractSlice'
 import './style/_style.scss'
 import { EmailOutlined, PhoneIphoneOutlined, PlaceOutlined, StoreOutlined } from '@mui/icons-material'
 import TradeHistoryImgeDialog from '../../../common-components/trade-history-img-dialog/TradeHistoryImgeDialog'
@@ -15,7 +15,8 @@ const TradeHistoryWithStoreComponent = () => {
     const [fullImageContract, setFullImageContract] = React.useState(false);
     const [imageArray, setImageArray] = React.useState<string[]>([]);
 
-    const [isOpenErrorContractDialo, setIsOpenErrorContractDialog] = React.useState(false);
+    const [isOpenErrorContractDialog, setIsOpenErrorContractDialog] = React.useState(false);
+    const [isOpenAcceptContractDialog, setIsOpenAcceptContractDialog] = React.useState(false)
     const [contractIdDialog, setContractIdDialog] = React.useState<number | null
     >(null);
 
@@ -47,6 +48,25 @@ const TradeHistoryWithStoreComponent = () => {
                     loadData()
                     setTimeout(() => {
                         setIsOpenErrorContractDialog(false)
+                    }, 1000)
+                })
+        }
+    }
+
+    const handleAcceptContract = (contractId: number) => {
+        setContractIdDialog(contractId)
+        setIsOpenAcceptContractDialog(true)
+    }
+    const handleCloseAccectContractDialog = () => {
+        setIsOpenAcceptContractDialog(false)
+    }
+    const handleConfirmAcceptContract = (contractId: number | null) => {
+        if (contractId !== null) {
+            dispatch(acceptContractByOwner({ contractId }))
+                .then(() => {
+                    loadData()
+                    setTimeout(() => {
+                        setIsOpenAcceptContractDialog(false)
                     }, 1000)
                 })
         }
@@ -147,7 +167,7 @@ const TradeHistoryWithStoreComponent = () => {
                                             }}
                                         >
                                             {contractOwner?.negotiations[0]?.bookings[0]?.contracts[0]?.status === 'PENDING' ? 'CHỜ ĐỢI' :
-                                                contractOwner?.negotiations[0]?.bookings[0]?.contracts[0]?.status === 'ACCEPT' ? 'ĐÃ DUYỆT/SẼ TỚI' :
+                                                contractOwner?.negotiations[0]?.bookings[0]?.contracts[0]?.status === 'ACCEPT' ? 'ĐÃ DUYỆT' :
                                                     'QUÁ HẠN/CHƯA XÁC ĐỊNH'
                                             }
                                         </Typography>
@@ -167,10 +187,15 @@ const TradeHistoryWithStoreComponent = () => {
                                             variant='contained'
                                             size='small'
                                             color='success'
+                                            onClick={
+                                                () => handleAcceptContract(
+                                                    contractOwner?.negotiations[0]?.bookings[0]
+                                                        ?.contracts[0]?.contractId
+                                                )
+                                            }
                                         >
                                             Đạt thỏa thuận
                                         </Button>
-
                                     </div>
                                     <div className='booking-store-btn-reContract'>
                                         <Button
@@ -216,7 +241,7 @@ const TradeHistoryWithStoreComponent = () => {
                 imageUrls={imageArray}
             />
             <Dialog
-                open={isOpenErrorContractDialo}
+                open={isOpenErrorContractDialog}
                 onClose={handleCloseContractErrorDialog}
             >
                 <DialogTitle>Hợp đồng bị lỗi? Yêu cầu cập nhật lại.</DialogTitle>
@@ -242,6 +267,39 @@ const TradeHistoryWithStoreComponent = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
+
+            <Dialog
+                open={isOpenAcceptContractDialog}
+                onClose={handleCloseAccectContractDialog}
+            >
+                <DialogTitle fontWeight='700'>
+                    Bạn đã đọc kỹ hợp đồng hay chưa? Xác nhận đã nhận được hợp đồng.
+                </DialogTitle>
+                <DialogContent>
+                    <Typography
+                        variant='h6'
+
+                    >
+                        Bạn có chắc muốn xác nhận đã nhận được hợp đồng?
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={handleCloseAccectContractDialog}
+                        color='error'
+                    >
+                        Hủy
+                    </Button>
+                    <Button
+                        onClick={() =>
+                            handleConfirmAcceptContract(contractIdDialog)}
+                        color='success'
+                    >
+                        Xác nhận
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
         </Container>
     )
 }
