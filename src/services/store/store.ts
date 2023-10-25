@@ -10,7 +10,6 @@ import motorbikeSlice from '../features/motorbike/motorbikeSlice';
 import motorFiledsSlice from '../features/motorbike/motorFields';
 import ownerSlice from '../features/owner/ownerSlice';
 import wishListSlice from '../features/motorbike/wishListSlice';
-import bookingSlice from '../features/booking/bookingSlice';
 import negotiationSlice from '../features/negotiation/negotiationSlice';
 import storeBookingSlice from '../features/booking/storeBookingSlice';
 import contractSlice from '../features/contract/contractSlice';
@@ -29,10 +28,10 @@ const persistConfig = {
         'motorFields',
         'wishlist',
         'negotiation',
-        // 'booking',
+
         'storeBooking',
         'contract',
-        'bill'
+        'bill',
     ],
 };
 
@@ -45,7 +44,6 @@ const rootReducer = combineReducers({
     motorFields: motorFiledsSlice,
     wishlist: wishListSlice,
     negotiation: negotiationSlice,
-    // booking: bookingSlice,
     storeBooking: storeBookingSlice,
     contract: contractSlice,
     bill: billSlice,

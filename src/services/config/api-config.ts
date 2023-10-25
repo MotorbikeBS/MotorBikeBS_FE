@@ -79,13 +79,12 @@ export const acceptContractEndPoint = `${BASE_URL}/api/contract/acceptcontract`;
 export const cancelContractEndPoint = `${BASE_URL}/api/contract/cancelcontract`;
 export const reUpdateContractEndPoint = `${BASE_URL}/api/contract/reupcontract`;
 
-//Booking
-export const storeBookingWithOwnerExchangeEndPoint = `${BASE_URL}/api/booking/storebookingowner`;
-export const getAllBookingByOwnerEndPoint = `${BASE_URL}/api/booking/getbookingrequest`;
-export const getBookingByIDEndPoint = `${BASE_URL}/api/booking`;
-export const acceptBookingEndPoint = `${BASE_URL}/api/booking/acceptbooking`;
-export const rejectBookingEndPoint = `${BASE_URL}/api/booking/rejectbooking`;
-export const cancelBookingEndPoint = `${BASE_URL}/api/booking/cancelbooking`;
+//Buyer Booking with Store
+export const buyerBookingNonConsignmentEndPoint = `${BASE_URL}/api/buyerbooking/bookingnonconsignment`;
+export const getBookingBuyerEndPoint = `${BASE_URL}/api/buyerbooking/getbookingrequest`;
+export const acceptBookingBuyerEndPoint = `${BASE_URL}/api/buyerbooking/acceptbooking`;
+export const rejectBookingBuyerEndPoint = `${BASE_URL}/api/buyerbooking/rejectbooking`;
+export const cancelBookingBuyerEndPoint = `${BASE_URL}/api/buyerbooking/cancelbooking`;
 
 //Bill
 export const getBillByStoreIdEndPoint = `${BASE_URL}/api/bill/getByStoreid`;
