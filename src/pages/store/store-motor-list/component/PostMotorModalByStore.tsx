@@ -59,6 +59,7 @@ const PostMotorModalByStore: React.FC<PostDialogProps> = ({
 }) => {
     const dispatch = useAppDispatch();
     const { account } = useAppSelector((state) => state.account);
+    const { motorbike } = useAppSelector((state) => state.motorbikes);
 
     const [motorStatus, setMotorStatus] = useState('');
 
@@ -96,7 +97,7 @@ const PostMotorModalByStore: React.FC<PostDialogProps> = ({
                 handleCloseDialog();
             })
             .catch((error) => {
-                toast.error(error?.error[0]);
+                // toast.error(error?.error[0]);
                 console.log(error);
             });
     };
@@ -161,23 +162,6 @@ const PostMotorModalByStore: React.FC<PostDialogProps> = ({
                                                         Model
                                                     </TableCell>
                                                     <TableCell className="header-table-content">
-                                                        {/* <FormControl fullWidth>
-                                                            <InputLabel id="demo-simple-select-label">
-                                                                Model
-                                                            </InputLabel>
-                                                            <Select
-                                                                labelId="demo-simple-select-label"
-                                                                label="Model"
-                                                                value={model}
-                                                                onChange={
-                                                                    handleChangeModel
-                                                                }
-                                                            >
-                                                                <MenuItem value="1">
-                                                                    @
-                                                                </MenuItem>
-                                                            </Select>
-                                                        </FormControl> */}
                                                         <TextField
                                                             label="Model"
                                                             type="text"
@@ -281,11 +265,19 @@ const PostMotorModalByStore: React.FC<PostDialogProps> = ({
                                                                 }
                                                             >
                                                                 <MenuItem value="1">
-                                                                    Xe có tại cửa hàng
+                                                                    Xe có tại
+                                                                    cửa hàng
                                                                 </MenuItem>
-                                                                <MenuItem value="5">
-                                                                    Xe không có ở cửa hàng
-                                                                </MenuItem>
+                                                                {motorbike
+                                                                    ?.owner
+                                                                    ?.roleId !==
+                                                                    2 && (
+                                                                    <MenuItem value="5">
+                                                                        Xe không
+                                                                        có ở cửa
+                                                                        hàng
+                                                                    </MenuItem>
+                                                                )}
                                                             </Select>
                                                         </FormControl>
                                                     </TableCell>

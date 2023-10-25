@@ -103,7 +103,9 @@ const CreateModelModal: React.FC<CreateDialogProps> = ({
                 loadData();
                 toast.success('Thêm Model thành công!');
                 handleCloseDialog();
-            });
+            }).catch((e)=>{
+                
+            })
         console.log(data);
     };
 

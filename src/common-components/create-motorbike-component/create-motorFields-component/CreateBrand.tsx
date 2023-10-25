@@ -89,7 +89,8 @@ const CreateBrandModal: React.FC<CreateDialogProps> = ({
                 toast.success('Thêm Brand thành công!');
                 toast.warning('Bạn vui lòng chờ admin duyệt!');
                 handleCloseDialog();
-            });
+            })
+            .catch((e) => {});
     };
 
     return (

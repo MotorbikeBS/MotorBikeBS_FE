@@ -14,6 +14,7 @@ import bookingSlice from '../features/booking/bookingSlice';
 import negotiationSlice from '../features/negotiation/negotiationSlice';
 import storeBookingSlice from '../features/booking/storeBookingSlice';
 import contractSlice from '../features/contract/contractSlice';
+import billSlice from '../features/bill/billSlice';
 
 // Định nghĩa cấu hình persist
 const persistConfig = {
@@ -31,6 +32,7 @@ const persistConfig = {
         // 'booking',
         'storeBooking',
         'contract',
+        'bill'
     ],
 };
 
@@ -46,6 +48,7 @@ const rootReducer = combineReducers({
     // booking: bookingSlice,
     storeBooking: storeBookingSlice,
     contract: contractSlice,
+    bill: billSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

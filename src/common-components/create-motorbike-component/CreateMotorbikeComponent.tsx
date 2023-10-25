@@ -157,6 +157,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                 loadData();
                 toast.success('Thêm xe thành công.');
                 handleCloseDialog();
+                form.reset()
             }).catch(error => {
                 onCloseSubmitDialog()
             })

@@ -105,7 +105,8 @@ const CreateModelModal: React.FC<CreateDialogProps> = ({
                 toast.success('Thêm Model thành công!');
                 toast.warning('Bạn vui lòng chờ admin duyệt!');
                 handleCloseDialog();
-            });
+            })
+            .catch((e) => {});
         // console.log(data);
     };
 

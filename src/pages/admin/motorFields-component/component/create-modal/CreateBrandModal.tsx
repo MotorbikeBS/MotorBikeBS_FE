@@ -88,7 +88,8 @@ const CreateBrandModal: React.FC<CreateDialogProps> = ({
                 loadData();
                 toast.success('Thêm Brand thành công!');
                 handleCloseDialog();
-            });
+            })
+            .catch((e) => {});
     };
 
     return (

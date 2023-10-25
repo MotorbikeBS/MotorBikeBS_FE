@@ -88,7 +88,8 @@ const CreateTypeModal: React.FC<CreateDialogProps> = ({
                 loadData();
                 toast.success('Thêm loại xe thành công!');
                 handleCloseDialog();
-            });
+            })
+            .catch((e) => {});
     };
 
     return (
