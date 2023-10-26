@@ -117,8 +117,10 @@ const ContractListWithStoreComponent = () => {
                                 </div>
                                 <div className='tag-motorbike-status'>
                                     <Typography variant='subtitle1'>
-                                        {contractOwner?.motor?.motorStatus?.title === 'CONSIGNMENT' ? 'KÝ GỬI' :
-                                            contractOwner?.motor?.motorStatus?.title === 'LIVELIHOOD' ? 'KHÔNG KÝ GỬI' : 'Đã thỏa thuận'}
+                                        {contractOwner?.motor?.motorStatus?.title === 'CONSIGNMENT' ? 'ĐÃ THỎA THUẬN' :
+                                            contractOwner?.motor?.motorStatus?.title === 'LIVELIHOOD' ? 'ĐÃ THỎA THUẬN' :
+                                                contractOwner?.motor?.motorStatus?.title === 'STORAGE' ? 'ĐÃ THỎA THUẬN'
+                                                    : 'CHƯA XÁC ĐỊNH'}
                                     </Typography>
                                 </div>
                             </div>
