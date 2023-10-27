@@ -106,8 +106,8 @@ const ContractListWithOwner = () => {
                                 </div>
                                 <div className='tag-motorbike-status'>
                                     <Typography variant='subtitle1'>
-                                        {contract?.motor?.motorStatus?.title === 'CONSIGNMENT' ? 'ĐÃ BÁN - KÝ GỬI' :
-                                            contract?.motor?.motorStatus?.title === 'LIVELIHOOD' ? 'ĐÃ BÁN - KHÔNG KÝ GỬI' :
+                                        {contract?.motor?.motorStatus?.title === 'CONSIGNMENT' ? 'ĐÃ ĐĂNG BÁN - KÝ GỬI' :
+                                            contract?.motor?.motorStatus?.title === 'LIVELIHOOD' ? 'ĐÃ ĐĂNG BÁN - KHÔNG KÝ GỬI' :
                                                 contract?.motor?.motorStatus?.title === 'STORAGE' ? 'ĐÃ CHUYỂN VÀO KHO' : 'KHÔNG XÁC ĐỊNH'}
                                     </Typography>
                                 </div>

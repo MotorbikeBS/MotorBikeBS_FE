@@ -264,10 +264,25 @@ const PostMotorModalByStore: React.FC<PostDialogProps> = ({
                                                                     handleChangeStatus
                                                                 }
                                                             >
-                                                                <MenuItem value="1">
-                                                                    Xe có tại
-                                                                    cửa hàng
-                                                                </MenuItem>
+                                                                {motorbike
+                                                                    ?.owner
+                                                                    ?.roleId ===
+                                                                    2 && (
+                                                                    <MenuItem value="1">
+                                                                        Xe có
+                                                                        sẵn
+                                                                    </MenuItem>
+                                                                )}
+                                                                {motorbike
+                                                                    ?.owner
+                                                                    ?.roleId !==
+                                                                    2 && (
+                                                                    <MenuItem value="4">
+                                                                        Xe có
+                                                                        sẵn - Kí
+                                                                        gửi
+                                                                    </MenuItem>
+                                                                )}
                                                                 {motorbike
                                                                     ?.owner
                                                                     ?.roleId !==

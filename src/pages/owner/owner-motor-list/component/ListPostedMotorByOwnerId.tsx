@@ -74,9 +74,13 @@ const ListPostedMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
         dispatch(getMotorByOwnerId({ ownerId: Number(account?.userId) }));
     }, [dispatch, account?.userId]);
 
-    const motorbikesByOwnerStorage = motorbikesByOwner && motorbikesByOwner?.filter(
-        (motor) => motor?.motorStatus?.motorStatusId !== 3,
-    );
+    const motorbikesByOwnerStorage =
+        motorbikesByOwner &&
+        motorbikesByOwner?.filter(
+            (motor) =>
+                motor?.storeId === null &&
+                motor?.motorStatus?.motorStatusId !== 3,
+        );
 
     const rows = useMemo(() => {
         return (motorbikesByOwnerStorage ?? []).map((motor: IMotorbike) => ({
@@ -162,7 +166,10 @@ const ListPostedMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
                     <Button onClick={handleCloseDialog} color="error">
                         Hủy bỏ
                     </Button>
-                    <Button onClick={handleSubmitConfirmCancelPost} color="info">
+                    <Button
+                        onClick={handleSubmitConfirmCancelPost}
+                        color="info"
+                    >
                         Xác nhận
                     </Button>
                 </DialogActions>
