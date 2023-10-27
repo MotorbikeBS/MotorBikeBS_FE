@@ -61,7 +61,7 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
 
     useEffect(() => {
         dispatch(clearMotor());
-        dispatch(getAllOnStoreExchange());
+        dispatch(getAllOnStoreExchange({ pageNumber: 1, pageSize: 10 }));
     }, [dispatch]);
 
     //Nego
@@ -167,8 +167,8 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
                                                             <img
                                                                 src={
                                                                     motor
-                                                                    ?.motorbikeImages[0]
-                                                                    ?.imageLink
+                                                                        ?.motorbikeImages[0]
+                                                                        ?.imageLink
                                                                 }
                                                                 alt="Đây là ảnh sản phẩm"
                                                             />
@@ -196,7 +196,7 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
                                                             </strong>{' '}
                                                             {
                                                                 motor?.owner
-                                                                ?.userName
+                                                                    ?.userName
                                                             }
                                                         </Typography>
                                                         <Typography>
@@ -205,7 +205,7 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
                                                             </strong>
                                                             {
                                                                 motor?.motorType
-                                                                ?.title
+                                                                    ?.title
                                                             }
                                                         </Typography>
                                                         <Typography>
