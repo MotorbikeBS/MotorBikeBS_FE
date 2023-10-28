@@ -15,6 +15,8 @@ import {
     Typography,
 } from '@mui/material';
 import './style/style.scss';
+import { useAppDispatch } from '../../../services/store/store';
+import { customerBookingWithStore } from '../../../services/features/booking/customerBookingSlice';
 
 interface BookingDialogProps {
     open: boolean;
@@ -44,6 +46,8 @@ const BookingDialog: React.FC<BookingDialogProps> = ({
     onCloseCancelDialog,
     onClose,
 }) => {
+    const dispatch = useAppDispatch()
+
     const form = useForm<IBookingViewMotorbike>({
         defaultValues: {
             bookingDate: new Date(),
@@ -64,8 +68,19 @@ const BookingDialog: React.FC<BookingDialogProps> = ({
     };
 
     const onSubmit = (data: IBookingViewMotorbike) => {
-        console.log(data);
-        handleCloseDialog()
+        if (motorbikeId !== null) {
+            dispatch(customerBookingWithStore({
+                motorId: motorbikeId,
+                bookingDate: data.bookingDate,
+                note: data.note
+            }))
+                .then(() => {
+                    setTimeout(() => {
+                        handleCloseDialog()
+
+                    }, 1000)
+                })
+        }
     };
 
     return (
