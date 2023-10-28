@@ -171,7 +171,10 @@ export const customerBookingSlice = createSlice({
         setError: (state, action) => {
             state.error = action.payload;
         },
-        clearCustomerBooking: (state) => {},
+        clearCustomerBooking: (state) => {
+            state.customerBooking = null;
+            state.getAllCustomerBooking = null;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(customerBookingWithStore.pending, (state) => {
