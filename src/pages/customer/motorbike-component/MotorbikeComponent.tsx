@@ -44,7 +44,7 @@ const MotorbikeComponent = () => {
 
     useEffect(() => {
         dispatch(clearMotor());
-        dispatch(getAllOnExchange());
+        dispatch(getAllOnExchange({ pageNumber: 1, pageSize: 10 }));
     }, [dispatch]);
 
     const handleOpenDialog = (motorId: number) => {
