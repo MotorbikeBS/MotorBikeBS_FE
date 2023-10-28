@@ -34,36 +34,45 @@ const initialState: MotorbikeState = {
     error: null,
 };
 
-export const getAllOnExchange = createAsyncThunk<IMotorbike[], void>(
-    'motorbikes/getAllOnExchange',
-    async (_, thunkAPI) => {
-        try {
-            const token = localStorage.getItem('motorbike_bs');
-            const response = await axios.get(getAllOnExChangeEndPoint, {
+export const getAllOnExchange = createAsyncThunk<
+    IMotorbike[],
+    { pageNumber: number; pageSize: number }
+>('motorbikes/getAllOnExchange', async ({ pageNumber, pageSize }, thunkAPI) => {
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.get(
+            `${getAllOnExChangeEndPoint}?PageNumber=${pageNumber}&PageSize=${pageSize}`,
+            {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-            });
-            return response.data.result;
-        } catch (error: any) {
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
-        }
-    },
-);
+            },
+        );
+        return response.data.result.data;
+    } catch (error: any) {
+        return thunkAPI.rejectWithValue({
+            error: error.response?.data?.errorMessages,
+        });
+    }
+});
 
-export const getAllOnStoreExchange = createAsyncThunk<IMotorbike[], void>(
+export const getAllOnStoreExchange = createAsyncThunk<
+    IMotorbike[],
+    { pageNumber: number; pageSize: number }
+>(
     'motorbikes/getAllOnStoreExchange',
-    async (_, thunkAPI) => {
+    async ({ pageNumber, pageSize }, thunkAPI) => {
         try {
             const token = localStorage.getItem('motorbike_bs');
-            const response = await axios.get(getAllOnStoreExChangeEndPoint, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
+            const response = await axios.get(
+                `${getAllOnStoreExChangeEndPoint}?PageNumber=${pageNumber}&PageSize=${pageSize}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 },
-            });
-            return response.data.result;
+            );
+            return response.data.result.data;
         } catch (error: any) {
             return thunkAPI.rejectWithValue({
                 error: error.response?.data?.errorMessages,
@@ -302,7 +311,8 @@ export const cancelPosting = createAsyncThunk<IMotorbike, { motorId: number }>(
         try {
             const token = localStorage.getItem('motorbike_bs');
             const response = await axios.put(
-                `${cancelPostingEndPoint}?MotorID=${motorId}`, {},
+                `${cancelPostingEndPoint}?MotorID=${motorId}`,
+                {},
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
