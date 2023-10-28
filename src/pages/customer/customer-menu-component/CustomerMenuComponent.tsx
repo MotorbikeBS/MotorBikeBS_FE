@@ -44,7 +44,7 @@ const pages = [
         name: 'DS. Cửa hàng',
     },
     {
-        to: '/date-booking',
+        to: '/customer/my-booking',
         name: 'Lịch hẹn',
     },
     {
@@ -80,7 +80,7 @@ const CustomerMenuComponent = () => {
     );
 
     const [anchorElFilter, setAnchorElFilter] =
-    React.useState<null | HTMLElement>(null);
+        React.useState<null | HTMLElement>(null);
 
 
     const handleOpenFilterBox = (event: React.MouseEvent<HTMLElement>) => {
@@ -305,7 +305,7 @@ const CustomerMenuComponent = () => {
                                     <FilterAltIcon />
                                 </IconButton>
                             </Tooltip>
-                            <FilterComponent 
+                            <FilterComponent
                                 anchorElFilter={anchorElFilter}
                                 handleCloseFilter={handleCloseFilterBox}
                             />
@@ -419,11 +419,10 @@ const CustomerMenuComponent = () => {
                                 <Link
                                     key={page.to}
                                     to={page.to}
-                                    className={`link-customer ${
-                                        isMenuItemActive(page.to)
+                                    className={`link-customer ${isMenuItemActive(page.to)
                                             ? 'active'
                                             : ''
-                                    }`}
+                                        }`}
                                 >
                                     {page.name}
                                 </Link>
