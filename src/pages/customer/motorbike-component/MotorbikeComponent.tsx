@@ -47,9 +47,10 @@ const MotorbikeComponent = () => {
         dispatch(getAllOnExchange({ pageNumber: 1, pageSize: 10 }));
     }, [dispatch]);
 
-    const handleOpenDialog = (motorbikeId: number) => {
-        setMotorbikeIdForDialog(motorbikeId);
+    const handleOpenDialog = (motorId: number) => {
+        setMotorbikeIdForDialog(motorId);
         setOpenDialog(true);
+        console.log(motorId)
     };
 
     const handleAddToWishList = (motorId: number) => {
@@ -147,17 +148,17 @@ const MotorbikeComponent = () => {
                                                     <Typography variant="subtitle1">
                                                         {motor?.motorStatus
                                                             ?.motorStatusId ===
-                                                        1
+                                                            1
                                                             ? 'CÓ SẴN'
                                                             : motor?.motorStatus
-                                                                  ?.motorStatusId ===
-                                                              4
-                                                            ? 'KÍ GỬI'
-                                                            : motor?.motorStatus
-                                                                  ?.motorStatusId ===
-                                                              5
-                                                            ? 'KHÔNG KÍ GỬI'
-                                                            : 'CHƯA XÁC ĐỊNH'}
+                                                                ?.motorStatusId ===
+                                                                4
+                                                                ? 'KÍ GỬI'
+                                                                : motor?.motorStatus
+                                                                    ?.motorStatusId ===
+                                                                    5
+                                                                    ? 'KHÔNG KÍ GỬI'
+                                                                    : 'CHƯA XÁC ĐỊNH'}
                                                     </Typography>
                                                 </div>
                                                 <div className="product-information">
@@ -226,7 +227,7 @@ const MotorbikeComponent = () => {
                                                     <>
                                                         {motor?.motorStatus
                                                             ?.motorStatusId ===
-                                                        5 ? (
+                                                            5 ? (
                                                             <div className="btn-style">
                                                                 <Button
                                                                     variant="outlined"

@@ -16,7 +16,6 @@ import StoreDetail from '../pages/customer/store-detail/StoreDetail';
 import SignUpStoreOwner from '../pages/customer/signup-store-owner/SignUpStoreOwner';
 import SignUpMotorbikeOwner from '../pages/customer/signup-motorbike-owner/SignUpMotorbikeOwner';
 import FauvoriteList from '../pages/customer/favourite-list/FauvoriteList';
-import DateBooking from '../pages/customer/date-booking/DateBooking';
 import VerifyAccount from '../pages/register/verify-account/VerifyAccount';
 import BuyHistory from '../pages/customer/buy-history/date-booking/BuyHistory';
 import ResetPassword from '../pages/forgot-password/reset-password/ResetPassword';
@@ -35,6 +34,7 @@ import MotorFields from '../pages/admin/motorFields-component/MotorFields';
 import OwnerMotorAcceptNegotitationDetail from '../pages/store/motor-owner-exchange/OwnerMotorAcceptNegotiationDetail';
 import ContractHistoryList from '../pages/store/contract-list/ContractHistoryList';
 import ContractHistoryWithStore from '../pages/owner/contract-list-with-store/ContractHistoryWithStore';
+import CustomerBookingComponent from '../pages/store/booking-list/customer-booking-component/CustomerBookingComponent';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -183,7 +183,7 @@ const AppRoutes = () => {
                         element={<SignUpMotorbikeOwner />}
                     />
                     <Route path="/favourite-list" element={<FauvoriteList />} />
-                    <Route path="/date-booking" element={<DateBooking />} />
+                    <Route path="/customer/my-booking" element={<CustomerBookingComponent />} />
                     <Route path="/buy-history" element={<BuyHistory />} />
 
                     <Route path="*" element={<PageNotFound />} />
