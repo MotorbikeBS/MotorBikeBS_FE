@@ -154,26 +154,15 @@ const CustomerBookingStoreList = () => {
                                 <div style={{
                                     flexDirection: 'column',
                                     marginTop: '40px',
-
                                 }}>
-                                    {cusBooking?.buyerBookings[0]?.status === 'PENDING' ? (
-                                        <Button
-                                            color='error'
-                                            variant='contained'
-                                            onClick={() => handleOpenCancleBooking(cusBooking?.buyerBookings[0]?.bookingId)}
-                                        >
-                                            Hủy lịch
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            color='error'
-                                            variant='contained'
-                                            onClick={() => handleOpenCancleBooking(cusBooking?.buyerBookings[0]?.bookingId)}
-                                            disabled={true}
-                                        >
-                                            Không thể hủy lịch
-                                        </Button>
-                                    )}
+                                    <Button
+                                        color='error'
+                                        variant='contained'
+                                        onClick={() => handleOpenCancleBooking(cusBooking?.buyerBookings[0]?.bookingId)}
+                                        disabled={cusBooking?.buyerBookings[0]?.status !== 'PENDING'}
+                                    >
+                                        Hủy lịch
+                                    </Button>
                                 </div>
                             </div>
                         </Box>

@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
 import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, Paper, Typography } from '@mui/material';
 import { cancleBookingByStore, clearStoreBooking, getAllBookingOwnerExchange } from '../../../../services/features/booking/storeBookingSlice';
-import './style/_style.scss';
+import './style/_owner-booking.scss';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import CreateContractDialogByStore from '../../contract-dialog-store/CreateContractDialogByStore';
+import { EmailOutlined, Person2Outlined, PhoneIphoneOutlined, PlaceOutlined } from '@mui/icons-material';
 
 const OwnerBookingListComponent = () => {
     const dispatch = useAppDispatch();
@@ -73,14 +74,25 @@ const OwnerBookingListComponent = () => {
 
 
     return (
-        <Container className="container-xl" maxWidth="lg">
-            <Typography className="h4-heading" variant="h4" gutterBottom>
+        <Container
+            className="container-xl"
+            maxWidth="lg"
+        >
+            <Typography
+                className='h4-heading'
+                variant="h4"
+                gutterBottom
+                marginBottom='20px'
+            >
                 Danh sách lịch hẹn của tôi
             </Typography>
             {getAllBooking?.map((booking) => (
-                <Paper key={booking.negotiations[0].bookings[0].bookingId} className="paper-booking-list">
+                <Paper
+                    key={booking.negotiations[0].bookings[0].bookingId}
+                    className="paper-booking-list"
+                >
                     <Box className="booking-row" display="flex">
-                        <Box className="left-box" flexGrow={3}>
+                        <Box className="left-box" flexGrow={4}>
                             <div className="image-booking-product">
                                 <img
                                     src={booking?.motor?.motorbikeImages[0]?.imageLink || ''}
@@ -117,18 +129,30 @@ const OwnerBookingListComponent = () => {
                         <Box className="right-box" flexGrow={9}>
                             <div className="motorbike-owner-info">
                                 <div className="motorbike-owner-info-header">
-                                    <Typography variant='h5' sx={{ color: '#f0c413' }}>Thông tin chủ xe:</Typography>
+                                    <Typography variant='h5' sx={{ color: '#f0c413', fontWeight: 'bold', marginBottom: '10px' }}>Thông tin chủ xe:</Typography>
                                 </div>
                                 <div className="motorbike-owner-info-content">
-                                    <Typography>Tên chủ xe: {booking?.receiver?.userName}</Typography>
-                                    <Typography>Số điện thoại: {booking?.receiver?.phone}</Typography>
-                                    <Typography>Email: {booking?.receiver?.email}</Typography>
-                                    <Typography>Địa chỉ: {booking?.receiver?.address}</Typography>
+                                    <Typography display='flex'>
+                                        <Person2Outlined />{' '}
+                                        {booking?.receiver?.userName}
+                                    </Typography>
+                                    <Typography display='flex'>
+                                        <PhoneIphoneOutlined />{' '}
+                                        {booking?.receiver?.phone}
+                                    </Typography>
+                                    <Typography>
+                                        <EmailOutlined />{' '}
+                                        {booking?.receiver?.email}
+                                    </Typography>
+                                    <Typography>
+                                        <PlaceOutlined />{' '}
+                                        {booking?.receiver?.address}
+                                    </Typography>
                                 </div>
                             </div>
                             <div className="booking-owner-info">
                                 <div className="booking-owner-info-header">
-                                    <Typography variant='h5' sx={{ color: '#35c206' }}>Thông tin đặt lịch:</Typography>
+                                    <Typography variant='h5' sx={{ color: '#35c206', fontWeight: 'bold', marginBottom: '10px' }}>Thông tin đặt lịch:</Typography>
                                 </div>
                                 <div className="booking-owner-info-content">
                                     <Typography>

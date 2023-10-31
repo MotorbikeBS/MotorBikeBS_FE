@@ -28,7 +28,7 @@ const StoreBookingWithOwnerComponent = () => {
     }, [dispatch]);
 
     return (
-        <Container className='container-xl' maxWidth='xl'>
+        <Container className='container-xl' maxWidth='lg'>
             <Typography
                 className='h4-heading'
                 variant="h4"
@@ -74,7 +74,7 @@ const StoreBookingWithOwnerComponent = () => {
                                 </div>
                             </div>
                         </Box>
-                        <Box className="right-box" flexGrow={9}>
+                        <Box className="right-box" flexGrow={8}>
                             <div className="motorbike-owner-info">
                                 <div className="motorbike-owner-info-header">
                                     <Typography variant='h5' sx={{ color: '#f0c413' }}>Thông tin cửa hàng:</Typography>
@@ -123,12 +123,6 @@ const StoreBookingWithOwnerComponent = () => {
                                             }
                                         </Typography>
                                     </div>
-                                </div>
-                                <div style={{
-                                    flexDirection: 'column',
-                                    marginTop: '20px',
-
-                                }}>
                                 </div>
                             </div>
                         </Box>

@@ -1,6 +1,4 @@
-// _style.scss
-.container-xl {
-    margin: 0 auto;
+container-xl {
     max-width: 1200px;
     .h4-heading {
         font-size: 30px;
@@ -26,14 +24,11 @@
                         justify-items: center;
                     }
                 }
-                .product-booking {
-                    margin-top: 10px;
-                }
                 .product-content {
                     margin-top: 10px;
                     .register-date {
                         display: flex;
-                        :nth-child(1) {
+                        &:nth-child(1) {
                             font-weight: 700;
                         }
                     }
@@ -54,53 +49,35 @@
                 }
             }
             .right-box {
-                flex: 9;
-                padding: 10px;
-                border: 2px solid #eedcdc;
+                border: 10px solid #eedcdc;
                 display: flex;
-                max-width: 90%;
-                justify-content: space-evenly;
-                .motorbike-owner-info {
-                    max-width: 50%;
+                max-width: 100%;
+                text-align: left;
+                justify-items: flex-start;
+                .customer-info {
+                    max-width: 60% !important;
                     text-align: left;
-                    margin-right: 30px;
-                    margin-left: 50px;
                 }
-                .booking-owner-info {
-                    max-width: 50%;
+                .booking-customer-info {
+                    max-width: 40% !important;
                     text-align: left;
-                    margin-left: 10px;
                 }
-                // .image-contract {
-                //     max-width: 33%;
-                //     text-align: left;
-                //     margin-left: 10px;
-                // }
-                // .image-contract img {
-                //     max-width: 60%;
-                //     max-height: 1200px;
-                //     max-height: auto;
-                // }
-                .motorbike-owner-info,
-                .booking-owner-info {
-                    // .image-contract {
+                .customer-info,
+                .booking-customer-info {
                     flex: 1;
-                    .motorbike-owner-info-header, // .image-owner-info-header,
-                    .motorbike-owner-info-content,
-                    .booking-owner-info-header,
-                    .booking-owner-btn-contract {
+                    .motorbike-customer-info-header,
+                    .customer-info-content,
+                    .booking-customer-info-header,
+                    .booking-customer-btn-booking {
                         margin-top: 20px;
+                        &:nth-child(1) {
+                            margin-bottom: 10px;
+                        }
                     }
-                    .booking-owner-info-content {
+                    .booking-customer-info-content {
                         margin-top: 10px;
                     }
-                    .motorbike-owner-info-header,
-                    .booking-owner-info-header,
-                    .image-owner-info-header {
-                        font-weight: bold;
-                    }
                 }
-                // }
             }
         }
     }

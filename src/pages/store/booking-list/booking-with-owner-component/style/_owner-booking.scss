@@ -1,4 +1,5 @@
-container-xl {
+// _style.scss
+.container-xl {
     max-width: 1200px;
     .h4-heading {
         font-size: 30px;
@@ -21,6 +22,7 @@ container-xl {
                         max-width: 100%;
                         max-height: 200px;
                         display: block;
+                        justify-items: center;
                     }
                 }
                 .product-booking {
@@ -30,7 +32,7 @@ container-xl {
                     margin-top: 10px;
                     .register-date {
                         display: flex;
-                        &:nth-child(1) {
+                        :nth-child(1) {
                             font-weight: 700;
                         }
                     }
@@ -51,40 +53,40 @@ container-xl {
                 }
             }
             .right-box {
-                flex: 9;
-                padding: 10px;
-                border: 2px solid #eedcdc;
+                border: 10px solid #eedcdc;
                 display: flex;
-                max-width: 70%;
-                .store-info {
-                    max-width: 50%;
+                max-width: 100%;
+                text-align: left;
+                justify-items: flex-start;
+                .motorbike-owner-info {
+                    max-width: 70% !important;
                     text-align: left;
                 }
-                .booking-store-info {
-                    max-width: 50%;
+                .booking-owner-info {
+                    max-width: 30% !important;
                     text-align: left;
+                    margin-right: 10px;
                 }
-                .store-info,
-                .booking-store-info {
+                .motorbike-owner-info,
+                .booking-owner-info {
                     flex: 1;
-                    .motorbike-store-info-header,
-                    .image-store-info-header,
-                    .store-info-content,
-                    .booking-store-info-header,
-                    .booking-store-btn-booking {
+                    .motorbike-owner-info-header,
+                    .booking-owner-info-header,
+                    .booking-owner-btn-contract {
                         margin-top: 20px;
                         &:nth-child(1) {
                             margin-bottom: 10px;
                         }
                     }
-                    .booking-store-info-content {
+                    .booking-owner-info-content {
                         margin-top: 10px;
                     }
-                    .store-info-header,
-                    .booking-store-info-header {
+                    .motorbike-owner-info-header,
+                    .booking-owner-info-header {
                         font-weight: bold;
                     }
                 }
+                // }
             }
         }
     }
