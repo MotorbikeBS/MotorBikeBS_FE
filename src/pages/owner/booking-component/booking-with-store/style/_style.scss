@@ -51,26 +51,21 @@
                 }
             }
             .right-box {
-                flex: 9;
-                padding: 10px;
-                border: 2px solid #eedcdc;
+                border: 10px solid #eedcdc;
                 display: flex;
-                max-width: 90%;
-                justify-content: space-evenly;
+                max-width: 100%;
+                text-align: left;
+                justify-items: flex-start;
                 .motorbike-owner-info {
                     max-width: 50%;
                     text-align: left;
-                    margin-right: 30px;
-                    margin-left: 50px;
                 }
                 .booking-owner-info {
-                    max-width: 100%;
+                    max-width: 50%;
                     text-align: left;
-                    margin-left: 10px;
                 }
                 .motorbike-owner-info,
-                .booking-owner-info,
-                .image-contract {
+                .booking-owner-info {
                     flex: 1;
                     .motorbike-owner-info-header,
                     .image-owner-info-header,
