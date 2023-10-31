@@ -73,7 +73,7 @@ const ContractListWithStoreComponent = () => {
     }
 
     return (
-        <Container className='container-xl' maxWidth='xl'>
+        <Container className='container-xl' maxWidth='lg'>
             <Typography
                 className='h4-heading'
                 variant="h4"
