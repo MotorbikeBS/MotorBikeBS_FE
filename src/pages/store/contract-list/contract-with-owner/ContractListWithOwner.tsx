@@ -61,7 +61,7 @@ const ContractListWithOwner = () => {
 
 
     return (
-        <Container className="container-xl" maxWidth="lg">
+        <Container className="container-lg" maxWidth="lg">
             <Typography className="h4-heading"
                 variant="h4"
                 gutterBottom
