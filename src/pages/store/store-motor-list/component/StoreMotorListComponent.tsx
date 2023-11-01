@@ -6,7 +6,10 @@ import {
 import { Box, Button, Tab, Tabs } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import CreateMotorbikeComponent from '../../../../common-components/create-motorbike-component/CreateMotorbikeComponent';
-import { clearMotor, getMotorByStoreId } from '../../../../services/features/motorbike/motorbikeSlice';
+import {
+    clearMotor,
+    getMotorByStoreId,
+} from '../../../../services/features/motorbike/motorbikeSlice';
 import ListStorageMotorByStoreId from './ListStorageMotorByStoreId';
 import ListPostedMotorByStoreId from './ListPostedMotorByStoreId';
 import CreateModelModal from '../../../../common-components/create-motorbike-component/create-motorFields-component/CreateModel';
@@ -14,7 +17,7 @@ import CreateBrandModal from '../../../../common-components/create-motorbike-com
 
 const StoreMotorListComponent = () => {
     // const { account } = useAppSelector((state) => state.account);
-    const { user } = useAppSelector((state) => state.users)
+    const { user } = useAppSelector((state) => state.users);
     const dispatch = useAppDispatch();
     const [isOpenDialog, setOpenDialog] = useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false);
@@ -42,8 +45,12 @@ const StoreMotorListComponent = () => {
     };
 
     const loadData = () => {
-        dispatch(clearMotor())
-        dispatch(getMotorByStoreId({ storeId: Number(user?.storeDesciptions[0]?.storeId) }))
+        dispatch(clearMotor());
+        dispatch(
+            getMotorByStoreId({
+                storeId: Number(user?.storeDesciptions[0]?.storeId),
+            }),
+        );
     };
 
     const handleOpenDialog = () => {
@@ -117,21 +124,6 @@ const StoreMotorListComponent = () => {
 
     return (
         <div className="motorlist-container">
-            <div className="motorlist-add-btn">
-                <Button onClick={handleOpenBrandDialog} variant="contained">
-                    <AddIcon />
-                    Thêm Brand
-                </Button>
-                <Button onClick={handleOpenModelDialog} variant="contained">
-                    <AddIcon />
-                    Thêm Model
-                </Button>
-                <Button onClick={handleOpenDialog} variant="contained">
-                    <AddIcon />
-                    Thêm xe
-                </Button>
-            </div>
-
             <Tabs
                 value={value}
                 onChange={handleChangeTabs}
@@ -146,6 +138,25 @@ const StoreMotorListComponent = () => {
                 <Tab label="Xe trong kho" />
                 <Tab label="Xe đã đăng" />
             </Tabs>
+
+            {value === 0 ? (
+                <div className="motorlist-add-btn">
+                    <Button onClick={handleOpenBrandDialog} variant="contained">
+                        <AddIcon />
+                        Thêm Brand
+                    </Button>
+                    <Button onClick={handleOpenModelDialog} variant="contained">
+                        <AddIcon />
+                        Thêm Model
+                    </Button>
+                    <Button onClick={handleOpenDialog} variant="contained">
+                        <AddIcon />
+                        Thêm xe
+                    </Button>
+                </div>
+            ) : (
+                <></>
+            )}
 
             <Box flexGrow={4} marginTop="3rem">
                 {value === 0 && (

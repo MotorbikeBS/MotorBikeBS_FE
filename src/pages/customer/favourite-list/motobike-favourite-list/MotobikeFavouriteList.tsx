@@ -146,6 +146,19 @@ const MotobikeFavouriteList = () => {
                                         alt="Đây là ảnh sản phẩm"
                                     />
                                 </div>
+                                <div className="tag-motor-status">
+                                    <Typography variant="subtitle1">
+                                        {wishlist.motor?.motorStatus?.motorStatusId === 1
+                                            ? 'CÓ SẴN'
+                                            : wishlist.motor?.motorStatus
+                                                  ?.motorStatusId === 4
+                                            ? 'KÍ GỬI'
+                                            : wishlist.motor?.motorStatus
+                                                  ?.motorStatusId === 5
+                                            ? 'KHÔNG KÍ GỬI'
+                                            : 'CHƯA XÁC ĐỊNH'}
+                                    </Typography>
+                                </div>
                                 <div className="product-information">
                                     <Typography variant="h6">
                                         {wishlist.motor.motorName}
@@ -158,18 +171,6 @@ const MotobikeFavouriteList = () => {
                                         Giá:{' '}
                                         {formatCurrency(wishlist.motor.price)}
                                     </Typography>
-                                    {wishlist.motor?.motorStatus
-                                        ?.motorStatusId === 5 ? (
-                                        <Typography color="blue">
-                                            <strong>
-                                                Xe hiện không có ở cửa hàng
-                                            </strong>
-                                        </Typography>
-                                    ) : (
-                                        <>
-                                            <br />
-                                        </>
-                                    )}
                                     <div className="product-info-content">
                                         <Typography>
                                             <strong>Cửa Hàng:</strong>{' '}
