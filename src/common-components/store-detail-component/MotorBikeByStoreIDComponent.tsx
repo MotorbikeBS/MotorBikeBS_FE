@@ -146,6 +146,23 @@ const MotorbikeByStoreIdComponent = () => {
                                                     </>
                                                 )}
                                             </div>
+                                            <div className="tag-motor-status">
+                                                    <Typography variant="subtitle1">
+                                                        {motor?.motorStatus
+                                                            ?.motorStatusId ===
+                                                            1
+                                                            ? 'CÓ SẴN'
+                                                            : motor?.motorStatus
+                                                                ?.motorStatusId ===
+                                                                4
+                                                                ? 'KÍ GỬI'
+                                                                : motor?.motorStatus
+                                                                    ?.motorStatusId ===
+                                                                    5
+                                                                    ? 'KHÔNG KÍ GỬI'
+                                                                    : 'CHƯA XÁC ĐỊNH'}
+                                                    </Typography>
+                                                </div>
                                             <div className="product-information">
                                                 <Typography variant="h6">
                                                     {motor.motorName}
@@ -160,19 +177,6 @@ const MotorbikeByStoreIdComponent = () => {
                                                         motor.price,
                                                     )}
                                                 </Typography>
-                                                {motor?.motorStatus
-                                                    ?.motorStatusId === 5 ? (
-                                                    <Typography color="blue">
-                                                        <strong>
-                                                            Xe hiện không có ở
-                                                            cửa hàng
-                                                        </strong>
-                                                    </Typography>
-                                                ) : (
-                                                    <>
-                                                        <br />
-                                                    </>
-                                                )}
                                                 <div className="product-info-content">
                                                     <Typography>
                                                         <strong>

@@ -94,15 +94,6 @@ const StoreDetailComponent = () => {
                             </Typography>
                         </div>
                     </Grid>
-                    {account?.roleId === 3 && (
-                        <Grid xs={3} md={4}>
-                            <div className="sell-btn-container">
-                                <Button variant="outlined">
-                                    Đặt lịch bán xe
-                                </Button>
-                            </div>
-                        </Grid>
-                    )}
                 </Grid>
             </Box>
 

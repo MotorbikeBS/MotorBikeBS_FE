@@ -26,12 +26,13 @@ import {
     BusinessCenter,
     FavoriteBorderOutlined,
     DirectionsBike,
+    Clear
 } from '@mui/icons-material';
 import './style/style.scss';
 import MenuComponent from '../../../common-components/notify-component/NotifyComponent';
 import { useAppDispatch } from '../../../services/store/store';
 import { logoutUser } from '../../../services/features/auth/accountSlice';
-import { searchMotorByName } from '../../../services/features/motorbike/motorbikeSlice';
+import { getAllOnExchange, searchMotorByName } from '../../../services/features/motorbike/motorbikeSlice';
 import FilterComponent from '../../../common-components/filter-component/FilterComponent';
 
 const pages = [
@@ -64,6 +65,12 @@ const CustomerMenuComponent = () => {
     const handleSearch = () => {
         dispatch(searchMotorByName({ motorName: searchTerm }));
     };
+
+    const handleClearSearch = () =>{
+        dispatch(getAllOnExchange({ pageNumber: 1, pageSize: 1 }));
+        setSearchTerm('');
+        setIsButtonDisabled(true);
+    }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = e.target.value;
@@ -276,6 +283,14 @@ const CustomerMenuComponent = () => {
                                 fullWidth
                                 value={searchTerm}
                                 onChange={handleInputChange}
+                                InputProps={{
+                                    endAdornment: searchTerm && (
+                                      <Clear
+                                        onClick={handleClearSearch}
+                                        sx={{ cursor: 'pointer', color: 'white' }}
+                                      />
+                                    ),
+                                  }}
                             />
                             <Button
                                 variant="text"

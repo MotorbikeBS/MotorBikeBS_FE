@@ -76,7 +76,7 @@ const OwnerMotorListComponent = () => {
                 <Tab label="Xe đã đăng" />
                 <Tab label="Xe đang thương lượng" />
             </Tabs>
-            {value === 0 || value === 1 ? (
+            {value === 0  ? (
                 <div className="motorlist-add-btn">
                     <Button onClick={handleOpenDialog} variant="contained">
                         <AddIcon />
