@@ -93,8 +93,6 @@ const ListStorageMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
         setIsPostModalOpen(true);
     };
 
-    console.log(motorbikeByStoreId && motorbikeByStoreId);
-
     React.useEffect(() => {
         dispatch(clearMotor());
         dispatch(

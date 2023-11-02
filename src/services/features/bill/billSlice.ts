@@ -15,8 +15,8 @@ import {
 interface BillState {
     loading: boolean;
     error: string[] | unknown;
-    billStore: IBill | null;
-    billUser: IBill | null;
+    billStore: IBill[] | null;
+    billUser: IBill[] | null;
 }
 
 const initialState: BillState = {
@@ -26,36 +26,36 @@ const initialState: BillState = {
     billUser: null,
 };
 
-export const getBillByStoreId = createAsyncThunk<IBill, { receiverId: number }>(
-    'bill/getBillByStoreId',
-    async ({ receiverId }, thunkAPI) => {
-        try {
-            const token = localStorage.getItem('motorbike_bs');
-            const response = await axios.get(
-                `${getBillByStoreIdEndPoint}?receiverId=${receiverId}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+export const getBillByStoreId = createAsyncThunk<
+    IBill[],
+    { receiverId: number }
+>('bill/getBillByStoreId', async ({ receiverId }, thunkAPI) => {
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.get(
+            `${getBillByStoreIdEndPoint}?receiverId=${receiverId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
                 },
-            );
-            return response.data.result;
-        } catch (error: any) {
-            toast.error(`${error.response.data?.errorMessages}`);
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
-        }
-    },
-);
+            },
+        );
+        return response.data.result;
+    } catch (error: any) {
+        toast.error(`${error.response.data?.errorMessages}`);
+        return thunkAPI.rejectWithValue({
+            error: error.response?.data?.errorMessages,
+        });
+    }
+});
 
-export const getBillByUserId = createAsyncThunk<IBill, { userId: number }>(
+export const getBillByUserId = createAsyncThunk<IBill[], { userId: number }>(
     'bill/getBillByUserId',
     async ({ userId }, thunkAPI) => {
         try {
             const token = localStorage.getItem('motorbike_bs');
             const response = await axios.get(
-                `${getBillByUserIDEndPoint}?receiverId=${userId}`,
+                `${getBillByUserIDEndPoint}?UserId=${userId}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -103,6 +103,7 @@ export const createBillInStock = createAsyncThunk<
         const token = localStorage.getItem('motorbike_bs');
         const response = await axios.post(
             `${createBillInStockEndPoint}?newUser=${newUser}&MotorID=${motorId}`,
+            {},
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -120,66 +121,66 @@ export const createBillInStock = createAsyncThunk<
 
 export const createBillConsignment = createAsyncThunk<
     IBill,
-    { newUser: number; negotiationRequestID: number }
->(
-    'bill/createBillConsignment',
-    async ({ newUser, negotiationRequestID }, thunkAPI) => {
-        try {
-            const token = localStorage.getItem('motorbike_bs');
-            const response = await axios.post(
-                `${createBillConsignmentEndPoint}?newUser=${newUser}&NegotiationRequestID=${negotiationRequestID}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+    { newUser: number; motorId: number }
+>('bill/createBillConsignment', async ({ newUser, motorId }, thunkAPI) => {
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.post(
+            `${createBillConsignmentEndPoint}?newUser=${newUser}&MotorID=${motorId}`,{},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
                 },
-            );
-            return response.data.result;
-        } catch (error: any) {
-            toast.error(`${error.response.data?.errorMessages}`);
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
-        }
-    },
-);
+            },
+        );
+        return response.data.result;
+    } catch (error: any) {
+        toast.error(`${error.response.data?.errorMessages}`);
+        return thunkAPI.rejectWithValue({
+            error: error.response?.data?.errorMessages,
+        });
+    }
+});
 
 export const createBillNonConsignment = createAsyncThunk<
     IBill,
-    { negotiationRequestID: number; buyerBookingID: number }
->(
-    'bill/createBillNonConsignment',
-    async ({ negotiationRequestID, buyerBookingID }, thunkAPI) => {
-        try {
-            const token = localStorage.getItem('motorbike_bs');
-            const response = await axios.post(
-                `${createBillNonConsignmentEndPoint}?NegotiationRequestID=${negotiationRequestID}&BuyerBookingID=${buyerBookingID}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+    { motorId: number }
+>('bill/createBillNonConsignment', async ({ motorId }, thunkAPI) => {
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.post(
+            `${createBillNonConsignmentEndPoint}?MotorID=${motorId}`,{},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
                 },
-            );
-            return response.data.result;
-        } catch (error: any) {
-            toast.error(`${error.response.data?.errorMessages}`);
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
-        }
-    },
-);
+            },
+        );
+        return response.data.result;
+    } catch (error: any) {
+        toast.error(`${error.response.data?.errorMessages}`);
+        return thunkAPI.rejectWithValue({
+            error: error.response?.data?.errorMessages,
+        });
+    }
+});
 
 export const billSlice = createSlice({
     name: 'bookingOwerExchange',
     initialState,
-    reducers: {},
+    reducers: {
+        clearBill: (state) => {
+            state.billStore = null;
+            state.billUser = null;
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(getBillByStoreId.pending, (state) => {
             state.loading = true;
         });
         builder.addCase(getBillByStoreId.fulfilled, (state, action) => {
             state.loading = false;
+            state.billStore = action.payload;
             state.error = null;
         });
         builder.addCase(getBillByStoreId.rejected, (state, action) => {
@@ -191,6 +192,7 @@ export const billSlice = createSlice({
         });
         builder.addCase(getBillByUserId.fulfilled, (state, action) => {
             state.loading = false;
+            state.billUser = action.payload;
             state.error = null;
         });
         builder.addCase(getBillByUserId.rejected, (state, action) => {
@@ -244,4 +246,5 @@ export const billSlice = createSlice({
     },
 });
 
+export const { clearBill } = billSlice.actions;
 export default billSlice.reducer;

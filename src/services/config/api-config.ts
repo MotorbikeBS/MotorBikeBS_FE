@@ -90,6 +90,6 @@ export const cancelBookingBuyerEndPoint = `${BASE_URL}/api/buyerbooking/cancelbo
 export const getBillByStoreIdEndPoint = `${BASE_URL}/api/bill/getByStoreid`;
 export const getBillByUserIDEndPoint = `${BASE_URL}/api/bill/getByUserId`;
 export const getBillByIdEndPoint = `${BASE_URL}/api/bill/getBillId`;
-export const createBillInStockEndPoint = `${BASE_URL}/api/bill/CreateBill-InStock`;
+export const createBillInStockEndPoint = `${BASE_URL}/api/Bill/CreateBill-InStock`;
 export const createBillConsignmentEndPoint = `${BASE_URL}/api/bill/CreateBill-Consignment`;
 export const createBillNonConsignmentEndPoint = `${BASE_URL}/api/bill/CreateBill-nonConsignment`;

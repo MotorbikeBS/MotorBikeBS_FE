@@ -5,4 +5,5 @@ export interface IBill {
     storeId: number;
     price: number;
     status: string;
+    createAt: Date;
 }

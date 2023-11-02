@@ -47,6 +47,10 @@ const pages = [
         to: '/store/contract',
         name: 'Hợp đồng',
     },
+    {
+        to: '/transaction-history',
+        name: 'Lịch sử giao dịch'
+    }
 ];
 
 const StoreMenuComponent = () => {

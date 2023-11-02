@@ -31,19 +31,6 @@ export const columns: GridColDef[] = [
         headerName: 'Cửa hàng ID',
         width: 120,
         hideable: true,
-        renderCell: (params) =>
-            params.row.storeId === null ? (
-                <>
-                    {/* <Typography sx={{ color: '#e6b30b' }}>
-                        !!!
-                    </Typography> */}
-                    <ReportIcon color="warning" />
-                    <ReportIcon color="warning" />
-                    <ReportIcon color="warning" />
-                </>
-            ) : (
-                <>{params.row.storeId}</>
-            ),
     },
     {
         field: 'certificateNumber',

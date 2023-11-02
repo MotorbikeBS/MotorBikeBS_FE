@@ -67,7 +67,7 @@ const CustomerMenuComponent = () => {
     };
 
     const handleClearSearch = () =>{
-        dispatch(getAllOnExchange({ pageNumber: 1, pageSize: 1 }));
+        dispatch(getAllOnExchange({ pageNumber: 1, pageSize: 6 }));
         setSearchTerm('');
         setIsButtonDisabled(true);
     }
@@ -541,6 +541,14 @@ const CustomerMenuComponent = () => {
                             fullWidth
                             value={searchTerm}
                             onChange={handleInputChange}
+                            InputProps={{
+                                endAdornment: searchTerm && (
+                                  <Clear
+                                    onClick={handleClearSearch}
+                                    sx={{ cursor: 'pointer', color: 'white' }}
+                                  />
+                                ),
+                              }}
                         />
                         <Button
                             variant="text"
