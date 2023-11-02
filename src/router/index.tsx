@@ -35,6 +35,7 @@ import OwnerMotorAcceptNegotitationDetail from '../pages/store/motor-owner-excha
 import ContractHistoryList from '../pages/store/contract-list/ContractHistoryList';
 import ContractHistoryWithStore from '../pages/owner/contract-list-with-store/ContractHistoryWithStore';
 import CustomerBookingComponentWithStore from '../pages/customer/customer-booking/CustomerBookingWithStoreComponent';
+import MotorbikeSold from '../pages/store/motorbike-sold/MotorbikeSold';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -126,6 +127,10 @@ const AppRoutes = () => {
                     <Route
                         path='/store/contract'
                         element={<ContractHistoryList />}
+                    />
+                    <Route
+                        path='/transaction-history'
+                        element={<MotorbikeSold />}
                     />
                     <Route path="*" element={<PageNotFound />} />
                 </>

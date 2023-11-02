@@ -21,6 +21,7 @@ import {
     getMotorByStoreId,
 } from '../../../../services/features/motorbike/motorbikeSlice';
 import { toast } from 'react-toastify';
+import { createBillInStock } from '../../../../services/features/bill/billSlice';
 
 interface ListMotorProps {
     loadData: () => void;
@@ -33,6 +34,7 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
     const [isConfirmCancelPost, setIsConfirmCancelPost] = useState(false);
+    const [isConfirmSale, setIsConfirmSale] = useState(false);
 
     const [selectedRow, setSelectedRow] = useState<IMotorbike | null>(null);
 
@@ -40,14 +42,40 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
         setIsDetailModalOpen(false);
     };
 
-    const openEditModal = () => {
+    const openCancelPostModal = () => {
         setIsDetailModalOpen(false);
         setIsConfirmCancelPost(true);
         setSelectedRow(selectedRow);
     };
+
+    const openSaleModal = () => {
+        setIsDetailModalOpen(false);
+        setIsConfirmSale(true);
+        setSelectedRow(selectedRow);
+    };
+
     const handleCloseDialog = () => {
         setIsDetailModalOpen(false);
         setIsConfirmCancelPost(false);
+        setIsConfirmSale(false);
+    };
+
+    const handleSubmitConfirmSaleMotor = () => {
+        dispatch(
+            createBillInStock({
+                newUser: 0,
+                motorId: Number(selectedRow?.id),
+            }),
+        )
+            .unwrap()
+            .then(() => {
+                toast.success('Đã chuyển qua xe đã bán!');
+                loadData();
+                handleCloseDialog();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     const handleSubmitConfirmCancelPost = () => {
@@ -146,8 +174,36 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                     )}
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={openEditModal} color="warning">
+                    {/* {selectedRow &&
+                        // selectedRow?.motorStatus?.motorStatusId === 1 && (
+                            <Button onClick={openSaleModal} color="secondary">
+                                Đã bán Tại cửa hàng {selectedRow?.motorStatus?.title}
+                            </Button>
+                        // )
+                        } */}
+                    <Button onClick={openCancelPostModal} color="warning">
                         Hủy đăng bài
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+            <Dialog open={isConfirmSale}>
+                <DialogTitle>
+                    <Typography variant="h4" textAlign="center">
+                        Xác nhận bán xe
+                    </Typography>
+                </DialogTitle>
+                <DialogContent>
+                    <Typography variant="subtitle1" textAlign="center">
+                        Bạn có chắc chắn đã bán xe này không?
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDialog} color="error">
+                        Hủy bỏ
+                    </Button>
+                    <Button onClick={handleSubmitConfirmSaleMotor} color="info">
+                        Xác nhận
                     </Button>
                 </DialogActions>
             </Dialog>
