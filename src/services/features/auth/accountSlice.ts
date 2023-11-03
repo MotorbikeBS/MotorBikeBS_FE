@@ -33,9 +33,7 @@ export const registerUser = createAsyncThunk<IAccount, Object>(
     async (data, thunkAPI) => {
         try {
             const response = await axios.post(signupEndPoint, data);
-            toast.success(
-                'Đăng ký thành công ! Vui lòng xác minh email để tiếp tục !',
-            );
+            toast.success('Đăng ký thành công !');
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -56,7 +54,7 @@ export const verifyEmail = createAsyncThunk<
         const response = await axios.post(
             `${verifyEndPoit}?id=${id}&token=${token}`,
         );
-        toast.success('Xác minh email thành công !');
+        toast.success(`${response.data.message}`);
         return response.data;
     } catch (error: any) {
         if (error.response) {
@@ -75,7 +73,6 @@ export const loginUser = createAsyncThunk<IAccount, string | Object>(
             const response = await axios.post(loginEndpoint, data);
             const token = response.data.result.token;
             localStorage.setItem('motorbike_bs', token);
-            // toast.success('Đăng nhập thành công !');
             toast.success(response.data.message);
             return response.data.result;
         } catch (error: any) {
@@ -94,7 +91,6 @@ export const logoutUser = createAsyncThunk<IAccount | null, string | Object>(
         try {
             localStorage.removeItem('motorbike_bs');
             toast.success('Đăng xuất thành công !');
-
             return null;
         } catch (error: any) {
             toast.error('Đăng xuất không thành công !');
@@ -113,7 +109,7 @@ export const forgotPassword = createAsyncThunk<IAccount, { email: string }>(
             const response = await axios.post(
                 `${forgotPasswordEndPoint}?email=${email}`,
             );
-            toast.success('Mã xác minh đã được gửi đến email của bạn !');
+            toast.success(`${response.data.message}`);
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -135,7 +131,7 @@ export const resetPassword = createAsyncThunk<
             `${resetPasswordEndPoint}?token=${token}`,
             { password, passwordConfirmed },
         );
-        toast.success('Đổi mật khẩu thành công! Bạn có thể đăng nhập !');
+        toast.success(`${response.data.message}`);
         return response.data;
     } catch (error: any) {
         if (error.response) {

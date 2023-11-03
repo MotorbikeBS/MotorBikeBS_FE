@@ -36,6 +36,7 @@ import ContractHistoryList from '../pages/store/contract-list/ContractHistoryLis
 import ContractHistoryWithStore from '../pages/owner/contract-list-with-store/ContractHistoryWithStore';
 import CustomerBookingComponentWithStore from '../pages/customer/customer-booking/CustomerBookingWithStoreComponent';
 import MotorbikeSold from '../pages/store/motorbike-sold/MotorbikeSold';
+import OwnerDashBoardComponent from '../pages/owner/dashboard/OwnerDashBoardComponent';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -143,7 +144,8 @@ const AppRoutes = () => {
                         path="/"
                         element={<Navigate to="/owner-home" replace />}
                     />
-                    <Route path="/owner-home" element={<OwnerHome />} />{' '}
+                    <Route path="/owner-home" element={<OwnerHome />} />
+                    <Route path='/owner/dashboard' element={<OwnerDashBoardComponent />} />
                     <Route path="/store/:storeId" element={<StoreDetail />} />
                     <Route path="*" element={<PageNotFound />} />
                     <Route
