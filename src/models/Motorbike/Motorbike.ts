@@ -13,6 +13,7 @@ export interface IMotorbike {
     id: number;
     modelName?: string;
     motorTypeName?: string;
+    motorStatuss?: string;
     // ===============================================
     motorStatus: IMotorStatus;
     motorType: IMotorType;
@@ -29,7 +30,7 @@ export interface IMotorbike {
     };
     registrationImage: string;
     motorbikeImages: IMotorImages[];
-    postingAt: Date
+    postingAt: Date;
 }
 
 export interface IModel {
@@ -66,7 +67,7 @@ export interface IMotorType {
     title: string;
     description?: string;
     status: string;
-    motorbikes: IMotorbike[]
+    motorbikes: IMotorbike[];
 }
 
 export interface IMotorTypeTable extends IMotorType {
