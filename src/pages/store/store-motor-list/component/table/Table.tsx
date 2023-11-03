@@ -1,6 +1,5 @@
 import { Typography } from '@mui/material';
 import { GridColDef, GridColTypeDef } from '@mui/x-data-grid';
-import ReportIcon from '@mui/icons-material/Report';
 
 import '../../style/style.scss';
 
@@ -90,16 +89,16 @@ export const columns: GridColDef[] = [
         editable: false,
     },
     {
-        field: 'motorStatus',
+        field: 'motorStatuss',
         headerName: 'Tình trạng',
         width: 150,
         editable: false,
         renderCell: (params) =>
-            params.row.motorStatus === 'POSTING' ? (
+            params.row.motorStatuss === 'POSTING' ? (
                 <Typography sx={{ color: 'green' }}>POSTING</Typography>
-            ) : params.row.motorStatus === 'STORAGE' ? (
+            ) : params.row.motorStatuss === 'STORAGE' ? (
                 <Typography sx={{ color: 'orange' }}>KHO XE</Typography>
-            ) : params.row.motorStatus === 'CONSIGNMENT' ? (
+            ) : params.row.motorStatuss === 'CONSIGNMENT' ? (
                 <Typography sx={{ color: '#E6A160' }}>KÍ GỞI</Typography>
             ) : (
                 <Typography sx={{ color: '#3D609A' }}>KHÔNG KÍ GỞI</Typography>

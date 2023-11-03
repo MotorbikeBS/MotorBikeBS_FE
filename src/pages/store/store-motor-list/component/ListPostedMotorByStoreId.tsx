@@ -1,11 +1,18 @@
 import React, { useMemo, useState } from 'react';
 import {
+    Box,
     Button,
     Container,
     Dialog,
     DialogActions,
     DialogContent,
     DialogTitle,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableRow,
     Typography,
 } from '@mui/material';
 import { DataGrid, GridRowParams } from '@mui/x-data-grid';
@@ -22,6 +29,8 @@ import {
 } from '../../../../services/features/motorbike/motorbikeSlice';
 import { toast } from 'react-toastify';
 import { createBillInStock } from '../../../../services/features/bill/billSlice';
+import '../style/style.scss';
+import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 
 interface ListMotorProps {
     loadData: () => void;
@@ -31,6 +40,8 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
     const dispatch = useAppDispatch();
     const { motorbikeByStoreId } = useAppSelector((state) => state.motorbikes);
     const { user } = useAppSelector((state) => state.users);
+
+    const formatPrice = useFormatCurrency();
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
     const [isConfirmCancelPost, setIsConfirmCancelPost] = useState(false);
@@ -122,7 +133,7 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
             price: motor?.price,
             modelName: motor.model?.modelName,
             motorTypeName: motor.motorType?.title,
-            motorStatus: motor.motorStatus?.title,
+            motorStatuss: motor.motorStatus?.title,
         }));
     }, [motorbikesByStoreStorage]);
 
@@ -166,21 +177,98 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                 </DialogTitle>
                 <DialogContent>
                     {selectedRow && (
-                        <>
-                            <Typography variant="subtitle1" textAlign="center">
-                                Tên xe: {selectedRow.motorName}
-                            </Typography>
-                        </>
+                        <Box flexGrow={12} className="table-content">
+                            <Box flexGrow={10}>
+                                <TableContainer component={Paper}>
+                                    <Table>
+                                        <TableBody>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Tên xe
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {selectedRow.motorName}
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Số đăng ký
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {
+                                                        selectedRow.certificateNumber
+                                                    }
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Số Km
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {selectedRow.odo}
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Năm đăng ký
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {new Date(
+                                                        selectedRow.year,
+                                                    ).toLocaleDateString(
+                                                        'vi-VN',
+                                                    )}
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Model
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {selectedRow?.modelName}
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Loại xe
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {selectedRow?.motorTypeName}
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Năm đăng ký
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {formatPrice(
+                                                        selectedRow.price,
+                                                    )}
+                                                </TableCell>
+                                            </TableRow>
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </Box>
+                        </Box>
                     )}
                 </DialogContent>
                 <DialogActions>
-                    {/* {selectedRow &&
-                        // selectedRow?.motorStatus?.motorStatusId === 1 && (
-                            <Button onClick={openSaleModal} color="secondary">
-                                Đã bán Tại cửa hàng {selectedRow?.motorStatus?.title}
+                    {selectedRow && selectedRow?.motorStatuss === 'POSTING' && (
+                        <Button onClick={openSaleModal} color="secondary">
+                            Đã bán Tại cửa hàng
+                        </Button>
+                    )}
+                    {selectedRow &&
+                        selectedRow?.motorStatuss === 'CONSIGNMENT' && (
+                            <Button color="secondary">Đã bán kí gởi</Button>
+                        )}
+                    {selectedRow &&
+                        selectedRow?.motorStatuss === 'LIVELIHOOD' && (
+                            <Button color="secondary">
+                                Đã bán không kí gởi
                             </Button>
-                        // )
-                        } */}
+                        )}
                     <Button onClick={openCancelPostModal} color="warning">
                         Hủy đăng bài
                     </Button>

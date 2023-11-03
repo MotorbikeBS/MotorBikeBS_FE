@@ -1,11 +1,18 @@
 import React, { useMemo, useState } from 'react';
 import {
+    Box,
     Button,
     Container,
     Dialog,
     DialogActions,
     DialogContent,
     DialogTitle,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableRow,
     Typography,
 } from '@mui/material';
 import { DataGrid, GridRowParams } from '@mui/x-data-grid';
@@ -15,9 +22,14 @@ import {
     useAppSelector,
 } from '../../../../services/store/store';
 import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
-import { clearMotor, getMotorByOwnerId } from '../../../../services/features/motorbike/motorbikeSlice';
+import {
+    clearMotor,
+    getMotorByOwnerId,
+} from '../../../../services/features/motorbike/motorbikeSlice';
 import EditMotorModal from './EditMotorModal';
 import PostMotorModal from './PostMotorModal';
+import useFormatCurrency from '../../../../hooks/useFormatCurrency';
+import '../style/style.scss';
 
 interface ListMotorProps {
     loadData: () => void;
@@ -27,6 +39,7 @@ const ListStorageMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
     const dispatch = useAppDispatch();
     const { motorbikesByOwner } = useAppSelector((state) => state.motorbikes);
     const { account } = useAppSelector((state) => state.account);
+    const formatPrice = useFormatCurrency();
 
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
@@ -98,7 +111,9 @@ const ListStorageMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
     const motorbikesByOwnerStorage =
         motorbikesByOwner &&
         motorbikesByOwner?.filter(
-            (motor) => motor?.storeId === null && motor?.motorStatus.motorStatusId === 3,
+            (motor) =>
+                motor?.storeId === null &&
+                motor?.motorStatus.motorStatusId === 3,
         );
 
     const rows = useMemo(() => {
@@ -156,11 +171,80 @@ const ListStorageMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
                 </DialogTitle>
                 <DialogContent>
                     {selectedRow && (
-                        <>
-                            <Typography variant="subtitle1" textAlign="center">
-                                Tên xe: {selectedRow.motorName}
-                            </Typography>
-                        </>
+                        <Box flexGrow={12} className="table-content">
+                            <Box flexGrow={10}>
+                                <TableContainer component={Paper}>
+                                    <Table>
+                                        <TableBody>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Tên xe
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {selectedRow.motorName}
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Số đăng ký
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {
+                                                        selectedRow.certificateNumber
+                                                    }
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Số Km
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {selectedRow.odo}
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Năm đăng ký
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {new Date(
+                                                        selectedRow.year,
+                                                    ).toLocaleDateString(
+                                                        'vi-VN',
+                                                    )}
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Model
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {selectedRow?.modelName}
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Loại xe
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {selectedRow?.motorTypeName}
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Năm đăng ký
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {formatPrice(
+                                                        selectedRow.price,
+                                                    )}
+                                                </TableCell>
+                                            </TableRow>
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </Box>
+                        </Box>
                     )}
                 </DialogContent>
                 <DialogActions>

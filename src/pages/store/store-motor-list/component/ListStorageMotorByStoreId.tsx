@@ -1,11 +1,18 @@
 import React, { useMemo, useState } from 'react';
 import {
+    Box,
     Button,
     Container,
     Dialog,
     DialogActions,
     DialogContent,
     DialogTitle,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableRow,
     Typography,
 } from '@mui/material';
 import { DataGrid, GridRowParams } from '@mui/x-data-grid';
@@ -21,6 +28,8 @@ import {
 } from '../../../../services/features/motorbike/motorbikeSlice';
 import PostMotorModalByStore from './PostMotorModalByStore';
 import EditMotorModalByStore from './EditMotorModalByStore';
+import '../style/style.scss';
+import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 
 interface ListMotorProps {
     loadData: () => void;
@@ -30,6 +39,7 @@ const ListStorageMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
     const dispatch = useAppDispatch();
     const { motorbikeByStoreId } = useAppSelector((state) => state.motorbikes);
     const { user } = useAppSelector((state) => state.users);
+    const formatPrice = useFormatCurrency();
 
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
@@ -120,7 +130,7 @@ const ListStorageMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
             price: motor?.price,
             modelName: motor.model?.modelName,
             motorTypeName: motor.motorType?.title,
-            motorStatus: motor.motorStatus?.title,
+            motorStatuss: motor.motorStatus?.title,
         }));
     }, [motorbikesByStoreIdStorage]);
 
@@ -137,16 +147,6 @@ const ListStorageMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                     width: '100%',
                 }}
             >
-                {/* <div style={{ marginBottom: '8px' }}>
-                    <Typography sx={{ color: '#e81c1c', fontSize: '14px' }}>
-                        *** Lưu ý{' '}
-                        <ReportIcon color="warning" fontSize="small" />
-                        <ReportIcon color="warning" fontSize="small" />
-                        <ReportIcon color="warning" fontSize="small" />: Bạn
-                        phải chỉnh sửa xe để thay đổi trạng thái cửa hàng cho xe
-                        trước rồi mới được đăng bài.
-                    </Typography>
-                </div> */}
                 <DataGrid
                     sx={{
                         '& .css-gl260s-MuiDataGrid-columnHeadersInner': {
@@ -174,11 +174,80 @@ const ListStorageMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                 </DialogTitle>
                 <DialogContent>
                     {selectedRow && (
-                        <>
-                            <Typography variant="subtitle1" textAlign="center">
-                                Tên xe: {selectedRow.motorName}
-                            </Typography>
-                        </>
+                        <Box flexGrow={12} className="table-content">
+                            <Box flexGrow={10}>
+                                <TableContainer component={Paper}>
+                                    <Table>
+                                        <TableBody>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Tên xe
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {selectedRow.motorName}
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Số đăng ký
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {
+                                                        selectedRow.certificateNumber
+                                                    }
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Số Km
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {selectedRow.odo}
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Năm đăng ký
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {new Date(
+                                                        selectedRow.year,
+                                                    ).toLocaleDateString(
+                                                        'vi-VN',
+                                                    )}
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Model
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {selectedRow?.modelName}
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Loại xe
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {selectedRow?.motorTypeName}
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Năm đăng ký
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {formatPrice(
+                                                        selectedRow.price,
+                                                    )}
+                                                </TableCell>
+                                            </TableRow>
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </Box>
+                        </Box>
                     )}
                 </DialogContent>
                 <DialogActions>
