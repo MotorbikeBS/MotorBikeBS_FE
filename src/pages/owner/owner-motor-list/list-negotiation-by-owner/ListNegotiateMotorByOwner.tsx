@@ -13,7 +13,7 @@ const ListNegotiateMotorByOwner = () => {
     const dispatch = useAppDispatch()
     const formatCurrency = useFormatCurrency()
 
-    const { negotiations } = useAppSelector((state) => state.negotiation)
+    const { negotiations, loading } = useAppSelector((state) => state.negotiation)
     const [selectedRow, setSelectedRow] = useState<ISelectRowNegotiation | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -70,6 +70,11 @@ const ListNegotiateMotorByOwner = () => {
                     pageSizeOptions={[5, 10, 100]}
                     disableRowSelectionOnClick
                     onRowDoubleClick={handleRowDoubleClick}
+                    autoHeight
+                    localeText={{
+                        noRowsLabel: 'Không có dữ liệu',
+                    }}
+                    loading={loading}
                 />
 
             </Paper>

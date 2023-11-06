@@ -38,7 +38,9 @@ interface ListMotorProps {
 
 const ListPostedMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
     const dispatch = useAppDispatch();
-    const { motorbikesByOwner } = useAppSelector((state) => state.motorbikes);
+    const { motorbikesByOwner, loading } = useAppSelector(
+        (state) => state.motorbikes,
+    );
     const { account } = useAppSelector((state) => state.account);
     const formatPrice = useFormatCurrency();
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
@@ -136,6 +138,11 @@ const ListPostedMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
                     pageSizeOptions={[5, 10, 100]}
                     disableRowSelectionOnClick
                     onRowDoubleClick={handleRowDoubleClick}
+                    autoHeight
+                    localeText={{
+                        noRowsLabel: 'Không có dữ liệu',
+                    }}
+                    loading={loading}
                 />
             </div>
 

@@ -37,6 +37,7 @@ import ContractHistoryWithStore from '../pages/owner/contract-list-with-store/Co
 import CustomerBookingComponentWithStore from '../pages/customer/customer-booking/CustomerBookingWithStoreComponent';
 import MotorbikeSold from '../pages/store/motorbike-sold/MotorbikeSold';
 import OwnerDashBoardComponent from '../pages/owner/dashboard/OwnerDashBoardComponent';
+import HistoryTransaction from '../pages/owner/history-transaction/HistoryTransaction';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -159,6 +160,7 @@ const AppRoutes = () => {
                     <Route path="/owner/motors" element={<OwnerMotorList />} />
                     <Route path='/owner/my-booking' element={<BookingListOwner />} />
                     <Route path='/owner/contract' element={<ContractHistoryWithStore />} />
+                    <Route path='/owner/history-transaction' element={<HistoryTransaction />} />
                 </>
             )}
             {/* ============================================== ROUTE CUSTOMER ================================================== */}

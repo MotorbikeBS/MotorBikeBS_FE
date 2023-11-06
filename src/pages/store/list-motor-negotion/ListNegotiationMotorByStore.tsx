@@ -1,37 +1,46 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../../../services/store/store'
-import { Container, Paper, Typography } from '@mui/material'
-import { DataGrid, GridRowParams } from '@mui/x-data-grid'
-import { format } from 'date-fns'
-import { columns } from './negotiation-table/NegotiationTableStore'
-import NegotiationInforModalByStore from './negotiation-infor-modal/NegotiationInforModalByStore'
-import useFormatCurrency from '../../../hooks/useFormatCurrency'
-import { INegotiation, ISelectRowNegotiation } from '../../../models/Negotiation/Negotiation'
-import { clearNegotiation, getNegotiationRequest } from '../../../services/features/negotiation/negotiationSlice'
+import React, { useEffect, useMemo, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../services/store/store';
+import { Container, Paper, Typography } from '@mui/material';
+import { DataGrid, GridRowParams } from '@mui/x-data-grid';
+import { format } from 'date-fns';
+import { columns } from './negotiation-table/NegotiationTableStore';
+import NegotiationInforModalByStore from './negotiation-infor-modal/NegotiationInforModalByStore';
+import useFormatCurrency from '../../../hooks/useFormatCurrency';
+import {
+    INegotiation,
+    ISelectRowNegotiation,
+} from '../../../models/Negotiation/Negotiation';
+import {
+    clearNegotiation,
+    getNegotiationRequest,
+} from '../../../services/features/negotiation/negotiationSlice';
 
 const ListNegotiationMotorByStore = () => {
-    const dispatch = useAppDispatch()
-    const formatCurrency = useFormatCurrency()
-    const { negotiations } = useAppSelector((state) => state.negotiation)
+    const dispatch = useAppDispatch();
+    const formatCurrency = useFormatCurrency();
+    const { negotiations, loading } = useAppSelector(
+        (state) => state.negotiation,
+    );
 
-    const [selectedRow, setSelectedRow] = useState<ISelectRowNegotiation | null>(null)
+    const [selectedRow, setSelectedRow] =
+        useState<ISelectRowNegotiation | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-
     useEffect(() => {
-        dispatch(clearNegotiation())
-        dispatch(getNegotiationRequest())
-    }, [dispatch])
+        dispatch(clearNegotiation());
+        dispatch(getNegotiationRequest());
+    }, [dispatch]);
 
     const loadingData = () => {
-        dispatch(clearNegotiation())
-        dispatch(getNegotiationRequest())
-    }
+        dispatch(clearNegotiation());
+        dispatch(getNegotiationRequest());
+    };
 
     const pendingNegotiation = useMemo(() => {
-        return (negotiations ?? []).filter((
-            nego: INegotiation) => nego.negotiations[0].status === 'PENDING')
-    }, [negotiations])
+        return (negotiations ?? []).filter(
+            (nego: INegotiation) => nego.negotiations[0].status === 'PENDING',
+        );
+    }, [negotiations]);
 
     const rows = useMemo(() => {
         return pendingNegotiation.map((nego: INegotiation) => ({
@@ -47,16 +56,14 @@ const ListNegotiationMotorByStore = () => {
             ownerPhone: nego.receiver?.phone,
             ownerAddress: nego.receiver?.address,
             negotiationStatus: nego.negotiations[0].status,
-            motorStatus: nego.motor?.motorStatus.title
-
-        }))
-    }, [pendingNegotiation, formatCurrency])
-
+            motorStatus: nego.motor?.motorStatus.title,
+        }));
+    }, [pendingNegotiation, formatCurrency]);
 
     const handleRowDoubleClick = (params: GridRowParams) => {
         setSelectedRow(params.row as ISelectRowNegotiation);
-        setIsModalOpen(true)
-    }
+        setIsModalOpen(true);
+    };
 
     return (
         <Container maxWidth="xl">
@@ -64,8 +71,9 @@ const ListNegotiationMotorByStore = () => {
                 <Typography variant="h4" gutterBottom>
                     Danh sách xe đang thương lượng
                 </Typography>
-                <Typography fontSize='12px' gutterBottom color='red'>
-                    <strong>Lưu ý: </strong>Vui lòng nhấn đúp vào 1 hàng để xem thông tin cửa hàng đang thương lượng và cập nhật trạng thái
+                <Typography fontSize="12px" gutterBottom color="red">
+                    <strong>Lưu ý: </strong>Vui lòng nhấn đúp vào 1 hàng để xem
+                    thông tin cửa hàng đang thương lượng và cập nhật trạng thái
                 </Typography>
                 <DataGrid
                     rows={rows}
@@ -73,8 +81,12 @@ const ListNegotiationMotorByStore = () => {
                     pageSizeOptions={[5, 10, 100]}
                     disableRowSelectionOnClick
                     onRowDoubleClick={handleRowDoubleClick}
+                    loading={loading}
+                    autoHeight
+                    localeText={{
+                        noRowsLabel: 'Không có dữ liệu',
+                    }}
                 />
-
             </Paper>
             <NegotiationInforModalByStore
                 isOpen={isModalOpen}
@@ -82,10 +94,8 @@ const ListNegotiationMotorByStore = () => {
                 data={selectedRow}
                 loadingData={loadingData}
             />
-
-
         </Container>
-    )
-}
+    );
+};
 
-export default ListNegotiationMotorByStore
+export default ListNegotiationMotorByStore;
