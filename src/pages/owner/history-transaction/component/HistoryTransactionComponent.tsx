@@ -1,47 +1,39 @@
 import React, { useEffect, useMemo } from 'react';
 import { Container } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import { columns } from './table/Table';
+import { columns } from './table/HistoryTransactionTable';
 import {
     useAppDispatch,
     useAppSelector,
 } from '../../../../services/store/store';
+import { IBill } from '../../../../models/Bill/Bill';
 import {
     clearBill,
-    getBillByStoreId,
+    getBillByUserId,
 } from '../../../../services/features/bill/billSlice';
-import { IBill } from '../../../../models/Bill/Bill';
-import { getUserByID } from '../../../../services/features/user/userSlice';
 
-const MotorbikeSoldComponent = () => {
+const HistoryTransactionComponent = () => {
     const dispatch = useAppDispatch();
-    const { billStore, loading } = useAppSelector((state) => state.bill);
     const { account } = useAppSelector((state) => state.account);
-    const { user } = useAppSelector((state) => state.users);
-
-    useEffect(() => {
-        if (account && account.userId) {
-            dispatch(getUserByID({ id: Number(account.userId) }));
-        }
-    }, [dispatch, account]);
+    const { billUser, loading } = useAppSelector((state) => state.bill);
 
     useEffect(() => {
         dispatch(clearBill());
-        dispatch(
-            getBillByStoreId({
-                receiverId: Number(user?.storeDesciptions[0]?.storeId),
-            }),
-        );
-    }, [dispatch, user]);
+        dispatch(getBillByUserId({ userId: Number(account?.userId) }));
+    }, [dispatch, account]);
 
     const rows = useMemo(() => {
-        return (billStore ?? []).map((bill: IBill) => ({
-            id: bill.billConfirmId,
-            motorId: bill?.motorId,
-            price: bill?.price,
-            createAt: bill?.createAt,
-        }));
-    }, [billStore]);
+        return (
+            billUser ??
+            [].map((bill: IBill) => ({
+                id: bill.billConfirmId,
+                motorId: bill?.motorId,
+                price: bill?.price,
+                createAt: bill?.createAt,
+            }))
+        );
+    }, [billUser]);
+
     return (
         <Container maxWidth="xl">
             <div
@@ -65,16 +57,16 @@ const MotorbikeSoldComponent = () => {
                     }}
                     pageSizeOptions={[5, 10, 100]}
                     disableRowSelectionOnClick
-                    // onRowDoubleClick={handleRowDoubleClick}
                     autoHeight
                     localeText={{
                         noRowsLabel: 'Không có dữ liệu',
                     }}
                     loading={loading}
+                    // onRowDoubleClick={handleRowDoubleClick}
                 />
             </div>
         </Container>
     );
 };
 
-export default MotorbikeSoldComponent;
+export default HistoryTransactionComponent;

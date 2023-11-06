@@ -40,18 +40,24 @@ const pages = [
         to: '/owner/contract',
         name: 'Hợp đồng',
     },
-
+    {
+        to: '/owner/history-transaction',
+        name: 'Lịch sử giao dịch',
+    },
 ];
 
 const OwnerMenuComponent = () => {
     const theme = useTheme();
     const location = useLocation();
     const navigate = useNavigate();
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
 
-
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+        null,
+    );
+    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+        null,
+    );
 
     // const [searchOpen, setSearchOpen] = React.useState(false);
 
@@ -96,7 +102,10 @@ const OwnerMenuComponent = () => {
             >
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
-                        <Link to="/owner-home" style={{ textDecoration: 'none' }}>
+                        <Link
+                            to="/owner-home"
+                            style={{ textDecoration: 'none' }}
+                        >
                             <Typography
                                 variant="h4"
                                 noWrap
@@ -122,7 +131,12 @@ const OwnerMenuComponent = () => {
                             <StyledInputBase placeholder="Tìm Kiếm…" inputProps={{ 'aria-label': 'search' }} />
                         </Search> */}
 
-                        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                display: { xs: 'flex', md: 'none' },
+                            }}
+                        >
                             <IconButton
                                 size="large"
                                 aria-label="account of current user"
@@ -152,9 +166,18 @@ const OwnerMenuComponent = () => {
                                 }}
                             >
                                 {pages.map((page) => (
-                                    <Link to={page.to} style={{ textDecoration: 'none' }}>
-                                        <MenuItem key={page.to} onClick={handleCloseNavMenu}>
-                                            <Typography textAlign="center" sx={{ color: 'black' }}>
+                                    <Link
+                                        to={page.to}
+                                        style={{ textDecoration: 'none' }}
+                                    >
+                                        <MenuItem
+                                            key={page.to}
+                                            onClick={handleCloseNavMenu}
+                                        >
+                                            <Typography
+                                                textAlign="center"
+                                                sx={{ color: 'black' }}
+                                            >
                                                 {page.name}
                                             </Typography>
                                         </MenuItem>
@@ -195,12 +218,22 @@ const OwnerMenuComponent = () => {
                             </Typography>
                         </Link>
 
-                        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 2 }}>
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                display: { xs: 'none', md: 'flex' },
+                                gap: 2,
+                            }}
+                        >
                             {pages.map((page) => (
                                 <Link
                                     key={page.to}
                                     to={page.to}
-                                    className={`link-customer ${isMenuItemActive(page.to) ? 'active' : ''}`}
+                                    className={`link-customer ${
+                                        isMenuItemActive(page.to)
+                                            ? 'active'
+                                            : ''
+                                    }`}
                                 >
                                     {page.name}
                                 </Link>
@@ -242,12 +275,19 @@ const OwnerMenuComponent = () => {
                                 onClose={handleCloseUserMenu}
                             >
                                 <MenuItem onClick={handleCloseUserMenu}>
-                                    <Link to="/user/profile" style={{ textDecoration: 'none' }}>
+                                    <Link
+                                        to="/user/profile"
+                                        style={{ textDecoration: 'none' }}
+                                    >
                                         <Typography>Hồ Sơ</Typography>
                                     </Link>
                                 </MenuItem>
                                 <MenuItem onClick={handleCloseUserMenu}>
-                                    <Link to="/" style={{ textDecoration: 'none' }} onClick={handleLogout}>
+                                    <Link
+                                        to="/"
+                                        style={{ textDecoration: 'none' }}
+                                        onClick={handleLogout}
+                                    >
                                         <Typography>Đăng xuất</Typography>
                                     </Link>
                                 </MenuItem>
