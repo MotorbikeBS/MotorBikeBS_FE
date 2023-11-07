@@ -1,13 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../../../../services/store/store'
-// import { clearNegotiation, getNegotiationRequest } from '../../../../services/features/negotiation/negotiationSlice'
-import { INegotiation, ISelectRowNegotiation } from '../../../../models/Negotiation/Negotiation'
+import { useAppDispatch, useAppSelector } from '../../../../../services/store/store'
+import { INegotiation, ISelectRowNegotiation } from '../../../../../models/Negotiation/Negotiation'
 import { Container, Paper, Typography } from '@mui/material'
 import { DataGrid, GridRowParams } from '@mui/x-data-grid'
 import { format } from 'date-fns'
-import useFormatCurrency from '../../../../hooks/useFormatCurrency'
+import useFormatCurrency from '../../../../../hooks/useFormatCurrency'
 import { columns } from './negotiation-table/NegotiationTableOwner'
 import NegotiationInforModalByOwner from './negotiation-infor-modal/NegotiationInforModalByOwner'
+import { clearNegotiation, getNegotiationRequest } from '../../../../../services/features/negotiation/negotiationSlice'
 
 const ListNegotiateMotorByOwner = () => {
     const dispatch = useAppDispatch()
@@ -17,15 +17,15 @@ const ListNegotiateMotorByOwner = () => {
     const [selectedRow, setSelectedRow] = useState<ISelectRowNegotiation | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    // useEffect(() => {
-    //     dispatch(clearNegotiation())
-    //     dispatch(getNegotiationRequest())
-    // }, [dispatch])
+    useEffect(() => {
+        dispatch(clearNegotiation())
+        dispatch(getNegotiationRequest())
+    }, [dispatch])
 
-    // const loadingData = () => {
-    //     dispatch(clearNegotiation())
-    //     dispatch(getNegotiationRequest())
-    // }
+    const loadingData = () => {
+        dispatch(clearNegotiation())
+        dispatch(getNegotiationRequest())
+    }
 
     const pendingNegotiation = useMemo(() => {
         return (negotiations ?? []).filter((nego: INegotiation) => nego.negotiations[0].status === 'PENDING');
@@ -38,9 +38,9 @@ const ListNegotiateMotorByOwner = () => {
             images: nego.motor.motorbikeImages[0].imageLink,
             certificateNumber: nego.motor.certificateNumber,
             year: format(new Date(nego.motor.year), 'dd/MM/yyyy'),
-            price: formatCurrency(nego.motor.price),
-            // storePrice: nego.negotiations[0]?.storePrice,
-            // ownerPrice: nego.negotiations[0]?.ownerPrice,
+            price: nego.negotiations[0].price,
+            startTime: format(new Date(nego.negotiations[0].startTime), 'dd/MM/yyyy'),
+            endTime: format(new Date(nego.negotiations[0].endTime), 'dd/MM/yyyy'),
             storeName: nego.sender?.storeDesciptions[0].storeName,
             storePhone: nego.sender?.storeDesciptions[0].storePhone,
             storeAddress: nego.sender?.storeDesciptions[0].address,
@@ -79,12 +79,12 @@ const ListNegotiateMotorByOwner = () => {
 
             </Paper>
 
-            {/* <NegotiationInforModalByOwner
+            <NegotiationInforModalByOwner
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 data={selectedRow}
-            // loadingData={loadingData}
-            /> */}
+                loadingData={loadingData}
+            />
         </Container>
     )
 }

@@ -26,7 +26,6 @@ import StoreListAdmin from '../pages/admin/store-list/StoreList';
 import MotorOwnerExchange from '../pages/store/motor-owner-exchange/MotorOwnerExchange';
 import OwnerMotorDetail from '../pages/store/motor-owner-exchange/OwnerMotorDetail';
 import OwnerMotorList from '../pages/owner/owner-motor-list/OwnerMotorList';
-import BookingListOwner from '../pages/owner/booking-component/BookingListOwner';
 import StoreMotorList from '../pages/store/store-motor-list/StoreMotorList';
 import BookingListStore from '../pages/store/booking-list/BookingListStore';
 import MotorBikeDetailForStore from '../pages/customer/motorbike-detail/MotorBikeDetailForStore';
@@ -38,6 +37,8 @@ import CustomerBookingComponentWithStore from '../pages/customer/customer-bookin
 import MotorbikeSold from '../pages/store/motorbike-sold/MotorbikeSold';
 import OwnerDashBoardComponent from '../pages/owner/dashboard/OwnerDashBoardComponent';
 import HistoryTransaction from '../pages/owner/history-transaction/HistoryTransaction';
+import StoreNegotiationWithOwnerComponent from '../pages/owner/negotiation-component/negotiation-with-store/StoreNegotiationWithOwnerComponent';
+import NegotiationListOwner from '../pages/owner/negotiation-component/NegotiationListOwner';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -158,7 +159,7 @@ const AppRoutes = () => {
                         element={<MotorBikeDetailForStore />}
                     />
                     <Route path="/owner/motors" element={<OwnerMotorList />} />
-                    <Route path='/owner/my-booking' element={<BookingListOwner />} />
+                    <Route path='/owner/negotiation' element={<NegotiationListOwner />} />
                     <Route path='/owner/contract' element={<ContractHistoryWithStore />} />
                     <Route path='/owner/history-transaction' element={<HistoryTransaction />} />
                 </>

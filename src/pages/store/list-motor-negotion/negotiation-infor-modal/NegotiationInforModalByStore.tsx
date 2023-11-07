@@ -2,7 +2,6 @@ import React, { ReactNode, useState } from 'react'
 import { Box, Button, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from '@mui/material';
 import { ClearRounded } from '@mui/icons-material';
 import './style/_style.scss'
-import { useForm } from 'react-hook-form';
 import { ISelectRowNegotiation } from '../../../../models/Negotiation/Negotiation';
 import { useAppDispatch } from '../../../../services/store/store';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';

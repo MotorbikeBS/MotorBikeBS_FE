@@ -33,8 +33,8 @@ const pages = [
         name: 'Kho xe',
     },
     {
-        to: '/owner/my-booking',
-        name: 'Lịch hẹn',
+        to: '/owner/negotiation',
+        name: 'Thương Lượng',
     },
     {
         to: '/owner/contract',
@@ -229,11 +229,10 @@ const OwnerMenuComponent = () => {
                                 <Link
                                     key={page.to}
                                     to={page.to}
-                                    className={`link-customer ${
-                                        isMenuItemActive(page.to)
-                                            ? 'active'
-                                            : ''
-                                    }`}
+                                    className={`link-customer ${isMenuItemActive(page.to)
+                                        ? 'active'
+                                        : ''
+                                        }`}
                                 >
                                     {page.name}
                                 </Link>
