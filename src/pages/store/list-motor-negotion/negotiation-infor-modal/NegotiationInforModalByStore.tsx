@@ -2,10 +2,10 @@ import React, { ReactNode, useState } from 'react'
 import { Box, Button, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from '@mui/material';
 import { ClearRounded } from '@mui/icons-material';
 import './style/_style.scss'
-import { useForm } from 'react-hook-form';
 import { ISelectRowNegotiation } from '../../../../models/Negotiation/Negotiation';
 import { useAppDispatch } from '../../../../services/store/store';
-import { acceptEnemyPrice, cancleNegotiation, changePriceNegotiation } from '../../../../services/features/negotiation/negotiationSlice';
+import useFormatCurrency from '../../../../hooks/useFormatCurrency';
+import { cancleNegotiation } from '../../../../services/features/negotiation/negotiationSlice';
 
 interface NegotiationInforModalProps {
 
@@ -14,9 +14,7 @@ interface NegotiationInforModalProps {
     loadingData: () => void;
     data: ISelectRowNegotiation | null;
 }
-interface IFormOwnerPriceValues {
-    price: number
-}
+
 
 const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
     isOpen,
@@ -26,42 +24,9 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
 
 }) => {
     const dispatch = useAppDispatch()
-    const [storePrice, setStorePrice] = useState<number | null>(data?.storePrice || null);
+    const formatPrice = useFormatCurrency()
 
-    const form = useForm<IFormOwnerPriceValues>({
-        defaultValues: {
-            price: data?.storePrice ?? 0,
-        }
-    });
-    const { register, handleSubmit, formState } = form;
-    const onSubmit = (formData: IFormOwnerPriceValues) => {
-        if (data && data.id) {
-            dispatch(changePriceNegotiation({
-                negotiationId: data.id,
-                price: formData.price
-            }))
-                .then(() => {
-                    setStorePrice(formData.price)
-                    loadingData()
-                    setTimeout(() => {
-                        onClose()
-                    }, 1000)
-                })
 
-        }
-    };
-
-    const handleAcceptEnemyPrice = () => {
-        if (data && data.id) {
-            dispatch(acceptEnemyPrice({ negotiationId: data.id }))
-                .then(() => {
-                    loadingData()
-                    setTimeout(() => {
-                        onClose()
-                    }, 1000)
-                })
-        }
-    }
     const createData = (label: string, value: ReactNode | string) => ({
         label,
         value,
@@ -72,104 +37,41 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
         createData('Số đăng ký', data?.certificateNumber),
         createData('Năm đăng ký', data?.year ? data.year.toLocaleString() : 'N/A'),
         createData('Giá ban đầu',
-            <Typography
-                fontWeight='bold'
-            >
-                {data?.price}
+            <Typography fontWeight='bold'>
+                {data?.price !== undefined ? formatPrice(data.price) : 'N/A'}
             </Typography>
         ),
-        createData('Giá chủ xe',
-            <div className='price-value'>
-                <TextField
-                    value={data?.ownerPrice
-                        ? data?.ownerPrice
-                        : 'Chưa nhập'}
-                    disabled
-                />
-                <Box>
-                    <Button
-                        variant="contained"
-                        color="success"
-                        className='btn-accept-price'
-                        onClick={handleAcceptEnemyPrice}
-                    >
-                        Chấp nhận
-                    </Button>
-                </Box>
-            </div>
-
-        ),
-        createData('Giá của bạn',
-
-            <div className='price-value'>
-                <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    noValidate
-                >
-                    <TextField
-                        {...register('price')}
-                        defaultValue={
-                            data?.storePrice ?? ''
-                        }
-                    />
-                    <Button
-                        type='submit'
-                        variant="contained"
-                        color="warning"
-                        className='btn-again-price'
-                    >
-                        Trả giá lại
-                    </Button>
-
-                </form>
-            </div>
-        ),
+        createData('Ngày nhận xe', data?.startTime ? data.startTime.toLocaleString() : 'N/A'),
+        createData('Ngày kết thúc', data?.endTime ? data.endTime.toLocaleString() : 'N/A'),
         createData('Tên chủ xe', data?.ownerName),
         createData('Số điện thoại chủ xe', data?.ownerPhone),
         createData('Địa chỉ chủ xe', data?.ownerAddress),
-        createData('Trạng thái thương lượng',
+        createData('Trạng thái thương lượng', (
             data?.negotiationStatus === 'PENDING' ? (
-                <Typography
-                    color='red'
-                    fontWeight='700'
-                >
+                <Typography color='red' fontWeight='700'>
                     Đang Chờ
                 </Typography>
             ) : data?.negotiationStatus === 'ACCEPT' ? (
-                <Typography
-                    color='green'
-                    fontWeight='700'
-                >
+                <Typography color='green' fontWeight='700'>
                     Đã Duyệt
                 </Typography>
             ) : (
-                <Typography
-                    color='black'
-                    fontWeight='700'
-                >
+                <Typography color='black' fontWeight='700'>
                     Chưa Xác Định
                 </Typography>
             )
-        ),
-        createData('Trạng thái xe',
-
-            data?.motorStatus === 'CONSIGNMENT'
-                || data?.motorStatus === 4 ? (
-                <Typography
-                    color='#E6A160'
-                    fontWeight='700'
-                >
+        )),
+        createData('Trạng thái xe', (
+            data?.motorStatus === 'CONSIGNMENT' || data?.motorStatus === 4 ? (
+                <Typography color='#E6A160' fontWeight='700'>
                     KÝ GỞI
                 </Typography>
-            ) : data?.motorStatus === 'LIVELIHOOD'
-                || data?.motorStatus === 5 ? (
+            ) : data?.motorStatus === 'LIVELIHOOD' || data?.motorStatus === 5 ? (
                 <Typography sx={{ color: 'green' }}>KHÔNG KÍ GỞI</Typography>
-
             ) : (
                 <Typography sx={{ color: '#3D609A' }}>CHƯA XÁC ĐỊNH</Typography>
             )
-
-        ),
+        )),
     ]
 
     const handleCancleNegotiation = () => {
@@ -218,7 +120,6 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                         </TableBody>
                     </Table>
                 </TableContainer>
-
                 {data?.negotiationStatus === 'PENDING' &&
                     (
                         <Box className='btn-negotiation-status'>

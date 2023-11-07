@@ -10,12 +10,11 @@ import {
 } from '../../../../services/store/store';
 import ListPostedMotorByOwnerId from './ListPostedMotorByOwnerId';
 import ListStorageMotorByOwnerId from './ListStorageMotorByOwnerId';
-import ListNegotiateMotorByOwner from '../list-negotiation-by-owner/ListNegotiateMotorByOwner';
 
 const OwnerMotorListComponent = () => {
     const { account } = useAppSelector((state) => state.account);
     const dispatch = useAppDispatch();
-    
+
     const [isOpenDialog, setOpenDialog] = useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = useState(false);
@@ -74,9 +73,8 @@ const OwnerMotorListComponent = () => {
             >
                 <Tab label="Xe trong kho" />
                 <Tab label="Xe đã đăng" />
-                <Tab label="Xe đang thương lượng" />
             </Tabs>
-            {value === 0  ? (
+            {value === 0 ? (
                 <div className="motorlist-add-btn">
                     <Button onClick={handleOpenDialog} variant="contained">
                         <AddIcon />
@@ -94,7 +92,7 @@ const OwnerMotorListComponent = () => {
                 {value === 1 && (
                     <ListPostedMotorByOwnerId loadData={loadData} />
                 )}
-                {value === 2 && <ListNegotiateMotorByOwner />}
+                {/* {value === 2 && <ListNegotiateMotorByOwner />} */}
             </Box>
 
             {/* <ListMotorByOwnerId loadData={loadData} /> */}

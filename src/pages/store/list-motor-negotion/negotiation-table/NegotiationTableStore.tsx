@@ -38,48 +38,19 @@ export const columns: GridColDef[] = [
         width: 200,
         editable: false,
     },
-    {
-        field: 'price',
-        headerName: 'Giá ban đầu',
-        width: 160,
-        editable: false,
 
-    },
     {
-        field: 'ownerPrice',
-        headerName: 'Giá chủ xe',
+        field: 'pricce',
+        headerName: 'Giá thương lượng',
         width: 200,
         editable: false,
         renderCell: (params) =>
-            params.row.ownerPrice > 0 ? (
-                <Typography
-                    color='red'
-                    fontWeight='700'
-                >
-                    {/* {params.row.ownerPrice} */}
-                    {currencyFormatter.format(params.row.ownerPrice)}
-                </Typography>
-            ) : (
-                <Typography
-                    color='#ad1e02'
-                >
-                    Chưa nhập giá
-                </Typography>
-            ),
-    },
-    {
-        field: 'storePrice',
-        headerName: 'Giá của bạn',
-        width: 200,
-        editable: false,
-        renderCell: (params) =>
-            params.row.storePrice > 0 ?
+            params.row.price > 0 ?
                 (<Typography
                     color='#fab71b'
                     fontWeight='700'
                 >
-                    {/* {params.row.storePrice} */}
-                    {currencyFormatter.format(params.row.storePrice)}
+                    {currencyFormatter.format(params.row.price)}
                 </Typography>) : (
                     <Typography
                         color='#ad1e02'
@@ -87,6 +58,18 @@ export const columns: GridColDef[] = [
                         Chưa nhập giá
                     </Typography>
                 ),
+    },
+    {
+        field: 'startTime',
+        headerName: 'Ngày nhận',
+        width: 200,
+        editable: false,
+    },
+    {
+        field: 'endTime',
+        headerName: 'Ngày kết thúc',
+        width: 200,
+        editable: false,
     },
     {
         field: 'ownerName',

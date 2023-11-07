@@ -1,10 +1,10 @@
 import { Box, Typography } from "@mui/material"
 import OwnerMenuComponent from "../owner-menu-component/OwnerMenuComponent"
 import FooterComponent from "../../../common-components/footer-component/FooterComponent"
-import StoreBookingWithOwnerComponent from "./booking-with-store/StoreBookingWithOwnerComponent"
+import StoreNegotiationWithOwnerComponent from "./negotiation-with-store/StoreNegotiationWithOwnerComponent"
 
 
-const BookingListOwner = () => {
+const NegotiationListOwner = () => {
 
     return (
         <>
@@ -22,7 +22,7 @@ const BookingListOwner = () => {
                     marginTop='0.5rem'
                     marginBottom='5%'
                 >
-                    <StoreBookingWithOwnerComponent />
+                    <StoreNegotiationWithOwnerComponent />
                 </Box>
                 <Box flexGrow={1} className="footer-style">
                     <FooterComponent />
@@ -32,4 +32,4 @@ const BookingListOwner = () => {
     )
 }
 
-export default BookingListOwner
+export default NegotiationListOwner

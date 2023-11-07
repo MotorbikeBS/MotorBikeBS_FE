@@ -17,7 +17,7 @@ import {
 } from '../../../../services/store/store';
 import {
     clearNegotiation,
-    getNegotiationRequest,
+
 } from '../../../../services/features/negotiation/negotiationSlice';
 import { Item } from '../../motor-owner-exchange/style/style-root';
 import './style/_style.scss';
@@ -40,7 +40,7 @@ const ListMotorAcceptNegotiation = () => {
 
     useEffect(() => {
         dispatch(clearNegotiation());
-        dispatch(getNegotiationRequest());
+        // dispatch(getNegotiationRequest());
     }, [dispatch]);
 
     const acceptPriceNegotiation = negotiations?.filter(
@@ -88,7 +88,7 @@ const ListMotorAcceptNegotiation = () => {
             ) : (
                 <>
                     {acceptPriceNegotiation &&
-                    acceptPriceNegotiation.length === 0 ? (
+                        acceptPriceNegotiation.length === 0 ? (
                         <>
                             <Container className="accept-negotiation-notFound">
                                 <Paper elevation={3} sx={{ padding: 2 }}>
@@ -129,9 +129,9 @@ const ListMotorAcceptNegotiation = () => {
                                                 >
                                                     {negoMoto.motor
                                                         ?.motorbikeImages &&
-                                                    negoMoto.motor
-                                                        ?.motorbikeImages
-                                                        .length === 0 ? (
+                                                        negoMoto.motor
+                                                            ?.motorbikeImages
+                                                            .length === 0 ? (
                                                         <>
                                                             <img
                                                                 src="https://png.pngtree.com/element_origin_min_pic/16/10/21/277448a877a33e8d0efc778025291c86.jpg"
@@ -156,7 +156,7 @@ const ListMotorAcceptNegotiation = () => {
                                                                 ?.motorName
                                                         }
                                                     </Typography>
-                                                    <Typography
+                                                    {/* <Typography
                                                         color="red"
                                                         fontWeight="700"
                                                         fontSize="18px"
@@ -167,7 +167,7 @@ const ListMotorAcceptNegotiation = () => {
                                                                 .negotiations[0]
                                                                 ?.finalPrice,
                                                         )}
-                                                    </Typography>
+                                                    </Typography> */}
                                                     <div className="info-content-accept-negotiation">
                                                         <Typography>
                                                             <strong>

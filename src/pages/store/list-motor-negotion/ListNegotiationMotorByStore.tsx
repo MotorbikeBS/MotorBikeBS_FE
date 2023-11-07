@@ -11,8 +11,7 @@ import {
     ISelectRowNegotiation,
 } from '../../../models/Negotiation/Negotiation';
 import {
-    clearNegotiation,
-    getNegotiationRequest,
+    clearNegotiation, getNegotiationRequest,
 } from '../../../services/features/negotiation/negotiationSlice';
 
 const ListNegotiationMotorByStore = () => {
@@ -49,9 +48,9 @@ const ListNegotiationMotorByStore = () => {
             images: nego.motor.motorbikeImages[0].imageLink,
             certificateNumber: nego.motor.certificateNumber,
             year: format(new Date(nego.motor.year), 'dd/MM/yyyy'),
-            price: formatCurrency(nego.motor.price),
-            ownerPrice: nego.negotiations[0]?.ownerPrice,
-            storePrice: nego.negotiations[0]?.storePrice,
+            price: nego.negotiations[0].price,
+            startTime: format(new Date(nego.negotiations[0].startTime), 'dd/MM/yyyy'),
+            endTime: format(new Date(nego.negotiations[0].endTime), 'dd/MM/yyyy'),
             ownerName: nego.receiver?.userName,
             ownerPhone: nego.receiver?.phone,
             ownerAddress: nego.receiver?.address,
@@ -69,7 +68,7 @@ const ListNegotiationMotorByStore = () => {
         <Container maxWidth="xl">
             <Paper style={{ marginBottom: '20px', padding: '20px' }}>
                 <Typography variant="h4" gutterBottom>
-                    Danh sách xe đang thương lượng
+                    Danh sách thương lượng
                 </Typography>
                 <Typography fontSize="12px" gutterBottom color="red">
                     <strong>Lưu ý: </strong>Vui lòng nhấn đúp vào 1 hàng để xem

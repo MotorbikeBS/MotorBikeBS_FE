@@ -1,71 +1,12 @@
-import { IMotorImages, IMotorStatus, IMotorType } from '../Motorbike/Motorbike';
-import { IStore } from '../Store/Store';
-import { IUser } from '../User/UserInterface';
-
-export interface INegotiationStore {
-    motorId: number;
-    storePrice: number;
-    description: string;
-}
-export interface IChangePriceNegotiation {
-    negotiationId: number;
-    price: number;
-}
-export interface INegotiationOwner {
-    motorId: number;
-    ownerPrice: number;
-    description: string;
-}
-
-export interface IMotorNegotiation {
-    motorId: number;
-    certificateNumber: string;
-    motorName: string;
-    modelId:number;
-    odo: number;
-    year: Date;
-    price: number;
-    description?: string;
-    motorStatusId: number;
-    motorType: IMotorType;
-    ownerId: number;
-    motorStatus: IMotorStatus;
-    registrationImage: string;
-    motorbikeImages: IMotorImages[];
-}
-export interface INegotiationRequest {
-    negotiationId: number;
-    requestId: number;
-    storePrice: number;
-    ownerPrice: number;
-    startTime: Date;
-    endTime: Date;
-    description: string;
-    status: string;
-    finalPrice: number;
-}
-
-export interface INegotiation {
-    requestId: number;
-    motorId: number;
-    receiverId: number;
-    senderId: number;
-    time: Date;
-    requestTypeId: number;
-    motor: IMotorNegotiation;
-    negotiations: INegotiationRequest[];
-    receiver: IUser;
-    sender: IUser;
-}
 export interface ISelectRowNegotiation {
     id: number;
     motorName: string;
     images: string;
     certificateNumber: string;
     year: Date;
+    startTime: Date;
+    endTime: Date;
     price: number;
-    storePrice: number;
-    ownerPrice: number;
     storeName: string;
     ownerName: string;
     ownerPhone: string;
@@ -74,4 +15,61 @@ export interface ISelectRowNegotiation {
     storeAddress: string;
     negotiationStatus: string;
     motorStatus: string | number;
+}
+import { IMotorStatus, IMotorType } from '../Motorbike/Motorbike';
+import { IUser } from '../User/UserInterface';
+
+// }
+export interface IMotorImgNego {
+    imageId: number;
+    imageLink: string;
+    motorId: number;
+}
+export interface IMotorNego {
+    motorId: number;
+    certificateNumber: number;
+    motorName: string;
+    modelId: number;
+    odo: number;
+    year: Date;
+    price: number;
+    description: string;
+    motorStatusId: number;
+    motorTypeId: number;
+    storeId: number;
+    ownerId: number;
+    registrationImage: string;
+    motorStatus: IMotorStatus;
+    motorType: IMotorType;
+    motorbikeImages: IMotorImgNego[];
+}
+export interface INegoRequest {
+    negotiationId: number;
+    requestId: number;
+    price: number;
+    startTime: Date;
+    endTime: Date;
+    description: string;
+    status: string;
+    expiredTime: Date;
+}
+export interface IFieldRequest {
+    motorId: number;
+    price: number;
+    startTime: Date;
+    endTime: Date;
+    description: string;
+}
+export interface INegotiation {
+    requestId: number;
+    motorId: number;
+    receiverId: number;
+    senderId: number;
+    time: Date;
+    requestTypeId: number;
+    status: string;
+    motor: IMotorNego;
+    negotiations: INegoRequest[];
+    receiver: IUser;
+    sender: IUser;
 }
