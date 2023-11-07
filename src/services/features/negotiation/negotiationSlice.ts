@@ -1,19 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import {
-    IChangePriceNegotiation,
-    INegotiation,
-    INegotiationStore,
-} from '../../../models/Negotiation/Negotiation';
+
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import {
     startNegotitationEndPoint,
     getNegotiationRequestEndPoint,
-    acceptDefaultPriceEndPoint,
-    acceptEnemyPriceEndPoint,
     cancleNegotiationEndPoint,
-    changePriceNegotiationEndPoint,
 } from '../../config/api-config';
+import {
+    IFieldRequest,
+    INegotiation,
+} from '../../../models/Negotiation/Negotiation';
 
 interface INegotiationState {
     loading: boolean;
@@ -28,33 +25,33 @@ const initialState: INegotiationState = {
     negotiations: [],
 };
 
-export const startNegotiation = createAsyncThunk<
-    INegotiation,
-    INegotiationStore
->('negotiation/startNegotiation', async (data: INegotiationStore, thunkAPI) => {
-    const { motorId, storePrice, description } = data;
-    try {
-        const token = localStorage.getItem('motorbike_bs');
-        const response = await axios.post(
-            `${startNegotitationEndPoint}?motorId=${motorId}`,
-            { storePrice, description },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
+export const startNegotiation = createAsyncThunk<INegotiation, IFieldRequest>(
+    'negotiation/startNegotiation',
+    async (data: IFieldRequest, thunkAPI) => {
+        const { motorId, price, startTime, endTime, description } = data;
+        try {
+            const token = localStorage.getItem('motorbike_bs');
+            const response = await axios.post(
+                `${startNegotitationEndPoint}?motorId=${motorId}`,
+                { price, startTime, endTime, description },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 },
-            },
-        );
-        toast.success(`${response.data.message}`);
-        return response.data;
-    } catch (err: any) {
-        if (err.response) {
-            toast.error(`${err.response.data?.errorMessages}`);
-            return thunkAPI.rejectWithValue({
-                error: err.response?.data?.errorMessages,
-            });
+            );
+            toast.success(`${response.data.message}`);
+            return response.data;
+        } catch (err: any) {
+            if (err.response) {
+                toast.error(`${err.response.data?.errorMessages}`);
+                return thunkAPI.rejectWithValue({
+                    error: err.response?.data?.errorMessages,
+                });
+            }
         }
-    }
-});
+    },
+);
 
 export const getNegotiationRequest = createAsyncThunk<INegotiation[], void>(
     'negotiation/getNegotiationRequest',
@@ -77,61 +74,6 @@ export const getNegotiationRequest = createAsyncThunk<INegotiation[], void>(
         }
     },
 );
-
-export const acceptDefaultPrice = createAsyncThunk<
-    INegotiation,
-    { motorId: number }
->('negotiation/acceptDefautPrice', async (data, thunkAPI) => {
-    const { motorId } = data;
-    try {
-        const token = localStorage.getItem('motorbike_bs');
-        const response = await axios.post(
-            `${acceptDefaultPriceEndPoint}?motorId=${motorId}`,
-            {},
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            },
-        );
-        toast.success(`${response.data.message}`);
-        return response.data;
-    } catch (error: any) {
-        if (error.response) {
-            toast.error(`${error.response.data?.errorMessages}`);
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
-        }
-    }
-});
-export const acceptEnemyPrice = createAsyncThunk<
-    INegotiation,
-    { negotiationId: number }
->('negotiation/acceptNegotiation', async (data, thunkAPI) => {
-    const { negotiationId } = data;
-    try {
-        const token = localStorage.getItem('motorbike_bs');
-        const response = await axios.put(
-            `${acceptEnemyPriceEndPoint}?negotiationId=${negotiationId}`,
-            {},
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            },
-        );
-        toast.success(`${response.data.message}`);
-        return response.data;
-    } catch (error: any) {
-        if (error.response) {
-            toast.error(`${error.response.data?.errorMessages}`);
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
-        }
-    }
-});
 
 export const cancleNegotiation = createAsyncThunk<
     INegotiation,
@@ -160,33 +102,7 @@ export const cancleNegotiation = createAsyncThunk<
         }
     }
 });
-export const changePriceNegotiation = createAsyncThunk<
-    INegotiation,
-    IChangePriceNegotiation
->('negotiation/changePriceNegotiation', async (data, thunkAPI) => {
-    const { negotiationId, price } = data;
-    try {
-        const token = localStorage.getItem('motorbike_bs');
-        const response = await axios.put(
-            `${changePriceNegotiationEndPoint}?negotiationId=${negotiationId}`,
-            { price },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            },
-        );
-        toast.success(`${response.data.message}`);
-        return response.data;
-    } catch (err: any) {
-        if (err.response) {
-            toast.error(`${err.response.data?.errorMessages}`);
-            return thunkAPI.rejectWithValue({
-                error: err.response?.data?.errorMessages,
-            });
-        }
-    }
-});
+
 export const negotiationSlice = createSlice({
     name: 'negotiation',
     initialState,
@@ -231,39 +147,6 @@ export const negotiationSlice = createSlice({
             state.negotiation = action.payload;
         });
         builder.addCase(cancleNegotiation.rejected, (state, action) => {
-            state.loading = false;
-            state.error = action.payload;
-        });
-        builder.addCase(acceptEnemyPrice.pending, (state, action) => {
-            state.loading = true;
-        });
-        builder.addCase(acceptEnemyPrice.fulfilled, (state, action) => {
-            state.loading = false;
-            state.negotiation = action.payload;
-        });
-        builder.addCase(acceptEnemyPrice.rejected, (state, action) => {
-            state.loading = false;
-            state.error = action.payload;
-        });
-        builder.addCase(acceptDefaultPrice.pending, (state, action) => {
-            state.loading = true;
-        });
-        builder.addCase(acceptDefaultPrice.fulfilled, (state, action) => {
-            state.loading = false;
-            state.negotiation = action.payload;
-        });
-        builder.addCase(acceptDefaultPrice.rejected, (state, action) => {
-            state.loading = false;
-            state.error = action.payload;
-        });
-        builder.addCase(changePriceNegotiation.pending, (state) => {
-            state.loading = true;
-        });
-        builder.addCase(changePriceNegotiation.fulfilled, (state, action) => {
-            state.loading = false;
-            state.negotiation = action.payload;
-        });
-        builder.addCase(changePriceNegotiation.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });

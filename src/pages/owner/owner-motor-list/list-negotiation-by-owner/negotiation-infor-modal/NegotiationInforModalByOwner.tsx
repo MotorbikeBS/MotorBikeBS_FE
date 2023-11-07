@@ -1,5 +1,4 @@
 import React, { ReactNode, useState } from 'react'
-import { ISelectRowNegotiation } from '../../../../../models/Negotiation/Negotiation';
 import {
     Box,
     Button,
@@ -16,8 +15,8 @@ import {
 import { ClearRounded } from '@mui/icons-material';
 import './style/_style.scss'
 import { useAppDispatch } from '../../../../../services/store/store';
-import { acceptEnemyPrice, cancleNegotiation, changePriceNegotiation } from '../../../../../services/features/negotiation/negotiationSlice';
 import { useForm } from 'react-hook-form';
+import { ISelectRowNegotiation } from '../../../../../models/Negotiation/Negotiation';
 
 interface NegotiationInforModalProps {
     isOpen: boolean;
@@ -38,53 +37,19 @@ const NegotiationInforModalByOwner: React.FC<NegotiationInforModalProps> = ({
 }) => {
     const dispatch = useAppDispatch()
 
-    const [ownerPrice, setOwnerPrice] = useState<number | null>(data?.storePrice || null);
 
-    const form = useForm<IFormOwnerPriceValues>({
-        defaultValues: {
-            price: data?.ownerPrice ?? 0,
-        }
-    });
-    const { register, handleSubmit, formState } = form;
 
-    const handleAcceptEnemyPrice = () => {
-        if (data && data.id) {
-            dispatch(acceptEnemyPrice({ negotiationId: data.id }))
-                .then(() => {
-                    loadingData()
-                    setTimeout(() => {
-                        onClose()
-                    }, 1000)
-                })
-        }
-    }
-    const onSubmit = (formData: IFormOwnerPriceValues) => {
-        if (data && data.id) {
-            dispatch(changePriceNegotiation({
-                negotiationId: data.id,
-                price: formData.price
-            }))
-                .then(() => {
-                    setOwnerPrice(formData.price)
-                    loadingData()
-                    setTimeout(() => {
-                        onClose()
-                    }, 1000)
-                })
-
-        }
-    };
-    const handleCancleNegotiation = () => {
-        if (data && data.id) {
-            dispatch(cancleNegotiation({ negotiationId: data.id }))
-                .then(() => {
-                    loadingData()
-                    setTimeout(() => {
-                        onClose()
-                    }, 1000)
-                })
-        }
-    }
+    // const handleCancleNegotiation = () => {
+    //     if (data && data.id) {
+    //         dispatch(cancleNegotiation({ negotiationId: data.id }))
+    //             .then(() => {
+    //                 loadingData()
+    //                 setTimeout(() => {
+    //                     onClose()
+    //                 }, 1000)
+    //             })
+    //     }
+    // }
 
     const createData = (label: string, value: ReactNode | string) => ({
         label,
@@ -101,51 +66,8 @@ const NegotiationInforModalByOwner: React.FC<NegotiationInforModalProps> = ({
                 {data?.price}
             </Typography>
         ),
-        createData('Giá Store đưa ra',
-            <div className='price-value'>
-                <TextField
-                    value={data?.storePrice
-                        ? data?.storePrice
-                        : 'Chưa trả giá'
-                    }
-                    disabled
-                />
-                <Box>
-                    <Button
-                        variant="contained"
-                        color="success"
-                        className='btn-accept-price'
-                        onClick={handleAcceptEnemyPrice}
-                    >
-                        Chấp nhận
-                    </Button>
-                </Box>
-            </div>
-        ),
-        createData('Giá của bạn',
-            <div className='price-value'>
-                <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    noValidate>
-                    <TextField
-                        {...register('price')}
-                        defaultValue={data?.ownerPrice ?? ''}
-                        onChange={(e) => {
-                            const inputValue = e.target.value;
-                        }}
-                    />
-                    <Button
-                        type='submit'
-                        variant="contained"
-                        color="warning"
-                        className='btn-again-price'
-                    >
-                        Trả giá lại
-                    </Button>
-                </form>
-            </div>
 
-        ),
+
         createData('Tên cửa hàng', data?.storeName),
         createData('Số điện thoại cửa hàng', data?.storePhone),
         createData('Địa chỉ cửa hàng', data?.storeAddress),
@@ -233,7 +155,7 @@ const NegotiationInforModalByOwner: React.FC<NegotiationInforModalProps> = ({
                             <Button
                                 variant="contained"
                                 color="error"
-                                onClick={handleCancleNegotiation}
+                            // onClick={handleCancleNegotiation}
                             >
                                 Hủy giao dịch
                             </Button>

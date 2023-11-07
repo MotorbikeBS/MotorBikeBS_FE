@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store'
-import { clearNegotiation, getNegotiationRequest } from '../../../../services/features/negotiation/negotiationSlice'
+// import { clearNegotiation, getNegotiationRequest } from '../../../../services/features/negotiation/negotiationSlice'
 import { INegotiation, ISelectRowNegotiation } from '../../../../models/Negotiation/Negotiation'
 import { Container, Paper, Typography } from '@mui/material'
 import { DataGrid, GridRowParams } from '@mui/x-data-grid'
@@ -17,15 +17,15 @@ const ListNegotiateMotorByOwner = () => {
     const [selectedRow, setSelectedRow] = useState<ISelectRowNegotiation | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    useEffect(() => {
-        dispatch(clearNegotiation())
-        dispatch(getNegotiationRequest())
-    }, [dispatch])
+    // useEffect(() => {
+    //     dispatch(clearNegotiation())
+    //     dispatch(getNegotiationRequest())
+    // }, [dispatch])
 
-    const loadingData = () => {
-        dispatch(clearNegotiation())
-        dispatch(getNegotiationRequest())
-    }
+    // const loadingData = () => {
+    //     dispatch(clearNegotiation())
+    //     dispatch(getNegotiationRequest())
+    // }
 
     const pendingNegotiation = useMemo(() => {
         return (negotiations ?? []).filter((nego: INegotiation) => nego.negotiations[0].status === 'PENDING');
@@ -39,8 +39,8 @@ const ListNegotiateMotorByOwner = () => {
             certificateNumber: nego.motor.certificateNumber,
             year: format(new Date(nego.motor.year), 'dd/MM/yyyy'),
             price: formatCurrency(nego.motor.price),
-            storePrice: nego.negotiations[0]?.storePrice,
-            ownerPrice: nego.negotiations[0]?.ownerPrice,
+            // storePrice: nego.negotiations[0]?.storePrice,
+            // ownerPrice: nego.negotiations[0]?.ownerPrice,
             storeName: nego.sender?.storeDesciptions[0].storeName,
             storePhone: nego.sender?.storeDesciptions[0].storePhone,
             storeAddress: nego.sender?.storeDesciptions[0].address,
@@ -79,12 +79,12 @@ const ListNegotiateMotorByOwner = () => {
 
             </Paper>
 
-            <NegotiationInforModalByOwner
+            {/* <NegotiationInforModalByOwner
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 data={selectedRow}
-                loadingData={loadingData}
-            />
+            // loadingData={loadingData}
+            /> */}
         </Container>
     )
 }

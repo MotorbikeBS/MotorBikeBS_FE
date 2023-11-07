@@ -170,20 +170,7 @@ const OwnerMotorAcceptNegotiationDetailComponent = () => {
                                 {negoMotorDetails?.motor?.motorName}
                             </Typography>
 
-                            <div className="nego-icon-infomation">
-                                <MonetizationOnOutlined />
-                                <Typography
-                                    variant="h6"
-                                    textAlign="left"
-                                    color="red"
-                                    fontWeight="bold"
-                                >
-                                    {formatPrice(
-                                        negoMotorDetails?.negotiations[0]
-                                            ?.finalPrice,
-                                    )}
-                                </Typography>
-                            </div>
+
 
                             <div className="nego-icon-infomation">
                                 <Accessibility />

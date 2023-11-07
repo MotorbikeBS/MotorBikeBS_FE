@@ -7,7 +7,6 @@ import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
 import Carousel from 'react-material-ui-carousel';
 import NegotiationDialog from '../../negotiation-modal-store/NegotiationDialog';
-import { acceptDefaultPrice } from '../../../../services/features/negotiation/negotiationSlice';
 import './style/_style.scss'
 
 type motorbikeParams = {
@@ -44,13 +43,6 @@ const OwnerMotorDetailComponent = () => {
     const handleOpenDialogPriceDefault = (motorId: number) => {
         setMotorbikeIdForBuyDialog(motorId);
         setIsOpenPriceDefaultDialog(true);
-    };
-
-    const handleAcceptDefaultPrice = (motorId: number | null) => {
-        if (motorId !== null) {
-            dispatch(acceptDefaultPrice({ motorId }));
-            setIsOpenPriceDefaultDialog(false);
-        }
     };
 
     const handleCloseDialogNego = () => {
@@ -336,33 +328,7 @@ const OwnerMotorDetailComponent = () => {
                 onClose={handleCloseDialogNego}
                 motorIdNego={motorbikeIdForDialogNego}
             />
-            <Dialog
-                open={isOpenPriceDefaultDialog}
-                onClose={handleCloseDialogPriceDefault}
-            >
-                <DialogTitle>Mua với giá hiện tại</DialogTitle>
-                <DialogContent>
-                    <Typography>
-                        Bạn có chắc muốn mua với giá hiện tại?
-                    </Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        onClick={handleCloseDialogPriceDefault}
-                        color="error"
-                    >
-                        Hủy
-                    </Button>
-                    <Button
-                        onClick={() =>
-                            handleAcceptDefaultPrice(motorbikeIdForBuyDialog)
-                        }
-                        color="success"
-                    >
-                        Xác nhận
-                    </Button>
-                </DialogActions>
-            </Dialog>
+
         </Container>
     );
 }
