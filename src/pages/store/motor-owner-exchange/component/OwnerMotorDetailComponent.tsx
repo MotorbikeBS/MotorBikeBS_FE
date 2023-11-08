@@ -230,22 +230,6 @@ const OwnerMotorDetailComponent = () => {
                                             ).toLocaleDateString()}
                                         </TableCell>
                                     </TableRow>
-                                    {/* <TableRow>
-                                        <TableCell className="header-table">
-                                            Tình trạng
-                                        </TableCell>
-                                        <TableCell>
-                                            {motorbike.status}
-                                        </TableCell>
-                                    </TableRow> */}
-                                    {/* <TableRow>
-                                        <TableCell className="header-table">
-                                            Dung tích
-                                        </TableCell>
-                                        <TableCell>
-                                            {motorbike.vehicleCapacity} cc
-                                        </TableCell>
-                                    </TableRow> */}
                                     <TableRow>
                                         <TableCell className="nego-header-table">
                                             Model
@@ -278,7 +262,6 @@ const OwnerMotorDetailComponent = () => {
                             </Table>
                         </TableContainer>
                     </Box>
-                    {/* {account?.roleId === 4 && ( */}
                     <Box
                         sx={{
                             display: 'flex',
@@ -300,18 +283,6 @@ const OwnerMotorDetailComponent = () => {
                             }
                         >
                             Thương lượng
-                        </Button>
-                        <Button
-                            size="large"
-                            color="warning"
-                            variant="contained"
-                            onClick={() =>
-                                handleOpenDialogPriceDefault(
-                                    motorbike.motorId,
-                                )
-                            }
-                        >
-                            Mua giá mặc định
                         </Button>
                     </Box>
                     {/* )} */}

@@ -17,10 +17,10 @@ import {
 } from '@mui/material';
 import { ClearRounded } from '@mui/icons-material';
 import './style/_style.scss';
-import { useAppDispatch } from '../../../../../../services/store/store';
-import useFormatCurrency from '../../../../../../hooks/useFormatCurrency';
-import { ISelectRowNegotiation } from '../../../../../../models/Negotiation/Negotiation';
-import { acceptNegotiation, cancleNegotiation } from '../../../../../../services/features/negotiation/negotiationSlice';
+import { useAppDispatch } from '../../../../../services/store/store';
+import useFormatCurrency from '../../../../../hooks/useFormatCurrency';
+import { ISelectRowNegotiation } from '../../../../../models/Negotiation/Negotiation';
+import { acceptNegotiation, cancleNegotiation } from '../../../../../services/features/negotiation/negotiationSlice';
 
 interface NegotiationInforModalProps {
     isOpen: boolean;

@@ -5,8 +5,8 @@ import { Container, Paper, Typography } from '@mui/material'
 import { DataGrid, GridRowParams } from '@mui/x-data-grid'
 import { format } from 'date-fns'
 import useFormatCurrency from '../../../../../hooks/useFormatCurrency'
-import { columns } from './negotiation-table/NegotiationTableOwner'
-import NegotiationInforModalByOwner from './negotiation-infor-modal/NegotiationInforModalByOwner'
+import { columns } from '../negotiation-table/NegotiationTableOwner'
+import NegotiationInforModalByOwner from '../negotiation-infor-modal/NegotiationInforModalByOwner'
 import { clearNegotiation, getNegotiationRequest } from '../../../../../services/features/negotiation/negotiationSlice'
 
 const ListNegotiateMotorByOwner = () => {
