@@ -20,7 +20,7 @@ import { createContractByStore } from '../../../services/features/contract/contr
 
 interface CreateContractDialogProps {
     open: boolean;
-    bookingId: number | null
+    negotiationId: number | null
     openSubmit: boolean;
     openCancle: boolean;
     onOpenSubmitDialog: () => void;
@@ -31,14 +31,14 @@ interface CreateContractDialogProps {
 }
 
 interface ICreateContractForm {
-    bookingId: number | null
+    negotiationId: number | null
     content: string
     images: FileList
 }
 
 const CreateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
     open,
-    bookingId,
+    negotiationId,
     openSubmit,
     openCancle,
     onOpenCancelDialog,
@@ -51,7 +51,7 @@ const CreateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
 
     const form = useForm<ICreateContractForm>({
         defaultValues: {
-            bookingId: null,
+            negotiationId: null,
             content: '',
             images: undefined
         }
@@ -80,7 +80,7 @@ const CreateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
             }
         }
         dispatch(createContractByStore({
-            bookingId: Number(bookingId),
+            negoId: Number(negotiationId),
             data: formData
         }))
             .unwrap()

@@ -4,7 +4,7 @@ import StoreMenuComponent from '../store-menu-component/StoreMenuComponent';
 import ConsignmentMotorOwnerExchangeComponent from './component/ConsignmentMotorOwnerExchangeComponent';
 import FooterComponent from '../../../common-components/footer-component/FooterComponent';
 import LivelihoodMotorOwnerExchangeComponent from './component/LivelihoodMotorOwnerExchangeComponent';
-import ListNegotiationMotorByStore from '../list-motor-negotion/ListNegotiationMotorByStore';
+import ListNegotiationMotorByStore from '../list-motor-negotion/list-motor-negotiation-pending/ListNegotiationMotorByStore';
 import ListMotorAcceptNegotiation from '../list-motor-negotion/list-motor-accept-negotiation/ListMotorAcceptNegotiation';
 
 

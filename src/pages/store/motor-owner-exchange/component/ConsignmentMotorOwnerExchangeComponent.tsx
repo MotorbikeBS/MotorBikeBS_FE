@@ -238,17 +238,6 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
                                                             </Typography>
                                                         </div>
                                                     </div>
-                                                    {/* <div className="btn-style-1">
-                                            <Button
-                                                variant="outlined"
-                                                onClick={() =>
-                                                    handleOpenDialog(motor.motorId)
-                                                }
-                                            >
-                                                Đặt lịch xem xe
-                                            </Button>
-
-                                        </div> */}
                                                     <Box
                                                         sx={{
                                                             display: 'flex',

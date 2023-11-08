@@ -1,18 +1,18 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../services/store/store';
+import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
 import { Container, Paper, Typography } from '@mui/material';
 import { DataGrid, GridRowParams } from '@mui/x-data-grid';
 import { format } from 'date-fns';
-import { columns } from './negotiation-table/NegotiationTableStore';
-import NegotiationInforModalByStore from './negotiation-infor-modal/NegotiationInforModalByStore';
-import useFormatCurrency from '../../../hooks/useFormatCurrency';
+import { columns } from '../negotiation-table/NegotiationTableStore';
+import NegotiationInforModalByStore from '../negotiation-infor-modal/NegotiationInforModalByStore';
+import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import {
     INegotiation,
     ISelectRowNegotiation,
-} from '../../../models/Negotiation/Negotiation';
+} from '../../../../models/Negotiation/Negotiation';
 import {
     clearNegotiation, getNegotiationRequest,
-} from '../../../services/features/negotiation/negotiationSlice';
+} from '../../../../services/features/negotiation/negotiationSlice';
 
 const ListNegotiationMotorByStore = () => {
     const dispatch = useAppDispatch();

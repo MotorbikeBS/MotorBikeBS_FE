@@ -1,38 +1,64 @@
-import React, { ReactNode, useState } from 'react'
-import { Box, Button, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from '@mui/material';
+import React, { ReactNode, useState } from 'react';
+import { Box, Button, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
 import { ClearRounded } from '@mui/icons-material';
-import './style/_style.scss'
+import './style/_style.scss';
 import { ISelectRowNegotiation } from '../../../../models/Negotiation/Negotiation';
 import { useAppDispatch } from '../../../../services/store/store';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import { cancleNegotiation } from '../../../../services/features/negotiation/negotiationSlice';
+import CreateContractDialogByStore from '../../contract-dialog-store/CreateContractDialogByStore';
 
 interface NegotiationInforModalProps {
-
     isOpen: boolean;
     onClose: () => void;
     loadingData: () => void;
     data: ISelectRowNegotiation | null;
 }
 
-
 const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
     isOpen,
     onClose,
     loadingData,
     data,
-
 }) => {
-    const dispatch = useAppDispatch()
-    const formatPrice = useFormatCurrency()
+    const dispatch = useAppDispatch();
+    const formatPrice = useFormatCurrency();
 
+    const [negotiationIdDialog, setNegotiationIdDialog] = useState<number | null>(null)
+    const [isOpenContractDialog, setIsOpenContractDialog] = useState(false)
+    const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false)
+    const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
+
+    const handleOpenCreateContractDialog = (negotiationId: number) => {
+        setNegotiationIdDialog(negotiationId)
+        setIsOpenContractDialog(true)
+        console.log(negotiationId)
+    }
+    const handleOpenSubmitDialog = () => {
+        setIsOpenSubmitDialog(true);
+    };
+
+    const handleCloseSubmitDialog = () => {
+        setIsOpenSubmitDialog(false);
+    };
+    const handleOpenCancelDialog = () => {
+        setIsOpenCancelDialog(true);
+    };
+    const handleCloseCancelDialog = () => {
+        setIsOpenCancelDialog(false);
+    };
+    const handleCloseCreateContractDialog = () => {
+        setIsOpenContractDialog(false)
+        setIsOpenSubmitDialog(false);
+        setIsOpenCancelDialog(false);
+    };
 
     const createData = (label: string, value: ReactNode | string) => ({
         label,
         value,
     });
-    const rows = [
 
+    const rows = [
         createData('Tên Xe', data?.motorName),
         createData('Số đăng ký', data?.certificateNumber),
         createData('Năm đăng ký', data?.year ? data.year.toLocaleString() : 'N/A'),
@@ -72,69 +98,126 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                 <Typography sx={{ color: '#3D609A' }}>CHƯA XÁC ĐỊNH</Typography>
             )
         )),
-    ]
+    ];
+
+    const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
 
     const handleCancleNegotiation = () => {
+        setConfirmationModalOpen(true);
+    };
+
+    const handleConfirmCancleNegotiation = () => {
         if (data && data.id) {
             dispatch(cancleNegotiation({ negotiationId: data.id }))
                 .then(() => {
-                    loadingData()
+                    loadingData();
                     setTimeout(() => {
-                        onClose()
-                    }, 1000)
-                })
+                        onClose();
+                    }, 1000);
+                });
         }
-    }
-
+        setConfirmationModalOpen(false)
+    };
 
     return (
-        <Modal open={isOpen} onClose={onClose}>
-            <div className='modal-container'>
-                <div className='modal-header'>
-                    <Typography variant="h6"
-                        gutterBottom
-                        fontWeight='700'>
-                        Thông tin thương lượng
-                    </Typography>
-                    <div className='header-btn-close'>
-                        <Button onClick={onClose}>
-                            <ClearRounded />
-                        </Button>
+        <div>
+            <Modal open={isOpen} onClose={onClose}>
+                <div className='modal-container'>
+                    <div className='modal-header'>
+                        <Typography variant="h6" gutterBottom fontWeight='700'>
+                            Thông tin thương lượng
+                        </Typography>
+                        <div className='header-btn-close'>
+                            <Button onClick={onClose}>
+                                <ClearRounded />
+                            </Button>
+                        </div>
                     </div>
-                </div>
-                <TableContainer component={Paper}>
-                    <Table>
-                        <TableBody>
-                            {rows.map((row, index) => (
-                                <TableRow key={index}>
-                                    <TableCell component="th" scope="row"
-                                        sx={{
-                                            fontWeight: '700'
-                                        }}
-                                    >
-                                        {row.label}
-                                    </TableCell>
-                                    <TableCell align="left">{row.value}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                {data?.negotiationStatus === 'PENDING' &&
-                    (
+                    <TableContainer component={Paper}>
+                        <Table>
+                            <TableBody>
+                                {rows.map((row, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell component="th" scope="row"
+                                            sx={{
+                                                fontWeight: '700'
+                                            }}
+                                        >
+                                            {row.label}
+                                        </TableCell>
+                                        <TableCell align="left">{row.value}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    {data?.negotiationStatus === 'PENDING' &&
+                        (
+                            <Box className='btn-negotiation-status'>
+                                <Button
+                                    variant="contained"
+                                    color="error"
+                                    onClick={handleCancleNegotiation}
+                                >
+                                    Hủy giao dịch
+                                </Button>
+                            </Box>
+                        )}
+                    {data?.negotiationStatus === 'ACCEPT' && (
                         <Box className='btn-negotiation-status'>
                             <Button
                                 variant="contained"
-                                color="error"
-                                onClick={handleCancleNegotiation}
+                                color="success"
+                                onClick={(() => handleOpenCreateContractDialog(
+                                    data.id
+                                ))}
                             >
-                                Hủy giao dịch
+                                Tạo hợp đồng
                             </Button>
                         </Box>
                     )}
-            </div>
-        </Modal>
-    )
-}
 
-export default NegotiationInforModalByStore
+                </div>
+            </Modal>
+
+            <Modal open={isConfirmationModalOpen} onClose={() => setConfirmationModalOpen(false)}>
+                <div className='confirmation-modal-container'>
+                    <Typography variant="h6" gutterBottom fontWeight='700'>
+                        Xác nhận hủy giao dịch
+                    </Typography>
+                    <Typography>
+                        Bạn có chắc chắn muốn hủy giao dịch này?
+                    </Typography>
+                    <Button
+                        variant="outlined"
+                        color="error"
+                        onClick={handleConfirmCancleNegotiation}
+                    >
+                        Xác nhận
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => setConfirmationModalOpen(false)}
+                    >
+                        Hủy
+                    </Button>
+                </div>
+            </Modal>
+
+            <CreateContractDialogByStore
+                open={isOpenContractDialog}
+                openSubmit={isOpenSubmitDialog}
+                openCancle={isOpenCancelDialog}
+                onOpenSubmitDialog={handleOpenSubmitDialog}
+                onCloseSubmitDialog={handleCloseSubmitDialog}
+                onOpenCancelDialog={handleOpenCancelDialog}
+                onCloseCancelDialog={handleCloseCancelDialog}
+                onClose={handleCloseCreateContractDialog}
+                negotiationId={negotiationIdDialog}
+            />
+        </div>
+    );
+};
+
+export default NegotiationInforModalByStore;

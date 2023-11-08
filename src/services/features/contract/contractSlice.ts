@@ -29,12 +29,12 @@ const initialState: IContractState = {
 
 export const createContractByStore = createAsyncThunk<
     IContract,
-    { bookingId: number; data: Object }
->('contract/createContractByStore', async ({ bookingId, data }, thunkAPI) => {
+    { negoId: number; data: Object }
+>('contract/createContractByStore', async ({ negoId, data }, thunkAPI) => {
     try {
         const token = localStorage.getItem('motorbike_bs');
         const response = await axios.post(
-            `${createContractByStoreEndPoint}?bookingId=${bookingId}`,
+            `${createContractByStoreEndPoint}?negoId=${negoId}`,
             data,
             {
                 headers: {
