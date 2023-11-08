@@ -240,7 +240,7 @@ const ListStorageMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                                             </TableRow>
                                             <TableRow>
                                                 <TableCell className="header-table">
-                                                    Năm đăng ký
+                                                    Giá
                                                 </TableCell>
                                                 <TableCell className="header-table-content">
                                                     {formatPrice(

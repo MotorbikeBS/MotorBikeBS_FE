@@ -53,7 +53,6 @@ export const getUserByID = createAsyncThunk<IUser, { id: number }>(
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log(response);
             return response.data.result;
         } catch (err: any) {
             toast.error('Có lỗi xảy ra ! Vui lòng kiểm tra lại ! ');
