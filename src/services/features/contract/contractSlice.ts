@@ -6,7 +6,7 @@ import {
     reUpdateContractEndPoint,
 } from './../../config/api-config';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IContract, ICreateContract } from '../../../models/Contract/Contract';
+import { IContract } from '../../../models/Contract/Contract';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
@@ -177,14 +177,14 @@ export const contractSlice = createSlice({
         builder.addCase(createContractByStore.pending, (state) => {
             state.loading = true;
         });
-        builder.addCase(createContractByStore.fulfilled, (state, action) => {
+        builder.addCase(createContractByStore.fulfilled, (state) => {
             state.loading = false;
-            state.createContract = action.payload;
         });
         builder.addCase(createContractByStore.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });
+
         builder.addCase(getAllContract.pending, (state) => {
             state.loading = true;
         });
@@ -196,6 +196,7 @@ export const contractSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         });
+
         builder.addCase(cancelContractByOwner.pending, (state) => {
             state.loading = true;
         });
@@ -206,10 +207,11 @@ export const contractSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         });
+
         builder.addCase(acceptContractByOwner.pending, (state) => {
             state.loading = true;
         });
-        builder.addCase(acceptContractByOwner.fulfilled, (state, action) => {
+        builder.addCase(acceptContractByOwner.fulfilled, (state) => {
             state.loading = false;
             state.error = null;
         });

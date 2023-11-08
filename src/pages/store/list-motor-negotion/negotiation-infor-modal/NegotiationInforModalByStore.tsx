@@ -72,6 +72,7 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
         createData('Tên chủ xe', data?.ownerName),
         createData('Số điện thoại chủ xe', data?.ownerPhone),
         createData('Địa chỉ chủ xe', data?.ownerAddress),
+        createData('Nội dung', data?.noteNegotiation),
         createData('Trạng thái thương lượng', (
             data?.negotiationStatus === 'PENDING' ? (
                 <Typography color='red' fontWeight='700'>

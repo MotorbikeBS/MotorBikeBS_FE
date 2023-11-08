@@ -20,13 +20,13 @@ export interface IMotorbikeImagesContract {
     imageLink: string;
     motorId: number;
 }
-export interface IBookingContractImage {
+export interface IContractImage {
     contractImageId: number;
     contractId: number;
     imageLink: string;
     description: string;
 }
-export interface IBookingContract {
+export interface IFieldContract {
     contractId: number;
     motorId: number;
     price: number;
@@ -37,22 +37,12 @@ export interface IBookingContract {
     status: string;
     bookingId: number;
     baseRequestId: number;
-    contractImages: IBookingContractImage[];
-}
-export interface IBookingNegotiationContract {
-    bookingId: number;
-    dateCreate: Date;
-    bookingDate: Date;
-    note: string;
-    status: string;
-    contracts: IBookingContract[];
+    contractImages: IContractImage[];
 }
 
 export interface INegotiationContract {
     negotiationId: number;
     requestId: number;
-    storePrice: number;
-    ownerPrice: number;
     startTime: Date;
     endTime: Date;
     description: string;
@@ -61,7 +51,7 @@ export interface INegotiationContract {
     baseRequestId: number;
     expiredTime: Date;
     lastChangeUserId: number;
-    bookings: IBookingNegotiationContract[];
+    contracts: IFieldContract[];
 }
 export interface ICreateContract {
     content: string;

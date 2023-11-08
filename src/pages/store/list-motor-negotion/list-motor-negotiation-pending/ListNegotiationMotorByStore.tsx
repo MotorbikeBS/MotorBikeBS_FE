@@ -5,7 +5,6 @@ import { DataGrid, GridRowParams } from '@mui/x-data-grid';
 import { format } from 'date-fns';
 import { columns } from '../negotiation-table/NegotiationTableStore';
 import NegotiationInforModalByStore from '../negotiation-infor-modal/NegotiationInforModalByStore';
-import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import {
     INegotiation,
     ISelectRowNegotiation,
@@ -16,7 +15,6 @@ import {
 
 const ListNegotiationMotorByStore = () => {
     const dispatch = useAppDispatch();
-    const formatCurrency = useFormatCurrency();
     const { negotiations, loading } = useAppSelector(
         (state) => state.negotiation,
     );
@@ -54,10 +52,11 @@ const ListNegotiationMotorByStore = () => {
             ownerName: nego.receiver?.userName,
             ownerPhone: nego.receiver?.phone,
             ownerAddress: nego.receiver?.address,
+            noteNegotiation: nego?.negotiations[0]?.description,
             negotiationStatus: nego.negotiations[0].status,
             motorStatus: nego.motor?.motorStatus.title,
         }));
-    }, [pendingNegotiation, formatCurrency]);
+    }, [pendingNegotiation]);
 
     const handleRowDoubleClick = (params: GridRowParams) => {
         setSelectedRow(params.row as ISelectRowNegotiation);

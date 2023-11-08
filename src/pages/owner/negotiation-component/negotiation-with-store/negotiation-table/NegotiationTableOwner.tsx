@@ -90,13 +90,23 @@ export const columns: GridColDef[] = [
         editable: false,
     },
     {
+        field: 'noteNegotiation',
+        headerName: 'Nội dung thương lượng',
+        width: 200,
+        editable: false,
+    },
+    {
         field: 'negotiationStatus',
         headerName: 'Tình trạng thương lượng',
         width: 150,
         editable: false,
         renderCell: (params) =>
-            params.row.negotiationStatus === 'PENDING' && (
-                <Typography sx={{ color: 'red' }}>Đang Chờ</Typography>
+            params.row.negotiationStatus === 'PENDING' ? (
+                <Typography sx={{ color: 'red', fontWeight: '700' }}>Đang Chờ</Typography>
+            ) : params.row.negotiationStatus === 'ACCEPT' ? (
+                <Typography sx={{ color: 'green', fontWeight: '700' }}>Đã Duyệt</Typography>
+            ) : (
+                <Typography></Typography>
             ),
     },
     {
