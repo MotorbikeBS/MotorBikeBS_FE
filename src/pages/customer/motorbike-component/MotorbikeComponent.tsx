@@ -20,6 +20,7 @@ import {
     getAllOnExchange,
 } from '../../../services/features/motorbike/motorbikeSlice';
 import { addToWishList } from '../../../services/features/motorbike/wishListSlice';
+import { IMotorbike } from '../../../models/Motorbike/Motorbike';
 
 const MotorbikeComponent = () => {
     const navigate = useNavigate();
@@ -36,6 +37,14 @@ const MotorbikeComponent = () => {
     const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<
         number | null
     >(null);
+
+    const [currentMotorbikes, setCurrentMotorbikes] = React.useState<
+        IMotorbike[]
+    >([]);
+
+    const [currentPage, setCurrentPage] = React.useState(1);
+    const [itemsPerPage, setItemsPerPage] = React.useState(10);
+
     const formatCurrency = useFormatCurrency();
 
     const handleNavigateDetail = (motorbikeId: number) => {
@@ -44,13 +53,29 @@ const MotorbikeComponent = () => {
 
     useEffect(() => {
         dispatch(clearMotor());
-        dispatch(getAllOnExchange({ pageNumber: 1, pageSize: 10 }));
-    }, [dispatch]);
+        dispatch(
+            getAllOnExchange({
+                pageNumber: currentPage,
+                pageSize: itemsPerPage,
+            }),
+        ).then((data) => {
+            const result = data.payload as any[];
+            if (currentMotorbikes.length === 0) {
+                setCurrentMotorbikes(result);
+            } else {
+                setCurrentMotorbikes([...currentMotorbikes, ...result]);
+            }
+        });
+    }, [dispatch, currentPage, itemsPerPage]);
+
+    const handleLoadMore = () => {
+        setCurrentPage(currentPage + 1);
+    };
 
     const handleOpenDialog = (motorId: number) => {
         setMotorbikeIdForDialog(motorId);
         setOpenDialog(true);
-        console.log(motorId)
+        console.log(motorId);
     };
 
     const handleAddToWishList = (motorId: number) => {
@@ -113,8 +138,8 @@ const MotorbikeComponent = () => {
                                 spacing={2}
                                 className="product-grid"
                             >
-                                {motorbikes &&
-                                    motorbikes.map((motor) => (
+                                {currentMotorbikes &&
+                                    currentMotorbikes.map((motor) => (
                                         <Grid
                                             item
                                             xs={12}
@@ -148,17 +173,17 @@ const MotorbikeComponent = () => {
                                                     <Typography variant="subtitle1">
                                                         {motor?.motorStatus
                                                             ?.motorStatusId ===
-                                                            1
+                                                        1
                                                             ? 'CÓ SẴN'
                                                             : motor?.motorStatus
-                                                                ?.motorStatusId ===
-                                                                4
-                                                                ? 'KÍ GỬI'
-                                                                : motor?.motorStatus
-                                                                    ?.motorStatusId ===
-                                                                    5
-                                                                    ? 'KHÔNG KÍ GỬI'
-                                                                    : 'CHƯA XÁC ĐỊNH'}
+                                                                  ?.motorStatusId ===
+                                                              4
+                                                            ? 'KÍ GỬI'
+                                                            : motor?.motorStatus
+                                                                  ?.motorStatusId ===
+                                                              5
+                                                            ? 'KHÔNG KÍ GỬI'
+                                                            : 'CHƯA XÁC ĐỊNH'}
                                                     </Typography>
                                                 </div>
                                                 <div className="product-information">
@@ -227,7 +252,7 @@ const MotorbikeComponent = () => {
                                                     <>
                                                         {motor?.motorStatus
                                                             ?.motorStatusId ===
-                                                            5 ? (
+                                                        5 ? (
                                                             <div className="btn-style">
                                                                 <Button
                                                                     variant="outlined"
@@ -271,6 +296,23 @@ const MotorbikeComponent = () => {
                                         </Grid>
                                     ))}
                             </Grid>
+                            {currentMotorbikes &&
+                            currentMotorbikes.length < itemsPerPage ? null : (
+                                <Box
+                                    sx={{
+                                        textAlign: 'center',
+                                        marginTop: 2,
+                                        marginBottom: 2,
+                                    }}
+                                >
+                                    <Button
+                                        variant="outlined"
+                                        onClick={handleLoadMore}
+                                    >
+                                        Xem thêm
+                                    </Button>
+                                </Box>
+                            )}
                         </>
                     )}
                 </>
