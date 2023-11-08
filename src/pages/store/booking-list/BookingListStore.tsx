@@ -1,15 +1,9 @@
-import { Box, Tab, Tabs } from '@mui/material'
-import React, { useState } from 'react'
+import { Box } from '@mui/material'
 import StoreMenuComponent from '../store-menu-component/StoreMenuComponent'
 import CustomerBookingComponent from './customer-booking-component/CustomerBookingComponent'
 import FooterComponent from '../../../common-components/footer-component/FooterComponent'
-import OwnerBookingListComponent from './booking-with-owner-component/OwnerBookingListComponent'
 
 const BookingListStore = () => {
-    const [value, setValue] = useState<number>(0)
-    const handleChangeTabs = (event: React.ChangeEvent<{}>, newValue: number) => {
-        setValue(newValue)
-    }
 
     return (
         <>
@@ -28,25 +22,7 @@ const BookingListStore = () => {
                     marginTop='0.5rem'
                     marginBottom='5%'
                 >
-                    <Tabs
-                        value={value}
-                        onChange={handleChangeTabs}
-                        indicatorColor='secondary'
-                        sx={{
-                            ".Mui-selected": {
-                                color: `orange`,
-                            },
-                        }}
-                        centered
-                    >
-                        <Tab label='Lịch Hẹn Với Chủ Xe' />
-                        <Tab label='Lịch Hẹn Với Khách Mua' />
-                    </Tabs>
-                    <Box flexGrow={4} marginTop='3rem'>
-                        {value === 0 && <OwnerBookingListComponent />}
-                        {value === 1 && <CustomerBookingComponent />}
-
-                    </Box>
+                    <CustomerBookingComponent />
                 </Box>
                 <Box flexGrow={1} className="footer-style">
                     <FooterComponent />
