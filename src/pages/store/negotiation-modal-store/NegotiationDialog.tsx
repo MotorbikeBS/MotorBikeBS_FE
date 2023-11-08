@@ -95,6 +95,7 @@ const NegotiationDialog: React.FC<NegotiationDialogProps> = ({
                                     control={control}
                                     render={({ field }) => (
                                         <TextField
+                                            focused
                                             label="Giá thương lượng"
                                             type="number"
                                             {...field}
@@ -106,9 +107,13 @@ const NegotiationDialog: React.FC<NegotiationDialogProps> = ({
                                     control={control}
                                     render={({ field }) => (
                                         <TextField
-                                            label="Ngày nhận"
+                                            focused
+                                            label="Ngày nhận xe"
                                             type="date"
                                             {...field}
+                                            inputProps={{
+                                                min: format(new Date(), "yyyy-MM-dd"),
+                                            }}
                                         />
                                     )}
                                 />
@@ -117,9 +122,13 @@ const NegotiationDialog: React.FC<NegotiationDialogProps> = ({
                                     control={control}
                                     render={({ field }) => (
                                         <TextField
-                                            label="Ngày kết thúc"
+                                            focused
                                             type="date"
+                                            label="Ngày kết thúc"
                                             {...field}
+                                            inputProps={{
+                                                min: format(new Date(), "yyyy-MM-dd"),
+                                            }}
                                         />
                                     )}
                                 />
@@ -139,7 +148,7 @@ const NegotiationDialog: React.FC<NegotiationDialogProps> = ({
                                     color="primary"
                                     onClick={handleOpenSubmitDialogNego}
                                 >
-                                    Tạo
+                                    Tạo thông tin
                                 </Button>
                             </div>
                         </form>

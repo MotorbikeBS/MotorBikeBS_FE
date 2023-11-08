@@ -211,10 +211,19 @@ const NegotiationInforModalByOwner: React.FC<NegotiationInforModalProps> = ({
                     <Typography>Bạn có chắc chắn muốn xác nhận giao dịch?</Typography>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => setConfirmDialogOpen(false)} color="primary">
+                    <Button
+                        onClick={() => setConfirmDialogOpen(false)}
+                        color="error"
+                        variant='outlined'
+                    >
                         Hủy
                     </Button>
-                    <Button onClick={confirmNegotiation} color="primary">
+                    <Button
+                        onClick={confirmNegotiation}
+                        color="success"
+                        variant='outlined'
+
+                    >
                         Xác nhận
                     </Button>
                 </DialogActions>

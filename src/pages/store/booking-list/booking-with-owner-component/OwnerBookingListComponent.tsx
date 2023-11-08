@@ -28,30 +28,30 @@ const OwnerBookingListComponent = () => {
         dispatch(getAllBookingOwnerExchange());
     }
 
-    const handleOpenCreateContractDialog = (bookingId: number) => {
-        setBookingIdDialog(bookingId)
-        setIsOpenContractDialog(true)
-        console.log(bookingId)
-    }
-    const handleCloseCreateContractDialog = () => {
-        setIsOpenContractDialog(false)
-        setIsOpenSubmitDialog(false);
-        setIsOpenCancelDialog(false);
-    };
+    // const handleOpenCreateContractDialog = (bookingId: number) => {
+    //     setBookingIdDialog(bookingId)
+    //     setIsOpenContractDialog(true)
+    //     console.log(bookingId)
+    // }
+    // const handleCloseCreateContractDialog = () => {
+    //     setIsOpenContractDialog(false)
+    //     setIsOpenSubmitDialog(false);
+    //     setIsOpenCancelDialog(false);
+    // };
 
-    const handleOpenSubmitDialog = () => {
-        setIsOpenSubmitDialog(true);
-    };
+    // const handleOpenSubmitDialog = () => {
+    //     setIsOpenSubmitDialog(true);
+    // };
 
-    const handleCloseSubmitDialog = () => {
-        setIsOpenSubmitDialog(false);
-    };
-    const handleOpenCancelDialog = () => {
-        setIsOpenCancelDialog(true);
-    };
-    const handleCloseCancelDialog = () => {
-        setIsOpenCancelDialog(false);
-    };
+    // const handleCloseSubmitDialog = () => {
+    //     setIsOpenSubmitDialog(false);
+    // };
+    // const handleOpenCancelDialog = () => {
+    //     setIsOpenCancelDialog(true);
+    // };
+    // const handleCloseCancelDialog = () => {
+    //     setIsOpenCancelDialog(false);
+    // };
 
     const handleOpenCancleBooking = (bookingId: number) => {
         setBookingIdDialog(bookingId)
@@ -177,7 +177,7 @@ const OwnerBookingListComponent = () => {
                                     </div>
                                 </div>
                                 <div className='booking-owner-btn-contract'>
-                                    <Button
+                                    {/* <Button
                                         variant='contained'
                                         size='small'
                                         color='success'
@@ -187,7 +187,7 @@ const OwnerBookingListComponent = () => {
                                         )}
                                     >
                                         Tải hợp đồng
-                                    </Button>
+                                    </Button> */}
                                     <Button
                                         variant='contained'
                                         size='small'
@@ -207,7 +207,7 @@ const OwnerBookingListComponent = () => {
                     </Box>
                 </Paper>
             ))}
-            <CreateContractDialogByStore
+            {/* <CreateContractDialogByStore
                 open={isOpenContractDialog}
                 openSubmit={isOpenSubmitDialog}
                 openCancle={isOpenCancelDialog}
@@ -217,7 +217,7 @@ const OwnerBookingListComponent = () => {
                 onCloseCancelDialog={handleCloseCancelDialog}
                 onClose={handleCloseCreateContractDialog}
                 bookingId={bookingIdDialog}
-            />
+            /> */}
             <Dialog
                 open={isOpenCancelBookingDialog}
                 onClose={handleCloseCancelBookingDialog}

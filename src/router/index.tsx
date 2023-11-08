@@ -30,7 +30,6 @@ import StoreMotorList from '../pages/store/store-motor-list/StoreMotorList';
 import BookingListStore from '../pages/store/booking-list/BookingListStore';
 import MotorBikeDetailForStore from '../pages/customer/motorbike-detail/MotorBikeDetailForStore';
 import MotorFields from '../pages/admin/motorFields-component/MotorFields';
-import OwnerMotorAcceptNegotitationDetail from '../pages/store/motor-owner-exchange/OwnerMotorAcceptNegotiationDetail';
 import ContractHistoryList from '../pages/store/contract-list/ContractHistoryList';
 import ContractHistoryWithStore from '../pages/owner/contract-list-with-store/ContractHistoryWithStore';
 import CustomerBookingComponentWithStore from '../pages/customer/customer-booking/CustomerBookingWithStoreComponent';
@@ -114,10 +113,6 @@ const AppRoutes = () => {
                     <Route
                         path="/motorbike/:motorbikeId"
                         element={<OwnerMotorDetail />}
-                    />
-                    <Route
-                        path="/negotiation/detail/:negotiationId"
-                        element={<OwnerMotorAcceptNegotitationDetail />}
                     />
                     <Route
                         path="/motorbike-list"
