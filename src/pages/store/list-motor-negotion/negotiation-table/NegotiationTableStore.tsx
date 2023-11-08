@@ -89,6 +89,12 @@ export const columns: GridColDef[] = [
         editable: false,
     },
     {
+        field: 'noteNegotiation',
+        headerName: 'Địa chỉ chủ xe',
+        width: 200,
+        editable: false,
+    },
+    {
         field: 'negotiationStatus',
         headerName: 'Tình trạng thương lượng',
         width: 150,

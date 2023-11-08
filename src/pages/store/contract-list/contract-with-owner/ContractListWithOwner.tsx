@@ -29,13 +29,14 @@ const ContractListWithOwner = () => {
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
 
-    const loadData = () => {
+    const loadData = React.useCallback(() => {
         dispatch(clearContract());
         dispatch(getAllContract());
-    };
+    }, [dispatch]);
+
     React.useEffect(() => {
         loadData();
-    }, [dispatch]);
+    }, [loadData]);
 
     const handleOpenFullImage = (imageUrls: string[]) => {
         setImageArray(imageUrls);
@@ -81,8 +82,7 @@ const ContractListWithOwner = () => {
                         <Paper
                             className="paper-contract-list"
                             key={
-                                contract?.negotiations[0]?.bookings[0]
-                                    ?.contracts[0]?.contractId
+                                contract?.negotiations[0]?.contracts[0]?.contractId
                             }
                         >
                             <Box className="contract-row" display="flex">
@@ -94,7 +94,7 @@ const ContractListWithOwner = () => {
                                                     ?.motorbikeImages[0]
                                                     ?.imageLink || ''
                                             }
-                                            alt="Motor Image"
+                                            alt="Ảnh mô tả xe"
                                         />
                                     </div>
                                     <div className="product-contract">
@@ -113,7 +113,7 @@ const ContractListWithOwner = () => {
                                         >
                                             {formattedCurrency(
                                                 contract?.negotiations[0]
-                                                    ?.finalPrice,
+                                                    ?.contracts[0]?.price,
                                             )}
                                         </Typography>
                                     </div>
@@ -138,15 +138,15 @@ const ContractListWithOwner = () => {
                                                     ?.title === 'CONSIGNMENT'
                                                     ? 'ĐÃ ĐĂNG BÁN - KÝ GỬI'
                                                     : contract?.motor
-                                                          ?.motorStatus
-                                                          ?.title ===
-                                                      'LIVELIHOOD'
-                                                    ? 'ĐÃ ĐĂNG BÁN - KHÔNG KÝ GỬI'
-                                                    : contract?.motor
-                                                          ?.motorStatus
-                                                          ?.title === 'STORAGE'
-                                                    ? 'ĐÃ CHUYỂN VÀO KHO'
-                                                    : 'KHÔNG XÁC ĐỊNH'}
+                                                        ?.motorStatus
+                                                        ?.title ===
+                                                        'LIVELIHOOD'
+                                                        ? 'ĐÃ ĐĂNG BÁN - KHÔNG KÝ GỬI'
+                                                        : contract?.motor
+                                                            ?.motorStatus
+                                                            ?.title === 'STORAGE'
+                                                            ? 'ĐÃ CHUYỂN VÀO KHO'
+                                                            : 'KHÔNG XÁC ĐỊNH'}
                                             </Typography>
                                         </div>
                                     </div>
@@ -193,14 +193,13 @@ const ContractListWithOwner = () => {
                                             <Typography>
                                                 <strong>Ngày tạo:</strong>{' '}
                                                 {new Date(
-                                                    contract?.negotiations[0]?.bookings[0]?.contracts[0]?.createdAt,
+                                                    contract?.negotiations[0]?.contracts[0]?.createdAt,
                                                 ).toLocaleDateString('vi-VN')}
                                             </Typography>
                                             <Typography>
                                                 <strong>Nội dung:</strong>{' '}
                                                 {
                                                     contract?.negotiations[0]
-                                                        ?.bookings[0]
                                                         ?.contracts[0]?.content
                                                 }
                                             </Typography>
@@ -217,31 +216,28 @@ const ContractListWithOwner = () => {
                                                     }}
                                                 >
                                                     {contract?.negotiations[0]
-                                                        ?.bookings[0]
                                                         ?.contracts[0]
                                                         ?.status === 'PENDING'
                                                         ? 'CHỜ ĐỢI'
                                                         : contract
-                                                              ?.negotiations[0]
-                                                              ?.bookings[0]
-                                                              ?.contracts[0]
-                                                              ?.status ===
-                                                          'ACCEPT'
-                                                        ? 'CHẤP NHẬN'
-                                                        : contract
-                                                              ?.negotiations[0]
-                                                              ?.bookings[0]
-                                                              ?.contracts[0]
-                                                              ?.status ===
-                                                          'CANCEL'
-                                                        ? 'TỪ CHỐI'
-                                                        : 'CHƯA XÁC ĐỊNH'}
+                                                            ?.negotiations[0]
+                                                            ?.contracts[0]
+                                                            ?.status ===
+                                                            'ACCEPT'
+                                                            ? 'CHẤP NHẬN'
+                                                            : contract
+                                                                ?.negotiations[0]
+                                                                ?.contracts[0]
+                                                                ?.status ===
+                                                                'CANCEL'
+                                                                ? 'TỪ CHỐI'
+                                                                : 'CHƯA XÁC ĐỊNH'}
                                                 </Typography>
                                             </div>
                                         </div>
-                                        {contract?.negotiations[0]?.bookings[0]
+                                        {contract?.negotiations[0]
                                             ?.contracts[0]?.status ===
-                                        'CANCEL' ? (
+                                            'CANCEL' ? (
                                             <div className="contract-owner-btn-contract">
                                                 <Button
                                                     variant="contained"
@@ -251,7 +247,6 @@ const ContractListWithOwner = () => {
                                                         handleOpenReUpdateContractDialog(
                                                             contract
                                                                 ?.negotiations[0]
-                                                                ?.bookings[0]
                                                                 ?.contracts[0]
                                                                 ?.contractId,
                                                         )
@@ -276,15 +271,15 @@ const ContractListWithOwner = () => {
                                         <img
                                             src={
                                                 contract?.negotiations[0]
-                                                    ?.bookings[0]?.contracts[0]
+                                                    ?.contracts[0]
                                                     ?.contractImages[0]
                                                     .imageLink
                                             }
                                             alt="Hợp đồng"
                                             onClick={() =>
                                                 handleOpenFullImage(
-                                                    contract?.negotiations[0]?.bookings[0]?.contracts[0]?.contractImages.map(
-                                                        (image) =>
+                                                    contract?.negotiations[0]?.contracts[0]?.contractImages.map(
+                                                        (image: any) =>
                                                             image.imageLink,
                                                     ) || [],
                                                 )

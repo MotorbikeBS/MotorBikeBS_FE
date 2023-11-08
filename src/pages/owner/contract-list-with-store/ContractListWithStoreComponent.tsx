@@ -44,14 +44,14 @@ const ContractListWithStoreComponent = () => {
         number | null
     >(null);
 
-    const loadData = () => {
+    const loadData = React.useCallback(() => {
         dispatch(clearContract());
         dispatch(getAllContract());
-    };
+    }, [dispatch])
 
     React.useEffect(() => {
         loadData();
-    }, [dispatch]);
+    }, [loadData]);
 
     const handleOpenFullImage = (imageUrls: string[]) => {
         setImageArray(imageUrls);
@@ -61,6 +61,7 @@ const ContractListWithStoreComponent = () => {
     const handleErrorContract = (contractId: number) => {
         setContractIdDialog(contractId);
         setIsOpenErrorContractDialog(true);
+        console.log(contractId)
     };
     const handleCloseContractErrorDialog = () => {
         setIsOpenErrorContractDialog(false);
@@ -113,7 +114,7 @@ const ContractListWithStoreComponent = () => {
                     {getContracts?.map((contractOwner) => (
                         <Paper
                             key={
-                                contractOwner?.negotiations[0]?.bookings[0]
+                                contractOwner?.negotiations[0]
                                     ?.contracts[0]?.contractId
                             }
                             className="paper-booking-list"
@@ -127,7 +128,7 @@ const ContractListWithStoreComponent = () => {
                                                     ?.motorbikeImages[0]
                                                     ?.imageLink || ''
                                             }
-                                            alt="Motor Image"
+                                            alt="Mô tả Xe máy cũ"
                                         />
                                     </div>
                                     <div className="product-booking">
@@ -146,7 +147,7 @@ const ContractListWithStoreComponent = () => {
                                         >
                                             {formattedCurrency(
                                                 contractOwner?.negotiations[0]
-                                                    ?.finalPrice,
+                                                    ?.contracts[0].price,
                                             )}
                                         </Typography>
                                     </div>
@@ -170,31 +171,29 @@ const ContractListWithStoreComponent = () => {
                                                 {contractOwner?.motor
                                                     ?.motorStatus?.title ===
                                                     'CONSIGNMENT' &&
-                                                contractOwner.negotiations[0]
-                                                    ?.bookings[0]?.contracts[0]
-                                                    ?.status === 'ACCEPT'
+                                                    contractOwner.negotiations[0]
+                                                        ?.contracts[0]
+                                                        ?.status === 'ACCEPT'
                                                     ? 'ĐÃ THỎA THUẬN'
                                                     : contractOwner?.motor
-                                                          ?.motorStatus
-                                                          ?.title ===
-                                                          'LIVELIHOOD' &&
-                                                      contractOwner
-                                                          .negotiations[0]
-                                                          ?.bookings[0]
-                                                          ?.contracts[0]
-                                                          ?.status === 'ACCEPT'
-                                                    ? 'ĐÃ THỎA THUẬN'
-                                                    : contractOwner?.motor
-                                                          ?.motorStatus
-                                                          ?.title ===
-                                                          'STORAGE' &&
-                                                      contractOwner
-                                                          .negotiations[0]
-                                                          ?.bookings[0]
-                                                          ?.contracts[0]
-                                                          ?.status === 'ACCEPT'
-                                                    ? 'ĐÃ THỎA THUẬN'
-                                                    : 'CHƯA XÁC ĐỊNH'}
+                                                        ?.motorStatus
+                                                        ?.title ===
+                                                        'LIVELIHOOD' &&
+                                                        contractOwner
+                                                            .negotiations[0]
+                                                            ?.contracts[0]
+                                                            ?.status === 'ACCEPT'
+                                                        ? 'ĐÃ THỎA THUẬN'
+                                                        : contractOwner?.motor
+                                                            ?.motorStatus
+                                                            ?.title ===
+                                                            'STORAGE' &&
+                                                            contractOwner
+                                                                .negotiations[0]
+                                                                ?.contracts[0]
+                                                                ?.status === 'ACCEPT'
+                                                            ? 'ĐÃ THỎA THUẬN'
+                                                            : 'CHƯA XÁC ĐỊNH'}
                                             </Typography>
                                         </div>
                                     </div>
@@ -257,7 +256,7 @@ const ContractListWithStoreComponent = () => {
                                             <Typography>
                                                 <strong>Ngày tạo</strong>
                                                 {new Date(
-                                                    contractOwner?.negotiations[0]?.bookings[0]?.contracts[0]?.createdAt,
+                                                    contractOwner?.negotiations[0]?.contracts[0]?.createdAt,
                                                 ).toLocaleDateString('vi-VN')}
                                             </Typography>
                                             <Typography>
@@ -265,7 +264,6 @@ const ContractListWithStoreComponent = () => {
                                                 {
                                                     contractOwner
                                                         ?.negotiations[0]
-                                                        ?.bookings[0]
                                                         ?.contracts[0]?.content
                                                 }
                                             </Typography>
@@ -283,18 +281,18 @@ const ContractListWithStoreComponent = () => {
                                                 >
                                                     {contractOwner
                                                         ?.negotiations[0]
-                                                        ?.bookings[0]
+
                                                         ?.contracts[0]
                                                         ?.status === 'PENDING'
                                                         ? 'CHỜ ĐỢI'
                                                         : contractOwner
-                                                              ?.negotiations[0]
-                                                              ?.bookings[0]
-                                                              ?.contracts[0]
-                                                              ?.status ===
-                                                          'ACCEPT'
-                                                        ? 'ĐÃ DUYỆT'
-                                                        : 'QUÁ HẠN/CHƯA XÁC ĐỊNH'}
+                                                            ?.negotiations[0]
+
+                                                            ?.contracts[0]
+                                                            ?.status ===
+                                                            'ACCEPT'
+                                                            ? 'ĐÃ DUYỆT'
+                                                            : 'QUÁ HẠN/CHƯA XÁC ĐỊNH'}
                                                 </Typography>
                                             </div>
                                         </div>
@@ -305,7 +303,7 @@ const ContractListWithStoreComponent = () => {
                                             }}
                                         >
                                             {contractOwner?.negotiations[0]
-                                                ?.bookings[0]?.contracts[0]
+                                                ?.contracts[0]
                                                 .status === 'PENDING' ? (
                                                 <>
                                                     <div
@@ -323,7 +321,6 @@ const ContractListWithStoreComponent = () => {
                                                                 handleAcceptContract(
                                                                     contractOwner
                                                                         ?.negotiations[0]
-                                                                        ?.bookings[0]
                                                                         ?.contracts[0]
                                                                         ?.contractId,
                                                                 )
@@ -342,9 +339,8 @@ const ContractListWithStoreComponent = () => {
                                                                 handleErrorContract(
                                                                     contractOwner
                                                                         ?.negotiations[0]
-                                                                        ?.bookings[0]
                                                                         ?.contracts[0]
-                                                                        ?.contractId,
+                                                                        ?.contractId
                                                                 )
                                                             }
                                                         >
@@ -369,14 +365,14 @@ const ContractListWithStoreComponent = () => {
                                         <img
                                             src={
                                                 contractOwner?.negotiations[0]
-                                                    ?.bookings[0]?.contracts[0]
+                                                    ?.contracts[0]
                                                     ?.contractImages[0]
                                                     .imageLink
                                             }
                                             alt="Hợp đồng"
                                             onClick={() =>
                                                 handleOpenFullImage(
-                                                    contractOwner?.negotiations[0]?.bookings[0]?.contracts[0]?.contractImages.map(
+                                                    contractOwner?.negotiations[0]?.contracts[0]?.contractImages.map(
                                                         (image) =>
                                                             image.imageLink,
                                                     ) || [],

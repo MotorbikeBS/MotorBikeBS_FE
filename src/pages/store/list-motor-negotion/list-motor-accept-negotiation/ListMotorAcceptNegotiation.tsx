@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store'
-import useFormatCurrency from '../../../../hooks/useFormatCurrency'
 import { clearNegotiation, getNegotiationRequest } from '../../../../services/features/negotiation/negotiationSlice'
 import { INegotiation, ISelectRowNegotiation } from '../../../../models/Negotiation/Negotiation'
 import { format } from 'date-fns'
@@ -11,7 +10,6 @@ import NegotiationInforModalByStore from '../negotiation-infor-modal/Negotiation
 
 const ListMotorAcceptNegotiation = () => {
     const dispatch = useAppDispatch();
-    const formatCurrency = useFormatCurrency();
     const { negotiations, loading } = useAppSelector(
         (state) => state.negotiation,
     );
@@ -49,10 +47,11 @@ const ListMotorAcceptNegotiation = () => {
             ownerName: nego.receiver?.userName,
             ownerPhone: nego.receiver?.phone,
             ownerAddress: nego.receiver?.address,
+            noteNegotiation: nego?.negotiations[0]?.description,
             negotiationStatus: nego.negotiations[0].status,
             motorStatus: nego.motor?.motorStatus.title,
         }));
-    }, [acceptNegotiation, formatCurrency]);
+    }, [acceptNegotiation]);
 
     const handleRowDoubleClick = (params: GridRowParams) => {
         setSelectedRow(params.row as ISelectRowNegotiation);

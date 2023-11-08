@@ -13,6 +13,7 @@ export interface ISelectRowNegotiation {
     storePhone: string;
     ownerAddress: string;
     storeAddress: string;
+    noteNegotiation: string;
     negotiationStatus: string;
     motorStatus: string | number;
 }

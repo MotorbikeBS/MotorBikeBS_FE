@@ -4,14 +4,12 @@ import { INegotiation, ISelectRowNegotiation } from '../../../../../models/Negot
 import { Container, Paper, Typography } from '@mui/material'
 import { DataGrid, GridRowParams } from '@mui/x-data-grid'
 import { format } from 'date-fns'
-import useFormatCurrency from '../../../../../hooks/useFormatCurrency'
 import { columns } from '../negotiation-table/NegotiationTableOwner'
 import NegotiationInforModalByOwner from '../negotiation-infor-modal/NegotiationInforModalByOwner'
 import { clearNegotiation, getNegotiationRequest } from '../../../../../services/features/negotiation/negotiationSlice'
 
 const ListNegotiateMotorByOwner = () => {
     const dispatch = useAppDispatch()
-    const formatCurrency = useFormatCurrency()
 
     const { negotiations, loading } = useAppSelector((state) => state.negotiation)
     const [selectedRow, setSelectedRow] = useState<ISelectRowNegotiation | null>(null)
@@ -44,11 +42,12 @@ const ListNegotiateMotorByOwner = () => {
             storeName: nego.sender?.storeDesciptions[0].storeName,
             storePhone: nego.sender?.storeDesciptions[0].storePhone,
             storeAddress: nego.sender?.storeDesciptions[0].address,
+            noteNegotiation: nego?.negotiations[0]?.description,
             negotiationStatus: nego.negotiations[0].status,
             motorStatus: nego.motor?.motorStatus.title,
 
         }))
-    }, [pendingNegotiation, formatCurrency])
+    }, [pendingNegotiation])
 
 
     const handleRowDoubleClick = (params: GridRowParams) => {
