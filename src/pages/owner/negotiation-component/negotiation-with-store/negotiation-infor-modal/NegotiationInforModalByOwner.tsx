@@ -235,10 +235,10 @@ const NegotiationInforModalByOwner: React.FC<NegotiationInforModalProps> = ({
                     <Typography>Bạn có chắc chắn muốn hủy giao dịch?</Typography>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => setCancelConfirmDialogOpen(false)} color="primary">
+                    <Button onClick={() => setCancelConfirmDialogOpen(false)} color="error">
                         Hủy
                     </Button>
-                    <Button onClick={confirmCancelNegotiation} color="primary">
+                    <Button onClick={confirmCancelNegotiation} color="success">
                         Xác nhận
                     </Button>
                 </DialogActions>
