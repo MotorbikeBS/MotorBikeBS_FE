@@ -35,8 +35,6 @@ const SignUpMotorbikeOwner = () => {
         }
     }, [dispatch, account?.userId]);
 
-
-
     const form = useForm({
         defaultValues: {
             phone: '',

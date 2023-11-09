@@ -37,6 +37,9 @@ import MotorbikeSold from '../pages/store/motorbike-sold/MotorbikeSold';
 import OwnerDashBoardComponent from '../pages/owner/dashboard/OwnerDashBoardComponent';
 import HistoryTransaction from '../pages/owner/history-transaction/HistoryTransaction';
 import NegotiationListOwner from '../pages/owner/negotiation-component/NegotiationListOwner';
+import StorePaymentComponent from '../pages/store/payment/StorePaymentComponent';
+import PaymentSucessfullyComponent from '../pages/store/payment/payment-successfully/PaymentSucessfullyComponent';
+import PaymentErrorComponent from '../pages/store/payment/payment-error/PaymentErrorComponent';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -129,6 +132,10 @@ const AppRoutes = () => {
                         path='/transaction-history'
                         element={<MotorbikeSold />}
                     />
+                    <Route path='/user/payment-point' element={<StorePaymentComponent />} />
+                    <Route path='/payment-point/successfully' element={<PaymentSucessfullyComponent />} />
+                    <Route path='/payment-point/error-payment' element={<PaymentErrorComponent />} />
+
                     <Route path="*" element={<PageNotFound />} />
                 </>
             )}

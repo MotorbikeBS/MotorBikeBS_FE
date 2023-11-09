@@ -62,10 +62,8 @@ export const deleteWishListByMotorIdEndPoint = `${BASE_URL}/api/wishlist/deletew
 //Negotiation
 export const startNegotitationEndPoint = `${BASE_URL}/api/negotiation/startnegotitaion`;
 export const getNegotiationRequestEndPoint = `${BASE_URL}/api/negotiation/getnegotiationrequest`;
-
 export const accepNegotiationEndPoint = `${BASE_URL}/api/negotiation/accept`;
 export const cancleNegotiationEndPoint = `${BASE_URL}/api/negotiation/cancel`;
-// export const changePriceNegotiationEndPoint = `${BASE_URL}/api/negotiation/changePrice`;
 
 //Store Booking On Owner Exchange
 export const storeBookingEndPoint = `${BASE_URL}/api/booking/storeBookingOwner`;
@@ -76,7 +74,6 @@ export const storeCancelBookingEndPoint = `${BASE_URL}/api/booking/cancelbooking
 export const createContractByStoreEndPoint = `${BASE_URL}/api/contract/createcontract`;
 export const getAllContractEndPoint = `${BASE_URL}/api/Contract/GetContract`;
 export const cancelContractEndPoint = `${BASE_URL}/api/contract/cancelcontract`;
-
 export const acceptContractEndPoint = `${BASE_URL}/api/contract/acceptcontract`;
 export const reUpdateContractEndPoint = `${BASE_URL}/api/contract/reupcontract`;
 
@@ -94,3 +91,6 @@ export const getBillByIdEndPoint = `${BASE_URL}/api/bill/getBillId`;
 export const createBillInStockEndPoint = `${BASE_URL}/api/Bill/CreateBill-InStock`;
 export const createBillConsignmentEndPoint = `${BASE_URL}/api/bill/CreateBill-Consignment`;
 export const createBillNonConsignmentEndPoint = `${BASE_URL}/api/bill/CreateBill-nonConsignment`;
+
+//Payment Endpoint
+export const paymentRequestEndPoint = `${BASE_URL}/api/Payment/CreatePaymentUrl`;
