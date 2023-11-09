@@ -14,6 +14,8 @@ export interface IMotorbike {
     modelName?: string;
     motorTypeName?: string;
     motorStatuss?: string;
+    //================================================
+    createAt?: Date;
     // ===============================================
     motorStatus: IMotorStatus;
     motorType: IMotorType;

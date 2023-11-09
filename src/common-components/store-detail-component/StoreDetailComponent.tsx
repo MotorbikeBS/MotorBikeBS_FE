@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
+import { Avatar, Box, Container, Grid, Paper, Typography } from '@mui/material';
 import './style/style.scss';
 import { useAppSelector } from '../../services/store/store';
 import { useParams } from 'react-router-dom';
@@ -12,7 +12,7 @@ type storeParams = {
 
 const StoreDetailComponent = () => {
     const { storeId } = useParams<storeParams | any >();
-    const { account } = useAppSelector(state => state.account);
+    // const { account } = useAppSelector(state => state.account);
     const { stores } = useAppSelector((state) => state.store)
 
     if (!storeId) {

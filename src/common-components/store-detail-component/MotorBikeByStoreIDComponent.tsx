@@ -75,6 +75,7 @@ const MotorbikeByStoreIdComponent = () => {
         motorbikeByStoreId?.filter(
             (motor) =>
                 motor?.motorStatus.motorStatusId === 1 ||
+                motor?.motorStatus.motorStatusId === 4 ||
                 motor?.motorStatus.motorStatusId === 5,
         );
 
