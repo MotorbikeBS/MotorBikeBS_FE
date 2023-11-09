@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material"
+import { Box } from "@mui/material"
 import OwnerMenuComponent from "../owner-menu-component/OwnerMenuComponent"
 import FooterComponent from "../../../common-components/footer-component/FooterComponent"
 import StoreNegotiationWithOwnerComponent from "./negotiation-with-store/StoreNegotiationWithOwnerComponent"

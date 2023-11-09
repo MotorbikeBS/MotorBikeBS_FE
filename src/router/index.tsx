@@ -36,7 +36,6 @@ import CustomerBookingComponentWithStore from '../pages/customer/customer-bookin
 import MotorbikeSold from '../pages/store/motorbike-sold/MotorbikeSold';
 import OwnerDashBoardComponent from '../pages/owner/dashboard/OwnerDashBoardComponent';
 import HistoryTransaction from '../pages/owner/history-transaction/HistoryTransaction';
-import StoreNegotiationWithOwnerComponent from '../pages/owner/negotiation-component/negotiation-with-store/StoreNegotiationWithOwnerComponent';
 import NegotiationListOwner from '../pages/owner/negotiation-component/NegotiationListOwner';
 
 const AppRoutes = () => {

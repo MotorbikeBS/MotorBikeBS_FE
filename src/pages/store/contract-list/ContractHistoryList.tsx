@@ -1,14 +1,11 @@
-import { Box, Tab, Tabs } from '@mui/material'
-import React, { useState } from 'react'
+import { Box } from '@mui/material'
+
 import StoreMenuComponent from '../store-menu-component/StoreMenuComponent'
 import FooterComponent from '../../../common-components/footer-component/FooterComponent'
 import ContractListWithOwner from './contract-with-owner/ContractListWithOwner'
 
 const ContractHistoryList = () => {
-    const [value, setValue] = useState<number>(0)
-    const handleChangeTabs = (event: React.ChangeEvent<{}>, newValue: number) => {
-        setValue(newValue)
-    }
+
     return (
         <>
             <Box

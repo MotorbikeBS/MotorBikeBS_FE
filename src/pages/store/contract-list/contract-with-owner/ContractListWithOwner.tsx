@@ -132,7 +132,7 @@ const ContractListWithOwner = () => {
                                                 ).toLocaleDateString('vi-VN')}
                                             </Typography>
                                         </div>
-                                        <div className="tag-motorbike-status">
+                                        {/* <div className="tag-motorbike-status">
                                             <Typography variant="subtitle1">
                                                 {contract?.motor?.motorStatus
                                                     ?.title === 'CONSIGNMENT'
@@ -144,11 +144,11 @@ const ContractListWithOwner = () => {
                                                         ? 'ĐÃ ĐĂNG BÁN - KHÔNG KÝ GỬI'
                                                         : contract?.motor
                                                             ?.motorStatus
-                                                            ?.title === 'STORAGE'
+                                                            ?.title === 'STORAGE' && contract?.negotiations[0]?.contracts[0]?.storeId
                                                             ? 'ĐÃ CHUYỂN VÀO KHO'
                                                             : 'KHÔNG XÁC ĐỊNH'}
                                             </Typography>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </Box>
                                 <Box className="right-box" flexGrow={9}>

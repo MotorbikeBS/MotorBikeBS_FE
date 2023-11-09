@@ -83,7 +83,7 @@ const CustomerBookingComponent = () => {
                             <div className="image-booking-product">
                                 <img
                                     src={booking?.motor?.motorbikeImages[0]?.imageLink}
-                                    alt='Motorbike image'
+                                    alt='MotorImg'
                                 />
                             </div>
                             <div className="product-booking">

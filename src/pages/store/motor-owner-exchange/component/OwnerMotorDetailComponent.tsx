@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
+import React from 'react'
+import { Box, Button, Container, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
 import { FmdGoodOutlined, MonetizationOnOutlined, Phone, Accessibility } from '@mui/icons-material';
 import { useParams } from 'react-router';
-import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
+import { useAppSelector } from '../../../../services/store/store';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
 import Carousel from 'react-material-ui-carousel';
@@ -15,16 +15,10 @@ type motorbikeParams = {
 
 const OwnerMotorDetailComponent = () => {
 
-    const dispatch = useAppDispatch();
     const { motorbikeId } = useParams<motorbikeParams | any>();
     const { motorbikesByOwner } = useAppSelector((state) => state.motorbikes);
 
 
-    const [isOpenPriceDefaultDialog, setIsOpenPriceDefaultDialog] =
-        useState(false);
-    const [motorbikeIdForBuyDialog, setMotorbikeIdForBuyDialog] = useState<
-        number | null
-    >(null);
     const [isOpenDialogNego, setOpenDialogNego] = React.useState(false);
     const [isOpenSubmitDialogNego, setIsOpenSubmitDialogNego] =
         React.useState(false);
@@ -40,10 +34,7 @@ const OwnerMotorDetailComponent = () => {
         setMotorbikeIdForDialogNego(motorId);
         setOpenDialogNego(true);
     };
-    const handleOpenDialogPriceDefault = (motorId: number) => {
-        setMotorbikeIdForBuyDialog(motorId);
-        setIsOpenPriceDefaultDialog(true);
-    };
+
 
     const handleCloseDialogNego = () => {
         setOpenDialogNego(false);
@@ -54,9 +45,7 @@ const OwnerMotorDetailComponent = () => {
     const handleOpenSubmitDialogNego = () => {
         setIsOpenSubmitDialogNego(true);
     };
-    const handleCloseDialogPriceDefault = () => {
-        setIsOpenPriceDefaultDialog(false);
-    };
+
 
     const handleCloseSubmitDialogNego = () => {
         setIsOpenSubmitDialogNego(false);
