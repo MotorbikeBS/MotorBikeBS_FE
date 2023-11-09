@@ -100,8 +100,14 @@ export const columns: GridColDef[] = [
         width: 150,
         editable: false,
         renderCell: (params) =>
-            params.row.negotiationStatus === 'PENDING' &&
-            <Typography sx={{ color: 'red' }}>Đang Chờ</Typography>
+            params.row.negotiationStatus === 'PENDING' ? (
+
+                <Typography sx={{ color: 'red', fontWeight: '700' }}>Đang Chờ</Typography>
+            ) : params.row.negotiationStatus === 'ACCEPT' ? (
+                <Typography sx={{ color: 'green', fontWeight: '700' }}>Chấp nhận</Typography>
+            ) : (
+                <></>
+            )
     },
     {
         field: 'motorStatus',

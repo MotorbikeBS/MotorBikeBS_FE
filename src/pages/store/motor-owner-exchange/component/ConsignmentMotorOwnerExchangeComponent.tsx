@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
     Box,
     Button,
     CircularProgress,
     Container,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
     Grid,
     Paper,
     Typography,
@@ -31,17 +27,6 @@ const ConsignmentMotorOwnerExchangeComponent = () => {
     const { motorbikesByOwner, loading } = useAppSelector(
         (state) => state.motorbikes,
     );
-
-    const [isOpenPriceDefaultDialog, setIsOpenPriceDefaultDialog] =
-        useState(false);
-    const [motorbikeIdForBuyDialog, setMotorbikeIdForBuyDialog] = useState<
-        number | null
-    >(null);
-    // const [isOpenDialog, setOpenDialog] = React.useState(false);
-    // const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
-    // const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
-    // const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<number | null>(null)
-
     const [isOpenDialogNego, setOpenDialogNego] = React.useState(false);
     const [isOpenSubmitDialogNego, setIsOpenSubmitDialogNego] =
         React.useState(false);

@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
     Box,
     Button,
     CircularProgress,
     Container,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
     Grid,
     Paper,
     Typography,
@@ -31,15 +27,6 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
     const { motorbikesByOwner, loading } = useAppSelector(
         (state) => state.motorbikes,
     );
-
-    const [isOpenPriceDefaultDialog, setIsOpenPriceDefaultDialog] =
-        useState(false);
-    const [motorbikeIdForBuyDialog, setMotorbikeIdForBuyDialog] = useState<
-        number | null
-    >(null);
-
-
-
     const [isOpenDialogNego, setOpenDialogNego] = React.useState(false);
     const [isOpenSubmitDialogNego, setIsOpenSubmitDialogNego] =
         React.useState(false);
@@ -63,18 +50,11 @@ const LivelihoodMotorOwnerExchangeComponent = () => {
         setMotorbikeIdForDialogNego(motorId);
         setOpenDialogNego(true);
     };
-    const handleOpenDialogPriceDefault = (motorId: number) => {
-        setMotorbikeIdForBuyDialog(motorId);
-        setIsOpenPriceDefaultDialog(true);
-    };
 
     const handleCloseDialogNego = () => {
         setOpenDialogNego(false);
         setIsOpenSubmitDialogNego(false);
         setIsOpenCancelDialogNego(false);
-    };
-    const handleCloseDialogPriceDefault = () => {
-        setIsOpenPriceDefaultDialog(false);
     };
     const handleOpenSubmitDialogNego = () => {
         setIsOpenSubmitDialogNego(true);

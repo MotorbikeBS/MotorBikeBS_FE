@@ -47,8 +47,9 @@ const ListMotorAcceptNegotiation = () => {
             ownerName: nego.receiver?.userName,
             ownerPhone: nego.receiver?.phone,
             ownerAddress: nego.receiver?.address,
+
             noteNegotiation: nego?.negotiations[0]?.description,
-            negotiationStatus: nego.negotiations[0].status,
+            negotiationStatus: nego.negotiations[0]?.status,
             motorStatus: nego.motor?.motorStatus.title,
         }));
     }, [acceptNegotiation]);
