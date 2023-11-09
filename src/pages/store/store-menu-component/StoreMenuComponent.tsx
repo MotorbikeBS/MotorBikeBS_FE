@@ -294,6 +294,14 @@ const StoreMenuComponent = () => {
                                 </MenuItem>
                                 <MenuItem onClick={handleCloseUserMenu}>
                                     <Link
+                                        to="/user/payment-point"
+                                        style={{ textDecoration: 'none' }}
+                                    >
+                                        <Typography>Ví Điểm</Typography>
+                                    </Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleCloseUserMenu}>
+                                    <Link
                                         to="/"
                                         style={{ textDecoration: 'none' }}
                                         onClick={handleLogout}

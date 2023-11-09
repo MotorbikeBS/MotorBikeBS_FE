@@ -230,8 +230,13 @@ const ContractListWithOwner = () => {
                                                                 ?.contracts[0]
                                                                 ?.status ===
                                                                 'CANCEL'
-                                                                ? 'TỪ CHỐI'
-                                                                : 'CHƯA XÁC ĐỊNH'}
+                                                                ? 'SAI'
+                                                                : contract
+                                                                    ?.negotiations[0]
+                                                                    ?.contracts[0]
+                                                                    ?.status ===
+                                                                    'REJECT' ? 'TỪ CHỐI'
+                                                                    : 'CHƯA XÁC ĐỊNH'}
                                                 </Typography>
                                             </div>
                                         </div>
