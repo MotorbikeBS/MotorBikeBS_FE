@@ -28,7 +28,7 @@ import {
     getMotorByStoreId,
 } from '../../../../services/features/motorbike/motorbikeSlice';
 import { toast } from 'react-toastify';
-import { createBillInStock } from '../../../../services/features/bill/billSlice';
+import { createBillConsignment, createBillInStock } from '../../../../services/features/bill/billSlice';
 import '../style/style.scss';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 
@@ -48,6 +48,8 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
 
     const [isConfirmCancelPost, setIsConfirmCancelPost] = useState(false);
     const [isConfirmSale, setIsConfirmSale] = useState(false);
+    const [isConfirmSaleConsignment, setIsConfirmSaleConsignment] =
+        useState(false);
 
     const [selectedRow, setSelectedRow] = useState<IMotorbike | null>(null);
 
@@ -66,16 +68,40 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
         setIsConfirmSale(true);
         setSelectedRow(selectedRow);
     };
+    const openSaleConsignmentModal = () => {
+        setIsDetailModalOpen(false);
+        setIsConfirmSaleConsignment(true);
+        setSelectedRow(selectedRow);
+    };
 
     const handleCloseDialog = () => {
         setIsDetailModalOpen(false);
         setIsConfirmCancelPost(false);
         setIsConfirmSale(false);
+        setIsConfirmSaleConsignment(false);
     };
 
     const handleSubmitConfirmSaleMotor = () => {
         dispatch(
             createBillInStock({
+                newUser: 0,
+                motorId: Number(selectedRow?.id),
+            }),
+        )
+            .unwrap()
+            .then(() => {
+                toast.success('Đã chuyển qua xe đã bán!');
+                loadData();
+                handleCloseDialog();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    const handleSubmitConfirmSaleConsignmentMotor = () => {
+        dispatch(
+            createBillConsignment({
                 newUser: 0,
                 motorId: Number(selectedRow?.id),
             }),
@@ -268,7 +294,7 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                     )}
                     {selectedRow &&
                         selectedRow?.motorStatuss === 'CONSIGNMENT' && (
-                            <Button color="secondary">Đã bán kí gởi</Button>
+                            <Button onClick={openSaleConsignmentModal} color="secondary">Đã bán kí gởi</Button>
                         )}
                     {selectedRow &&
                         selectedRow?.motorStatuss === 'LIVELIHOOD' && (
@@ -298,6 +324,27 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                         Hủy bỏ
                     </Button>
                     <Button onClick={handleSubmitConfirmSaleMotor} color="info">
+                        Xác nhận
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+            <Dialog open={isConfirmSaleConsignment}>
+                <DialogTitle>
+                    <Typography variant="h4" textAlign="center">
+                        Xác nhận bán xe
+                    </Typography>
+                </DialogTitle>
+                <DialogContent>
+                    <Typography variant="subtitle1" textAlign="center">
+                        Bạn có chắc chắn đã bán xe này không?
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDialog} color="error">
+                        Hủy bỏ
+                    </Button>
+                    <Button onClick={handleSubmitConfirmSaleConsignmentMotor} color="info">
                         Xác nhận
                     </Button>
                 </DialogActions>

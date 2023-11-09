@@ -134,6 +134,9 @@ const HistoryTransactionComponent = () => {
                                                     {motorbike?.motorbikeImages?.map(
                                                         (motor) => (
                                                             <img
+                                                                key={
+                                                                    motor.imageId
+                                                                }
                                                                 src={
                                                                     motor.imageLink
                                                                 }
@@ -204,6 +207,20 @@ const HistoryTransactionComponent = () => {
                                                     {formatPrice(
                                                         motorbike.price,
                                                     )}
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell className="header-table">
+                                                    Ngày tạo hóa đơn
+                                                </TableCell>
+                                                <TableCell className="header-table-content">
+                                                    {selectedRow &&
+                                                        selectedRow.createAt &&
+                                                        new Date(
+                                                            selectedRow.createAt,
+                                                        ).toLocaleDateString(
+                                                            'vi-VN',
+                                                        )}
                                                 </TableCell>
                                             </TableRow>
                                         </TableBody>
