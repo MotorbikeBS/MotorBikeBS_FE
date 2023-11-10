@@ -37,8 +37,8 @@ const pages = [
         name: 'Thương Lượng',
     },
     {
-        to: '/owner/contract',
-        name: 'Hợp đồng',
+        to: '/owner/receipt',
+        name: 'Biên nhận',
     },
     {
         to: '/owner/history-transaction',

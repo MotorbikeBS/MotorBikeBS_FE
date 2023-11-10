@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../../services/store/store'
-import { INegotiation, ISelectRowNegotiation } from '../../../../../models/Negotiation/Negotiation'
 import { format } from 'date-fns'
 import { DataGrid, GridRowParams } from '@mui/x-data-grid'
 import { Container, Paper, Typography } from '@mui/material'

@@ -66,15 +66,10 @@ export const acceptValuationEndPoint = `${BASE_URL}/api/valuation/accept`;
 export const cancelValuationEndPoint = `${BASE_URL}/api/valuation/cancel`;
 
 //Negotiation
-export const startNegotitationEndPoint = `${BASE_URL}/api/negotiation/startnegotitaion`;
-export const getNegotiationRequestEndPoint = `${BASE_URL}/api/negotiation/getnegotiationrequest`;
-export const accepNegotiationEndPoint = `${BASE_URL}/api/negotiation/accept`;
-export const cancleNegotiationEndPoint = `${BASE_URL}/api/negotiation/cancel`;
-
-//Store Booking On Owner Exchange
-export const storeBookingEndPoint = `${BASE_URL}/api/booking/storeBookingOwner`;
-export const getAllStoreBookingOwnerEndPoind = `${BASE_URL}/api/booking`;
-export const storeCancelBookingEndPoint = `${BASE_URL}/api/booking/cancelbooking`;
+export const createNegotitationEndPoint = `${BASE_URL}/api/Negotiation/CreateNegotiation`;
+export const getNegotiationEndPoint = `${BASE_URL}/api/Negotiation/GetNegotiation`;
+export const accepNegotiationEndPoint = `${BASE_URL}/api/negotiation/acceptnegotiation`;
+export const cancleNegotiationEndPoint = `${BASE_URL}/api/negotiation/cancelnetiation`;
 
 // Contract between store owner and vehicle owner
 export const createContractByStoreEndPoint = `${BASE_URL}/api/contract/createcontract`;

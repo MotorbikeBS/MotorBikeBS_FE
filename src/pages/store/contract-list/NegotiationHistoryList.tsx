@@ -2,9 +2,9 @@ import { Box } from '@mui/material'
 
 import StoreMenuComponent from '../store-menu-component/StoreMenuComponent'
 import FooterComponent from '../../../common-components/footer-component/FooterComponent'
-import ContractListWithOwner from './contract-with-owner/ContractListWithOwner'
+import NegotiationListWithOwner from './negotiation-with-owner/NegotiationListWithOwner'
 
-const ContractHistoryList = () => {
+const NegotiationHistoryList = () => {
 
     return (
         <>
@@ -22,7 +22,7 @@ const ContractHistoryList = () => {
                     marginTop='0.5rem'
                     marginBottom='5%'
                 >
-                    <ContractListWithOwner />
+                    <NegotiationListWithOwner />
                 </Box>
                 <Box flexGrow={1} className="footer-style">
                     <FooterComponent />
@@ -32,4 +32,4 @@ const ContractHistoryList = () => {
     )
 }
 
-export default ContractHistoryList
+export default NegotiationHistoryList

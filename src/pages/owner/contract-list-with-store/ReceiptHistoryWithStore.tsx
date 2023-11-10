@@ -2,9 +2,9 @@ import { Box } from '@mui/material'
 import React from 'react'
 import OwnerMenuComponent from '../owner-menu-component/OwnerMenuComponent'
 import FooterComponent from '../../../common-components/footer-component/FooterComponent'
-import ContractListWithStoreComponent from './ContractListWithStoreComponent'
+import ReceiptListWithStoreComponent from './ReceiptListWithStoreComponent'
 
-const ContractHistoryWithStore = () => {
+const ReceiptHistoryWithStore = () => {
     return (
         <>
             <Box
@@ -21,7 +21,7 @@ const ContractHistoryWithStore = () => {
                     marginTop='0.5rem'
                     marginBottom='5%'
                 >
-                    <ContractListWithStoreComponent />
+                    <ReceiptListWithStoreComponent />
                 </Box>
                 <Box flexGrow={1} className="footer-style">
                     <FooterComponent />
@@ -31,4 +31,4 @@ const ContractHistoryWithStore = () => {
     )
 }
 
-export default ContractHistoryWithStore
+export default ReceiptHistoryWithStore
