@@ -37,7 +37,7 @@ const ListNegotiationMotorByStore = () => {
 
     const rows = useMemo(() => {
         return pendingValuation.map((valua: IValuation) => ({
-            id: valua.valuations[0]?.valueationId,
+            id: valua.valuations[0]?.valuationId,
             motorName: valua.motor?.motorName,
             images: valua.motor?.motorbikeImages[0]?.imageLink,
             certificateNumber: valua.motor?.certificateNumber,

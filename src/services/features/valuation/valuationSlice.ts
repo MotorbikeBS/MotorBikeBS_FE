@@ -93,6 +93,7 @@ export const cancleValuation = createAsyncThunk<
         return response.data;
     } catch (error: any) {
         if (error.response) {
+            console.log(error);
             toast.error(`${error.response.data?.errorMessages}`);
             return thunkAPI.rejectWithValue({
                 error: error.response?.data?.errorMessages,

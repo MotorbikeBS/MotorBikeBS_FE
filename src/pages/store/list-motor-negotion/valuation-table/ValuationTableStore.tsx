@@ -96,7 +96,7 @@ export const columns: GridColDef[] = [
         editable: false,
     },
     {
-        field: ' noteValuation',
+        field: 'noteValuation',
         headerName: 'Ghi chú',
         width: 200,
         editable: false,

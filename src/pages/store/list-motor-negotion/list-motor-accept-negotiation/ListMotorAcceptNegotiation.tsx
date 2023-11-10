@@ -1,12 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store'
-import { clearNegotiation, getNegotiationRequest } from '../../../../services/features/negotiation/negotiationSlice'
-import { INegotiation, ISelectRowNegotiation } from '../../../../models/Negotiation/Negotiation'
-import { format } from 'date-fns'
 import { DataGrid, GridRowParams } from '@mui/x-data-grid'
 import { Container, Paper, Typography } from '@mui/material'
 import { columns } from '../valuation-table/ValuationTableStore'
-import NegotiationInforModalByStore from '../valuation-infor-dialog/ValuationInforModalByStore'
 import ValuationInforModalByStore from '../valuation-infor-dialog/ValuationInforModalByStore'
 import { ISelectRowValuation, IValuation } from '../../../../models/Valuation/Valuation'
 import { clearValuation, getValuationRequest } from '../../../../services/features/valuation/valuationSlice'
@@ -38,7 +34,7 @@ const ListMotorAcceptNegotiation = () => {
 
     const rows = useMemo(() => {
         return acceptValuation.map((valua: IValuation) => ({
-            id: valua.valuations[0]?.valueationId,
+            id: valua.valuations[0]?.valuationId,
 
         }));
     }, [acceptValuation]);

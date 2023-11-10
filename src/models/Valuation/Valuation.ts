@@ -31,7 +31,7 @@ export interface IMotorValuation {
     motorbikeImages: IMotorImgValuation[];
 }
 export interface IValuationRequest {
-    valueationId: number;
+    valuationId: number;
     requestId: number;
     storePrice: number;
     description: string;

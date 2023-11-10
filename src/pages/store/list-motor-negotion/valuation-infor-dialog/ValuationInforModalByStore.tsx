@@ -5,9 +5,9 @@ import './style/_style.scss';
 import { ISelectRowNegotiation } from '../../../../models/Negotiation/Negotiation';
 import { useAppDispatch } from '../../../../services/store/store';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
-import { cancleNegotiation } from '../../../../services/features/negotiation/negotiationSlice';
 import CreateContractDialogByStore from '../../contract-dialog-store/CreateContractDialogByStore';
 import { ISelectRowValuation } from '../../../../models/Valuation/Valuation';
+import { cancleValuation } from '../../../../services/features/valuation/valuationSlice';
 
 interface NegotiationInforModalProps {
     isOpen: boolean;
@@ -25,15 +25,15 @@ const ValuationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
     const dispatch = useAppDispatch();
     const formatPrice = useFormatCurrency();
 
-    const [negotiationIdDialog, setNegotiationIdDialog] = useState<number | null>(null)
+    const [valuationIdDialog, setValuationIdDialog] = useState<number | null>(null)
     const [isOpenContractDialog, setIsOpenContractDialog] = useState(false)
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false)
     const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
 
-    const handleOpenCreateContractDialog = (negotiationId: number) => {
-        setNegotiationIdDialog(negotiationId)
+    const handleOpenCreateContractDialog = (valuationId: number) => {
+        setValuationIdDialog(valuationId)
         setIsOpenContractDialog(true)
-        console.log(negotiationId)
+        console.log(valuationId)
     }
     const handleOpenSubmitDialog = () => {
         setIsOpenSubmitDialog(true);
@@ -113,7 +113,7 @@ const ValuationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
 
     const handleConfirmCancleValuation = () => {
         if (data && data.id) {
-            dispatch(cancleNegotiation({ negotiationId: data.id }))
+            dispatch(cancleValuation({ valuationId: data.id }))
                 .then(() => {
                     loadingData();
                     setTimeout(() => {
@@ -121,6 +121,7 @@ const ValuationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                     }, 1000);
                 });
         }
+        console.log(data?.id)
         setConfirmationModalOpen(false)
     };
 
@@ -219,7 +220,7 @@ const ValuationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                 onOpenCancelDialog={handleOpenCancelDialog}
                 onCloseCancelDialog={handleCloseCancelDialog}
                 onClose={handleCloseCreateContractDialog}
-                negotiationId={negotiationIdDialog}
+                negotiationId={valuationIdDialog}
             />
         </div>
     );
