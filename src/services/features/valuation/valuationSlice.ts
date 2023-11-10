@@ -113,7 +113,7 @@ export const acceptValuation = createAsyncThunk<
         try {
             const token = localStorage.getItem('motorbike_bs');
             const response = await axios.put(
-                `${acceptValuationEndPoint}?valuationId =${valuationId}`,
+                `${acceptValuationEndPoint}?valuationId=${valuationId}`,
                 {},
                 {
                     headers: {

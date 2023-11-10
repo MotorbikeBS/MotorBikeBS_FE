@@ -41,8 +41,8 @@ export const columns: GridColDef[] = [
         editable: false,
     },
     {
-        field: 'pricce',
-        headerName: 'Giá thương lượng',
+        field: 'price',
+        headerName: 'Giá ban đầu',
         width: 200,
         editable: false,
         renderCell: (params) =>
@@ -61,16 +61,24 @@ export const columns: GridColDef[] = [
                 ),
     },
     {
-        field: 'startTime',
-        headerName: 'Ngày nhận',
+        field: 'storePrice',
+        headerName: 'Giá CH đề xuất',
         width: 200,
         editable: false,
-    },
-    {
-        field: 'endTime',
-        headerName: 'Ngày kết thúc',
-        width: 200,
-        editable: false,
+        renderCell: (params) =>
+            params.row.storePrice > 0 ?
+                (<Typography
+                    color='#fab71b'
+                    fontWeight='700'
+                >
+                    {currencyFormatter.format(params.row.storePrice)}
+                </Typography>) : (
+                    <Typography
+                        color='#ad1e02'
+                    >
+                        Chưa nhập giá
+                    </Typography>
+                ),
     },
     {
         field: 'storeName',
@@ -90,24 +98,25 @@ export const columns: GridColDef[] = [
         editable: false,
     },
     {
-        field: 'noteNegotiation',
-        headerName: 'Nội dung thương lượng',
+        field: 'noteValuation',
+        headerName: 'Ghi chú',
         width: 200,
         editable: false,
     },
     {
-        field: 'negotiationStatus',
-        headerName: 'Tình trạng thương lượng',
+        field: 'valuationStatus',
+        headerName: 'Trạng thái yêu cầu',
         width: 150,
         editable: false,
         renderCell: (params) =>
-            params.row.negotiationStatus === 'PENDING' ? (
+            params.row.valuationStatus === 'PENDING' ? (
+
                 <Typography sx={{ color: 'red', fontWeight: '700' }}>Đang Chờ</Typography>
-            ) : params.row.negotiationStatus === 'ACCEPT' ? (
-                <Typography sx={{ color: 'green', fontWeight: '700' }}>Đã Duyệt</Typography>
+            ) : params.row.valuationStatus === 'ACCEPT' ? (
+                <Typography sx={{ color: 'green', fontWeight: '700' }}>Chấp nhận</Typography>
             ) : (
-                <Typography></Typography>
-            ),
+                <></>
+            )
     },
     {
         field: 'motorStatus',

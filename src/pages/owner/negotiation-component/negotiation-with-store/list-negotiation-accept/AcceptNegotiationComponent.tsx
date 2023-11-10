@@ -1,58 +1,62 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../../services/store/store'
-import { clearNegotiation, getNegotiationRequest } from '../../../../../services/features/negotiation/negotiationSlice'
 import { INegotiation, ISelectRowNegotiation } from '../../../../../models/Negotiation/Negotiation'
 import { format } from 'date-fns'
 import { DataGrid, GridRowParams } from '@mui/x-data-grid'
 import { Container, Paper, Typography } from '@mui/material'
 import { columns } from '../negotiation-table/NegotiationTableOwner'
-import NegotiationInforModalByOwner from '../negotiation-infor-modal/NegotiationInforModalByOwner'
+import ValuationInforModalByOwner from '../negotiation-infor-modal/NegotiationInforModalByOwner'
+import { clearValuation, getValuationRequest } from '../../../../../services/features/valuation/valuationSlice'
+import { ISelectRowValuation, IValuation } from '../../../../../models/Valuation/Valuation'
 
 const AcceptNegotiationComponent = () => {
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
+    const { valuations, loading } = useAppSelector(
+        (state) => state.valuation,
+    );
 
-    const { negotiations, loading } = useAppSelector((state) => state.negotiation)
-    const [selectedRow, setSelectedRow] = useState<ISelectRowNegotiation | null>(null)
+    const [selectedRow, setSelectedRow] =
+        useState<ISelectRowValuation | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
-        dispatch(clearNegotiation())
-        dispatch(getNegotiationRequest())
-    }, [dispatch])
+        dispatch(clearValuation());
+        dispatch(getValuationRequest());
+    }, [dispatch]);
 
     const loadingData = () => {
-        dispatch(clearNegotiation())
-        dispatch(getNegotiationRequest())
-    }
-    const acceptNegotiation = useMemo(() => {
-        return (negotiations ?? []).filter((nego: INegotiation) => nego.negotiations[0].status === 'ACCEPT');
-    }, [negotiations]);
+        dispatch(clearValuation());
+        dispatch(getValuationRequest());
+    };
+    const acceptValuation = useMemo(() => {
+        return (valuations ?? []).filter(
+            (valua: IValuation) => valua.valuations[0].status === 'ACCEPT',
+        );
+    }, [valuations]);
 
     const rows = useMemo(() => {
-        return acceptNegotiation.map((nego: INegotiation) => ({
-            id: nego.negotiations[0].negotiationId,
-            motorName: nego.motor.motorName,
-            images: nego.motor.motorbikeImages[0].imageLink,
-            certificateNumber: nego.motor.certificateNumber,
-            year: format(new Date(nego.motor.year), 'dd/MM/yyyy'),
-            price: nego.negotiations[0].price,
-            startTime: format(new Date(nego.negotiations[0].startTime), 'dd/MM/yyyy'),
-            endTime: format(new Date(nego.negotiations[0].endTime), 'dd/MM/yyyy'),
-            storeName: nego.sender?.storeDesciptions[0].storeName,
-            storePhone: nego.sender?.storeDesciptions[0].storePhone,
-            storeAddress: nego.sender?.storeDesciptions[0].address,
-            noteNegotiation: nego?.negotiations[0]?.description,
-            negotiationStatus: nego.negotiations[0].status,
-            motorStatus: nego.motor?.motorStatus.title,
-
-        }))
-    }, [acceptNegotiation])
+        return acceptValuation.map((valua: IValuation) => ({
+            id: valua.valuations[0]?.valuationId,
+            motorName: valua?.motor?.motorName,
+            images: valua.motor?.motorbikeImages[0]?.imageLink,
+            certificateNumber: valua.motor?.certificateNumber,
+            year: format(new Date(valua?.motor?.year), 'dd/MM/yyyy'),
+            price: valua?.motor?.price,
+            storePrice: valua?.valuations[0]?.storePrice,
+            storeName: valua?.sender?.storeDesciptions[0]?.storeName,
+            storePhone: valua?.sender?.storeDesciptions[0]?.storePhone,
+            storeAddress: valua?.sender?.storeDesciptions[0]?.address,
+            noteValuation: valua?.valuations[0]?.description,
+            valuationStatus: valua.valuations[0]?.status,
+            motorStatus: valua.motor?.motorStatus?.title,
+        }));
+    }, [acceptValuation]);
 
 
     const handleRowDoubleClick = (params: GridRowParams) => {
-        setSelectedRow(params.row as ISelectRowNegotiation);
-        setIsModalOpen(true)
-    }
+        setSelectedRow(params.row as ISelectRowValuation);
+        setIsModalOpen(true);
+    };
 
     return (
         <Container maxWidth="xl">
@@ -78,7 +82,7 @@ const AcceptNegotiationComponent = () => {
 
             </Paper>
 
-            <NegotiationInforModalByOwner
+            <ValuationInforModalByOwner
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 data={selectedRow}
