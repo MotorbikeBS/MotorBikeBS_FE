@@ -1,82 +1,88 @@
 import React from 'react'
 import { useAppDispatch } from '../../../services/store/store';
 import { Controller, useForm } from 'react-hook-form';
-import { startNegotiation } from '../../../services/features/negotiation/negotiationSlice';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack, TextField, TextareaAutosize, Typography } from '@mui/material';
+import {
+    Box,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Stack,
+    TextField,
+    TextareaAutosize,
+    Typography
+}
+    from '@mui/material';
 import './style/_style.scss'
-import { format } from 'date-fns'
+import { startValuation } from '../../../services/features/valuation/valuationSlice';
 interface NegotiationDialogProps {
-    openNego: boolean
-    motorIdNego: number | null
-    openSubmitNego: boolean;
-    openCancelNego: boolean;
-    onOpenSubmitDialogNego: () => void;
-    onCloseSubmitDialogNego: () => void;
-    onOpenCancelDialogNego: () => void;
-    onCloseCancelDialogNego: () => void;
+    openValuation: boolean
+    motorIdValuation: number | null
+    openSubmitValuation: boolean;
+    openCancelValuation: boolean;
+    onOpenSubmitDialogValuation: () => void;
+    onCloseSubmitDialogValuation: () => void;
+    onOpenCancelDialogValuation: () => void;
+    onCloseCancelDialogValuation: () => void;
     onClose: () => void;
 }
 
-interface INegotiationForm {
-    price: number;
-    startTime: Date;
-    endTime: Date;
+interface IValuationForm {
+    storePrice: number;
     description: string;
 }
 
 
-const NegotiationDialog: React.FC<NegotiationDialogProps> = ({
-    openNego,
-    motorIdNego,
-    openSubmitNego,
-    openCancelNego,
-    onOpenSubmitDialogNego,
-    onOpenCancelDialogNego,
-    onCloseSubmitDialogNego,
-    onCloseCancelDialogNego,
+const ValuationDialog: React.FC<NegotiationDialogProps> = ({
+    openValuation,
+    motorIdValuation,
+    openSubmitValuation,
+    openCancelValuation,
+    onOpenSubmitDialogValuation,
+    onOpenCancelDialogValuation,
+    onCloseSubmitDialogValuation,
+    onCloseCancelDialogValuation,
     onClose
 }) => {
     const dispatch = useAppDispatch()
 
-    const form = useForm<INegotiationForm>({
+    const form = useForm<IValuationForm>({
         defaultValues: {
-            price: undefined,
-            startTime: undefined,
-            endTime: undefined,
+            storePrice: undefined,
             description: ''
         }
     });
     const { control, handleSubmit, register } = form
 
-    const handleCloseDialogNego = () => {
+    const handleCloseDialogValuation = () => {
         onClose();
     };
-    const handleOpenSubmitDialogNego = () => {
-        onOpenSubmitDialogNego();
+    const handleOpenSubmitDialogValuation = () => {
+        onOpenSubmitDialogValuation();
     };
 
-    const handleOpenCancelDialogNego = () => {
-        onOpenCancelDialogNego();
+    const handleOpenCancelDialogValuation = () => {
+        onOpenCancelDialogValuation();
 
     };
-    const onSubmit = (data: INegotiationForm) => {
-        if (motorIdNego !== null) {
-            dispatch(startNegotiation({
-                motorId: motorIdNego,
-                price: data.price,
-                startTime: data.startTime,
-                endTime: data.endTime,
+    const onSubmit = (data: IValuationForm) => {
+        if (motorIdValuation !== null) {
+            dispatch(startValuation({
+                motorId: motorIdValuation,
+                storePrice: data.storePrice,
                 description: data.description
             }))
-            handleCloseDialogNego();
+            handleCloseDialogValuation();
         } else {
         }
     };
     return (
         <div>
-            <Dialog open={openNego} onClose={handleOpenCancelDialogNego}>
+            <Dialog open={openValuation} onClose={handleOpenCancelDialogValuation}>
                 <DialogTitle>
-                    <Typography variant="h4">Thương lượng giá cả</Typography>
+                    <Typography variant="h4">Định giá cho xe</Typography>
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
@@ -91,18 +97,18 @@ const NegotiationDialog: React.FC<NegotiationDialogProps> = ({
                         <form noValidate>
                             <Stack spacing={2} className="negotiation-form-style">
                                 <Controller
-                                    name="price"
+                                    name="storePrice"
                                     control={control}
                                     render={({ field }) => (
                                         <TextField
                                             focused
-                                            label="Giá thương lượng"
+                                            label="Giá đưa ra"
                                             type="number"
                                             {...field}
                                         />
                                     )}
                                 />
-                                <Controller
+                                {/* <Controller
                                     name="startTime"
                                     control={control}
                                     render={({ field }) => (
@@ -116,8 +122,8 @@ const NegotiationDialog: React.FC<NegotiationDialogProps> = ({
                                             }}
                                         />
                                     )}
-                                />
-                                <Controller
+                                /> */}
+                                {/* <Controller
                                     name="endTime"
                                     control={control}
                                     render={({ field }) => (
@@ -131,7 +137,7 @@ const NegotiationDialog: React.FC<NegotiationDialogProps> = ({
                                             }}
                                         />
                                     )}
-                                />
+                                /> */}
                                 <TextareaAutosize
                                     placeholder='Nhập mô tả của bạn.....'
                                     className="aria-note custom-textarea"
@@ -146,7 +152,7 @@ const NegotiationDialog: React.FC<NegotiationDialogProps> = ({
                                 <Button
                                     variant="contained"
                                     color="primary"
-                                    onClick={handleOpenSubmitDialogNego}
+                                    onClick={handleOpenSubmitDialogValuation}
                                 >
                                     Tạo thông tin
                                 </Button>
@@ -154,13 +160,13 @@ const NegotiationDialog: React.FC<NegotiationDialogProps> = ({
                         </form>
                     </Box>
                     <DialogActions>
-                        <Button onClick={handleOpenCancelDialogNego} color="error" variant="outlined">
+                        <Button onClick={handleOpenCancelDialogValuation} color="error" variant="outlined">
                             Hủy bỏ
                         </Button>
                     </DialogActions>
                 </DialogContent>
             </Dialog>
-            <Dialog open={openSubmitNego}>
+            <Dialog open={openSubmitValuation}>
                 <DialogTitle>
                     <Typography variant="h5">Xác nhận tạo thông tin thương lượng</Typography>
                 </DialogTitle>
@@ -170,7 +176,7 @@ const NegotiationDialog: React.FC<NegotiationDialogProps> = ({
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button color="error" variant="outlined" onClick={onCloseSubmitDialogNego}>
+                    <Button color="error" variant="outlined" onClick={onCloseSubmitDialogValuation}>
                         Hủy bỏ
                     </Button>
                     <Button type="submit" color="success" variant="outlined" onClick={handleSubmit(onSubmit)}>
@@ -178,7 +184,7 @@ const NegotiationDialog: React.FC<NegotiationDialogProps> = ({
                     </Button>
                 </DialogActions>
             </Dialog>
-            <Dialog open={openCancelNego}>
+            <Dialog open={openCancelValuation}>
                 <DialogTitle>
                     <Typography variant="h5">Xác nhận hủy bỏ</Typography>
                 </DialogTitle>
@@ -188,10 +194,10 @@ const NegotiationDialog: React.FC<NegotiationDialogProps> = ({
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button color="error" variant="outlined" onClick={onCloseCancelDialogNego}>
+                    <Button color="error" variant="outlined" onClick={onCloseCancelDialogValuation}>
                         Hủy bỏ
                     </Button>
-                    <Button color="success" variant="outlined" onClick={handleCloseDialogNego}>
+                    <Button color="success" variant="outlined" onClick={handleCloseDialogValuation}>
                         Đồng ý
                     </Button>
                 </DialogActions>
@@ -201,4 +207,4 @@ const NegotiationDialog: React.FC<NegotiationDialogProps> = ({
     )
 }
 
-export default NegotiationDialog
+export default ValuationDialog

@@ -18,7 +18,6 @@ interface ICreateRequestPayment {
 
 const PaymentPointComponent = () => {
     const dispatch = useAppDispatch()
-    const navigate = useNavigate()
 
     const form = useForm<ICreateRequestPayment>({
         defaultValues: {
@@ -51,7 +50,7 @@ const PaymentPointComponent = () => {
                     <div className="background-payment-coin" style={{ textAlign: 'center' }}>
                         <img
                             src="https://phongvu.vn/cong-nghe/wp-content/uploads/sites/2/2020/08/Banner-cong-thanh-toan-VNPAYQR.png"
-                            alt="Background Image"
+                            alt="BackgroundImage"
                         />
                     </div>
                     <div className="payment-coin-header" style={{ textAlign: 'center', marginTop: '30px' }}>

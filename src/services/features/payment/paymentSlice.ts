@@ -1,4 +1,3 @@
-import { error } from 'console';
 import { IPaymentRequest } from '../../../models/Payment/Payment';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';

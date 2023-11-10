@@ -37,8 +37,8 @@ const MotorOwnerExchange = () => {
                 >
                     <Tab label="Xe kí gởi" />
                     <Tab label="Xe không kí gởi" />
-                    <Tab label="Xe đang thương lượng" />
-                    <Tab label="Xe đã thương lượng" />
+                    <Tab label="Yêu cầu thương lượng" />
+                    <Tab label="Chấp nhận thương lượng" />
                 </Tabs>
                 <Box>
                     {value === 0 && <ConsignmentMotorOwnerExchangeComponent />}

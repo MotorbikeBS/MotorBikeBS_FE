@@ -59,6 +59,12 @@ export const addToWishListEndPoint = `${BASE_URL}/api/wishlist/addtowishlist`;
 export const deleteAllWishListEndPoint = `${BASE_URL}/api/wishlist/deleteallwishlist`;
 export const deleteWishListByMotorIdEndPoint = `${BASE_URL}/api/wishlist/deletewishlist`;
 
+//Valuation
+export const startValuationEndPoint = `${BASE_URL}/api/valuation/StartValuation`;
+export const getValuationEndPoint = `${BASE_URL}/api/valuation/GetValuationRequest`;
+export const acceptValuationEndPoint = `${BASE_URL}/api/valuation/accept`;
+export const cancelValuationEndPoint = `${BASE_URL}/api/valuation/cancel`;
+
 //Negotiation
 export const startNegotitationEndPoint = `${BASE_URL}/api/negotiation/startnegotitaion`;
 export const getNegotiationRequestEndPoint = `${BASE_URL}/api/negotiation/getnegotiationrequest`;
