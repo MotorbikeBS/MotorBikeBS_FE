@@ -7,15 +7,16 @@ import { useAppDispatch } from '../../../../services/store/store';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import { cancleNegotiation } from '../../../../services/features/negotiation/negotiationSlice';
 import CreateContractDialogByStore from '../../contract-dialog-store/CreateContractDialogByStore';
+import { ISelectRowValuation } from '../../../../models/Valuation/Valuation';
 
 interface NegotiationInforModalProps {
     isOpen: boolean;
     onClose: () => void;
     loadingData: () => void;
-    data: ISelectRowNegotiation | null;
+    data: ISelectRowValuation | null;
 }
 
-const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
+const ValuationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
     isOpen,
     onClose,
     loadingData,
@@ -67,18 +68,21 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                 {data?.price !== undefined ? formatPrice(data.price) : 'N/A'}
             </Typography>
         ),
-        createData('Ngày nhận xe', data?.startTime ? data.startTime.toLocaleString() : 'N/A'),
-        createData('Ngày kết thúc', data?.endTime ? data.endTime.toLocaleString() : 'N/A'),
+        createData('Giá đề xuất',
+            <Typography fontWeight='bold'>
+                {data?.storePrice !== undefined ? formatPrice(data.storePrice) : 'N/A'}
+            </Typography>
+        ),
         createData('Tên chủ xe', data?.ownerName),
         createData('Số điện thoại chủ xe', data?.ownerPhone),
         createData('Địa chỉ chủ xe', data?.ownerAddress),
-        createData('Nội dung', data?.noteNegotiation),
-        createData('Trạng thái thương lượng', (
-            data?.negotiationStatus === 'PENDING' ? (
+        createData('Nội dung', data?.noteValuation),
+        createData('Trạng thái yêu cầu', (
+            data?.valuationStatus === 'PENDING' ? (
                 <Typography color='red' fontWeight='700'>
                     Đang Chờ
                 </Typography>
-            ) : data?.negotiationStatus === 'ACCEPT' ? (
+            ) : data?.valuationStatus === 'ACCEPT' ? (
                 <Typography color='green' fontWeight='700'>
                     Đã Duyệt
                 </Typography>
@@ -103,11 +107,11 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
 
     const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
 
-    const handleCancleNegotiation = () => {
+    const handleCancleValuation = () => {
         setConfirmationModalOpen(true);
     };
 
-    const handleConfirmCancleNegotiation = () => {
+    const handleConfirmCancleValuation = () => {
         if (data && data.id) {
             dispatch(cancleNegotiation({ negotiationId: data.id }))
                 .then(() => {
@@ -126,7 +130,7 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                 <div className='modal-container'>
                     <div className='modal-header'>
                         <Typography variant="h6" gutterBottom fontWeight='700'>
-                            Thông tin thương lượng
+                            Thông tin yêu cầu
                         </Typography>
                         <div className='header-btn-close'>
                             <Button onClick={onClose}>
@@ -152,19 +156,19 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    {data?.negotiationStatus === 'PENDING' &&
+                    {data?.valuationStatus === 'PENDING' &&
                         (
                             <Box className='btn-negotiation-status'>
                                 <Button
                                     variant="contained"
                                     color="error"
-                                    onClick={handleCancleNegotiation}
+                                    onClick={handleCancleValuation}
                                 >
                                     Hủy giao dịch
                                 </Button>
                             </Box>
                         )}
-                    {data?.negotiationStatus === 'ACCEPT' && (
+                    {data?.valuationStatus === 'ACCEPT' && (
                         <Box className='btn-negotiation-status'>
                             <Button
                                 variant="contained"
@@ -192,7 +196,7 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                     <Button
                         variant="outlined"
                         color="error"
-                        onClick={handleConfirmCancleNegotiation}
+                        onClick={handleConfirmCancleValuation}
                     >
                         Xác nhận
                     </Button>
@@ -221,4 +225,4 @@ const NegotiationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
     );
 };
 
-export default NegotiationInforModalByStore;
+export default ValuationInforModalByStore;

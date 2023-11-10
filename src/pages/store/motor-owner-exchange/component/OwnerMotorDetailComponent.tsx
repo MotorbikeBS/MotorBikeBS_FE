@@ -6,8 +6,9 @@ import { useAppSelector } from '../../../../services/store/store';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
 import Carousel from 'react-material-ui-carousel';
-import NegotiationDialog from '../../negotiation-modal-store/NegotiationDialog';
+import NegotiationDialog from '../../valuation-dialog-store/ValuationDialog';
 import './style/_style.scss'
+import ValuationDialog from '../../valuation-dialog-store/ValuationDialog';
 
 type motorbikeParams = {
     motorbikeId: number;
@@ -19,42 +20,42 @@ const OwnerMotorDetailComponent = () => {
     const { motorbikesByOwner } = useAppSelector((state) => state.motorbikes);
 
 
-    const [isOpenDialogNego, setOpenDialogNego] = React.useState(false);
-    const [isOpenSubmitDialogNego, setIsOpenSubmitDialogNego] =
+    const [isOpenDialogValuation, setOpenDialogValuation] = React.useState(false);
+    const [isOpenSubmitDialogValuation, setIsOpenSubmitDialogValuation] =
         React.useState(false);
-    const [isOpenCancelDialogNego, setIsOpenCancelDialogNego] =
+    const [isOpenCancelDialogValuation, setIsOpenCancelDialogValuation] =
         React.useState(false);
-    const [motorbikeIdForDialogNego, setMotorbikeIdForDialogNego] =
+    const [motorbikeIdForDialogValuation, setMotorbikeIdForDialogValuation] =
         React.useState<number | null>(null);
 
 
     const formatPrice = useFormatCurrency();
 
-    const handleOpenDialogNego = (motorId: number) => {
-        setMotorbikeIdForDialogNego(motorId);
-        setOpenDialogNego(true);
+    const handleOpenDialogValuation = (motorId: number) => {
+        setMotorbikeIdForDialogValuation(motorId);
+        setOpenDialogValuation(true);
     };
 
 
-    const handleCloseDialogNego = () => {
-        setOpenDialogNego(false);
-        setIsOpenSubmitDialogNego(false);
-        setIsOpenCancelDialogNego(false);
+    const handleCloseDialogValuation = () => {
+        setOpenDialogValuation(false);
+        setIsOpenSubmitDialogValuation(false);
+        setIsOpenCancelDialogValuation(false);
     };
 
-    const handleOpenSubmitDialogNego = () => {
-        setIsOpenSubmitDialogNego(true);
+    const handleOpenSubmitDialogValuation = () => {
+        setIsOpenSubmitDialogValuation(true);
     };
 
 
-    const handleCloseSubmitDialogNego = () => {
-        setIsOpenSubmitDialogNego(false);
+    const handleCloseSubmitDialogValuation = () => {
+        setIsOpenSubmitDialogValuation(false);
     };
-    const handleOpenCancelDialogNego = () => {
-        setIsOpenCancelDialogNego(true);
+    const handleOpenCancelDialogValuation = () => {
+        setIsOpenCancelDialogValuation(true);
     };
-    const handleCloseCancelDialogNego = () => {
-        setIsOpenCancelDialogNego(false);
+    const handleCloseCancelDialogValuation = () => {
+        setIsOpenCancelDialogValuation(false);
     };
 
     if (!motorbikeId) {
@@ -266,27 +267,27 @@ const OwnerMotorDetailComponent = () => {
                             variant="contained"
                             size="large"
                             onClick={() =>
-                                handleOpenDialogNego(
+                                handleOpenDialogValuation(
                                     motorbike.motorId,
                                 )
                             }
                         >
-                            Thương lượng
+                            Tạo thương lượng
                         </Button>
                     </Box>
                     {/* )} */}
                 </Box>
             </Box>
-            <NegotiationDialog
-                openNego={isOpenDialogNego}
-                openSubmitNego={isOpenSubmitDialogNego}
-                openCancelNego={isOpenCancelDialogNego}
-                onOpenSubmitDialogNego={handleOpenSubmitDialogNego}
-                onCloseSubmitDialogNego={handleCloseSubmitDialogNego}
-                onOpenCancelDialogNego={handleOpenCancelDialogNego}
-                onCloseCancelDialogNego={handleCloseCancelDialogNego}
-                onClose={handleCloseDialogNego}
-                motorIdNego={motorbikeIdForDialogNego}
+            <ValuationDialog
+                openValuation={isOpenDialogValuation}
+                openSubmitValuation={isOpenSubmitDialogValuation}
+                openCancelValuation={isOpenCancelDialogValuation}
+                onOpenSubmitDialogValuation={handleOpenSubmitDialogValuation}
+                onCloseSubmitDialogValuation={handleCloseSubmitDialogValuation}
+                onOpenCancelDialogValuation={handleOpenCancelDialogValuation}
+                onCloseCancelDialogValuation={handleCloseCancelDialogValuation}
+                onClose={handleCloseDialogValuation}
+                motorIdValuation={motorbikeIdForDialogValuation}
             />
 
         </Container>
