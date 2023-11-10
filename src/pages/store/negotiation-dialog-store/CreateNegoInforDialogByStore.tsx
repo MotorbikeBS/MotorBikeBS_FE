@@ -9,18 +9,22 @@ import {
     Input,
     Stack,
 
+    TextField,
+
     TextareaAutosize,
     Typography
 } from '@mui/material';
 import React from 'react'
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import './style/_style.scss';
 import { useAppDispatch } from '../../../services/store/store';
 import { createContractByStore } from '../../../services/features/contract/contractSlice';
+import { createNegotiationInfor } from '../../../services/features/negotiation/negotiationSlice';
+import { format } from 'date-fns';
 
-interface CreateContractDialogProps {
+interface CreateNegotiationInforDialogProps {
     open: boolean;
-    negotiationId: number | null
+    valuationId: number | null
     openSubmit: boolean;
     openCancle: boolean;
     onOpenSubmitDialog: () => void;
@@ -30,15 +34,17 @@ interface CreateContractDialogProps {
     onClose: () => void;
 }
 
-interface ICreateContractForm {
-    negotiationId: number | null
-    content: string
-    images: FileList
+interface ICreateNegoInforForm {
+    finalPrice: number;
+    content: string;
+    startTime: Date;
+    endTime: Date;
+    deposit: number;
 }
 
-const CreateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
+const CreateNegoInforDialogByStore: React.FC<CreateNegotiationInforDialogProps> = ({
     open,
-    negotiationId,
+    valuationId,
     openSubmit,
     openCancle,
     onOpenCancelDialog,
@@ -49,16 +55,17 @@ const CreateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
 }) => {
     const dispatch = useAppDispatch()
 
-    const form = useForm<ICreateContractForm>({
+    const form = useForm<ICreateNegoInforForm>({
         defaultValues: {
-            negotiationId: null,
+            finalPrice: undefined,
             content: '',
-            images: undefined
+            startTime: undefined,
+            endTime: undefined,
+            deposit: undefined
         }
     });
 
-    const { formState, handleSubmit, register } = form;
-    const { errors } = formState;
+    const { control, handleSubmit, register } = form
 
     const handleCloseDialog = () => {
         onClose();
@@ -71,26 +78,20 @@ const CreateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
         onOpenCancelDialog();
     };
 
-    const onSubmit = (data: ICreateContractForm) => {
-        const formData = new FormData();
-        formData.append('content', data.content);
-        if (data.images && data.images.length > 0) {
-            for (let i = 0; i < data.images.length; i++) {
-                formData.append('images', data.images[i]);
-            }
+    const onSubmit = (data: ICreateNegoInforForm) => {
+        if (valuationId != null) {
+            dispatch(createNegotiationInfor({
+                valuationId: valuationId,
+                finalPrice: data.finalPrice,
+                content: data.content,
+                startTime: data.startTime,
+                endTime: data.endTime,
+                deposit: data.deposit
+            }))
+            handleCloseDialog()
         }
-        dispatch(createContractByStore({
-            negoId: Number(negotiationId),
-            data: formData
-        }))
-            .unwrap()
-            .then(() => {
-                // loadData();
-                handleCloseDialog();
-            })
-            .catch((error) => {
-                onCloseSubmitDialog()
-            })
+        else {
+        }
 
     }
 
@@ -104,7 +105,7 @@ const CreateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
                     <Typography
                         variant='h4'
                     >
-                        Tạo hợp đồng (bảng mềm)
+                        Tạo thông tin thương lượng
                     </Typography>
                 </DialogTitle>
                 <DialogContent>
@@ -116,7 +117,9 @@ const CreateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
                             >
                                 Chú ý:
                             </Typography>
-                            <Typography>Vui lòng tải lên hợp đồng (bản mềm) 1 cách rõ ràng đê thuận tiện cho việc quản lý </Typography>
+                            <Typography>
+                                Vui lòng tạo thông tin đã thương lượng 1 cách chính xác, để quản lí giao dịch tốt hơn.
+                            </Typography>
                         </div>
                     </DialogContentText>
                     <Box textAlign='center' >
@@ -128,43 +131,71 @@ const CreateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
                                     marginLeft: 'auto',
                                     marginRight: 'auto',
                                     marginTop: '20px',
+                                    marginBottom: '20px'
                                 }}
                             >
+                                <Controller
+                                    name="finalPrice"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <TextField
+                                            label="Giá đã chốt"
+                                            type="number"
+                                            {...field}
+                                        />
+                                    )}
+                                />
+                                <Controller
+                                    name="startTime"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <TextField
+                                            focused
+                                            label="Ngày nhận xe"
+                                            type="date"
+                                            {...field}
+                                            inputProps={{
+                                                min: format(new Date(), "yyyy-MM-dd"),
+                                            }}
+                                        />
+                                    )}
+                                />
+                                <Controller
+                                    name="endTime"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <TextField
+                                            focused
+                                            type="date"
+                                            label="Ngày kết thúc"
+                                            {...field}
+                                            inputProps={{
+                                                min: format(new Date(), "yyyy-MM-dd"),
+                                            }}
+                                        />
+                                    )}
+                                />
+                                <Controller
+                                    control={control}
+                                    name='deposit'
+                                    render={({ field }) => (
+                                        <TextField
+                                            label="Đã cọc"
+                                            type="number"
+                                            {...field}
+                                        />
+                                    )}
+
+                                />
                                 <TextareaAutosize
+                                    placeholder='Nhập mô tả của bạn.....'
                                     className="aria-note custom-textarea"
-                                    aria-label="Lưu ý của bạn"
                                     {...register('content')}
                                     style={{
                                         width: '345px',
                                         height: '50px',
                                     }}
                                 />
-                                <Input
-                                    id="images"
-                                    type="file"
-                                    {...register(
-                                        'images',
-                                        {
-                                            required:
-                                                'Bạn chưa chọn ảnh cho hợp đồng',
-                                        },
-                                    )}
-                                    inputProps={{
-                                        multiple: true,
-                                        accept: '.png, .jpg, .jpeg, .gif, .svg',
-                                    }}
-
-                                />
-                                <br />
-                                {errors.images && (
-                                    <span className="error-message">
-                                        {
-                                            errors
-                                                .images
-                                                .message
-                                        }
-                                    </span>
-                                )}
                             </Stack>
                             <Button
                                 variant="contained"
@@ -172,7 +203,7 @@ const CreateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
                                 className="btn-create-contract"
                                 onClick={handleOpenSubmitDialog}
                             >
-                                Tạo Hợp Đồng
+                                Tạo thông tin
                             </Button>
                         </form>
                     </Box>
@@ -224,4 +255,4 @@ const CreateContractDialogByStore: React.FC<CreateContractDialogProps> = ({
     )
 }
 
-export default CreateContractDialogByStore
+export default CreateNegoInforDialogByStore

@@ -10,12 +10,12 @@ import motorbikeSlice from '../features/motorbike/motorbikeSlice';
 import motorFiledsSlice from '../features/motorbike/motorFields';
 import ownerSlice from '../features/owner/ownerSlice';
 import wishListSlice from '../features/motorbike/wishListSlice';
-import negotiationSlice from '../features/negotiation/negotiationSlice';
 import contractSlice from '../features/contract/contractSlice';
 import billSlice from '../features/bill/billSlice';
 import customerBookingSlice from '../features/booking/customerBookingSlice';
 import paymentSlice from '../features/payment/paymentSlice';
 import valuationSlice from '../features/valuation/valuationSlice';
+import negotiationSlice from '../features/negotiation/negotiationSlice';
 
 // Định nghĩa cấu hình persist
 const persistConfig = {
@@ -29,7 +29,7 @@ const persistConfig = {
         'motorbikes',
         'motorFields',
         'wishlist',
-        // 'negotiation',
+        'negotiation',
         'customerBooking',
         // 'contract',
         'bill',

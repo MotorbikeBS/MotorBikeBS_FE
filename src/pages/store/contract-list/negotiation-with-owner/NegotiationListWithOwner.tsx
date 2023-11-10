@@ -11,9 +11,10 @@ import {
     getAllContract,
 } from '../../../../services/features/contract/contractSlice';
 import TradeHistoryImgeDialog from '../../../../common-components/trade-history-img-dialog/TradeHistoryImgeDialog';
-import ReUpdateContractDialogByStore from '../../contract-dialog-store/ReUpdateContractDialog';
+import ReUpdateContractDialogByStore from '../../negotiation-dialog-store/ReUpdateNegoInfoDialog';
+import ReUpdateNegoInfoDialogByStore from '../../negotiation-dialog-store/ReUpdateNegoInfoDialog';
 
-const ContractListWithOwner = () => {
+const NegotiationListWithOwner = () => {
     const dispatch = useAppDispatch();
     const formattedCurrency = useFormatCurrency();
     const { getContracts, loading } = useAppSelector((state) => state.contract);
@@ -302,7 +303,7 @@ const ContractListWithOwner = () => {
                 onClose={() => setFullImageContract(false)}
                 imageUrls={imageArray}
             />
-            <ReUpdateContractDialogByStore
+            <ReUpdateNegoInfoDialogByStore
                 open={isOpenContractDialog}
                 openSubmit={isOpenSubmitDialog}
                 openCancle={isOpenCancelDialog}
@@ -318,4 +319,4 @@ const ContractListWithOwner = () => {
     );
 };
 
-export default ContractListWithOwner;
+export default NegotiationListWithOwner

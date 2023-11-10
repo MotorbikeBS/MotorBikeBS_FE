@@ -30,8 +30,6 @@ import StoreMotorList from '../pages/store/store-motor-list/StoreMotorList';
 import BookingListStore from '../pages/store/booking-list/BookingListStore';
 import MotorBikeDetailForStore from '../pages/customer/motorbike-detail/MotorBikeDetailForStore';
 import MotorFields from '../pages/admin/motorFields-component/MotorFields';
-import ContractHistoryList from '../pages/store/contract-list/ContractHistoryList';
-import ContractHistoryWithStore from '../pages/owner/contract-list-with-store/ContractHistoryWithStore';
 import CustomerBookingComponentWithStore from '../pages/customer/customer-booking/CustomerBookingWithStoreComponent';
 import MotorbikeSold from '../pages/store/motorbike-sold/MotorbikeSold';
 import OwnerDashBoardComponent from '../pages/owner/dashboard/OwnerDashBoardComponent';
@@ -40,6 +38,8 @@ import NegotiationListOwner from '../pages/owner/negotiation-component/Negotiati
 import StorePaymentComponent from '../pages/store/payment/StorePaymentComponent';
 import PaymentSucessfullyComponent from '../pages/store/payment/payment-successfully/PaymentSucessfullyComponent';
 import PaymentErrorComponent from '../pages/store/payment/payment-error/PaymentErrorComponent';
+import NegotiationHistoryList from '../pages/store/contract-list/NegotiationHistoryList';
+import ReceiptHistoryWithStore from '../pages/owner/contract-list-with-store/ReceiptHistoryWithStore';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -126,7 +126,7 @@ const AppRoutes = () => {
                     />
                     <Route
                         path='/store/contract'
-                        element={<ContractHistoryList />}
+                        element={<NegotiationHistoryList />}
                     />
                     <Route
                         path='/transaction-history'
@@ -161,7 +161,7 @@ const AppRoutes = () => {
                     />
                     <Route path="/owner/motors" element={<OwnerMotorList />} />
                     <Route path='/owner/negotiation' element={<NegotiationListOwner />} />
-                    <Route path='/owner/contract' element={<ContractHistoryWithStore />} />
+                    <Route path='/owner/receipt' element={<ReceiptHistoryWithStore />} />
                     <Route path='/owner/history-transaction' element={<HistoryTransaction />} />
                 </>
             )}

@@ -2,12 +2,11 @@ import React, { ReactNode, useState } from 'react';
 import { Box, Button, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
 import { ClearRounded } from '@mui/icons-material';
 import './style/_style.scss';
-import { ISelectRowNegotiation } from '../../../../models/Negotiation/Negotiation';
 import { useAppDispatch } from '../../../../services/store/store';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
-import CreateContractDialogByStore from '../../contract-dialog-store/CreateContractDialogByStore';
 import { ISelectRowValuation } from '../../../../models/Valuation/Valuation';
 import { cancleValuation } from '../../../../services/features/valuation/valuationSlice';
+import CreateNegoInforDialogByStore from '../../negotiation-dialog-store/CreateNegoInforDialogByStore';
 
 interface NegotiationInforModalProps {
     isOpen: boolean;
@@ -178,7 +177,7 @@ const ValuationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                                     data.id
                                 ))}
                             >
-                                Tạo hợp đồng
+                                Tạo thông tin thương lượng
                             </Button>
                         </Box>
                     )}
@@ -211,7 +210,7 @@ const ValuationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                 </div>
             </Modal>
 
-            <CreateContractDialogByStore
+            <CreateNegoInforDialogByStore
                 open={isOpenContractDialog}
                 openSubmit={isOpenSubmitDialog}
                 openCancle={isOpenCancelDialog}
@@ -220,7 +219,7 @@ const ValuationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                 onOpenCancelDialog={handleOpenCancelDialog}
                 onCloseCancelDialog={handleCloseCancelDialog}
                 onClose={handleCloseCreateContractDialog}
-                negotiationId={valuationIdDialog}
+                valuationId={valuationIdDialog}
             />
         </div>
     );

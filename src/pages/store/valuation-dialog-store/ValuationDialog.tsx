@@ -108,36 +108,7 @@ const ValuationDialog: React.FC<NegotiationDialogProps> = ({
                                         />
                                     )}
                                 />
-                                {/* <Controller
-                                    name="startTime"
-                                    control={control}
-                                    render={({ field }) => (
-                                        <TextField
-                                            focused
-                                            label="Ngày nhận xe"
-                                            type="date"
-                                            {...field}
-                                            inputProps={{
-                                                min: format(new Date(), "yyyy-MM-dd"),
-                                            }}
-                                        />
-                                    )}
-                                /> */}
-                                {/* <Controller
-                                    name="endTime"
-                                    control={control}
-                                    render={({ field }) => (
-                                        <TextField
-                                            focused
-                                            type="date"
-                                            label="Ngày kết thúc"
-                                            {...field}
-                                            inputProps={{
-                                                min: format(new Date(), "yyyy-MM-dd"),
-                                            }}
-                                        />
-                                    )}
-                                /> */}
+
                                 <TextareaAutosize
                                     placeholder='Nhập mô tả của bạn.....'
                                     className="aria-note custom-textarea"

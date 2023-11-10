@@ -36,7 +36,7 @@ interface IReUpdateContractForm {
     images: FileList
 }
 
-const ReUpdateContractDialogByStore: React.FC<ReupdateContractDialogProps> = ({
+const ReUpdateNegoInfoDialogByStore: React.FC<ReupdateContractDialogProps> = ({
     open,
     contractId,
     openSubmit,
@@ -225,4 +225,4 @@ const ReUpdateContractDialogByStore: React.FC<ReupdateContractDialogProps> = ({
     )
 }
 
-export default ReUpdateContractDialogByStore
+export default ReUpdateNegoInfoDialogByStore

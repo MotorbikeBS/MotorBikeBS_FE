@@ -27,25 +27,27 @@ import {
     StoreOutlined,
 } from '@mui/icons-material';
 import TradeHistoryImgeDialog from '../../../common-components/trade-history-img-dialog/TradeHistoryImgeDialog';
+import { clearNegotiation } from '../../../services/features/negotiation/negotiationSlice';
 
-const ContractListWithStoreComponent = () => {
+const ReceiptListWithStoreComponent = () => {
     const dispatch = useAppDispatch();
-    const { getContracts, loading } = useAppSelector((state) => state.contract);
+
+    const { negotiations, loading } = useAppSelector((state) => state.negotiation);
     const formattedCurrency = useFormatCurrency();
 
-    const [fullImageContract, setFullImageContract] = React.useState(false);
-    const [imageArray, setImageArray] = React.useState<string[]>([]);
+    // const [fullImageContract, setFullImageContract] = React.useState(false);
+    // const [imageArray, setImageArray] = React.useState<string[]>([]);
 
-    const [isOpenErrorContractDialog, setIsOpenErrorContractDialog] =
+    const [isOpenErrorReceiptDialog, setIsOpenErrorReceiptDialog] =
         React.useState(false);
-    const [isOpenAcceptContractDialog, setIsOpenAcceptContractDialog] =
+    const [isOpenAcceptReceiptDialog, setIsOpenAcceptReceiptDialog] =
         React.useState(false);
-    const [contractIdDialog, setContractIdDialog] = React.useState<
+    const [receiptIdDialog, setReceiptIdDialog] = React.useState<
         number | null
     >(null);
 
     const loadData = React.useCallback(() => {
-        dispatch(clearContract());
+        dispatch(clearNegotiation());
         dispatch(getAllContract());
     }, [dispatch])
 
@@ -53,43 +55,45 @@ const ContractListWithStoreComponent = () => {
         loadData();
     }, [loadData]);
 
-    const handleOpenFullImage = (imageUrls: string[]) => {
-        setImageArray(imageUrls);
-        setFullImageContract(true);
-    };
+    // const handleOpenFullImage = (imageUrls: string[]) => {
+    //     setImageArray(imageUrls);
+    //     setFullImageContract(true);
+    // };
 
     const handleErrorContract = (contractId: number) => {
-        setContractIdDialog(contractId);
-        setIsOpenErrorContractDialog(true);
+        setReceiptIdDialog(contractId);
+        setIsOpenErrorReceiptDialog(true);
         console.log(contractId)
     };
     const handleCloseContractErrorDialog = () => {
-        setIsOpenErrorContractDialog(false);
+        setIsOpenErrorReceiptDialog(false);
     };
-    const handleConfirmErrorContract = (contractId: number | null) => {
-        if (contractId !== null) {
-            dispatch(cancelContractByOwner({ contractId })).then(() => {
-                loadData();
-                setTimeout(() => {
-                    setIsOpenErrorContractDialog(false);
-                }, 1000);
-            });
-        }
-    };
+    // const handleConfirmErrorContract = (contractId: number | null) => {
+    //     if (contractId !== null) {
+    //         dispatch(cancelContractByOwner({ contractId })).then(() => {
+    //             loadData();
+    //             setTimeout(() => {
+    //                 setIsOpenErrorContractDialog(false);
+    //             }, 1000);
+    //         });
+    //     }
+    // };
 
     const handleAcceptContract = (contractId: number) => {
-        setContractIdDialog(contractId);
-        setIsOpenAcceptContractDialog(true);
+        setReceiptIdDialog(contractId);
+        setIsOpenAcceptReceiptDialog(true);
     };
+
     const handleCloseAccectContractDialog = () => {
-        setIsOpenAcceptContractDialog(false);
+        setIsOpenAcceptReceiptDialog(false);
     };
+
     const handleConfirmAcceptContract = (contractId: number | null) => {
         if (contractId !== null) {
             dispatch(acceptContractByOwner({ contractId })).then(() => {
                 loadData();
                 setTimeout(() => {
-                    setIsOpenAcceptContractDialog(false);
+                    setIsOpenAcceptReceiptDialog(false);
                 }, 1000);
             });
         }
@@ -111,7 +115,7 @@ const ContractListWithStoreComponent = () => {
                 </Box>
             ) : (
                 <>
-                    {getContracts?.map((contractOwner) => (
+                    {/* {getContracts?.map((contractOwner) => (
                         <Paper
                             key={
                                 contractOwner?.negotiations[0]
@@ -383,17 +387,17 @@ const ContractListWithStoreComponent = () => {
                                 </Box>
                             </Box>
                         </Paper>
-                    ))}
+                    ))} */}
                 </>
             )}
 
-            <TradeHistoryImgeDialog
+            {/* <TradeHistoryImgeDialog
                 isOpen={fullImageContract}
                 onClose={() => setFullImageContract(false)}
                 imageUrls={imageArray}
-            />
+            /> */}
             <Dialog
-                open={isOpenErrorContractDialog}
+                open={isOpenErrorReceiptDialog}
                 onClose={handleCloseContractErrorDialog}
             >
                 <DialogTitle>
@@ -413,9 +417,9 @@ const ContractListWithStoreComponent = () => {
                         Hủy
                     </Button>
                     <Button
-                        onClick={() =>
-                            handleConfirmErrorContract(contractIdDialog)
-                        }
+                        // onClick={() =>
+                        //     handleConfirmError(contractIdDialog)
+                        // }
                         color="success"
                     >
                         Xác nhận
@@ -424,7 +428,7 @@ const ContractListWithStoreComponent = () => {
             </Dialog>
 
             <Dialog
-                open={isOpenAcceptContractDialog}
+                open={isOpenAcceptReceiptDialog}
                 onClose={handleCloseAccectContractDialog}
             >
                 <DialogTitle fontWeight="700">
@@ -444,9 +448,9 @@ const ContractListWithStoreComponent = () => {
                         Hủy
                     </Button>
                     <Button
-                        onClick={() =>
-                            handleConfirmAcceptContract(contractIdDialog)
-                        }
+                        // onClick={() =>
+                        //     handleConfirmAcceptContract(contractIdDialog)
+                        // }
                         color="success"
                     >
                         Xác nhận
@@ -457,4 +461,4 @@ const ContractListWithStoreComponent = () => {
     );
 };
 
-export default ContractListWithStoreComponent;
+export default ReceiptListWithStoreComponent;

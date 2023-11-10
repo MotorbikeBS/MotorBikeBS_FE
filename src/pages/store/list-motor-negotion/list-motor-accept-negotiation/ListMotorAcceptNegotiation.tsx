@@ -6,6 +6,7 @@ import { columns } from '../valuation-table/ValuationTableStore'
 import ValuationInforModalByStore from '../valuation-infor-dialog/ValuationInforModalByStore'
 import { ISelectRowValuation, IValuation } from '../../../../models/Valuation/Valuation'
 import { clearValuation, getValuationRequest } from '../../../../services/features/valuation/valuationSlice'
+import { format } from 'date-fns'
 
 const ListMotorAcceptNegotiation = () => {
     const dispatch = useAppDispatch();
@@ -35,7 +36,18 @@ const ListMotorAcceptNegotiation = () => {
     const rows = useMemo(() => {
         return acceptValuation.map((valua: IValuation) => ({
             id: valua.valuations[0]?.valuationId,
-
+            motorName: valua.motor?.motorName,
+            images: valua.motor?.motorbikeImages[0]?.imageLink,
+            certificateNumber: valua.motor?.certificateNumber,
+            year: format(new Date(valua.motor.year), 'dd/MM/yyyy'),
+            price: valua.motor?.price,
+            storePrice: valua.valuations[0].storePrice,
+            ownerName: valua.receiver?.userName,
+            ownerPhone: valua.receiver?.phone,
+            ownerAddress: valua.receiver?.address,
+            noteValuation: valua?.valuations[0]?.description,
+            valuationStatus: valua.valuations[0]?.status,
+            motorStatus: valua.motor?.motorStatus.title,
         }));
     }, [acceptValuation]);
 

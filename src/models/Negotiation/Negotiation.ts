@@ -1,32 +1,20 @@
-export interface ISelectRowNegotiation {
-    id: number;
-    motorName: string;
-    images: string;
-    certificateNumber: string;
-    year: Date;
-    startTime: Date;
-    endTime: Date;
-    price: number;
-    storeName: string;
-    ownerName: string;
-    ownerPhone: string;
-    storePhone: string;
-    ownerAddress: string;
-    storeAddress: string;
-    noteNegotiation: string;
-    negotiationStatus: string;
-    motorStatus: string | number;
-}
 import { IMotorStatus, IMotorType } from '../Motorbike/Motorbike';
 import { IUser } from '../User/UserInterface';
 
-// }
-export interface IMotorImgNego {
+export interface IFieldNegoInfor {
+    valuationId: number;
+    finalPrice: number;
+    content: string;
+    startTime: Date;
+    endTime: Date;
+    deposit: number;
+}
+export interface IMotorImgNeogtiation {
     imageId: number;
     imageLink: string;
     motorId: number;
 }
-export interface IMotorNego {
+export interface IMotorNegotiation {
     motorId: number;
     certificateNumber: number;
     motorName: string;
@@ -42,25 +30,32 @@ export interface IMotorNego {
     registrationImage: string;
     motorStatus: IMotorStatus;
     motorType: IMotorType;
-    motorbikeImages: IMotorImgNego[];
+    motorbikeImages: IMotorImgNeogtiation[];
 }
-export interface INegoRequest {
+export interface INegotiations {
     negotiationId: number;
-    requestId: number;
-    price: number;
+    motorId: number;
+    finalPrice: number;
+    storeId: number;
+    content: string;
+    createdAt: Date;
+    status: string;
+    valuationId: number;
+    baseRequestId: number;
     startTime: Date;
     endTime: Date;
+    deposit: number;
+}
+
+export interface IValuationNegotiation {
+    valuationId: number;
+    requestId: number;
+    storePrice: number;
     description: string;
     status: string;
-    expiredTime: Date;
+    negotiations: INegotiations[];
 }
-export interface IFieldRequest {
-    motorId: number;
-    price: number;
-    startTime: Date;
-    endTime: Date;
-    description: string;
-}
+
 export interface INegotiation {
     requestId: number;
     motorId: number;
@@ -69,8 +64,8 @@ export interface INegotiation {
     time: Date;
     requestTypeId: number;
     status: string;
-    motor: IMotorNego;
-    negotiations: INegoRequest[];
+    motor: IMotorNegotiation;
+    valuations: IValuationNegotiation[];
     receiver: IUser;
     sender: IUser;
 }
