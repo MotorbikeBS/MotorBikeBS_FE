@@ -39,6 +39,8 @@ const MotorbikeSoldComponent = () => {
     const { user } = useAppSelector((state) => state.users);
     const { motorbike } = useAppSelector((state) => state.motorbikes);
 
+    const getUserId = account?.userId
+
     const formatPrice = useFormatCurrency();
 
     const [selectedRow, setSelectedRow] = useState<IMotorbike | null>(null);
@@ -72,14 +74,18 @@ const MotorbikeSoldComponent = () => {
         }
     }, [dispatch, user]);
 
+    const billStores = billStore && billStore?.filter((bill) =>
+        bill?.userId === 1 || bill?.userId === getUserId
+    )
+
     const rows = useMemo(() => {
-        return (billStore ?? []).map((bill: IBill) => ({
+        return (billStores ?? []).map((bill: IBill) => ({
             id: bill.billConfirmId,
             motorId: bill?.motorId,
             price: bill?.price,
             createAt: bill?.createAt,
         }));
-    }, [billStore]);
+    }, [billStores]);
     return (
         <Container maxWidth="xl">
             <div

@@ -14,16 +14,17 @@ import {
     Typography,
 } from '@mui/material';
 import { DataGrid, GridRowParams } from '@mui/x-data-grid';
-import { columns } from './table/HistoryTransactionTable';
+import { columns } from './table/Table';
 import {
     useAppDispatch,
     useAppSelector,
 } from '../../../../services/store/store';
-import { IBill } from '../../../../models/Bill/Bill';
 import {
     clearBill,
-    getBillByUserId,
+    getBillByStoreId,
 } from '../../../../services/features/bill/billSlice';
+import { IBill } from '../../../../models/Bill/Bill';
+import { getUserByID } from '../../../../services/features/user/userSlice';
 import { IMotorbike } from '../../../../models/Motorbike/Motorbike';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import {
@@ -31,11 +32,14 @@ import {
     getMotorId,
 } from '../../../../services/features/motorbike/motorbikeSlice';
 
-const HistoryTransactionComponent = () => {
+const MotorbikeSoldOwnerComponent = () => {
     const dispatch = useAppDispatch();
+    const { billStore, loading } = useAppSelector((state) => state.bill);
     const { account } = useAppSelector((state) => state.account);
-    const { billUser, loading } = useAppSelector((state) => state.bill);
+    const { user } = useAppSelector((state) => state.users);
     const { motorbike } = useAppSelector((state) => state.motorbikes);
+
+    const getUserId = account?.userId
 
     const formatPrice = useFormatCurrency();
 
@@ -52,24 +56,36 @@ const HistoryTransactionComponent = () => {
     };
 
     useEffect(() => {
+        if (account && account.userId) {
+            dispatch(getUserByID({ id: Number(account.userId) }));
+        }
         dispatch(clearMotor());
         dispatch(getMotorId({ motorId: Number(selectedRow?.motorId) }));
-    }, [dispatch, selectedRow]);
+    }, [dispatch, account, selectedRow]);
 
     useEffect(() => {
         dispatch(clearBill());
-        dispatch(getBillByUserId({ userId: Number(account?.userId) }));
-    }, [dispatch, account]);
+        if (user) {
+            dispatch(
+                getBillByStoreId({
+                    receiverId: Number(user?.storeDesciptions[0]?.storeId),
+                }),
+            );
+        }
+    }, [dispatch, user]);
+
+    const billStoreOwner = billStore && billStore?.filter((bill) =>
+        bill?.userId !== 1 && bill?.userId !== getUserId
+    )
 
     const rows = useMemo(() => {
-        return (billUser ?? []).map((bill: IBill) => ({
-            id: bill?.billConfirmId,
+        return (billStoreOwner ?? []).map((bill: IBill) => ({
+            id: bill.billConfirmId,
             motorId: bill?.motorId,
             price: bill?.price,
             createAt: bill?.createAt,
         }));
-    }, [billUser]);
-
+    }, [billStoreOwner]);
     return (
         <Container maxWidth="xl">
             <div
@@ -232,4 +248,4 @@ const HistoryTransactionComponent = () => {
     );
 };
 
-export default HistoryTransactionComponent;
+export default MotorbikeSoldOwnerComponent;
