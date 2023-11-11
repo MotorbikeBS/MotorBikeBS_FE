@@ -44,8 +44,8 @@ const pages = [
         name: 'DS. Lịch hẹn',
     },
     {
-        to: '/store/contract',
-        name: 'Hợp đồng',
+        to: '/store/receipt',
+        name: 'Biên nhận',
     },
     {
         to: '/transaction-history',

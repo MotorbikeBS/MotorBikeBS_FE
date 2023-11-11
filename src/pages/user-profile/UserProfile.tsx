@@ -80,8 +80,37 @@ const UserProfile = () => {
                                     <EditIcon />
                                     Sửa hồ sơ
                                 </Button>
+
                             </Box>
                         </div>
+                        <Box sx={{
+                            display: 'flex'
+                        }}
+                        >
+                            {account?.roleId === 2 && (
+                                <Box sx={{
+                                    display: 'flex',
+                                    flexDirection: 'row'
+                                }}>
+                                    <Typography sx={{
+                                        fontWeight: '700',
+                                        marginLeft: '10px',
+                                    }}>
+                                        BS-COINS: {' '}
+                                    </Typography>
+                                    <Typography
+                                        sx={{
+                                            marginLeft: '20px',
+                                            color: 'green',
+                                            fontWeight: '700',
+                                        }}
+                                    >
+                                        {user?.storeDesciptions[0]?.point} COINS
+                                    </Typography>
+                                </Box>
+                            )}
+
+                        </Box>
                         <hr />
                         <Button
                             className="change-password-button"

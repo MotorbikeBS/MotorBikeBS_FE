@@ -28,7 +28,7 @@ const StoreNegotiationWithOwnerComponent = () => {
                     }}
                     centered
                 >
-                    <Tab label='Xe Đang Thương Lượng' />
+                    <Tab label='Yêu cầu thương lượng' />
                     <Tab label='Xe Đã Thương Lượng' />
                 </Tabs>
                 <Box flexGrow={4} marginTop='3rem'>

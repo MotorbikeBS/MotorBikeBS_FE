@@ -68,7 +68,7 @@ export const cancelValuationEndPoint = `${BASE_URL}/api/valuation/cancel`;
 //Negotiation
 export const createNegotitationEndPoint = `${BASE_URL}/api/Negotiation/CreateNegotiation`;
 export const getNegotiationEndPoint = `${BASE_URL}/api/Negotiation/GetNegotiation`;
-export const accepNegotiationEndPoint = `${BASE_URL}/api/negotiation/acceptnegotiation`;
+export const accepNegotiationEndPoint = `${BASE_URL}/api/Negotiation/AcceptNegotation`;
 export const cancleNegotiationEndPoint = `${BASE_URL}/api/negotiation/cancelnetiation`;
 
 // Contract between store owner and vehicle owner

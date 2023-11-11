@@ -19,7 +19,7 @@ import { reUpdateContractByStore } from '../../../services/features/contract/con
 
 interface ReupdateContractDialogProps {
     open: boolean;
-    contractId: number | null
+    NegotiationId: number | null
     openSubmit: boolean;
     openCancle: boolean;
     loadData: () => void
@@ -38,7 +38,7 @@ interface IReUpdateContractForm {
 
 const ReUpdateNegoInfoDialogByStore: React.FC<ReupdateContractDialogProps> = ({
     open,
-    contractId,
+    NegotiationId,
     openSubmit,
     openCancle,
     loadData,
@@ -81,7 +81,7 @@ const ReUpdateNegoInfoDialogByStore: React.FC<ReupdateContractDialogProps> = ({
             }
         }
         dispatch(reUpdateContractByStore({
-            contractId: Number(contractId),
+            contractId: Number(NegotiationId),
             data: formData
         }))
             .unwrap()

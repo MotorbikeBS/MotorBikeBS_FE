@@ -125,7 +125,7 @@ const AppRoutes = () => {
                         element={<BookingListStore />}
                     />
                     <Route
-                        path='/store/contract'
+                        path='/store/receipt'
                         element={<NegotiationHistoryList />}
                     />
                     <Route
