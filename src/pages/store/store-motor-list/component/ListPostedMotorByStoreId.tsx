@@ -35,7 +35,6 @@ import {
 } from '../../../../services/features/bill/billSlice';
 import '../style/style.scss';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
-import { createBillNonConsignmentEndPoint } from '../../../../services/config/api-config';
 
 interface ListMotorProps {
     loadData: () => void;

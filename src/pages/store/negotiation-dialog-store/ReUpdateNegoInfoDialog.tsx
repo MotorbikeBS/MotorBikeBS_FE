@@ -6,7 +6,6 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
-    Input,
     Stack,
     TextField,
     TextareaAutosize,
@@ -16,8 +15,7 @@ import React from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import './style/_style.scss';
 import { useAppDispatch } from '../../../services/store/store';
-import { reUpdateContractByStore } from '../../../services/features/contract/contractSlice';
-import { clearNegotiation, getNegotiationInfo, reupNegotiationInfor } from '../../../services/features/negotiation/negotiationSlice';
+import { reupNegotiationInfor } from '../../../services/features/negotiation/negotiationSlice';
 import { format } from 'date-fns';
 
 interface ReupdateNegoInfoDialogProps {

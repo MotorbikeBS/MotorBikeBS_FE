@@ -39,7 +39,7 @@ import StorePaymentComponent from '../pages/store/payment/StorePaymentComponent'
 import PaymentSucessfullyComponent from '../pages/store/payment/payment-successfully/PaymentSucessfullyComponent';
 import PaymentErrorComponent from '../pages/store/payment/payment-error/PaymentErrorComponent';
 import NegotiationHistoryList from '../pages/store/contract-list/NegotiationHistoryList';
-import ReceiptHistoryWithStore from '../pages/owner/contract-list-with-store/ReceiptHistoryWithStore';
+import ReceiptHistoryWithStore from '../pages/owner/Receipt-list-with-store/ReceiptHistoryWithStore';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
