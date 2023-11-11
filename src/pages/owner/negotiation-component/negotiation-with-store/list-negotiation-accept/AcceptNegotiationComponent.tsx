@@ -27,6 +27,7 @@ const AcceptNegotiationComponent = () => {
         dispatch(clearValuation());
         dispatch(getValuationRequest());
     };
+
     const acceptValuation = useMemo(() => {
         return (valuations ?? []).filter(
             (valua: IValuation) => valua.valuations[0].status === 'ACCEPT',

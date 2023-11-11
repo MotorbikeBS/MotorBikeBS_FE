@@ -18,7 +18,6 @@ import React from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import './style/_style.scss';
 import { useAppDispatch } from '../../../services/store/store';
-import { createContractByStore } from '../../../services/features/contract/contractSlice';
 import { createNegotiationInfor } from '../../../services/features/negotiation/negotiationSlice';
 import { format } from 'date-fns';
 
@@ -123,7 +122,7 @@ const CreateNegoInforDialogByStore: React.FC<CreateNegotiationInforDialogProps> 
                         </div>
                     </DialogContentText>
                     <Box textAlign='center' >
-                        <form encType='multipart/form-data' noValidate>
+                        <form noValidate>
                             <Stack
                                 spacing={2}
                                 sx={{
@@ -216,11 +215,11 @@ const CreateNegoInforDialogByStore: React.FC<CreateNegotiationInforDialogProps> 
             </Dialog>
             <Dialog open={openSubmit}>
                 <DialogTitle>
-                    <Typography variant="h5">Xác nhận tạo hợp đồng</Typography>
+                    <Typography variant="h5">Xác nhận tạo thông tin</Typography>
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        <Typography>Bạn có chắc chắn muốn tạo hợp đồng mua bán xe ?</Typography>
+                        <Typography>Bạn có chắc chắn muốn tạo thông tin đã thương lượng ?</Typography>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -239,7 +238,7 @@ const CreateNegoInforDialogByStore: React.FC<CreateNegotiationInforDialogProps> 
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        <Typography>Bạn có chắc chắn muốn hủy bỏ đặt lịch xem xe không ?</Typography>
+                        <Typography>Bạn có chắc chắn muốn hủy bỏ không ?</Typography>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

@@ -20,7 +20,7 @@ import {
     PlaceOutlined,
     StoreOutlined,
 } from '@mui/icons-material';
-import { acceptNegotiationInfo, cancelNegotiationInfo, clearNegotiation, getNegotiationInfo } from '../../../services/features/negotiation/negotiationSlice';
+import { acceptNegotiationInfo, cancelNegotiationInfo, clearNegotiation, getNegotiationInfo, rejectNegotiationInfor } from '../../../services/features/negotiation/negotiationSlice';
 
 const ReceiptListWithStoreComponent = () => {
     const dispatch = useAppDispatch();
@@ -33,18 +33,20 @@ const ReceiptListWithStoreComponent = () => {
         React.useState(false);
     const [isOpenAcceptReceiptDialog, setIsOpenAcceptReceiptDialog] =
         React.useState(false);
+    const [isOpenRejectReceiptDialog, setIsOpenRejectReceiptDialog] =
+        React.useState(false);
     const [negotiationIdDialog, setNegotiationIdDialog] = React.useState<
         number | null
     >(null);
 
-    const loadData = React.useCallback(() => {
+    const loadData = () => {
         dispatch(clearNegotiation());
         dispatch(getNegotiationInfo());
-    }, [dispatch])
+    }
 
     React.useEffect(() => {
         loadData();
-    }, [loadData]);
+    }, [dispatch]);
 
     const handleAcceptNegoInfor = (negotiationId: number) => {
         setNegotiationIdDialog(negotiationId);
@@ -83,6 +85,25 @@ const ReceiptListWithStoreComponent = () => {
         }
     };
 
+    const handleRejectNegoInfor = (negotiationId: number) => {
+        setNegotiationIdDialog(negotiationId);
+        setIsOpenRejectReceiptDialog(true);
+        console.log(negotiationId)
+    };
+    const handleCloseRejectNegoInfoDialog = () => {
+        setIsOpenRejectReceiptDialog(false);
+    };
+    const handleConfirmRejectNegotiationInfo = (negotiationId: number | null) => {
+        if (negotiationId !== null) {
+            dispatch(rejectNegotiationInfor({ negotiationId })).then(() => {
+                loadData();
+                setTimeout(() => {
+                    setIsOpenRejectReceiptDialog(false);
+                }, 1000);
+            });
+        }
+    };
+
 
 
     return (
@@ -93,7 +114,7 @@ const ReceiptListWithStoreComponent = () => {
                 gutterBottom
                 style={{ marginBottom: '20px' }}
             >
-                Lịch sử giao dịch với cửa hàng:
+                Biên nhận với cửa hàng:
             </Typography>
             {loading === true ? (
                 <Box textAlign="center">
@@ -135,6 +156,7 @@ const ReceiptListWithStoreComponent = () => {
                                             align="center"
                                             color="red"
                                         >
+                                            Giá chốt: {' '}
                                             {formattedCurrency(
                                                 negoInfo?.valuations[0]?.negotiations[0]?.finalPrice
                                             )}
@@ -238,7 +260,7 @@ const ReceiptListWithStoreComponent = () => {
                                                 variant="h5"
                                                 sx={{ color: '#35c206' }}
                                             >
-                                                Thông tin hợp đồng
+                                                Thông tin biên nhận
                                             </Typography>
                                         </div>
                                         <div className="booking-owner-info-content">
@@ -246,6 +268,17 @@ const ReceiptListWithStoreComponent = () => {
                                                 <strong>Ngày tạo:</strong>{' '}
                                                 {new Date(
                                                     negoInfo?.valuations[0]?.negotiations[0]?.createdAt
+                                                ).toLocaleDateString('vi-VN')}
+                                            </Typography>
+                                            <Typography>
+                                                <strong>Ngày nhận xe:</strong>{' '}
+                                                {new Date(
+                                                    negoInfo?.valuations[0]?.negotiations[0]?.startTime
+                                                ).toLocaleDateString('vi-VN')}
+                                            </Typography> <Typography>
+                                                <strong>Ngày kết thúc:</strong>{' '}
+                                                {new Date(
+                                                    negoInfo?.valuations[0]?.negotiations[0]?.endTime
                                                 ).toLocaleDateString('vi-VN')}
                                             </Typography>
                                             <Typography>
@@ -322,9 +355,12 @@ const ReceiptListWithStoreComponent = () => {
 
                                                     <div className="booking-store-btn-reContract">
                                                         <Button
+                                                            sx={{
+                                                                marginRight: '4px'
+                                                            }}
                                                             variant="contained"
                                                             size="small"
-                                                            color="error"
+                                                            color="warning"
                                                             onClick={() =>
                                                                 handleErrorNegoInfor(
                                                                     negoInfo?.valuations[0]
@@ -334,6 +370,19 @@ const ReceiptListWithStoreComponent = () => {
                                                             }
                                                         >
                                                             Sai thông tin
+                                                        </Button>
+                                                        <Button
+                                                            variant="contained"
+                                                            size="small"
+                                                            color="error"
+                                                            onClick={() =>
+                                                                handleRejectNegoInfor(
+                                                                    negoInfo?.valuations[0]
+                                                                        ?.negotiations[0]?.negotiationId
+                                                                )
+                                                            }
+                                                        >
+                                                            Từ chối
                                                         </Button>
                                                     </div>
                                                 </>
@@ -352,12 +401,11 @@ const ReceiptListWithStoreComponent = () => {
                 open={isOpenErrorReceiptDialog}
                 onClose={handleCloseNegoInfoErrorDialog}>
                 <DialogTitle>
-                    Hợp đồng bị lỗi? Yêu cầu cập nhật lại.
+                    Thông tin bị sai? Yêu cầu cập nhật lại.
                 </DialogTitle>
                 <DialogContent>
                     <Typography>
-                        Bạn có chắc muốn yêu cầu chủ cửa hàng cập nhật lại hợp
-                        đồng?
+                        Bạn có chắc muốn yêu cầu chủ cửa hàng cập nhật lại thông tin?
                     </Typography>
                 </DialogContent>
                 <DialogActions>
@@ -400,6 +448,35 @@ const ReceiptListWithStoreComponent = () => {
                     <Button
                         onClick={() =>
                             handleConfirmAcceptNegoInfo(negotiationIdDialog)
+                        }
+                        color="success"
+                    >
+                        Xác nhận
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={isOpenRejectReceiptDialog}
+                onClose={handleCloseRejectNegoInfoDialog}
+            >
+                <DialogTitle fontWeight="700">
+                    Bạn đã đọc kỹ thông tin biên nhận hay chưa? Xác nhận từ chối làm việc
+                </DialogTitle>
+                <DialogContent>
+                    <Typography variant="h6">
+                        Bạn có chắc muốn từ chối thông tin?
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={handleCloseRejectNegoInfoDialog}
+                        color="error"
+                    >
+                        Hủy
+                    </Button>
+                    <Button
+                        onClick={() =>
+                            handleConfirmRejectNegotiationInfo(negotiationIdDialog)
                         }
                         color="success"
                     >
