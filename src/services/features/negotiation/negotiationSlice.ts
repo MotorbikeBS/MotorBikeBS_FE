@@ -6,6 +6,7 @@ import {
 import { toast } from 'react-toastify';
 import {
     accepNegotiationEndPoint,
+    cancleNegotiationEndPoint,
     createNegotitationEndPoint,
     getNegotiationEndPoint,
 } from '../../config/api-config';
@@ -84,6 +85,33 @@ export const acceptNegotiationInfo = createAsyncThunk<
         const token = localStorage.getItem('motorbike_bs');
         const response = await axios.put(
             `${accepNegotiationEndPoint}?negotiationId=${negotiationId}`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        toast.success(`${response.data.message}`);
+        return response.data;
+    } catch (error: any) {
+        if (error.response) {
+            toast.error(`${error.response.data?.errorMessages}`);
+            return thunkAPI.rejectWithValue({
+                error: error.response?.data?.errorMessages,
+            });
+        }
+    }
+});
+export const cancelNegotiationInfo = createAsyncThunk<
+    INegotiation,
+    { negotiationId: number }
+>('negotiation/cancelNegotiationInfor', async (data, thunkAPI) => {
+    const { negotiationId } = data;
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.put(
+            `${cancleNegotiationEndPoint}?negotiationId=${negotiationId}`,
             {},
             {
                 headers: {

@@ -20,7 +20,7 @@ import {
     PlaceOutlined,
     StoreOutlined,
 } from '@mui/icons-material';
-import { acceptNegotiationInfo, clearNegotiation, getNegotiationInfo } from '../../../services/features/negotiation/negotiationSlice';
+import { acceptNegotiationInfo, cancelNegotiationInfo, clearNegotiation, getNegotiationInfo } from '../../../services/features/negotiation/negotiationSlice';
 
 const ReceiptListWithStoreComponent = () => {
     const dispatch = useAppDispatch();
@@ -64,24 +64,24 @@ const ReceiptListWithStoreComponent = () => {
         }
     };
 
-    const handleErrorNegoInfor = (contractId: number) => {
-        setNegotiationIdDialog(contractId);
+    const handleErrorNegoInfor = (negotiationId: number) => {
+        setNegotiationIdDialog(negotiationId);
         setIsOpenErrorReceiptDialog(true);
-        console.log(contractId)
+        console.log(negotiationId)
     };
     const handleCloseNegoInfoErrorDialog = () => {
         setIsOpenErrorReceiptDialog(false);
     };
-    // const handleConfirmErrorContract = (contractId: number | null) => {
-    //     if (contractId !== null) {
-    //         dispatch(cancelContractByOwner({ contractId })).then(() => {
-    //             loadData();
-    //             setTimeout(() => {
-    //                 setIsOpenErrorContractDialog(false);
-    //             }, 1000);
-    //         });
-    //     }
-    // };
+    const handleConfirmErrorNegotiationInfo = (negotiationId: number | null) => {
+        if (negotiationId !== null) {
+            dispatch(cancelNegotiationInfo({ negotiationId })).then(() => {
+                loadData();
+                setTimeout(() => {
+                    setIsOpenErrorReceiptDialog(false);
+                }, 1000);
+            });
+        }
+    };
 
 
 
@@ -368,9 +368,9 @@ const ReceiptListWithStoreComponent = () => {
                         Hủy
                     </Button>
                     <Button
-                        // onClick={() =>
-                        //     handleConfirmError(contractIdDialog)
-                        // }
+                        onClick={() =>
+                            handleConfirmErrorNegotiationInfo(negotiationIdDialog)
+                        }
                         color="success"
                     >
                         Xác nhận

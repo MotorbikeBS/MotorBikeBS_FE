@@ -113,7 +113,7 @@ export const columns: GridColDef[] = [
 
                 <Typography sx={{ color: 'red', fontWeight: '700' }}>Đang Chờ</Typography>
             ) : params.row.valuationStatus === 'ACCEPT' ? (
-                <Typography sx={{ color: 'green', fontWeight: '700' }}>Chấp nhận</Typography>
+                <Typography sx={{ color: 'green', fontWeight: '700' }}>Đã Duyệt</Typography>
             ) : (
                 <></>
             )
