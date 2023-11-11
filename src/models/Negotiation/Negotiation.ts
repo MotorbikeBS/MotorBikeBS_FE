@@ -9,6 +9,14 @@ export interface IFieldNegoInfor {
     endTime: Date;
     deposit: number;
 }
+export interface IFieldNegoInforUpate {
+    negotiationId: number;
+    finalPrice: number;
+    content: string;
+    startTime: Date;
+    endTime: Date;
+    deposit: number;
+}
 export interface IMotorImgNeogtiation {
     imageId: number;
     imageLink: string;

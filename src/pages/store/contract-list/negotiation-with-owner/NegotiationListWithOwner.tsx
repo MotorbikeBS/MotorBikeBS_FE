@@ -23,24 +23,27 @@ const NegotiationListWithOwner = () => {
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
 
-    const loadData = React.useCallback(() => {
-        dispatch(clearNegotiation());
-        dispatch(getNegotiationInfo());
-    }, [dispatch]);
+    const loadData = () => {
+        dispatch(clearNegotiation())
+        dispatch(getNegotiationInfo())
+    }
 
     React.useEffect(() => {
-        loadData();
-    }, [loadData]);
+        loadData()
+    }, [dispatch]);
 
-    const handleOpenReUpdateNegotiationDialog = (contractId: number) => {
-        setNegotiationInfoIdDialog(contractId);
+    const handleOpenReUpdateNegotiationDialog = (negotiationId: number) => {
+        setNegotiationInfoIdDialog(negotiationId);
         setIsOpenNegoInfoDialog(true);
-        console.log(contractId);
+        loadData();
+
     };
     const handleCloseReUpdateNegoInfoDialog = () => {
         setIsOpenNegoInfoDialog(false);
         setIsOpenSubmitDialog(false);
         setIsOpenCancelDialog(false);
+        loadData();
+
     };
     const handleOpenSubmitDialog = () => {
         setIsOpenSubmitDialog(true);
@@ -98,6 +101,7 @@ const NegotiationListWithOwner = () => {
                                             align="center"
                                             color="red"
                                         >
+                                            Giá chốt: {' '}
                                             {formattedCurrency(
                                                 negoInfo?.valuations[0]?.negotiations[0]?.finalPrice
                                             )}
@@ -180,6 +184,17 @@ const NegotiationListWithOwner = () => {
                                                 <strong>Ngày tạo:</strong>{' '}
                                                 {new Date(
                                                     negoInfo?.valuations[0]?.negotiations[0]?.createdAt
+                                                ).toLocaleDateString('vi-VN')}
+                                            </Typography>
+                                            <Typography>
+                                                <strong>Ngày nhận xe:</strong>{' '}
+                                                {new Date(
+                                                    negoInfo?.valuations[0]?.negotiations[0]?.startTime
+                                                ).toLocaleDateString('vi-VN')}
+                                            </Typography> <Typography>
+                                                <strong>Ngày kết thúc:</strong>{' '}
+                                                {new Date(
+                                                    negoInfo?.valuations[0]?.negotiations[0]?.endTime
                                                 ).toLocaleDateString('vi-VN')}
                                             </Typography>
                                             <Typography>
@@ -270,7 +285,7 @@ const NegotiationListWithOwner = () => {
                 onOpenCancelDialog={handleOpenCancelDialog}
                 onCloseCancelDialog={handleCloseCancelDialog}
                 onClose={handleCloseReUpdateNegoInfoDialog}
-                NegotiationId={negotiationInfoIdDialog}
+                negotiationId={negotiationInfoIdDialog}
                 loadData={loadData}
             />
         </Container>
