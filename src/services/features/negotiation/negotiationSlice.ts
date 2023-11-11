@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
-    IFieldNegoInforUpate,
     IFieldNegoInfor,
     INegotiation,
 } from '../../../models/Negotiation/Negotiation';
