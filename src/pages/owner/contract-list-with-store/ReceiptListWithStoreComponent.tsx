@@ -13,12 +13,6 @@ import {
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../services/store/store';
 import useFormatCurrency from '../../../hooks/useFormatCurrency';
-import {
-    acceptContractByOwner,
-    cancelContractByOwner,
-    clearContract,
-    getAllContract,
-} from '../../../services/features/contract/contractSlice';
 import './style/_style.scss';
 import {
     EmailOutlined,
@@ -26,8 +20,7 @@ import {
     PlaceOutlined,
     StoreOutlined,
 } from '@mui/icons-material';
-import TradeHistoryImgeDialog from '../../../common-components/trade-history-img-dialog/TradeHistoryImgeDialog';
-import { clearNegotiation } from '../../../services/features/negotiation/negotiationSlice';
+import { acceptNegotiationInfo, clearNegotiation, getNegotiationInfo } from '../../../services/features/negotiation/negotiationSlice';
 
 const ReceiptListWithStoreComponent = () => {
     const dispatch = useAppDispatch();
@@ -35,37 +28,48 @@ const ReceiptListWithStoreComponent = () => {
     const { negotiations, loading } = useAppSelector((state) => state.negotiation);
     const formattedCurrency = useFormatCurrency();
 
-    // const [fullImageContract, setFullImageContract] = React.useState(false);
-    // const [imageArray, setImageArray] = React.useState<string[]>([]);
 
     const [isOpenErrorReceiptDialog, setIsOpenErrorReceiptDialog] =
         React.useState(false);
     const [isOpenAcceptReceiptDialog, setIsOpenAcceptReceiptDialog] =
         React.useState(false);
-    const [receiptIdDialog, setReceiptIdDialog] = React.useState<
+    const [negotiationIdDialog, setNegotiationIdDialog] = React.useState<
         number | null
     >(null);
 
     const loadData = React.useCallback(() => {
         dispatch(clearNegotiation());
-        dispatch(getAllContract());
+        dispatch(getNegotiationInfo());
     }, [dispatch])
 
     React.useEffect(() => {
         loadData();
     }, [loadData]);
 
-    // const handleOpenFullImage = (imageUrls: string[]) => {
-    //     setImageArray(imageUrls);
-    //     setFullImageContract(true);
-    // };
+    const handleAcceptNegoInfor = (negotiationId: number) => {
+        setNegotiationIdDialog(negotiationId);
+        setIsOpenAcceptReceiptDialog(true);
+    };
+    const handleCloseAccectContractDialog = () => {
+        setIsOpenAcceptReceiptDialog(false);
+    };
+    const handleConfirmAcceptNegoInfo = (negotiationId: number | null) => {
+        if (negotiationId !== null) {
+            dispatch(acceptNegotiationInfo({ negotiationId })).then(() => {
+                loadData();
+                setTimeout(() => {
+                    setIsOpenAcceptReceiptDialog(false);
+                }, 1000);
+            });
+        }
+    };
 
-    const handleErrorContract = (contractId: number) => {
-        setReceiptIdDialog(contractId);
+    const handleErrorNegoInfor = (contractId: number) => {
+        setNegotiationIdDialog(contractId);
         setIsOpenErrorReceiptDialog(true);
         console.log(contractId)
     };
-    const handleCloseContractErrorDialog = () => {
+    const handleCloseNegoInfoErrorDialog = () => {
         setIsOpenErrorReceiptDialog(false);
     };
     // const handleConfirmErrorContract = (contractId: number | null) => {
@@ -79,25 +83,7 @@ const ReceiptListWithStoreComponent = () => {
     //     }
     // };
 
-    const handleAcceptContract = (contractId: number) => {
-        setReceiptIdDialog(contractId);
-        setIsOpenAcceptReceiptDialog(true);
-    };
 
-    const handleCloseAccectContractDialog = () => {
-        setIsOpenAcceptReceiptDialog(false);
-    };
-
-    const handleConfirmAcceptContract = (contractId: number | null) => {
-        if (contractId !== null) {
-            dispatch(acceptContractByOwner({ contractId })).then(() => {
-                loadData();
-                setTimeout(() => {
-                    setIsOpenAcceptReceiptDialog(false);
-                }, 1000);
-            });
-        }
-    };
 
     return (
         <Container className="container-xl" maxWidth="lg">
@@ -115,11 +101,12 @@ const ReceiptListWithStoreComponent = () => {
                 </Box>
             ) : (
                 <>
-                    {/* {getContracts?.map((contractOwner) => (
+                    {negotiations?.map((negoInfo) => (
                         <Paper
                             key={
-                                contractOwner?.negotiations[0]
-                                    ?.contracts[0]?.contractId
+                                negoInfo?.valuations[0]
+                                    ?.negotiations[0]?.negotiationId
+
                             }
                             className="paper-booking-list"
                         >
@@ -128,8 +115,7 @@ const ReceiptListWithStoreComponent = () => {
                                     <div className="image-booking-product">
                                         <img
                                             src={
-                                                contractOwner?.motor
-                                                    ?.motorbikeImages[0]
+                                                negoInfo?.motor?.motorbikeImages[0]
                                                     ?.imageLink || ''
                                             }
                                             alt="Mô tả Xe máy cũ"
@@ -141,7 +127,7 @@ const ReceiptListWithStoreComponent = () => {
                                             fontWeight={700}
                                             align="center"
                                         >
-                                            {contractOwner?.motor?.motorName}
+                                            {negoInfo?.motor?.motorName}
                                         </Typography>
                                         <Typography
                                             variant="h6"
@@ -150,15 +136,14 @@ const ReceiptListWithStoreComponent = () => {
                                             color="red"
                                         >
                                             {formattedCurrency(
-                                                contractOwner?.negotiations[0]
-                                                    ?.contracts[0].price,
+                                                negoInfo?.valuations[0]?.negotiations[0]?.finalPrice
                                             )}
                                         </Typography>
                                     </div>
                                     <div className="product-content">
                                         <Typography>
                                             <strong>Số KM: </strong>
-                                            {contractOwner?.motor?.odo} KM
+                                            {negoInfo?.motor?.odo} KM
                                         </Typography>
                                         <div className="register-date">
                                             <Typography>
@@ -166,11 +151,11 @@ const ReceiptListWithStoreComponent = () => {
                                             </Typography>
                                             <Typography>
                                                 {new Date(
-                                                    contractOwner?.motor?.year,
+                                                    negoInfo?.motor?.year,
                                                 ).toLocaleDateString('vi-VN')}
                                             </Typography>
                                         </div>
-                                        <div className="tag-motorbike-status">
+                                        {/* <div className="tag-motorbike-status">
                                             <Typography variant="subtitle1">
                                                 {contractOwner?.motor
                                                     ?.motorStatus?.title ===
@@ -199,7 +184,7 @@ const ReceiptListWithStoreComponent = () => {
                                                             ? 'ĐÃ THỎA THUẬN'
                                                             : 'CHƯA XÁC ĐỊNH'}
                                             </Typography>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </Box>
                                 <Box className="right-box" flexGrow={9}>
@@ -216,7 +201,7 @@ const ReceiptListWithStoreComponent = () => {
                                             <Typography display="flex">
                                                 <StoreOutlined />{' '}
                                                 {
-                                                    contractOwner?.sender
+                                                    negoInfo?.sender
                                                         ?.storeDesciptions[0]
                                                         ?.storeName
                                                 }
@@ -224,7 +209,7 @@ const ReceiptListWithStoreComponent = () => {
                                             <Typography display="flex">
                                                 <PhoneIphoneOutlined />{' '}
                                                 {
-                                                    contractOwner?.sender
+                                                    negoInfo?.sender
                                                         ?.storeDesciptions[0]
                                                         .storePhone
                                                 }
@@ -232,7 +217,7 @@ const ReceiptListWithStoreComponent = () => {
                                             <Typography display="flex">
                                                 <EmailOutlined />{' '}
                                                 {
-                                                    contractOwner?.sender
+                                                    negoInfo?.sender
                                                         ?.storeDesciptions[0]
                                                         ?.storeEmail
                                                 }
@@ -240,7 +225,7 @@ const ReceiptListWithStoreComponent = () => {
                                             <Typography display="flex">
                                                 <PlaceOutlined />{' '}
                                                 {
-                                                    contractOwner?.sender
+                                                    negoInfo?.sender
                                                         ?.storeDesciptions[0]
                                                         .address
                                                 }
@@ -258,17 +243,21 @@ const ReceiptListWithStoreComponent = () => {
                                         </div>
                                         <div className="booking-owner-info-content">
                                             <Typography>
-                                                <strong>Ngày tạo</strong>
+                                                <strong>Ngày tạo:</strong>{' '}
                                                 {new Date(
-                                                    contractOwner?.negotiations[0]?.contracts[0]?.createdAt,
+                                                    negoInfo?.valuations[0]?.negotiations[0]?.createdAt
                                                 ).toLocaleDateString('vi-VN')}
                                             </Typography>
                                             <Typography>
-                                                <strong>Chú ý:</strong>
+                                                <strong>Đặt cọc:</strong>{' '}
                                                 {
-                                                    contractOwner
-                                                        ?.negotiations[0]
-                                                        ?.contracts[0]?.content
+                                                    formattedCurrency(negoInfo?.valuations[0]?.negotiations[0]?.deposit)
+                                                }
+                                            </Typography>
+                                            <Typography>
+                                                <strong>Nội dung:</strong>{' '}
+                                                {
+                                                    negoInfo?.valuations[0]?.negotiations[0]?.content
                                                 }
                                             </Typography>
                                             <div style={{ display: 'flex' }}>
@@ -283,20 +272,20 @@ const ReceiptListWithStoreComponent = () => {
                                                         color: 'red',
                                                     }}
                                                 >
-                                                    {contractOwner
-                                                        ?.negotiations[0]
-
-                                                        ?.contracts[0]
-                                                        ?.status === 'PENDING'
+                                                    {negoInfo?.valuations[0]
+                                                        ?.negotiations[0]?.status === 'PENDING'
                                                         ? 'CHỜ ĐỢI'
-                                                        : contractOwner
-                                                            ?.negotiations[0]
-
-                                                            ?.contracts[0]
-                                                            ?.status ===
-                                                            'ACCEPT'
-                                                            ? 'ĐÃ DUYỆT'
-                                                            : 'QUÁ HẠN/CHƯA XÁC ĐỊNH'}
+                                                        : negoInfo?.valuations[0]
+                                                            ?.negotiations[0]?.status === 'ACCEPT'
+                                                            ? 'CHẤP NHẬN'
+                                                            : negoInfo?.valuations[0]
+                                                                ?.negotiations[0]?.status === 'CANCEL'
+                                                                ? 'SAI'
+                                                                : negoInfo?.valuations[0]
+                                                                    ?.negotiations[0]?.status === 'REJECT'
+                                                                    ? 'TỪ CHỐI'
+                                                                    : 'CHƯA XÁC ĐỊNH'
+                                                    }
                                                 </Typography>
                                             </div>
                                         </div>
@@ -306,9 +295,8 @@ const ReceiptListWithStoreComponent = () => {
                                                 marginTop: '20px',
                                             }}
                                         >
-                                            {contractOwner?.negotiations[0]
-                                                ?.contracts[0]
-                                                .status === 'PENDING' ? (
+                                            {negoInfo?.valuations[0]
+                                                ?.negotiations[0]?.status === 'PENDING' ? (
                                                 <>
                                                     <div
                                                         className="booking-owner-btn-contract"
@@ -322,15 +310,13 @@ const ReceiptListWithStoreComponent = () => {
                                                             size="small"
                                                             color="success"
                                                             onClick={() =>
-                                                                handleAcceptContract(
-                                                                    contractOwner
-                                                                        ?.negotiations[0]
-                                                                        ?.contracts[0]
-                                                                        ?.contractId,
+                                                                handleAcceptNegoInfor(
+                                                                    negoInfo?.valuations[0]
+                                                                        ?.negotiations[0]?.negotiationId
                                                                 )
                                                             }
                                                         >
-                                                            Đạt thỏa thuận
+                                                            Xác nhận thông tin
                                                         </Button>
                                                     </div>
 
@@ -340,15 +326,14 @@ const ReceiptListWithStoreComponent = () => {
                                                             size="small"
                                                             color="error"
                                                             onClick={() =>
-                                                                handleErrorContract(
-                                                                    contractOwner
-                                                                        ?.negotiations[0]
-                                                                        ?.contracts[0]
-                                                                        ?.contractId
+                                                                handleErrorNegoInfor(
+                                                                    negoInfo?.valuations[0]
+                                                                        ?.negotiations[0]?.negotiationId
+
                                                                 )
                                                             }
                                                         >
-                                                            Sai hợp đồng
+                                                            Sai thông tin
                                                         </Button>
                                                     </div>
                                                 </>
@@ -357,49 +342,15 @@ const ReceiptListWithStoreComponent = () => {
                                             )}
                                         </div>
                                     </div>
-                                    <div className="image-contract">
-                                        <div className="image-owner-info-header">
-                                            <Typography
-                                                variant="h5"
-                                                sx={{ color: '#f0c413' }}
-                                            >
-                                                Hợp đồng
-                                            </Typography>
-                                        </div>
-                                        <img
-                                            src={
-                                                contractOwner?.negotiations[0]
-                                                    ?.contracts[0]
-                                                    ?.contractImages[0]
-                                                    .imageLink
-                                            }
-                                            alt="Hợp đồng"
-                                            onClick={() =>
-                                                handleOpenFullImage(
-                                                    contractOwner?.negotiations[0]?.contracts[0]?.contractImages.map(
-                                                        (image) =>
-                                                            image.imageLink,
-                                                    ) || [],
-                                                )
-                                            }
-                                        />
-                                    </div>
                                 </Box>
                             </Box>
                         </Paper>
-                    ))} */}
+                    ))}
                 </>
             )}
-
-            {/* <TradeHistoryImgeDialog
-                isOpen={fullImageContract}
-                onClose={() => setFullImageContract(false)}
-                imageUrls={imageArray}
-            /> */}
             <Dialog
                 open={isOpenErrorReceiptDialog}
-                onClose={handleCloseContractErrorDialog}
-            >
+                onClose={handleCloseNegoInfoErrorDialog}>
                 <DialogTitle>
                     Hợp đồng bị lỗi? Yêu cầu cập nhật lại.
                 </DialogTitle>
@@ -411,7 +362,7 @@ const ReceiptListWithStoreComponent = () => {
                 </DialogContent>
                 <DialogActions>
                     <Button
-                        onClick={handleCloseContractErrorDialog}
+                        onClick={handleCloseNegoInfoErrorDialog}
                         color="error"
                     >
                         Hủy
@@ -432,12 +383,11 @@ const ReceiptListWithStoreComponent = () => {
                 onClose={handleCloseAccectContractDialog}
             >
                 <DialogTitle fontWeight="700">
-                    Bạn đã đọc kỹ hợp đồng hay chưa? Xác nhận đã nhận được hợp
-                    đồng.
+                    Bạn đã đọc kỹ thông tin biên nhận hay chưa? Xác nhận thông tin biên nhận đã chính xác
                 </DialogTitle>
                 <DialogContent>
                     <Typography variant="h6">
-                        Bạn có chắc muốn xác nhận đã nhận được hợp đồng?
+                        Bạn có chắc muốn xác nhận thông tin?
                     </Typography>
                 </DialogContent>
                 <DialogActions>
@@ -448,9 +398,9 @@ const ReceiptListWithStoreComponent = () => {
                         Hủy
                     </Button>
                     <Button
-                        // onClick={() =>
-                        //     handleConfirmAcceptContract(contractIdDialog)
-                        // }
+                        onClick={() =>
+                            handleConfirmAcceptNegoInfo(negotiationIdDialog)
+                        }
                         color="success"
                     >
                         Xác nhận

@@ -6,51 +6,39 @@ import {
     useAppSelector,
 } from '../../../../services/store/store';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
-import {
-    clearContract,
-    getAllContract,
-} from '../../../../services/features/contract/contractSlice';
-import TradeHistoryImgeDialog from '../../../../common-components/trade-history-img-dialog/TradeHistoryImgeDialog';
-import ReUpdateContractDialogByStore from '../../negotiation-dialog-store/ReUpdateNegoInfoDialog';
+
 import ReUpdateNegoInfoDialogByStore from '../../negotiation-dialog-store/ReUpdateNegoInfoDialog';
+import { clearNegotiation, getNegotiationInfo } from '../../../../services/features/negotiation/negotiationSlice';
 
 const NegotiationListWithOwner = () => {
     const dispatch = useAppDispatch();
     const formattedCurrency = useFormatCurrency();
-    const { getContracts, loading } = useAppSelector((state) => state.contract);
+    const { negotiations, loading } = useAppSelector((state) => state.negotiation);
 
-    const [fullImageContract, setFullImageContract] = React.useState(false);
-    const [imageArray, setImageArray] = React.useState<string[]>([]);
-
-    const [contractIdDialog, setContractIdDialog] = React.useState<
+    const [negotiationInfoIdDialog, setNegotiationInfoIdDialog] = React.useState<
         number | null
     >(null);
-    const [isOpenContractDialog, setIsOpenContractDialog] =
+    const [isOpenNegoInfoDialog, setIsOpenNegoInfoDialog] =
         React.useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
 
     const loadData = React.useCallback(() => {
-        dispatch(clearContract());
-        dispatch(getAllContract());
+        dispatch(clearNegotiation());
+        dispatch(getNegotiationInfo());
     }, [dispatch]);
 
     React.useEffect(() => {
         loadData();
     }, [loadData]);
 
-    const handleOpenFullImage = (imageUrls: string[]) => {
-        setImageArray(imageUrls);
-        setFullImageContract(true);
-    };
-
-    const handleOpenReUpdateContractDialog = (contractId: number) => {
-        setContractIdDialog(contractId);
-        setIsOpenContractDialog(true);
+    const handleOpenReUpdateNegotiationDialog = (contractId: number) => {
+        setNegotiationInfoIdDialog(contractId);
+        setIsOpenNegoInfoDialog(true);
         console.log(contractId);
     };
-    const handleCloseReUpdateContractDialog = () => {
-        setIsOpenContractDialog(false);
+    const handleCloseReUpdateNegoInfoDialog = () => {
+        setIsOpenNegoInfoDialog(false);
         setIsOpenSubmitDialog(false);
         setIsOpenCancelDialog(false);
     };
@@ -71,7 +59,7 @@ const NegotiationListWithOwner = () => {
     return (
         <Container className="container-lg" maxWidth="lg">
             <Typography className="h4-heading" variant="h4" gutterBottom>
-                Danh sách hợp đồng với chủ xe
+                Danh sách biên nhận với chủ xe
             </Typography>
             {loading === true ? (
                 <Box textAlign="center">
@@ -79,11 +67,11 @@ const NegotiationListWithOwner = () => {
                 </Box>
             ) : (
                 <>
-                    {getContracts?.map((contract) => (
+                    {negotiations?.map((negoInfo) => (
                         <Paper
                             className="paper-contract-list"
                             key={
-                                contract?.negotiations[0]?.contracts[0]?.contractId
+                                negoInfo?.valuations[0]?.negotiations[0]?.negotiationId
                             }
                         >
                             <Box className="contract-row" display="flex">
@@ -91,9 +79,7 @@ const NegotiationListWithOwner = () => {
                                     <div className="image-contract-product">
                                         <img
                                             src={
-                                                contract?.motor
-                                                    ?.motorbikeImages[0]
-                                                    ?.imageLink || ''
+                                                negoInfo?.motor?.motorbikeImages[0]?.imageLink
                                             }
                                             alt="Ảnh mô tả xe"
                                         />
@@ -104,7 +90,7 @@ const NegotiationListWithOwner = () => {
                                             fontWeight={700}
                                             align="center"
                                         >
-                                            {contract?.motor?.motorName}
+                                            {negoInfo?.motor?.motorName}
                                         </Typography>
                                         <Typography
                                             variant="h6"
@@ -113,15 +99,14 @@ const NegotiationListWithOwner = () => {
                                             color="red"
                                         >
                                             {formattedCurrency(
-                                                contract?.negotiations[0]
-                                                    ?.contracts[0]?.price,
+                                                negoInfo?.valuations[0]?.negotiations[0]?.finalPrice
                                             )}
                                         </Typography>
                                     </div>
                                     <div className="product-content">
                                         <Typography>
                                             <strong>Số KM: </strong>
-                                            {contract?.motor?.odo} KM
+                                            {negoInfo?.motor?.odo} KM
                                         </Typography>
                                         <div className="register-date">
                                             <Typography>
@@ -129,7 +114,7 @@ const NegotiationListWithOwner = () => {
                                             </Typography>
                                             <Typography>
                                                 {new Date(
-                                                    contract?.motor?.year,
+                                                    negoInfo?.motor?.year,
                                                 ).toLocaleDateString('vi-VN')}
                                             </Typography>
                                         </div>
@@ -165,19 +150,19 @@ const NegotiationListWithOwner = () => {
                                         <div className="motorbike-owner-info-content">
                                             <Typography>
                                                 <strong>Tên chủ xe:</strong>
-                                                {contract?.receiver?.userName}
+                                                {negoInfo?.receiver?.userName}
                                             </Typography>
                                             <Typography>
                                                 <strong>Số điện thoại:</strong>
-                                                {contract?.receiver?.phone}
+                                                {negoInfo?.receiver?.phone}
                                             </Typography>
                                             <Typography>
                                                 <strong>Email:</strong>
-                                                {contract?.receiver?.email}
+                                                {negoInfo?.receiver?.email}
                                             </Typography>
                                             <Typography>
                                                 <strong>Địa chỉ:</strong>
-                                                {contract?.receiver?.address}
+                                                {negoInfo?.receiver?.address}
                                             </Typography>
                                         </div>
                                     </div>
@@ -187,21 +172,38 @@ const NegotiationListWithOwner = () => {
                                                 variant="h5"
                                                 sx={{ color: '#35c206' }}
                                             >
-                                                Thông tin hợp đồng
+                                                Thông tin biên nhận
                                             </Typography>
                                         </div>
                                         <div className="contract-owner-info-content">
                                             <Typography>
                                                 <strong>Ngày tạo:</strong>{' '}
                                                 {new Date(
-                                                    contract?.negotiations[0]?.contracts[0]?.createdAt,
+                                                    negoInfo?.valuations[0]?.negotiations[0]?.createdAt
                                                 ).toLocaleDateString('vi-VN')}
+                                            </Typography>
+                                            <Typography>
+                                                <strong>Đặt cọc:</strong>{' '}
+                                                {
+                                                    formattedCurrency(negoInfo?.valuations[0]?.negotiations[0]?.deposit)
+                                                }
                                             </Typography>
                                             <Typography>
                                                 <strong>Nội dung:</strong>{' '}
                                                 {
-                                                    contract?.negotiations[0]
-                                                        ?.contracts[0]?.content
+                                                    negoInfo?.valuations[0]?.negotiations[0]?.content
+                                                }
+                                            </Typography>
+                                            <Typography
+                                                sx={{
+                                                    fontWeight: '700'
+                                                }}
+                                            >
+                                                Trạng thái xe:{' '}
+                                                {
+                                                    negoInfo?.motor?.motorStatus.title === 'CONSIGNMENT' ? 'KÝ GỬI'
+                                                        : negoInfo?.motor?.motorStatus.title === 'LIVELIHOOD' ? 'KHÔNG KÝ GỬI'
+                                                            : 'TRONG KHO'
                                                 }
                                             </Typography>
                                             <div style={{ display: 'flex' }}>
@@ -216,81 +218,42 @@ const NegotiationListWithOwner = () => {
                                                         color: 'red',
                                                     }}
                                                 >
-                                                    {contract?.negotiations[0]
-                                                        ?.contracts[0]
-                                                        ?.status === 'PENDING'
+                                                    {negoInfo?.valuations[0]
+                                                        ?.negotiations[0]?.status === 'PENDING'
                                                         ? 'CHỜ ĐỢI'
-                                                        : contract
-                                                            ?.negotiations[0]
-                                                            ?.contracts[0]
-                                                            ?.status ===
-                                                            'ACCEPT'
+                                                        : negoInfo?.valuations[0]
+                                                            ?.negotiations[0]?.status === 'ACCEPT'
                                                             ? 'CHẤP NHẬN'
-                                                            : contract
-                                                                ?.negotiations[0]
-                                                                ?.contracts[0]
-                                                                ?.status ===
-                                                                'CANCEL'
+                                                            : negoInfo?.valuations[0]
+                                                                ?.negotiations[0]?.status === 'CANCEL'
                                                                 ? 'SAI'
-                                                                : contract
-                                                                    ?.negotiations[0]
-                                                                    ?.contracts[0]
-                                                                    ?.status ===
-                                                                    'REJECT' ? 'TỪ CHỐI'
-                                                                    : 'CHƯA XÁC ĐỊNH'}
+                                                                : negoInfo?.valuations[0]
+                                                                    ?.negotiations[0]?.status === 'REJECT'
+                                                                    ? 'TỪ CHỐI'
+                                                                    : 'CHƯA XÁC ĐỊNH'
+                                                    }
                                                 </Typography>
                                             </div>
                                         </div>
-                                        {contract?.negotiations[0]
-                                            ?.contracts[0]?.status ===
-                                            'CANCEL' ? (
+                                        {negoInfo?.valuations[0]
+                                            ?.negotiations[0]?.status === 'CANCEL' ? (
                                             <div className="contract-owner-btn-contract">
                                                 <Button
                                                     variant="contained"
                                                     size="small"
                                                     color="warning"
                                                     onClick={() =>
-                                                        handleOpenReUpdateContractDialog(
-                                                            contract
-                                                                ?.negotiations[0]
-                                                                ?.contracts[0]
-                                                                ?.contractId,
+                                                        handleOpenReUpdateNegotiationDialog(
+                                                            negoInfo?.valuations[0]?.negotiations[0]?.negotiationId
                                                         )
                                                     }
                                                 >
-                                                    Tải Lại hợp đồng
+                                                    Tải lại thông tin
                                                 </Button>
                                             </div>
                                         ) : (
                                             <></>
                                         )}
-                                    </div>
-                                    <div className="image-contract">
-                                        <div className="image-owner-info-header">
-                                            <Typography
-                                                variant="h5"
-                                                sx={{ color: '#f0c413' }}
-                                            >
-                                                Hợp đồng
-                                            </Typography>
-                                        </div>
-                                        <img
-                                            src={
-                                                contract?.negotiations[0]
-                                                    ?.contracts[0]
-                                                    ?.contractImages[0]
-                                                    .imageLink
-                                            }
-                                            alt="Hợp đồng"
-                                            onClick={() =>
-                                                handleOpenFullImage(
-                                                    contract?.negotiations[0]?.contracts[0]?.contractImages.map(
-                                                        (image: any) =>
-                                                            image.imageLink,
-                                                    ) || [],
-                                                )
-                                            }
-                                        />
                                     </div>
                                 </Box>
                             </Box>
@@ -298,21 +261,16 @@ const NegotiationListWithOwner = () => {
                     ))}
                 </>
             )}
-            <TradeHistoryImgeDialog
-                isOpen={fullImageContract}
-                onClose={() => setFullImageContract(false)}
-                imageUrls={imageArray}
-            />
             <ReUpdateNegoInfoDialogByStore
-                open={isOpenContractDialog}
+                open={isOpenNegoInfoDialog}
                 openSubmit={isOpenSubmitDialog}
                 openCancle={isOpenCancelDialog}
                 onOpenSubmitDialog={handleOpenSubmitDialog}
                 onCloseSubmitDialog={handleCloseSubmitDialog}
                 onOpenCancelDialog={handleOpenCancelDialog}
                 onCloseCancelDialog={handleCloseCancelDialog}
-                onClose={handleCloseReUpdateContractDialog}
-                contractId={contractIdDialog}
+                onClose={handleCloseReUpdateNegoInfoDialog}
+                NegotiationId={negotiationInfoIdDialog}
                 loadData={loadData}
             />
         </Container>

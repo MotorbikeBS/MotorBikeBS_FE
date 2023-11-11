@@ -36,6 +36,7 @@ const ListNegotiateMotorByOwner = () => {
     const rows = useMemo(() => {
         return pendingValuation.map((valua: IValuation) => ({
             id: valua.valuations[0]?.valuationId,
+            motorName: valua?.motor?.motorName,
             images: valua.motor?.motorbikeImages[0]?.imageLink,
             certificateNumber: valua.motor?.certificateNumber,
             year: format(new Date(valua.motor.year), 'dd/MM/yyyy'),

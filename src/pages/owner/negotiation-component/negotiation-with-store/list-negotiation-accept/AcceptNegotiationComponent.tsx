@@ -61,7 +61,7 @@ const AcceptNegotiationComponent = () => {
         <Container maxWidth="xl">
             <Paper style={{ marginBottom: '20px', padding: '20px' }}>
                 <Typography variant="h4" gutterBottom>
-                    Danh sách xe đang thương lượng
+                    Danh sách xe chấp nhận thương lượng
                 </Typography>
                 <Typography fontSize='12px' gutterBottom color='red'>
                     <strong>Lưu ý: </strong>Vui lòng nhấn đúp vào 1 hàng để xem thông tin cửa hàng đang thương lượng và cập nhật trạng thái

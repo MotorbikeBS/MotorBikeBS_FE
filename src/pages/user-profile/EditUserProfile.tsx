@@ -187,7 +187,7 @@ const EditUserProfile = () => {
 
                                             <TextField
                                                 label="Tên cửa hàng"
-                                                value={user?.userName}
+                                                value={user?.storeDesciptions[0]?.storeName}
                                                 type="text"
                                                 variant="outlined"
                                                 disabled

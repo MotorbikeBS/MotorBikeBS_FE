@@ -68,7 +68,7 @@ export const columns: GridColDef[] = [
         renderCell: (params) =>
             params.row.storePrice > 0 ?
                 (<Typography
-                    color='#fab71b'
+                    color='red'
                     fontWeight='700'
                 >
                     {currencyFormatter.format(params.row.storePrice)}
