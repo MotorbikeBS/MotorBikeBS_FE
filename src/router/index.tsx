@@ -34,12 +34,13 @@ import MotorbikeSold from '../pages/store/motorbike-sold/MotorbikeSold';
 import OwnerDashBoardComponent from '../pages/owner/dashboard/OwnerDashBoardComponent';
 import HistoryTransaction from '../pages/owner/history-transaction/HistoryTransaction';
 import NegotiationListOwner from '../pages/owner/negotiation-component/NegotiationListOwner';
-import StorePaymentComponent from '../pages/store/payment/StorePaymentComponent';
-import PaymentSucessfullyComponent from '../pages/store/payment/payment-successfully/PaymentSucessfullyComponent';
-import PaymentErrorComponent from '../pages/store/payment/payment-error/PaymentErrorComponent';
+import StorePaymentComponent from '../pages/store/payment/store-payment/StorePaymentComponent';
+import PaymentSucessfullyComponent from '../pages/store/payment/store-payment/payment-successfully/PaymentSucessfullyComponent';
+import PaymentErrorComponent from '../pages/store/payment/store-payment/payment-error/PaymentErrorComponent';
 import NegotiationHistoryList from '../pages/store/contract-list/NegotiationHistoryList';
 import ReceiptHistoryWithStore from '../pages/owner/Receipt-list-with-store/ReceiptHistoryWithStore';
 import HistoryTransactionCustomer from '../pages/customer/history-transaction/HistoryTransactionCustomer';
+import PaymentHistoryComponent from '../pages/store/payment/payment-history/PaymentHistoryComponent';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -133,6 +134,7 @@ const AppRoutes = () => {
                         element={<MotorbikeSold />}
                     />
                     <Route path='/user/payment-point' element={<StorePaymentComponent />} />
+                    <Route path='/user/payment-history' element={<PaymentHistoryComponent />} />
                     <Route path='/payment-point/successfully' element={<PaymentSucessfullyComponent />} />
                     <Route path='/payment-point/error-payment' element={<PaymentErrorComponent />} />
 

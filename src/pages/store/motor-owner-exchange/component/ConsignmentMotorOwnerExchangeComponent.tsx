@@ -19,7 +19,6 @@ import {
     clearMotor,
     getAllOnStoreExchange,
 } from '../../../../services/features/motorbike/motorbikeSlice';
-import NegotiationDialog from '../../valuation-dialog-store/ValuationDialog';
 import ValuationDialog from '../../valuation-dialog-store/ValuationDialog';
 
 const ConsignmentMotorOwnerExchangeComponent = () => {

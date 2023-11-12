@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import React from 'react'
-import StoreMenuComponent from '../store-menu-component/StoreMenuComponent'
-import FooterComponent from '../../../common-components/footer-component/FooterComponent'
+import StoreMenuComponent from '../../store-menu-component/StoreMenuComponent'
+import FooterComponent from '../../../../common-components/footer-component/FooterComponent'
 import PaymentPointComponent from './payment-point/PaymentPoint'
 
 const StorePaymentComponent = () => {
