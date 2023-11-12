@@ -17,7 +17,6 @@ import SignUpStoreOwner from '../pages/customer/signup-store-owner/SignUpStoreOw
 import SignUpMotorbikeOwner from '../pages/customer/signup-motorbike-owner/SignUpMotorbikeOwner';
 import FauvoriteList from '../pages/customer/favourite-list/FauvoriteList';
 import VerifyAccount from '../pages/register/verify-account/VerifyAccount';
-import BuyHistory from '../pages/customer/buy-history/date-booking/BuyHistory';
 import ResetPassword from '../pages/forgot-password/reset-password/ResetPassword';
 import ChangePassword from '../pages/user-profile/ChangePassword';
 import { useAppSelector } from '../services/store/store';
@@ -40,6 +39,7 @@ import PaymentSucessfullyComponent from '../pages/store/payment/payment-successf
 import PaymentErrorComponent from '../pages/store/payment/payment-error/PaymentErrorComponent';
 import NegotiationHistoryList from '../pages/store/contract-list/NegotiationHistoryList';
 import ReceiptHistoryWithStore from '../pages/owner/Receipt-list-with-store/ReceiptHistoryWithStore';
+import HistoryTransactionCustomer from '../pages/customer/history-transaction/HistoryTransactionCustomer';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -195,7 +195,7 @@ const AppRoutes = () => {
                     />
                     <Route path="/favourite-list" element={<FauvoriteList />} />
                     <Route path="/customer/my-booking" element={<CustomerBookingComponentWithStore />} />
-                    <Route path="/buy-history" element={<BuyHistory />} />
+                    <Route path="/buy-history" element={<HistoryTransactionCustomer />} />
 
                     <Route path="*" element={<PageNotFound />} />
                 </>
