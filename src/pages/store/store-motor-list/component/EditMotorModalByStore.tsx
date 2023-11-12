@@ -139,6 +139,7 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
             form.setValue('motorName', motorbike?.motorName);
             form.setValue('modelId', motorbike?.model?.modelId);
             form.setValue('odo', motorbike?.odo);
+            form.setValue('year', motorbike?.year);
             form.setValue('price', motorbike?.price);
             form.setValue('description', motorbike?.description || '');
             form.setValue(
@@ -417,37 +418,12 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                 </TableRow>
                                                 <TableRow>
                                                     <TableCell className="header-table">
-                                                        Ngày đăng ký cũ
-                                                    </TableCell>
-                                                    <TableCell className="header-table-content">
-                                                        <TextField
-                                                            label="Ngày đăng ký cũ"
-                                                            // value={motorbike ? formatDate(motorbike?.year.toLocaleString()) : new Date()}
-                                                            value={
-                                                                motorbike &&
-                                                                motorbike?.year
-                                                                    ? formatDate(
-                                                                          motorbike?.year.toLocaleString(),
-                                                                      )
-                                                                    : new Date().toLocaleString(
-                                                                          'vi-VN',
-                                                                      )
-                                                            }
-                                                            type="text"
-                                                            variant="outlined"
-                                                            fullWidth
-                                                            disabled
-                                                        />
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell className="header-table">
                                                         Ngày đăng ký
                                                     </TableCell>
                                                     <TableCell className="header-table-content">
                                                         <TextField
                                                             label="Ngày đăng ký"
-                                                            type="date"
+                                                            type="datetime-local"
                                                             {...register(
                                                                 'year',
                                                                 {
