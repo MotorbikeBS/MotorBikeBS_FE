@@ -23,14 +23,14 @@ const NegotiationListWithOwner = () => {
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
 
-    const loadData = () => {
+    const loadData = React.useCallback(() => {
         dispatch(clearNegotiation())
         dispatch(getNegotiationInfo())
-    }
+    }, [dispatch])
 
     React.useEffect(() => {
         loadData()
-    }, [dispatch]);
+    }, [loadData]);
 
     const handleOpenReUpdateNegotiationDialog = (negotiationId: number) => {
         setNegotiationInfoIdDialog(negotiationId);
@@ -70,7 +70,7 @@ const NegotiationListWithOwner = () => {
                 </Box>
             ) : (
                 <>
-                    {negotiations?.map((negoInfo) => (
+                    {negotiations && negotiations?.map((negoInfo) => (
                         <Paper
                             className="paper-contract-list"
                             key={

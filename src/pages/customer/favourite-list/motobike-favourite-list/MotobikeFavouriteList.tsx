@@ -151,12 +151,12 @@ const MotobikeFavouriteList = () => {
                                         {wishlist.motor?.motorStatus?.motorStatusId === 1
                                             ? 'CÓ SẴN'
                                             : wishlist.motor?.motorStatus
-                                                  ?.motorStatusId === 4
-                                            ? 'KÍ GỬI'
-                                            : wishlist.motor?.motorStatus
-                                                  ?.motorStatusId === 5
-                                            ? 'KHÔNG KÍ GỬI'
-                                            : 'CHƯA XÁC ĐỊNH'}
+                                                ?.motorStatusId === 4
+                                                ? 'KÍ GỬI'
+                                                : wishlist.motor?.motorStatus
+                                                    ?.motorStatusId === 5
+                                                    ? 'KHÔNG KÍ GỬI'
+                                                    : 'CHƯA XÁC ĐỊNH'}
                                     </Typography>
                                 </div>
                                 <div className="product-information">
@@ -203,7 +203,7 @@ const MotobikeFavouriteList = () => {
                                 </div>
 
                                 {wishlist.motor.motorStatus?.motorStatusId ===
-                                5 ? (
+                                    5 ? (
                                     <div className="btn-style">
                                         <Button variant="outlined">
                                             Đặt lịch xem xe

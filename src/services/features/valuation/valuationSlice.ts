@@ -39,7 +39,7 @@ export const startValuation = createAsyncThunk<IValuation, IFieldRequest>(
                 },
             );
             toast.success(`${response.data.message}`);
-            return response.data;
+            return response.data.result;
         } catch (err: any) {
             if (err.response) {
                 toast.error(`${err.response.data?.errorMessages}`);

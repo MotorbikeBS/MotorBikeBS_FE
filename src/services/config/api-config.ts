@@ -73,13 +73,6 @@ export const cancleNegotiationEndPoint = `${BASE_URL}/api/Negotiation/CancelNego
 export const reupNegotiationEndPoint = `${BASE_URL}/api/Negotiation/ReUpNegotiation`;
 export const rejectNegotiationEndPoint = `${BASE_URL}/api/Negotiation/RejectNegotiation`;
 
-// Contract between store owner and vehicle owner
-export const createContractByStoreEndPoint = `${BASE_URL}/api/contract/createcontract`;
-export const getAllContractEndPoint = `${BASE_URL}/api/Contract/GetContract`;
-export const cancelContractEndPoint = `${BASE_URL}/api/contract/cancelcontract`;
-export const acceptContractEndPoint = `${BASE_URL}/api/contract/acceptcontract`;
-export const reUpdateContractEndPoint = `${BASE_URL}/api/contract/reupcontract`;
-
 //Buyer Booking with Store
 export const buyerBookingNonConsignmentEndPoint = `${BASE_URL}/api/buyerbooking/bookingnonconsignment`;
 export const getBookingBuyerEndPoint = `${BASE_URL}/api/buyerbooking/getbookingrequest`;
@@ -97,3 +90,4 @@ export const createBillNonConsignmentEndPoint = `${BASE_URL}/api/bill/CreateBill
 
 //Payment Endpoint
 export const paymentRequestEndPoint = `${BASE_URL}/api/Payment/CreatePaymentUrl`;
+export const paymentHistoryEndPoint = `${BASE_URL}/api/Payment/GetPaymentHistory`;

@@ -3,3 +3,21 @@ export interface IPaymentRequest {
     // result: string | any | unknown;
     // response: string | null | any;
 }
+export interface IFieldPayment {
+    paymentId: number;
+    requestId: number;
+    content: string;
+    dateCreated: Date;
+    paymentTime: Date;
+    vnpayOrderId: string;
+    paymentType: string;
+}
+export interface IPaymentHistory {
+    requestId: number;
+    motorId: number;
+    senderId: number;
+    time: Date;
+    requestTypeId: number;
+    status: string;
+    payments: IFieldPayment[];
+}

@@ -7,9 +7,9 @@ import {
 } from '@mui/material';
 import './css/_payment-point.scss';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
+import { useAppDispatch, useAppSelector } from '../../../../../services/store/store';
 import { useNavigate } from 'react-router-dom';
-import { paymentPointRequest } from '../../../../services/features/payment/paymentSlice';
+import { paymentPointRequest } from '../../../../../services/features/payment/paymentSlice';
 
 interface ICreateRequestPayment {
     amount: number | null

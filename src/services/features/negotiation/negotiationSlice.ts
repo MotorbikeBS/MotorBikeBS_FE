@@ -23,9 +23,9 @@ interface INegotiationState {
 
 const initialState: INegotiationState = {
     loading: false,
-    error: false,
     negotiation: null,
     negotiations: null,
+    error: null,
 };
 
 export const createNegotiationInfor = createAsyncThunk<
@@ -199,7 +199,7 @@ export const negotiationSlice = createSlice({
         },
         clearNegotiation: (state) => {
             state.negotiation = null;
-            state.negotiations = null;
+            state.negotiations = [];
         },
     },
     extraReducers: (builder) => {
