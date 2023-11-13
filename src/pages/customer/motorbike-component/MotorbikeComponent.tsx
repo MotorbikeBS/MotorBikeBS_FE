@@ -173,17 +173,17 @@ const MotorbikeComponent = () => {
                                                     <Typography variant="subtitle1">
                                                         {motor?.motorStatus
                                                             ?.motorStatusId ===
-                                                        1
+                                                            1
                                                             ? 'CÓ SẴN'
                                                             : motor?.motorStatus
-                                                                  ?.motorStatusId ===
-                                                              4
-                                                            ? 'KÍ GỬI'
-                                                            : motor?.motorStatus
-                                                                  ?.motorStatusId ===
-                                                              5
-                                                            ? 'KHÔNG KÍ GỬI'
-                                                            : 'CHƯA XÁC ĐỊNH'}
+                                                                ?.motorStatusId ===
+                                                                4
+                                                                ? 'KÍ GỬI'
+                                                                : motor?.motorStatus
+                                                                    ?.motorStatusId ===
+                                                                    5
+                                                                    ? 'KHÔNG KÍ GỬI'
+                                                                    : 'CHƯA XÁC ĐỊNH'}
                                                     </Typography>
                                                 </div>
                                                 <div className="product-information">
@@ -252,7 +252,7 @@ const MotorbikeComponent = () => {
                                                     <>
                                                         {motor?.motorStatus
                                                             ?.motorStatusId ===
-                                                        5 ? (
+                                                            5 ? (
                                                             <div className="btn-style">
                                                                 <Button
                                                                     variant="outlined"
@@ -297,7 +297,7 @@ const MotorbikeComponent = () => {
                                     ))}
                             </Grid>
                             {currentMotorbikes &&
-                            currentMotorbikes.length < itemsPerPage ? null : (
+                                currentMotorbikes.length < itemsPerPage ? null : (
                                 <Box
                                     sx={{
                                         textAlign: 'center',

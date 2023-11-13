@@ -35,6 +35,7 @@ import {
 } from '../../../../services/features/bill/billSlice';
 import '../style/style.scss';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
+import PostingBootDialog from '../../posting-boot-dialog/PostingBootDialog';
 
 interface ListMotorProps {
     loadData: () => void;
@@ -49,15 +50,46 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
 
     const formatPrice = useFormatCurrency();
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
-
     const [isConfirmCancelPost, setIsConfirmCancelPost] = useState(false);
     const [isConfirmSale, setIsConfirmSale] = useState(false);
     const [isConfirmSaleConsignment, setIsConfirmSaleConsignment] =
         useState(false);
     const [isConfirmSaleNonConsignment, setIsConfirmSaleNonConsignment] =
         useState(false);
-
     const [selectedRow, setSelectedRow] = useState<IMotorbike | null>(null);
+
+    //Posting boot
+    const [isOpenPostingBootDialog, setIOpenPostingBootDialog] = React.useState(false)
+    const [isOpenSubmitPostingBootDialog, setIsOpenSubmitPostingBootDialog] = React.useState(false)
+    const [isOpenCancelPostingBootDialog, setIsOpenCancelPostingBootDialog] = React.useState(false);
+    const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<
+        number | null
+    >(null);
+
+    const handleOpenPostingBootDialog = (motorId: number) => {
+        setMotorbikeIdForDialog(motorId);
+        setIOpenPostingBootDialog(true);
+        console.log(motorId)
+    };
+    const handleClosePostingBootDialog = () => {
+        setIOpenPostingBootDialog(false)
+        setIsOpenSubmitPostingBootDialog(false)
+        setIsOpenCancelPostingBootDialog(false)
+    }
+
+    const handleOpenSubmitPostingBootDialog = () => {
+        setIsOpenSubmitPostingBootDialog(true)
+    }
+    const handleCloseSubmitPostingBootDialog = () => {
+        setIsOpenSubmitPostingBootDialog(false)
+    }
+
+    const handleOpenCancelPostingBoot = () => {
+        setIsOpenCancelPostingBootDialog(true)
+    }
+    const handleCloseCancelPostingBoot = () => {
+        setIsOpenCancelPostingBootDialog(false)
+    }
 
     const closeDetailModal = () => {
         setIsDetailModalOpen(false);
@@ -317,7 +349,10 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                 </DialogContent>
                 <DialogActions>
                     {selectedRow && selectedRow?.motorStatuss === 'POSTING' && (
-                        <Button onClick={openSaleModal} color="secondary">
+                        <Button onClick={openSaleModal}
+                            color="secondary"
+                            variant='contained'
+                        >
                             Đã bán Tại cửa hàng
                         </Button>
                     )}
@@ -326,22 +361,47 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                             <Button
                                 onClick={openSaleConsignmentModal}
                                 color="secondary"
+                                variant='contained'
                             >
                                 Đã bán kí gởi
                             </Button>
                         )}
                     {selectedRow &&
                         selectedRow?.motorStatuss === 'LIVELIHOOD' && (
-                            <Button onClick={openSaleNonConsignmentModal} color="secondary">
+                            <Button onClick={openSaleNonConsignmentModal} color="secondary" variant='contained'>
                                 Đã bán không kí gởi
                             </Button>
                         )}
-                    <Button onClick={openCancelPostModal} color="warning">
+
+                    <Button
+                        color="warning"
+                        variant='contained'
+                        onClick={() => {
+                            const motorId = selectedRow?.id;
+                            if (typeof motorId === 'number') {
+                                handleOpenPostingBootDialog(motorId);
+                            }
+                        }}
+                    >
+                        Đẩy bài
+                    </Button>
+
+                    <Button onClick={openCancelPostModal} color="error" variant='contained'>
                         Hủy đăng bài
                     </Button>
                 </DialogActions>
             </Dialog>
-
+            <PostingBootDialog
+                open={isOpenPostingBootDialog}
+                openSubmit={isOpenSubmitPostingBootDialog}
+                openCancel={isOpenCancelPostingBootDialog}
+                onOpenSubmitDialog={handleOpenSubmitPostingBootDialog}
+                onCloseSubmitDialog={handleCloseSubmitPostingBootDialog}
+                onOpenCancelDialog={handleOpenCancelPostingBoot}
+                onCloseCancelDialog={handleCloseCancelPostingBoot}
+                onClose={handleClosePostingBootDialog}
+                motorId={motorbikeIdForDialog}
+            />
             <Dialog open={isConfirmSale}>
                 <DialogTitle>
                     <Typography variant="h4" textAlign="center">
