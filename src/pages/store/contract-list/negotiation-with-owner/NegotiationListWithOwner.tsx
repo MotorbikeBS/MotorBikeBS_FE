@@ -70,6 +70,16 @@ const NegotiationListWithOwner = () => {
                 </Box>
             ) : (
                 <>
+                {negotiations && negotiations.length === 0 ? (
+                    <>
+                        <Container className='receipt-container-notFound'>
+                            <Paper elevation={3} sx={{ padding: 2 }}>
+                                Chưa có biên nhận.
+                            </Paper>
+                        </Container>
+                    </>
+                ) : (
+                <>
                     {negotiations && negotiations?.map((negoInfo) => (
                         <Paper
                             className="paper-contract-list"
@@ -275,6 +285,8 @@ const NegotiationListWithOwner = () => {
                         </Paper>
                     ))}
                 </>
+            )}
+       </>
             )}
             <ReUpdateNegoInfoDialogByStore
                 open={isOpenNegoInfoDialog}
