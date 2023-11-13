@@ -33,10 +33,10 @@ const PaymentPointComponent = () => {
     const onSubmit = async (data: ICreateRequestPayment) => {
         try {
             await dispatch(paymentPointRequest(data))
-            if (url) {
-                window.open(`${url}`)
-                // navigate(`${url}`)
-            }
+            // if (url) {
+            //     window.open(`${url}`)
+            //     // navigate(`${url}`)
+            // }
         } catch (error) {
 
         }
@@ -74,6 +74,11 @@ const PaymentPointComponent = () => {
                                 helperText={errors.amount?.message}
                             />
                             <Button
+                                onClick={() => {
+                                    if (url) {
+                                        window.open(`${url}`);
+                                    }
+                                }}
                                 type='submit'
                                 variant="contained"
                                 color="primary"
