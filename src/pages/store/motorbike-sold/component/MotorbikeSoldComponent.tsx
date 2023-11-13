@@ -39,8 +39,6 @@ const MotorbikeSoldComponent = () => {
     const { user } = useAppSelector((state) => state.users);
     const { motorbike } = useAppSelector((state) => state.motorbikes);
 
-    const getUserId = account?.userId;
-
     const formatPrice = useFormatCurrency();
 
     const [selectedRow, setSelectedRow] = useState<IMotorbike | null>(null);
@@ -73,11 +71,14 @@ const MotorbikeSoldComponent = () => {
             );
         }
     }, [dispatch, user]);
+    console.log(billStore);
 
     const billStores =
         billStore &&
         billStore?.filter(
-            (bill) => bill?.userId === 1 || bill?.userId === getUserId,
+            (bill) =>
+                bill?.request?.receiver?.roleId === 1 ||
+                bill?.request?.receiver?.roleId === 4,
         );
 
     const rows = useMemo(() => {
@@ -106,10 +107,10 @@ const MotorbikeSoldComponent = () => {
                     columns={columns}
                     initialState={{
                         pagination: {
-                            paginationModel: { page: 0, pageSize: 5 },
+                            paginationModel: { page: 0, pageSize: 10 },
                         },
                     }}
-                    pageSizeOptions={[5, 10, 100]}
+                    pageSizeOptions={[10, 20, 100]}
                     disableRowSelectionOnClick
                     onRowDoubleClick={handleRowDoubleClick}
                     autoHeight

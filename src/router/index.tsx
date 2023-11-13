@@ -37,10 +37,11 @@ import NegotiationListOwner from '../pages/owner/negotiation-component/Negotiati
 import StorePaymentComponent from '../pages/store/payment/store-payment/StorePaymentComponent';
 import PaymentSucessfullyComponent from '../pages/store/payment/store-payment/payment-successfully/PaymentSucessfullyComponent';
 import PaymentErrorComponent from '../pages/store/payment/store-payment/payment-error/PaymentErrorComponent';
-import ReceiptHistoryWithStore from '../pages/owner/receipt-list-with-store/ReceiptHistoryWithStore';
+
 import HistoryTransactionCustomer from '../pages/customer/history-transaction/HistoryTransactionCustomer';
 import PaymentHistoryComponent from '../pages/store/payment/payment-history/PaymentHistoryComponent';
 import NegotiationHistoryList from '../pages/store/receipt-list-with-owner/NegotiationHistoryList';
+import ReceiptHistoryWithStore from '../pages/owner/Receipt-list-with-store/ReceiptHistoryWithStore';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
