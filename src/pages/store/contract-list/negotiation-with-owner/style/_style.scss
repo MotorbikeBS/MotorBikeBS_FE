@@ -6,6 +6,12 @@
         font-size: 30px;
         font-weight: 700;
     }
+    .receipt-container-notFound {
+        :nth-child(1) {
+            align-items: center;
+            text-align: center !important;
+        }
+    }
     .paper-contract-list {
         border-radius: 10px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
