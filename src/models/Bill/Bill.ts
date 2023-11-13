@@ -6,4 +6,9 @@ export interface IBill {
     price: number;
     status: string;
     createAt: Date;
+    request: {
+        receiver : {
+            roleId: number
+        }
+    }
 }

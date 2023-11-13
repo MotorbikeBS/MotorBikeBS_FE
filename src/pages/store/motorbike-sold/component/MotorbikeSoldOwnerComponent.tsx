@@ -39,8 +39,6 @@ const MotorbikeSoldOwnerComponent = () => {
     const { user } = useAppSelector((state) => state.users);
     const { motorbike } = useAppSelector((state) => state.motorbikes);
 
-    const getUserId = account?.userId
-
     const formatPrice = useFormatCurrency();
 
     const [selectedRow, setSelectedRow] = useState<IMotorbike | null>(null);
@@ -74,9 +72,9 @@ const MotorbikeSoldOwnerComponent = () => {
         }
     }, [dispatch, user]);
 
-    const billStoreOwner = billStore && billStore?.filter((bill) =>
-        bill?.userId !== 1 && bill?.userId !== getUserId
-    )
+    const billStoreOwner =
+        billStore &&
+        billStore?.filter((bill) => bill?.request?.receiver?.roleId === 3);
 
     const rows = useMemo(() => {
         return (billStoreOwner ?? []).map((bill: IBill) => ({
@@ -104,10 +102,10 @@ const MotorbikeSoldOwnerComponent = () => {
                     columns={columns}
                     initialState={{
                         pagination: {
-                            paginationModel: { page: 0, pageSize: 5 },
+                            paginationModel: { page: 0, pageSize: 10 },
                         },
                     }}
-                    pageSizeOptions={[5, 10, 100]}
+                    pageSizeOptions={[10, 20, 100]}
                     disableRowSelectionOnClick
                     onRowDoubleClick={handleRowDoubleClick}
                     autoHeight
