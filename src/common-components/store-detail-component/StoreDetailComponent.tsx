@@ -107,7 +107,7 @@ const StoreDetailComponent = () => {
                                 }} />
                             </Button>
                             <Button>
-                                <Rating name="half-rating" defaultValue={4} precision={0.5} />
+                                <Rating name="read-only" defaultValue={4} precision={0.5} readOnly />
                             </Button>
                         </div>
 
