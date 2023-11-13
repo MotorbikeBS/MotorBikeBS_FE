@@ -33,8 +33,12 @@ $primary-border: #04618f;
         .btn-style {
             flex-direction: row;
             align-items: center;
-            justify-content: space-between;
-            margin-top: 10px;
+            justify-content: space-around;
+            margin-top: 30px;
+            :nth-child(2) {
+                color: red;
+                margin-left: 20px;
+            }
         }
     }
 }

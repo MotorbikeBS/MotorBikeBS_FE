@@ -7,6 +7,7 @@ import "./style/style.scss";
 import { useAppDispatch, useAppSelector } from "../../../services/store/store";
 import { clearStore, getAllStore } from "../../../services/features/store/storeSlice";
 import { IStore } from "../../../models/Store/Store";
+import { Report } from "@mui/icons-material";
 
 const StoreListComponent = () => {
   const navigate = useNavigate();
@@ -82,6 +83,11 @@ const StoreListComponent = () => {
                   }
                 >
                   Xem cửa hàng
+                </Button>
+                <Button
+                  variant="text"
+                >
+                  <Report />
                 </Button>
               </div>
             </Item>

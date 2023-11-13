@@ -22,11 +22,11 @@
             font-size: 18px;
         }
     }
-    .sell-btn-container {
+    .btn-action-container {
         display: flex;
-        justify-content: flex-end;
+        flex-direction: row-reverse;
         :nth-child(1) {
-            font-size: 16px;
+            font-size: 35px;
         }
     }
 }

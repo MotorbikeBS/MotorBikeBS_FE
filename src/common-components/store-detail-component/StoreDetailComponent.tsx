@@ -1,17 +1,19 @@
 import React from 'react';
-import { Avatar, Box, Container, Grid, Paper, Typography } from '@mui/material';
+import { Avatar, Box, Button, Container, Grid, Paper, Rating, Typography } from '@mui/material';
 import './style/style.scss';
 import { useAppSelector } from '../../services/store/store';
 import { useParams } from 'react-router-dom';
 import { IStore } from '../../models/Store/Store';
 import MotorbikeByStoreIdComponent from './MotorBikeByStoreIDComponent';
+import { Report } from '@mui/icons-material';
+import { format } from 'date-fns';
 
 type storeParams = {
     storeId: number
 }
 
 const StoreDetailComponent = () => {
-    const { storeId } = useParams<storeParams | any >();
+    const { storeId } = useParams<storeParams | any>();
     // const { account } = useAppSelector(state => state.account);
     const { stores } = useAppSelector((state) => state.store)
 
@@ -69,7 +71,7 @@ const StoreDetailComponent = () => {
                                     {store?.storeName}
                                 </Typography>
                                 <Typography>
-                                    Ngày tham gia: <strong>{store?.storeCreatedAt.toLocaleString()}</strong>
+                                    Ngày tham gia: <strong>{store?.storeCreatedAt && format(new Date(store.storeCreatedAt), 'dd-MM-yyyy HH:mm')}</strong>
                                 </Typography>
                             </div>
                         </div>
@@ -93,6 +95,22 @@ const StoreDetailComponent = () => {
                                 {store?.address}
                             </Typography>
                         </div>
+                    </Grid>
+                    <Grid xs={5} md={4}>
+                        <div className="btn-action-container">
+                            <Button
+                                variant='text'
+                                color='error'
+                            >
+                                <Report sx={{
+                                    fontSize: '35px'
+                                }} />
+                            </Button>
+                            <Button>
+                                <Rating name="half-rating" defaultValue={4} precision={0.5} />
+                            </Button>
+                        </div>
+
                     </Grid>
                 </Grid>
             </Box>

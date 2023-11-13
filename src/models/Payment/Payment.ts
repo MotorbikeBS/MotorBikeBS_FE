@@ -11,6 +11,8 @@ export interface IFieldPayment {
     paymentTime: Date;
     vnpayOrderId: string;
     paymentType: string;
+    amount: number;
+    point: number;
 }
 export interface IPaymentHistory {
     requestId: number;
@@ -19,5 +21,6 @@ export interface IPaymentHistory {
     time: Date;
     requestTypeId: number;
     status: string;
+
     payments: IFieldPayment[];
 }
