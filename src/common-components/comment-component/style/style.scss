@@ -1,0 +1,21 @@
+.form-cmt {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.cmt-box {
+    width: 70%;
+    .user-date {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+        margin-bottom: 4px;
+        .user-date-name {
+            font-size: 20px;
+            font-weight: 800;
+        }
+        .info-cmt {
+            gap: 10px;
+        }
+    }
+}
