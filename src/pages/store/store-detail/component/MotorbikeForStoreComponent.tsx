@@ -1,84 +1,42 @@
-import React, { useEffect } from 'react';
 import {
     Box,
-    Button,
     CircularProgress,
     Container,
     Grid,
     Paper,
     Typography,
 } from '@mui/material';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Item } from '../../pages/customer/store-list/style/style-root';
-import { FavoriteBorderOutlined } from '@mui/icons-material';
-import { useAppDispatch, useAppSelector } from '../../services/store/store';
+import React, { useEffect } from 'react';
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../../../../services/store/store';
+import { Item } from '../../../customer/motorbike-component/style/style-root';
+import { useNavigate } from 'react-router';
+import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import {
     clearMotor,
     getMotorByStoreId,
-} from '../../services/features/motorbike/motorbikeSlice';
-import useFormatCurrency from '../../hooks/useFormatCurrency';
-import BookingDialog from '../../pages/customer/booking-dialog-component/BookingDialog';
-import { addToWishList } from '../../services/features/motorbike/wishListSlice';
+} from '../../../../services/features/motorbike/motorbikeSlice';
 
-type storeParams = {
-    storeId: number;
-};
-
-const MotorbikeByStoreIdComponent = () => {
-    const navigate = useNavigate();
+const MotorbikeForStoreComponent = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const formatCurrency = useFormatCurrency();
 
-    const [isOpenDialog, setOpenDialog] = React.useState(false);
-    const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false);
-    const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false);
-
-    const { storeId } = useParams<storeParams | any>();
-    const { account } = useAppSelector((state) => state.account);
     const { motorbikeByStoreId, loading } = useAppSelector(
         (state) => state.motorbikes,
     );
-    const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<
-        number | null
-    >(null);
-
-    const handleNavigateDetail = (motorbikeId: number) => {
-        navigate(`/store/motorbike/${motorbikeId}`);
-    };
-    console.log(motorbikeByStoreId);
+    const { user } = useAppSelector((state) => state.users);
 
     useEffect(() => {
         dispatch(clearMotor());
-        dispatch(getMotorByStoreId({ storeId: Number(storeId) }));
-    }, [dispatch, storeId]);
-
-    const handleOpenDialog = (motorbikeId: number) => {
-        setMotorbikeIdForDialog(motorbikeId);
-        setOpenDialog(true);
-        console.log(motorbikeId);
-    };
-
-    const handleCloseDialog = () => {
-        setOpenDialog(false);
-        setIsOpenSubmitDialog(false);
-        setIsOpenCancelDialog(false);
-    };
-    const handleOpenSubmitDialog = () => {
-        setIsOpenSubmitDialog(true);
-    };
-    const handleCloseSubmitDialog = () => {
-        setIsOpenSubmitDialog(false);
-    };
-
-    const handleOpenCancelDialog = () => {
-        setIsOpenCancelDialog(true);
-    };
-    const handleCloseCancelDialog = () => {
-        setIsOpenCancelDialog(false);
-    };
-    const handleAddToWishList = (motorId: number) => {
-        dispatch(addToWishList({ motorId: motorId }));
-    };
+        dispatch(
+            getMotorByStoreId({
+                storeId: Number(user?.storeDesciptions[0]?.storeId),
+            }),
+        );
+    }, [dispatch, user]);
 
     const motorbikeByStoreIdFIlter =
         motorbikeByStoreId &&
@@ -131,14 +89,7 @@ const MotorbikeByStoreIdComponent = () => {
                                                 key={motor.motorId}
                                             >
                                                 <Item className="product-item">
-                                                    <div
-                                                        className="product-image"
-                                                        onClick={() =>
-                                                            handleNavigateDetail(
-                                                                motor.motorId,
-                                                            )
-                                                        }
-                                                    >
+                                                    <div className="product-image">
                                                         {motor.motorbikeImages &&
                                                         motor.motorbikeImages
                                                             .length === 0 ? (
@@ -220,10 +171,6 @@ const MotorbikeByStoreIdComponent = () => {
                                                                 </strong>
                                                                 {motor.odo} Km
                                                             </Typography>
-                                                            {/* <Typography>
-                                        <strong>Tình trạng: </strong>
-                                        {motor.motorStatus.title}
-                                    </Typography> */}
                                                             <Typography>
                                                                 <strong>
                                                                     Đăng ký mới:
@@ -232,59 +179,10 @@ const MotorbikeByStoreIdComponent = () => {
                                                                     motor.year,
                                                                 ).toLocaleDateString()}
                                                             </Typography>
-                                                            {/* <Typography>
-                                    <strong>Ngày đăng bài:</strong>{' '}
-                                    {motor.postDate.toLocaleDateString()}
-                                </Typography> */}
                                                         </div>
                                                     </div>
-                                                    {account?.roleId === 4 && (
-                                                        <>
-                                                            {motor?.motorStatus
-                                                                ?.motorStatusId ===
-                                                            5 ? (
-                                                                <div className="btn-style">
-                                                                    <Button
-                                                                        variant="outlined"
-                                                                        onClick={() =>
-                                                                            handleOpenDialog(
-                                                                                motor.motorId,
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        Đặt lịch
-                                                                        xem xe
-                                                                    </Button>
-                                                                    <Button
-                                                                        className="btn-favorite"
-                                                                        onClick={() =>
-                                                                            handleAddToWishList(
-                                                                                motor.motorId,
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        <FavoriteBorderOutlined />
-                                                                    </Button>
-                                                                </div>
-                                                            ) : (
-                                                                <div className="btn-style-1">
-                                                                    <Button
-                                                                        className="btn-favorite"
-                                                                        onClick={() =>
-                                                                            handleAddToWishList(
-                                                                                motor.motorId,
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        <FavoriteBorderOutlined />
-                                                                    </Button>
-                                                                </div>
-                                                            )}
-                                                        </>
-                                                    )}
                                                 </Item>
                                             </Grid>
-                                            {/* )} */}
                                         </>
                                     ))}
                             </Grid>
@@ -292,20 +190,8 @@ const MotorbikeByStoreIdComponent = () => {
                     )}
                 </>
             )}
-
-            <BookingDialog
-                open={isOpenDialog}
-                openSubmit={isOpenSubmitDialog}
-                openCancel={isOpenCancelDialog}
-                onOpenSubmitDialog={handleOpenSubmitDialog}
-                onCloseSubmitDialog={handleCloseSubmitDialog}
-                onOpenCancelDialog={handleOpenCancelDialog}
-                onCloseCancelDialog={handleCloseCancelDialog}
-                onClose={handleCloseDialog}
-                motorbikeId={motorbikeIdForDialog}
-            />
         </Box>
     );
 };
 
-export default MotorbikeByStoreIdComponent;
+export default MotorbikeForStoreComponent;

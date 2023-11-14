@@ -1,27 +1,32 @@
 import { Report } from '@mui/icons-material';
-import { Avatar, Box, Button, Grid, Rating, Typography } from '@mui/material';
+import {
+    Avatar,
+    Box,
+    Button,
+    Container,
+    Grid,
+    Rating,
+    Typography,
+} from '@mui/material';
 import React, { useEffect } from 'react';
 import {
     useAppDispatch,
     useAppSelector,
 } from '../../../../services/store/store';
 import { getUserByID } from '../../../../services/features/user/userSlice';
-import { getStoreByID } from '../../../../services/features/store/storeSlice';
 import { format } from 'date-fns';
+import '../style/style.scss';
+import MotorbikeForStoreComponent from './MotorbikeForStoreComponent';
+import CommentForStoreComponent from './CommentForStoreComponent';
 
 const StoreDetailByStoreComponent = () => {
     const dispatch = useAppDispatch();
     const { account } = useAppSelector((state) => state.account);
     const { user } = useAppSelector((state) => state.users);
-    const { store } = useAppSelector((state) => state.store);
 
     useEffect(() => {
         dispatch(getUserByID({ id: Number(account?.userId) }));
     }, [dispatch, account]);
-
-    useEffect(() => {
-        getStoreByID({ id: Number(user?.storeDesciptions[0]?.storeId) });
-    }, [dispatch, user]);
 
     return (
         <Box className="store-detail-container">
@@ -40,14 +45,17 @@ const StoreDetailByStoreComponent = () => {
                             </Avatar>
                             <div>
                                 <Typography variant="h5">
-                                    {store?.storeName}
+                                    {user?.storeDesciptions[0]?.storeName}
                                 </Typography>
                                 <Typography>
                                     Ngày tham gia:{' '}
                                     <strong>
-                                        {store?.storeCreatedAt &&
+                                        {user?.storeDesciptions[0]
+                                            ?.storeCreatedAt &&
                                             format(
-                                                new Date(store.storeCreatedAt),
+                                                new Date(
+                                                    user?.storeDesciptions[0]?.storeCreatedAt,
+                                                ),
                                                 'dd-MM-yyyy HH:mm',
                                             )}
                                     </strong>
@@ -60,19 +68,19 @@ const StoreDetailByStoreComponent = () => {
                             <div className="store-info">
                                 <Typography className="store-info-txt">
                                     <strong>Email : </strong>
-                                    {store?.storeEmail}
+                                    {user?.storeDesciptions[0]?.storeEmail}
                                 </Typography>
                             </div>
                             <div className="store-info">
                                 <Typography className="store-info-txt">
                                     <strong>Điện thoại: </strong>
-                                    {store?.storePhone}
+                                    {user?.storeDesciptions[0]?.storePhone}
                                 </Typography>
                             </div>
                             <div className="store-info">
                                 <Typography className="store-info-txt">
                                     <strong>Địa chỉ:</strong>
-                                    {store?.address}
+                                    {user?.storeDesciptions[0]?.address}
                                 </Typography>
                             </div>
                         </Box>
@@ -101,13 +109,13 @@ const StoreDetailByStoreComponent = () => {
 
             <hr />
 
-            {/* <Box>
-        <MotorbikeByStoreIdComponent />
-    </Box>
+            <Box>
+                <MotorbikeForStoreComponent />
+            </Box>
 
-    <Container maxWidth="lg">
-        <CommentComponent />
-    </Container> */}
+            <Container maxWidth="lg">
+                <CommentForStoreComponent />
+            </Container>
         </Box>
     );
 };

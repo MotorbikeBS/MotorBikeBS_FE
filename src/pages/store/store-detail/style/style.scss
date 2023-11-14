@@ -1,0 +1,38 @@
+.store-detail-container {
+    flex-grow: 1;
+    margin-left: 88px;
+    margin-right: 88px;
+    .store-detail-header {
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+        background-color: #d8dde6;
+        padding: 2rem 1.5rem;
+        border-radius: 5px;
+    }
+    .store-info-header {
+        display: flex;
+        gap: 1rem;
+        margin-left: 1rem;
+        align-items: center;
+    }
+    .store-info {
+        display: flex;
+        margin-bottom: 10px;
+        .store-info-txt {
+            font-size: 18px;
+        }
+    }
+    .btn-action-container {
+        display: flex;
+        flex-direction: row-reverse;
+        :nth-child(1) {
+            font-size: 35px;
+        }
+    }
+}
+
+@media (max-width: 960px) {
+    .store-detail-container {
+        margin: 12px;
+    }
+}
