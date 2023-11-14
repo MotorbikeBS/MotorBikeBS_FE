@@ -16,6 +16,7 @@ import { IStore } from '../../models/Store/Store';
 import MotorbikeByStoreIdComponent from './MotorBikeByStoreIDComponent';
 import { Report } from '@mui/icons-material';
 import { format } from 'date-fns';
+import CommentComponent from '../comment-component/CommentComponent';
 
 type storeParams = {
     storeId: number;
@@ -138,13 +139,9 @@ const StoreDetailComponent = () => {
                 <MotorbikeByStoreIdComponent />
             </Box>
 
-            <Box sx={{ marginBottom: 2 }}>
-                {/* <Container> */}
-                <Paper elevation={3} sx={{ padding: 2 }}>
-                    <Typography variant="h5">Bình luận</Typography>
-                </Paper>
-                {/* </Container> */}
-            </Box>
+            <Container maxWidth="lg">
+                <CommentComponent />
+            </Container>
         </Box>
     );
 };
