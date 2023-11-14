@@ -91,3 +91,6 @@ export const createBillNonConsignmentEndPoint = `${BASE_URL}/api/bill/CreateBill
 //Payment Endpoint
 export const paymentRequestEndPoint = `${BASE_URL}/api/Payment/CreatePaymentUrl`;
 export const paymentHistoryEndPoint = `${BASE_URL}/api/Payment/GetPaymentHistory`;
+
+//Posting
+export const CreatePostBootingEndPoint = `${BASE_URL}/api/PostBoosting/Boosting`;
