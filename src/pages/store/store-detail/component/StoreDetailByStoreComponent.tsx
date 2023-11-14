@@ -1,63 +1,27 @@
-import React from 'react';
-import {
-    Avatar,
-    Box,
-    Button,
-    Container,
-    Grid,
-    Paper,
-    Rating,
-    Typography,
-} from '@mui/material';
-import './style/style.scss';
-import { useAppSelector } from '../../services/store/store';
-import { useParams } from 'react-router-dom';
-import { IStore } from '../../models/Store/Store';
-import MotorbikeByStoreIdComponent from './MotorBikeByStoreIDComponent';
 import { Report } from '@mui/icons-material';
+import { Avatar, Box, Button, Grid, Rating, Typography } from '@mui/material';
+import React, { useEffect } from 'react';
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../../../../services/store/store';
+import { getUserByID } from '../../../../services/features/user/userSlice';
+import { getStoreByID } from '../../../../services/features/store/storeSlice';
 import { format } from 'date-fns';
-import CommentComponent from '../comment-component/CommentComponent';
 
-type storeParams = {
-    storeId: number;
-};
+const StoreDetailByStoreComponent = () => {
+    const dispatch = useAppDispatch();
+    const { account } = useAppSelector((state) => state.account);
+    const { user } = useAppSelector((state) => state.users);
+    const { store } = useAppSelector((state) => state.store);
 
-const StoreDetailComponent = () => {
-    const { storeId } = useParams<storeParams | any>();
-    // const { account } = useAppSelector(state => state.account);
-    const { stores } = useAppSelector((state) => state.store);
+    useEffect(() => {
+        dispatch(getUserByID({ id: Number(account?.userId) }));
+    }, [dispatch, account]);
 
-    if (!storeId) {
-        return (
-            <Container>
-                <Paper elevation={3} sx={{ padding: 2 }}>
-                    Cửa hàng không tồn tại
-                </Paper>
-            </Container>
-        );
-    }
-
-    if (!storeId) {
-        return (
-            <Container>
-                <Paper elevation={3} sx={{ padding: 2 }}>
-                    Đợi tí......
-                </Paper>
-            </Container>
-        );
-    }
-
-    const store = stores?.find((st: IStore) => st.storeId === Number(storeId));
-
-    if (!storeId) {
-        return (
-            <Container>
-                <Paper elevation={3} sx={{ padding: 2 }}>
-                    Cửa hàng không tồn tại
-                </Paper>
-            </Container>
-        );
-    }
+    useEffect(() => {
+        getStoreByID({ id: Number(user?.storeDesciptions[0]?.storeId) });
+    }, [dispatch, user]);
 
     return (
         <Box className="store-detail-container">
@@ -137,15 +101,15 @@ const StoreDetailComponent = () => {
 
             <hr />
 
-            <Box>
-                <MotorbikeByStoreIdComponent />
-            </Box>
+            {/* <Box>
+        <MotorbikeByStoreIdComponent />
+    </Box>
 
-            <Container maxWidth="lg">
-                <CommentComponent />
-            </Container>
+    <Container maxWidth="lg">
+        <CommentComponent />
+    </Container> */}
         </Box>
     );
 };
 
-export default StoreDetailComponent;
+export default StoreDetailByStoreComponent;

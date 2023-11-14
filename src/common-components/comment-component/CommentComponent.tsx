@@ -48,7 +48,7 @@ const CommentComponent = () => {
                                 <Rating
                                     {...field}
                                     defaultValue={0}
-                                    precision={0.5}
+                                    precision={1}
                                 />
                             )}
                         />
@@ -98,6 +98,7 @@ const CommentComponent = () => {
                     <Box className="info-cmt">
                         <Rating readOnly defaultValue={4.5} precision={0.5} />
                         <Typography>Xe đẹp đó.</Typography>
+                        <Typography>Thông tin request</Typography>
                     </Box>
                 </Box>
                 <Box>

@@ -49,8 +49,12 @@ const pages = [
     },
     {
         to: '/transaction-history',
-        name: 'Lịch sử giao dịch'
-    }
+        name: 'Lịch sử giao dịch',
+    },
+    {
+        to: '/my-store',
+        name: 'Thông tin cửa hàng',
+    },
 ];
 
 const StoreMenuComponent = () => {
@@ -240,10 +244,11 @@ const StoreMenuComponent = () => {
                                 <Link
                                     key={page.to}
                                     to={page.to}
-                                    className={`link-customer ${isMenuItemActive(page.to)
-                                        ? 'active'
-                                        : ''
-                                        }`}
+                                    className={`link-customer ${
+                                        isMenuItemActive(page.to)
+                                            ? 'active'
+                                            : ''
+                                    }`}
                                 >
                                     {page.name}
                                 </Link>
@@ -305,7 +310,9 @@ const StoreMenuComponent = () => {
                                         to="/user/payment-history"
                                         style={{ textDecoration: 'none' }}
                                     >
-                                        <Typography>Lịch sử nạp điểm</Typography>
+                                        <Typography>
+                                            Lịch sử nạp điểm
+                                        </Typography>
                                     </Link>
                                 </MenuItem>
                                 <MenuItem onClick={handleCloseUserMenu}>
