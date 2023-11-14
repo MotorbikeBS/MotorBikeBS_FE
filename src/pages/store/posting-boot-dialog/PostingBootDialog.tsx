@@ -9,7 +9,6 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
-    InputLabel,
     MenuItem,
     Select,
     SelectChangeEvent,
@@ -17,7 +16,7 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-import { format } from 'date-fns';
+import { createPostBooting } from '../../../services/features/posting/postBootingSlice';
 
 interface IPostingBootProps {
     open: boolean;
@@ -80,7 +79,15 @@ const PostingBootDialog: React.FC<IPostingBootProps> = ({
     };
 
     const onSubmit = (data: IPostingBootField) => {
-        console.log(data);
+        if (motorId !== null) {
+            dispatch(createPostBooting({
+                motorId: motorId,
+                startTime: data.startTime,
+                endTime: data.endTime,
+                level: data.level
+            }))
+        }
+        console.log(data)
     }
     return (
         <div>
