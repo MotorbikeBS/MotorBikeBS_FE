@@ -106,7 +106,7 @@ const PostingBootDialog: React.FC<IPostingBootProps> = ({
                                         <TextField
                                             focused={true}
                                             label="Ngày bắt đầu"
-                                            type="date"
+                                            type="datetime-local"
                                             {...field}
                                             inputProps={{
                                                 min: new Date()

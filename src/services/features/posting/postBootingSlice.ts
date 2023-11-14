@@ -36,6 +36,7 @@ export const createPostBooting = createAsyncThunk<
                     },
                 },
             );
+            toast.success(`${response.data.message}`);
             return response.data;
         } catch (error: any) {
             toast.error(`${error.response.data?.errorMessages}`);
