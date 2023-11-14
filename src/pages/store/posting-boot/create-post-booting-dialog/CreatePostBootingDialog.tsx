@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAppDispatch } from '../../../services/store/store';
+import { useAppDispatch } from '../../../../services/store/store';
 import { Controller, useForm } from 'react-hook-form';
 import {
     Box,
@@ -16,7 +16,7 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-import { createPostBooting } from '../../../services/features/posting/postBootingSlice';
+import { createPostBooting } from '../../../../services/features/posting/postBootingSlice';
 
 interface IPostingBootProps {
     open: boolean;
@@ -34,7 +34,7 @@ interface IPostingBootField {
     endTime: Date;
     level: number
 }
-const PostingBootDialog: React.FC<IPostingBootProps> = ({
+const CreatePostBootingDialog: React.FC<IPostingBootProps> = ({
     open,
     motorId,
     openSubmit,
@@ -213,4 +213,4 @@ const PostingBootDialog: React.FC<IPostingBootProps> = ({
     )
 }
 
-export default PostingBootDialog
+export default CreatePostBootingDialog
