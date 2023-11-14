@@ -34,8 +34,8 @@ import {
 } from '../../../../services/features/bill/billSlice';
 import '../style/style.scss';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
-import PostingBootDialog from '../../posting-boot-dialog/PostingBootDialog';
 import CreateBillNonConsignment from './CreateBillNonConsignment';
+import CreatePostBootingDialog from '../../posting-boot/create-post-booting-dialog/CreatePostBootingDialog';
 interface ListMotorProps {
     loadData: () => void;
 }
@@ -405,7 +405,7 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                     </Button>
                 </DialogActions>
             </Dialog>
-            <PostingBootDialog
+            <CreatePostBootingDialog
                 open={isOpenPostingBootDialog}
                 openSubmit={isOpenSubmitPostingBootDialog}
                 openCancel={isOpenCancelPostingBootDialog}
