@@ -17,7 +17,7 @@ import {
     Typography
 } from '@mui/material';
 import { createPostBooting } from '../../../../services/features/posting/postBootingSlice';
-
+import './style/_createPostBooting.scss'
 interface IPostingBootProps {
     open: boolean;
     motorId: number | null;
@@ -86,8 +86,12 @@ const CreatePostBootingDialog: React.FC<IPostingBootProps> = ({
                 endTime: data.endTime,
                 level: data.level
             }))
+                .then(() => {
+                    setTimeout(() => {
+                        handleCloseDialog()
+                    }, 1000)
+                })
         }
-        console.log(data)
     }
     return (
         <div>
@@ -98,7 +102,7 @@ const CreatePostBootingDialog: React.FC<IPostingBootProps> = ({
                 <DialogContent>
                     <Box textAlign="center">
                         <form noValidate>
-                            <Stack spacing={2} className="booking-form-style">
+                            <Stack spacing={2} className='create-post-booting-form'>
                                 <Controller
                                     name="startTime"
                                     control={control}
@@ -152,7 +156,7 @@ const CreatePostBootingDialog: React.FC<IPostingBootProps> = ({
                             <Button
                                 variant="contained"
                                 color="primary"
-                                className="btn-booking"
+                                className="btn-action"
                                 onClick={handleOpenSubmitDialog}
                             >
                                 Đẩy bài
