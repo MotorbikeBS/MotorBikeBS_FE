@@ -31,12 +31,11 @@ import { toast } from 'react-toastify';
 import {
     createBillConsignment,
     createBillInStock,
-    createBillNonConsignment,
 } from '../../../../services/features/bill/billSlice';
 import '../style/style.scss';
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
 import PostingBootDialog from '../../posting-boot-dialog/PostingBootDialog';
-
+import CreateBillNonConsignment from './CreateBillNonConsignment';
 interface ListMotorProps {
     loadData: () => void;
 }
@@ -56,12 +55,16 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
         useState(false);
     const [isConfirmSaleNonConsignment, setIsConfirmSaleNonConsignment] =
         useState(false);
+    const [isOpenSelectBookingId, setIsOpenSelectBookingId] = useState(false);
     const [selectedRow, setSelectedRow] = useState<IMotorbike | null>(null);
 
     //Posting boot
-    const [isOpenPostingBootDialog, setIOpenPostingBootDialog] = React.useState(false)
-    const [isOpenSubmitPostingBootDialog, setIsOpenSubmitPostingBootDialog] = React.useState(false)
-    const [isOpenCancelPostingBootDialog, setIsOpenCancelPostingBootDialog] = React.useState(false);
+    const [isOpenPostingBootDialog, setIOpenPostingBootDialog] =
+        React.useState(false);
+    const [isOpenSubmitPostingBootDialog, setIsOpenSubmitPostingBootDialog] =
+        React.useState(false);
+    const [isOpenCancelPostingBootDialog, setIsOpenCancelPostingBootDialog] =
+        React.useState(false);
     const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<
         number | null
     >(null);
@@ -69,59 +72,79 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
     const handleOpenPostingBootDialog = (motorId: number) => {
         setMotorbikeIdForDialog(motorId);
         setIOpenPostingBootDialog(true);
-        console.log(motorId)
+        console.log(motorId);
     };
+
     const handleClosePostingBootDialog = () => {
-        setIOpenPostingBootDialog(false)
-        setIsOpenSubmitPostingBootDialog(false)
-        setIsOpenCancelPostingBootDialog(false)
-    }
+        setIOpenPostingBootDialog(false);
+        setIsOpenSubmitPostingBootDialog(false);
+        setIsOpenCancelPostingBootDialog(false);
+    };
 
     const handleOpenSubmitPostingBootDialog = () => {
-        setIsOpenSubmitPostingBootDialog(true)
-    }
+        setIsOpenSubmitPostingBootDialog(true);
+    };
     const handleCloseSubmitPostingBootDialog = () => {
-        setIsOpenSubmitPostingBootDialog(false)
-    }
+        setIsOpenSubmitPostingBootDialog(false);
+    };
 
     const handleOpenCancelPostingBoot = () => {
-        setIsOpenCancelPostingBootDialog(true)
-    }
+        setIsOpenCancelPostingBootDialog(true);
+    };
     const handleCloseCancelPostingBoot = () => {
-        setIsOpenCancelPostingBootDialog(false)
-    }
+        setIsOpenCancelPostingBootDialog(false);
+    };
 
     const closeDetailModal = () => {
         setIsDetailModalOpen(false);
     };
 
+    const openSelectBookingModal = () => {
+        setIsOpenSelectBookingId(true);
+        setSelectedRow(selectedRow);
+    };
+
     const openCancelPostModal = () => {
-        setIsDetailModalOpen(false);
         setIsConfirmCancelPost(true);
         setSelectedRow(selectedRow);
     };
 
     const openSaleModal = () => {
-        setIsDetailModalOpen(false);
         setIsConfirmSale(true);
         setSelectedRow(selectedRow);
     };
     const openSaleConsignmentModal = () => {
-        setIsDetailModalOpen(false);
         setIsConfirmSaleConsignment(true);
         setSelectedRow(selectedRow);
     };
     const openSaleNonConsignmentModal = () => {
-        setIsDetailModalOpen(false);
         setIsConfirmSaleNonConsignment(true);
         setSelectedRow(selectedRow);
     };
 
-    const handleCloseDialog = () => {
+    const handleCloseAll = () => {
         setIsDetailModalOpen(false);
+        setIsConfirmSaleNonConsignment(false);
+        setIsOpenSelectBookingId(false);
+    };
+
+    const handleCloseDialog = () => {
         setIsConfirmCancelPost(false);
         setIsConfirmSale(false);
         setIsConfirmSaleConsignment(false);
+        setIsConfirmSaleNonConsignment(false);
+        setIsOpenSelectBookingId(false);
+    };
+
+    const handleCloseSale = () => {
+        setIsConfirmSale(false);
+    };
+
+    const handleCloseSaleConsignment = () => {
+        setIsConfirmSaleConsignment(false);
+    };
+
+    const handleCloseSaleNonConsignment = () => {
         setIsConfirmSaleNonConsignment(false);
     };
 
@@ -147,23 +170,6 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
         dispatch(
             createBillConsignment({
                 newUser: 0,
-                motorId: Number(selectedRow?.id),
-            }),
-        )
-            .unwrap()
-            .then(() => {
-                toast.success('Đã chuyển qua xe đã bán!');
-                loadData();
-                handleCloseDialog();
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-
-    const handleSubmitConfirmSaleNonConsignmentMotor = () => {
-        dispatch(
-            createBillNonConsignment({
                 motorId: Number(selectedRow?.id),
             }),
         )
@@ -262,7 +268,6 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                     loading={loading}
                 />
             </div>
-
             <Dialog open={isDetailModalOpen} onClose={closeDetailModal}>
                 <DialogTitle>
                     <Typography variant="h4" textAlign="center">
@@ -349,9 +354,10 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                 </DialogContent>
                 <DialogActions>
                     {selectedRow && selectedRow?.motorStatuss === 'POSTING' && (
-                        <Button onClick={openSaleModal}
+                        <Button
+                            onClick={openSaleModal}
                             color="secondary"
-                            variant='contained'
+                            variant="contained"
                         >
                             Đã bán Tại cửa hàng
                         </Button>
@@ -361,21 +367,25 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                             <Button
                                 onClick={openSaleConsignmentModal}
                                 color="secondary"
-                                variant='contained'
+                                variant="contained"
                             >
                                 Đã bán kí gởi
                             </Button>
                         )}
                     {selectedRow &&
                         selectedRow?.motorStatuss === 'LIVELIHOOD' && (
-                            <Button onClick={openSaleNonConsignmentModal} color="secondary" variant='contained'>
+                            <Button
+                                onClick={openSelectBookingModal}
+                                color="secondary"
+                                variant="contained"
+                            >
                                 Đã bán không kí gởi
                             </Button>
                         )}
 
                     <Button
                         color="warning"
-                        variant='contained'
+                        variant="contained"
                         onClick={() => {
                             const motorId = selectedRow?.id;
                             if (typeof motorId === 'number') {
@@ -386,7 +396,11 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                         Đẩy bài
                     </Button>
 
-                    <Button onClick={openCancelPostModal} color="error" variant='contained'>
+                    <Button
+                        onClick={openCancelPostModal}
+                        color="error"
+                        variant="contained"
+                    >
                         Hủy đăng bài
                     </Button>
                 </DialogActions>
@@ -414,7 +428,7 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                     </Typography>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseDialog} color="error">
+                    <Button onClick={handleCloseSale} color="error">
                         Hủy bỏ
                     </Button>
                     <Button onClick={handleSubmitConfirmSaleMotor} color="info">
@@ -422,7 +436,6 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                     </Button>
                 </DialogActions>
             </Dialog>
-
             <Dialog open={isConfirmSaleConsignment}>
                 <DialogTitle>
                     <Typography variant="h4" textAlign="center">
@@ -435,7 +448,7 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                     </Typography>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseDialog} color="error">
+                    <Button onClick={handleCloseSaleConsignment} color="error">
                         Hủy bỏ
                     </Button>
                     <Button
@@ -446,31 +459,16 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                     </Button>
                 </DialogActions>
             </Dialog>
-
-            <Dialog open={isConfirmSaleNonConsignment}>
-                <DialogTitle>
-                    <Typography variant="h4" textAlign="center">
-                        Xác nhận bán xe
-                    </Typography>
-                </DialogTitle>
-                <DialogContent>
-                    <Typography variant="subtitle1" textAlign="center">
-                        Bạn có chắc chắn đã bán xe này không?
-                    </Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCloseDialog} color="error">
-                        Hủy bỏ
-                    </Button>
-                    <Button
-                        onClick={handleSubmitConfirmSaleNonConsignmentMotor}
-                        color="info"
-                    >
-                        Xác nhận
-                    </Button>
-                </DialogActions>
-            </Dialog>
-
+            <CreateBillNonConsignment
+                open={isOpenSelectBookingId}
+                openSubmit={isConfirmSaleNonConsignment}
+                onOpenSubmitDialog={openSaleNonConsignmentModal}
+                onCloseSubmitDialog={handleCloseDialog}
+                onCloseCancelDialog={handleCloseSaleNonConsignment}
+                onClose={handleCloseAll}
+                loadData={loadData}
+                selectedRow={selectedRow}
+            />
             <Dialog open={isConfirmCancelPost}>
                 <DialogTitle>
                     <Typography variant="h4" textAlign="center">
