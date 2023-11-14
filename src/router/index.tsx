@@ -41,6 +41,7 @@ import HistoryTransactionCustomer from '../pages/customer/history-transaction/Hi
 import PaymentHistoryComponent from '../pages/store/payment/payment-history/PaymentHistoryComponent';
 import NegotiationHistoryList from '../pages/store/receipt-list-with-owner/NegotiationHistoryList';
 import ReceiptHistoryWithStore from '../pages/owner/receipt-list-with-store/ReceiptHistoryWithStore';
+import StoreDetailByStore from '../pages/store/store-detail/StoreDetailByStore';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -137,6 +138,8 @@ const AppRoutes = () => {
                     <Route path='/user/payment-history' element={<PaymentHistoryComponent />} />
                     <Route path='/payment-point/successfully' element={<PaymentSucessfullyComponent />} />
                     <Route path='/payment-point/error-payment' element={<PaymentErrorComponent />} />
+
+                    <Route path='/my-store' element={<StoreDetailByStore />} />
 
                     <Route path="*" element={<PageNotFound />} />
                 </>
