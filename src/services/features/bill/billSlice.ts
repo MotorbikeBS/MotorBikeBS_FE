@@ -126,7 +126,8 @@ export const createBillConsignment = createAsyncThunk<
     try {
         const token = localStorage.getItem('motorbike_bs');
         const response = await axios.post(
-            `${createBillConsignmentEndPoint}?newUser=${newUser}&MotorID=${motorId}`,{},
+            `${createBillConsignmentEndPoint}?newUser=${newUser}&MotorID=${motorId}`,
+            {},
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -144,26 +145,30 @@ export const createBillConsignment = createAsyncThunk<
 
 export const createBillNonConsignment = createAsyncThunk<
     IBill,
-    { motorId: number }
->('bill/createBillNonConsignment', async ({ motorId }, thunkAPI) => {
-    try {
-        const token = localStorage.getItem('motorbike_bs');
-        const response = await axios.post(
-            `${createBillNonConsignmentEndPoint}?MotorID=${motorId}`,{},
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
+    { motorId: number; buyerBookingId: number }
+>(
+    'bill/createBillNonConsignment',
+    async ({ motorId, buyerBookingId }, thunkAPI) => {
+        try {
+            const token = localStorage.getItem('motorbike_bs');
+            const response = await axios.post(
+                `${createBillNonConsignmentEndPoint}?MotorID=${motorId}&BuyerBookingID=${buyerBookingId}`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 },
-            },
-        );
-        return response.data.result;
-    } catch (error: any) {
-        toast.error(`${error.response.data?.errorMessages}`);
-        return thunkAPI.rejectWithValue({
-            error: error.response?.data?.errorMessages,
-        });
-    }
-});
+            );
+            return response.data.result;
+        } catch (error: any) {
+            toast.error(`${error.response.data?.errorMessages}`);
+            return thunkAPI.rejectWithValue({
+                error: error.response?.data?.errorMessages,
+            });
+        }
+    },
+);
 
 export const billSlice = createSlice({
     name: 'bookingOwerExchange',
