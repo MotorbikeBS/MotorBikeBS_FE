@@ -90,6 +90,11 @@ const HistoryTransactionComponent = () => {
                         pagination: {
                             paginationModel: { page: 0, pageSize: 5 },
                         },
+                        columns:{
+                            columnVisibilityModel:{
+                                motorId: false
+                            }
+                        }
                     }}
                     pageSizeOptions={[5, 10, 100]}
                     disableRowSelectionOnClick

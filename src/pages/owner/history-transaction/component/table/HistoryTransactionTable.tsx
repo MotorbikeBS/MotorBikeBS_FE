@@ -21,7 +21,7 @@ const formatDate = (dateString: string) => {
 };
 
 export const columns: GridColDef[] = [
-    { field: 'id', headerName: 'Bill Id', width: 280, hideable: true },
+    { field: 'id', headerName: 'Bill Id', width: 480, hideable: true },
     {
         field: 'motorId',
         headerName: 'Motor Id',
@@ -31,7 +31,7 @@ export const columns: GridColDef[] = [
     {
         field: 'price',
         headerName: 'Giá',
-        width: 400,
+        width: 600,
         ...vndPrice,
     },
     {

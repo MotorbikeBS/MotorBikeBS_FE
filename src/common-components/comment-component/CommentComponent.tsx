@@ -4,73 +4,28 @@ import {
     Button,
     Paper,
     Rating,
-    TextareaAutosize,
     Typography,
 } from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
-import './style/style.scss';
-import { Controller, useForm } from 'react-hook-form';
 
-interface ICommentProps {
-    requestId: number;
-    content: string;
-    rating: number;
-    replyId: number;
-}
+import './style/style.scss';
+import CreateComment from './CreateComment';
 
 const CommentComponent = () => {
-    const form = useForm<ICommentProps>({
-        defaultValues: {
-            requestId: undefined,
-            content: '',
-            rating: undefined,
-            replyId: undefined,
-        },
-    });
-
-    const { control, handleSubmit, setValue } = form;
-
-    const onSubmit = (data: ICommentProps) => {
-        console.log(data);
-    };
+    
 
     return (
         <>
-            <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
+            <Paper elevation={3} className='cmt-paper'>
                 <Typography variant="h5">Bình luận</Typography>
                 <hr />
+                <Box sx={{ marginBottom: 2}}>
+                    <Button variant='contained'>Chọn Yêu cầu để bình luận</Button>
+                </Box>
+                <Box className='request-title'>
+                    <Typography className='request-title-text'>Yêu cầu thương lượng giá - Wave</Typography>
+                </Box>
                 <Box>
-                    <form noValidate className="form-cmt">
-                        <Controller
-                            name="rating"
-                            control={control}
-                            render={({ field }) => (
-                                <Rating
-                                    {...field}
-                                    defaultValue={0}
-                                    precision={1}
-                                />
-                            )}
-                        />
-                        <Controller
-                            name="content"
-                            control={control}
-                            render={({ field }) => (
-                                <TextareaAutosize
-                                    {...field}
-                                    placeholder="Viết bình luận ..."
-                                    style={{
-                                        width: '85%',
-                                        height: '60px',
-                                        resize: 'none',
-                                    }}
-                                />
-                            )}
-                        />
-                        <Button type="submit" onClick={handleSubmit(onSubmit)}>
-                            <SendIcon />
-                        </Button>
-                    </form>
+                    <CreateComment />
                 </Box>
             </Paper>
 

@@ -109,6 +109,11 @@ const MotorbikeSoldComponent = () => {
                         pagination: {
                             paginationModel: { page: 0, pageSize: 10 },
                         },
+                        columns:{
+                            columnVisibilityModel:{
+                                motorId: false
+                            }
+                        }
                     }}
                     pageSizeOptions={[10, 20, 100]}
                     disableRowSelectionOnClick
