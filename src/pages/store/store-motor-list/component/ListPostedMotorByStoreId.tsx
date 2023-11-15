@@ -57,6 +57,10 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
         useState(false);
     const [isOpenSelectBookingId, setIsOpenSelectBookingId] = useState(false);
     const [selectedRow, setSelectedRow] = useState<IMotorbike | null>(null);
+    const [
+        isCreateBillNonConsignmentSelected,
+        setIsCreateBillNonConsignmentSelected,
+    ] = useState(false);
 
     //Posting boot
     const [isOpenPostingBootDialog, setIOpenPostingBootDialog] =
@@ -101,6 +105,7 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
 
     const openSelectBookingModal = () => {
         setIsOpenSelectBookingId(true);
+        setIsCreateBillNonConsignmentSelected(true);
         setSelectedRow(selectedRow);
     };
 
@@ -126,6 +131,7 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
         setIsDetailModalOpen(false);
         setIsConfirmSaleNonConsignment(false);
         setIsOpenSelectBookingId(false);
+        setIsCreateBillNonConsignmentSelected(false);
     };
 
     const handleCloseDialog = () => {
@@ -459,16 +465,18 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                     </Button>
                 </DialogActions>
             </Dialog>
-            <CreateBillNonConsignment
-                open={isOpenSelectBookingId}
-                openSubmit={isConfirmSaleNonConsignment}
-                onOpenSubmitDialog={openSaleNonConsignmentModal}
-                onCloseSubmitDialog={handleCloseDialog}
-                onCloseCancelDialog={handleCloseSaleNonConsignment}
-                onClose={handleCloseAll}
-                loadData={loadData}
-                selectedRow={selectedRow}
-            />
+            {isCreateBillNonConsignmentSelected && (
+                <CreateBillNonConsignment
+                    open={isOpenSelectBookingId}
+                    openSubmit={isConfirmSaleNonConsignment}
+                    onOpenSubmitDialog={openSaleNonConsignmentModal}
+                    onCloseSubmitDialog={handleCloseDialog}
+                    onCloseCancelDialog={handleCloseSaleNonConsignment}
+                    onClose={handleCloseAll}
+                    loadData={loadData}
+                    selectedRow={selectedRow}
+                />
+            )}
             <Dialog open={isConfirmCancelPost}>
                 <DialogTitle>
                     <Typography variant="h4" textAlign="center">

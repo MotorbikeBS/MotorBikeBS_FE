@@ -1,108 +1,150 @@
+import React, { useEffect } from 'react';
 import {
     Box,
     Button,
+    CircularProgress,
+    Container,
     Paper,
     Rating,
-    TextareaAutosize,
     Typography,
 } from '@mui/material';
-import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import SendIcon from '@mui/icons-material/Send';
-
-interface IReplyCommentProps {
-    requestId: number;
-    content: string;
-    rating: number;
-    replyId: number;
-}
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../../../../services/store/store';
+import { getUserByID } from '../../../../services/features/user/userSlice';
+import {
+    clearComment,
+    getCommentByStoreId,
+} from '../../../../services/features/comment/commentSlice.';
+import '../style/style.scss';
+import { format } from 'date-fns';
 
 const CommentForStoreComponent = () => {
-    const form = useForm<IReplyCommentProps>({
-        defaultValues: {
-            requestId: undefined,
-            content: '',
-            rating: undefined,
-            replyId: undefined,
-        },
-    });
+    const dispatch = useAppDispatch();
+    const { account } = useAppSelector((state) => state.account);
+    const { user } = useAppSelector((state) => state.users);
+    const { commentStore, loading } = useAppSelector((state) => state.comment);
 
-    const { control, handleSubmit, setValue } = form;
+    useEffect(() => {
+        dispatch(getUserByID({ id: Number(account?.userId) }));
+    }, [dispatch, account]);
 
-    const onSubmit = (data: IReplyCommentProps) => {
-        console.log(data);
+    const loadData = () => {
+        dispatch(clearComment());
+        dispatch(
+            getCommentByStoreId({
+                storeId: Number(user?.storeDesciptions[0]?.storeId),
+            }),
+        );
     };
+
+    useEffect(() => {
+        loadData();
+    }, [dispatch, user]);
+
     return (
         <>
             <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
                 <Typography variant="h5">Bình luận</Typography>
                 <hr />
-                {/* <Box>
-                    <form noValidate className="form-cmt">
-                        <Controller
-                            name="rating"
-                            control={control}
-                            render={({ field }) => (
-                                <Rating
-                                    {...field}
-                                    defaultValue={0}
-                                    precision={1}
-                                />
-                            )}
-                        />
-                        <Controller
-                            name="content"
-                            control={control}
-                            render={({ field }) => (
-                                <TextareaAutosize
-                                    {...field}
-                                    placeholder="Viết bình luận ..."
-                                    style={{
-                                        width: '85%',
-                                        height: '60px',
-                                        resize: 'none',
-                                    }}
-                                />
-                            )}
-                        />
-                        <Button type="submit" onClick={handleSubmit(onSubmit)}>
-                            <SendIcon />
-                        </Button>
-                    </form>
-                </Box> */}
             </Paper>
-
-            <Paper
-                elevation={3}
-                sx={{
-                    paddingY: 2,
-                    paddingX: 4,
-                    marginBottom: 2,
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                }}
-            >
-                <Box className="cmt-box">
-                    <Box className="user-date">
-                        <Typography className="user-date-name">
-                            Minh Trí
-                        </Typography>
-                        <Typography sx={{ color: '#ccc' }}>
-                            Đã chỉnh sửa
-                        </Typography>
-                        <Typography variant="subtitle1">14-11-2023</Typography>
-                    </Box>
-                    <Box className="info-cmt">
-                        <Rating readOnly defaultValue={4.5} precision={0.5} />
-                        <Typography>Xe đẹp đó.</Typography>
-                        <Typography>Thông tin request</Typography>
-                    </Box>
+            {loading === true ? (
+                <Box textAlign="center">
+                    <CircularProgress />
                 </Box>
-                <Box>
-                    <Button variant="outlined">Trả lời</Button>
-                </Box>
-            </Paper>
+            ) : (
+                <>
+                    {commentStore && commentStore?.length === 0 ? (
+                        <>
+                            <Container className="comment-container-notFound">
+                                <Paper elevation={3} sx={{ padding: 2 }}>
+                                    Chưa có bình luận nào.
+                                </Paper>
+                            </Container>
+                        </>
+                    ) : (
+                        <>
+                            {commentStore &&
+                                commentStore?.map((comment) => (
+                                    <Paper
+                                        key={comment?.commentId}
+                                        elevation={3}
+                                        sx={{
+                                            paddingY: 2,
+                                            paddingX: 4,
+                                            marginBottom: 2,
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <Box className="cmt-box">
+                                            <Box className="user-date">
+                                                <Typography className="user-date-name">
+                                                    {comment?.request?.motor
+                                                        ?.owner === null ? (
+                                                        <Typography className="user-date-name">
+                                                            {
+                                                                comment?.request
+                                                                    ?.receiver
+                                                                    ?.userName
+                                                            }
+                                                        </Typography>
+                                                    ) : (
+                                                        <>
+                                                            <Typography className="user-date-name">
+                                                                {
+                                                                    comment
+                                                                        ?.request
+                                                                        ?.sender
+                                                                        ?.userName
+                                                                }
+                                                            </Typography>
+                                                        </>
+                                                    )}
+                                                </Typography>
+                                                <Typography variant="subtitle1">
+                                                    {comment?.createAt &&
+                                                        format(
+                                                            new Date(
+                                                                comment?.createAt,
+                                                            ),
+                                                            'dd-MM-yyyy HH:mm',
+                                                        )}
+                                                </Typography>
+                                            </Box>
+                                            <Box className="info-cmt">
+                                                <Rating
+                                                    readOnly
+                                                    defaultValue={
+                                                        comment?.rating
+                                                    }
+                                                    precision={1}
+                                                />
+                                                <Typography>
+                                                    {comment?.content}
+                                                </Typography>
+                                                <Typography className="request-description">
+                                                    {
+                                                        comment?.request
+                                                            ?.requestType
+                                                            ?.description
+                                                    }
+                                                </Typography>
+                                            </Box>
+                                        </Box>
+                                        <Box>
+                                            <Button variant="outlined">
+                                                Trả lời
+                                            </Button>
+                                        </Box>
+                                    </Paper>
+                                ))}
+                        </>
+                    )}
+                </>
+            )}
         </>
     );
 };

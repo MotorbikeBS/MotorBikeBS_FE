@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Avatar,
     Box,
@@ -10,13 +10,17 @@ import {
     Typography,
 } from '@mui/material';
 import './style/style.scss';
-import { useAppSelector } from '../../services/store/store';
+import { useAppDispatch, useAppSelector } from '../../services/store/store';
 import { useParams } from 'react-router-dom';
 import { IStore } from '../../models/Store/Store';
 import MotorbikeByStoreIdComponent from './MotorBikeByStoreIDComponent';
 import { Report } from '@mui/icons-material';
 import { format } from 'date-fns';
 import CommentComponent from '../comment-component/CommentComponent';
+import {
+    clearComment,
+    getCommentByStoreId,
+} from '../../services/features/comment/commentSlice.';
 
 type storeParams = {
     storeId: number;
@@ -24,8 +28,27 @@ type storeParams = {
 
 const StoreDetailComponent = () => {
     const { storeId } = useParams<storeParams | any>();
-    // const { account } = useAppSelector(state => state.account);
+    const dispatch = useAppDispatch();
     const { stores } = useAppSelector((state) => state.store);
+    const { commentStore } = useAppSelector((state) => state.comment);
+    
+    let averageRating: number | undefined;
+    
+    useEffect(() => {
+        dispatch(clearComment());
+        dispatch(getCommentByStoreId({ storeId: Number(storeId) }));
+    }, [dispatch, storeId]);
+
+    if (commentStore) {
+        averageRating =
+            commentStore.reduce((total, comment) => {
+                if (comment?.rating) {
+                    return total + comment.rating;
+                }
+                return total;
+            }, 0) /
+            (commentStore.filter((comment) => comment?.rating).length || 1);
+    }
 
     if (!storeId) {
         return (
@@ -125,7 +148,7 @@ const StoreDetailComponent = () => {
                             <Button>
                                 <Rating
                                     name="read-only"
-                                    defaultValue={4}
+                                    defaultValue={averageRating}
                                     precision={0.5}
                                     readOnly
                                 />
