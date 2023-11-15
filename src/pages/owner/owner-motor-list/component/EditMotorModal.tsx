@@ -89,15 +89,6 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
     const [model, setModel] = useState('');
     const [motorType, setMotorType] = useState('');
 
-    const formatDate = (dateString: string) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('vi-VN', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-        });
-    };
-
     const handleChangeModel = (event: SelectChangeEvent) => {
         setModel(event.target.value);
     };

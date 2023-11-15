@@ -2,28 +2,48 @@ import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import SendIcon from '@mui/icons-material/Send';
 import { Button, Rating, TextareaAutosize } from '@mui/material';
+import { useAppDispatch } from '../../services/store/store';
+import { createComment } from '../../services/features/comment/commentSlice.';
+import { toast } from 'react-toastify';
 
 interface ICommentProps {
-    requestId: number;
     content: string;
     rating: number;
-    replyId: number;
 }
 
-const CreateComment = () => {
+interface createCommentProps {
+    requestId: string;
+    handleClearRequestTitle: () => void;
+    loadData: () => void;
+}
+
+const CreateComment: React.FC<createCommentProps> = ({
+    requestId,
+    handleClearRequestTitle,
+    loadData,
+}) => {
+    const dispatch = useAppDispatch();
+
     const form = useForm<ICommentProps>({
         defaultValues: {
-            requestId: undefined,
             content: '',
             rating: undefined,
-            replyId: undefined,
         },
     });
 
-    const { control, handleSubmit, setValue } = form;
+    const { control, handleSubmit } = form;
 
     const onSubmit = (data: ICommentProps) => {
-        console.log(data);
+        dispatch(createComment({ requestId: Number(requestId), data }))
+            .unwrap()
+            .then(() => {
+                loadData();
+                handleClearRequestTitle();
+                toast.success('Bình luận thành công.');
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     return (

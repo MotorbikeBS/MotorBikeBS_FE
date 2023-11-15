@@ -98,6 +98,7 @@ export const getPostBootingHistoryEndPoint = `${BASE_URL}/api/PostBoosting/Boost
 export const ExtendPostBootingEndPoint = `${BASE_URL}/api/PostBooting/ExtendBoosting`;
 
 //Comment
+export const getCommentByCommentIdEndPoint = `${BASE_URL}/api/Comment/GetByCommentID`
 export const getCommentByStoreIdEndPoint = `${BASE_URL}/api/Comment/GetByStoreId_Receiver`;
 export const getHistoryCommentByRequestIdEndPoint = `${BASE_URL}/api/Comment/GetHistoryCommentByRequestID`;
 export const createCommentEndPoint = `${BASE_URL}/api/Comment/CommentRegister`;

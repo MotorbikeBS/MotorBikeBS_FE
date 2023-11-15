@@ -1,4 +1,7 @@
-import { getHistoryCommentByRequestIdEndPoint } from './../../config/api-config';
+import {
+    getCommentByCommentIdEndPoint,
+    getHistoryCommentByRequestIdEndPoint,
+} from './../../config/api-config';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { IComment } from '../../../models/Comment/Comment';
 import { toast } from 'react-toastify';
@@ -28,6 +31,29 @@ const initialState: CommentState = {
     commentStore: null,
     requestsWithStore: null,
 };
+
+export const getCommentByCommentId = createAsyncThunk<
+    IComment,
+    { commentId: number }
+>('comment/getCommentByCommentId', async ({ commentId }, thunkAPI) => {
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.get(
+            `${getCommentByCommentIdEndPoint}?CommentID=${commentId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return response.data.result;
+    } catch (error: any) {
+        // toast.error(`${error.response.data?.errorMessages}`);
+        return thunkAPI.rejectWithValue({
+            error: error.response?.data?.errorMessages,
+        });
+    }
+});
 
 export const getCommentByStoreId = createAsyncThunk<
     IComment[],
@@ -150,13 +176,13 @@ export const editComment = createAsyncThunk<
     }
 });
 
-export const deleteComment = createAsyncThunk<IComment, { id: number }>(
+export const deleteComment = createAsyncThunk<IComment, { commentId: number }>(
     'comment/deleteComment',
-    async ({ id }, thunkAPI) => {
+    async ({ commentId }, thunkAPI) => {
         try {
             const token = localStorage.getItem('motorbike_bs');
             const response = await axios.put(
-                `${deleteCommentEndPoint}?id=${id}`,
+                `${deleteCommentEndPoint}?CommentID=${commentId}`,
                 {},
                 {
                     headers: {
@@ -210,6 +236,18 @@ export const commentSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
+        builder.addCase(getCommentByCommentId.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(getCommentByCommentId.fulfilled, (state, action) => {
+            state.loading = false;
+            state.comment = action.payload;
+            state.error = null;
+        });
+        builder.addCase(getCommentByCommentId.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
         builder.addCase(getCommentByStoreId.pending, (state) => {
             state.loading = true;
         });
