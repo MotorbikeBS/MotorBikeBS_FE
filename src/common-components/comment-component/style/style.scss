@@ -1,3 +1,14 @@
+.cmt-paper {
+    padding: 16px;
+    margin-bottom: 16px;
+    .request-title {
+        margin-bottom: 12px;
+        .request-title-text {
+            font-weight: 800;
+        }
+    }
+}
+
 .form-cmt {
     display: flex;
     gap: 10px;
