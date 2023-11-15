@@ -28,6 +28,7 @@ const StoreDetailByStoreComponent = () => {
         dispatch(getUserByID({ id: Number(account?.userId) }));
     }, [dispatch, account]);
 
+
     return (
         <Box className="store-detail-container">
             <Box className="store-detail-header">

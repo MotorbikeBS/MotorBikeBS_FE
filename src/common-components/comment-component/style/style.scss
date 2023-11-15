@@ -8,6 +8,13 @@
         }
     }
 }
+.comment-container-notFound {
+    :nth-child(1) {
+        align-items: center;
+        text-align: center !important;
+        margin-bottom: 12px;
+    }
+}
 
 .form-cmt {
     display: flex;
@@ -25,8 +32,11 @@
             font-size: 20px;
             font-weight: 800;
         }
-        .info-cmt {
-            gap: 10px;
+    }
+    .info-cmt {
+        .request-description {
+            color: #524f44;
+            font-weight: 700;
         }
     }
 }

@@ -75,58 +75,69 @@ export const getHistoryCommentByRequestId = createAsyncThunk<
     }
 });
 
-export const createComment = createAsyncThunk<IComment, string | Object>(
-    'comment/createComment',
-    async (data, thunkAPI) => {
-        try {
-            const token = localStorage.getItem('motorbike_bs');
-            const response = await axios.post(createCommentEndPoint, data, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            return response.data;
-        } catch (error: any) {
-            toast.error(`${error.response.data?.errorMessages}`);
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
-        }
-    },
-);
-
-export const replyComment = createAsyncThunk<IComment, string | Object>(
-    'comment/replyComment',
-    async (data, thunkAPI) => {
-        try {
-            const token = localStorage.getItem('motorbike_bs');
-            const response = await axios.post(replyCommentEndPoint, data, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            return response.data;
-        } catch (error: any) {
-            toast.error(`${error.response.data?.errorMessages}`);
-            return thunkAPI.rejectWithValue({
-                error: error.response?.data?.errorMessages,
-            });
-        }
-    },
-);
-
-export const editComment = createAsyncThunk<
+export const createComment = createAsyncThunk<
     IComment,
-    { id: number; status: number; data: Object }
->('comment/editComment', async ({ id, status, data }, thunkAPI) => {
+    { requestId: number; data: Object }
+>('comment/createComment', async ({ requestId, data }, thunkAPI) => {
     try {
         const token = localStorage.getItem('motorbike_bs');
-        const response = await axios.put(
-            `${editCommentEndPoint}?id=${id}&Status=${status}`,
+        const response = await axios.post(
+            `${createCommentEndPoint}?RequestID=${requestId}`,
             data,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+            },
+        );
+        return response.data;
+    } catch (error: any) {
+        toast.error(`${error.response.data?.errorMessages}`);
+        return thunkAPI.rejectWithValue({
+            error: error.response?.data?.errorMessages,
+        });
+    }
+});
+
+export const replyComment = createAsyncThunk<
+    IComment,
+    { replyId: number; data: Object }
+>('comment/replyComment', async ({ replyId, data }, thunkAPI) => {
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.post(
+            `${replyCommentEndPoint}?ReplyId=${replyId}`,
+            data,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+            },
+        );
+        return response.data;
+    } catch (error: any) {
+        toast.error(`${error.response.data?.errorMessages}`);
+        return thunkAPI.rejectWithValue({
+            error: error.response?.data?.errorMessages,
+        });
+    }
+});
+
+export const editComment = createAsyncThunk<
+    IComment,
+    { commentId: number; data: Object }
+>('comment/editComment', async ({ commentId, data }, thunkAPI) => {
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.put(
+            `${editCommentEndPoint}?CommentID=${commentId}`,
+            data,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data',
                 },
             },
         );
@@ -179,7 +190,7 @@ export const getRequestAssociatedWithStore = createAsyncThunk<
         );
         return response.data.result;
     } catch (error: any) {
-        toast.error(`${error.response.data?.errorMessages}`);
+        // toast.error(`${error.response.data?.errorMessages}`);
         return thunkAPI.rejectWithValue({
             error: error.response?.data?.errorMessages,
         });

@@ -45,8 +45,6 @@ const MotorbikeByStoreIdComponent = () => {
     const handleNavigateDetail = (motorbikeId: number) => {
         navigate(`/store/motorbike/${motorbikeId}`);
     };
-    console.log(motorbikeByStoreId);
-
     useEffect(() => {
         dispatch(clearMotor());
         dispatch(getMotorByStoreId({ storeId: Number(storeId) }));
