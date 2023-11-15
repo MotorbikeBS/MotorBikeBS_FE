@@ -193,8 +193,9 @@ const CommentComponent = () => {
                                         >
                                             <Box className="cmt-box">
                                                 <Box className="user-date">
-                                                    {comment?.request?.motor
-                                                        ?.owner === null ? (
+                                                    {comment?.userId ===
+                                                    comment?.request?.receiver
+                                                        ?.userId ? (
                                                         <Typography className="user-date-name">
                                                             {
                                                                 comment?.request
