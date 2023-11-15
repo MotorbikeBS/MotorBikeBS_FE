@@ -94,6 +94,8 @@ export const paymentHistoryEndPoint = `${BASE_URL}/api/Payment/GetPaymentHistory
 
 //Posting
 export const createPostBootingEndPoint = `${BASE_URL}/api/PostBoosting/Boosting`;
+export const getPostBootingHistoryEndPoint = `${BASE_URL}/api/PostBoosting/BoostingHistory`;
+export const ExtendPostBootingEndPoint = `${BASE_URL}/api/PostBooting/ExtendBoosting`;
 
 //Comment
 export const getCommentByStoreIdEndPoint = `${BASE_URL}/api/Comment/GetByStoreId_Receiver`;
@@ -104,4 +106,4 @@ export const editCommentEndPoint = `${BASE_URL}/api/Comment/UpdateComment`;
 export const deleteCommentEndPoint = `${BASE_URL}/api/Comment/DeleteComment`;
 
 //Request
-export const getRequestAssociatedWithStoreEndPoint = `${BASE_URL}/api/Request/GetRequestAssociated_WithStore`
+export const getRequestAssociatedWithStoreEndPoint = `${BASE_URL}/api/Request/GetRequestAssociated_WithStore`;

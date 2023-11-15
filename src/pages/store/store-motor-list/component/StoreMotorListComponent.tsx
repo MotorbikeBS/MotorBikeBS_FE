@@ -14,6 +14,7 @@ import ListStorageMotorByStoreId from './ListStorageMotorByStoreId';
 import ListPostedMotorByStoreId from './ListPostedMotorByStoreId';
 import CreateModelModal from '../../../../common-components/create-motorbike-component/create-motorFields-component/CreateModel';
 import CreateBrandModal from '../../../../common-components/create-motorbike-component/create-motorFields-component/CreateBrand';
+import PostBootingHistoryComponent from '../../posting-boot/post-booting-history/PostBootingHistoryComponent';
 
 const StoreMotorListComponent = () => {
     // const { account } = useAppSelector((state) => state.account);
@@ -137,6 +138,7 @@ const StoreMotorListComponent = () => {
             >
                 <Tab label="Xe trong kho" />
                 <Tab label="Xe đã đăng" />
+                <Tab label="Danh sách đẩy bài" />
             </Tabs>
 
             {value === 0 ? (
@@ -164,6 +166,9 @@ const StoreMotorListComponent = () => {
                 )}
                 {value === 1 && (
                     <ListPostedMotorByStoreId loadData={loadData} />
+                )}
+                {value === 3 && (
+                    <PostBootingHistoryComponent />
                 )}
             </Box>
 
