@@ -34,7 +34,7 @@ const persistConfig = {
         'customerBooking',
         'bill',
         'payment',
-        'post',
+        'postBooting',
     ],
 };
 
@@ -52,7 +52,7 @@ const rootReducer = combineReducers({
     customerBooking: customerBookingSlice,
     bill: billSlice,
     payment: paymentSlice,
-    comment: commentSlice
+    comment: commentSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -95,10 +95,11 @@ export const paymentHistoryEndPoint = `${BASE_URL}/api/Payment/GetPaymentHistory
 //Posting
 export const createPostBootingEndPoint = `${BASE_URL}/api/PostBoosting/Boosting`;
 export const getPostBootingHistoryEndPoint = `${BASE_URL}/api/PostBoosting/BoostingHistory`;
-export const ExtendPostBootingEndPoint = `${BASE_URL}/api/PostBooting/ExtendBoosting`;
+export const extendPostBootingEndPoint = `${BASE_URL}/api/PostBooting/ExtendBoosting`;
+export const changeLevelPostBootingEndPoint = `${BASE_URL}/api/postboosting/changelevel`;
 
 //Comment
-export const getCommentByCommentIdEndPoint = `${BASE_URL}/api/Comment/GetByCommentID`
+export const getCommentByCommentIdEndPoint = `${BASE_URL}/api/Comment/GetByCommentID`;
 export const getCommentByStoreIdEndPoint = `${BASE_URL}/api/Comment/GetByStoreId_Receiver`;
 export const getHistoryCommentByRequestIdEndPoint = `${BASE_URL}/api/Comment/GetHistoryCommentByRequestID`;
 export const createCommentEndPoint = `${BASE_URL}/api/Comment/CommentRegister`;

@@ -4,26 +4,6 @@ export const columns: GridColDef[] = [
     { field: 'id', headerName: 'Số Hóa Đơn', width: 180, hideable: true },
     { field: 'vnpayOrderId', headerName: 'Mã giao dịch', width: 280, hideable: true },
 
-    // {
-    //     field: 'paymentMoney',
-    //     headerName: 'Số Tiền',
-    //     width: 400,
-    //     hideable: true,
-    //     renderCell: (params) =>
-    //         params.row.paymentMoney > 0 ? (
-    //             <Typography color="#fab71b" fontWeight="700">
-    //                 {currencyFormatter.format(params.row.paymentMoney)}
-    //             </Typography>
-    //         ) : (
-    //             <></>
-    //         ),
-    // },
-
-    // {
-    //     field: 'point',
-    //     headerName: 'Số điểm quy đổi',
-    //     width: 400,
-    // },
     {
         field: 'dateCreated',
         headerName: 'Ngày tạo',
