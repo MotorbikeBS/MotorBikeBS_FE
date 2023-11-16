@@ -167,7 +167,7 @@ const StoreMotorListComponent = () => {
                 {value === 1 && (
                     <ListPostedMotorByStoreId loadData={loadData} />
                 )}
-                {value === 3 && (
+                {value === 2 && (
                     <PostBootingHistoryComponent />
                 )}
             </Box>

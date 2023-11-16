@@ -1,5 +1,15 @@
 import { IMotorStatus, IMotorType } from '../Motorbike/Motorbike';
 
+export interface ISelectRowPostingHistory {
+    id: number;
+    motorName: string;
+    certificateNumber: string;
+    startTime: Date;
+    endTime: Date;
+    level: number;
+    qty: number;
+    status: string;
+}
 export interface IPostBootingField {
     motorId: number;
     startTime: Date;
@@ -13,7 +23,7 @@ export interface IMotorImgPostBooting {
 }
 export interface IMotorPostBooting {
     motorId: number;
-    certificateNumber: number;
+    certificateNumber: string;
     motorName: string;
     modelId: number;
     odo: number;
@@ -33,6 +43,7 @@ export interface IPostBootingData {
     boostId: number;
     startTime: Date;
     endTime: Date;
+    totalPoint: number;
     level: number;
     historyId: number;
     status: string;

@@ -43,7 +43,7 @@ const StorePaymentHistory = () => {
                 </Typography>
                 <Typography fontSize="12px" gutterBottom color="red">
                     <strong>Lưu ý: </strong>Vui lòng nhấn đúp vào 1 hàng để xem
-                    thông tin cửa hàng đang thương lượng và cập nhật trạng thái
+                    thông tin cập nhật trạng thái
                 </Typography>
             </Paper>
             <DataGrid

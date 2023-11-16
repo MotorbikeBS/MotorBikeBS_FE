@@ -109,8 +109,8 @@ const MotorbikeSoldComponent = () => {
                         pagination: {
                             paginationModel: { page: 0, pageSize: 10 },
                         },
-                        columns:{
-                            columnVisibilityModel:{
+                        columns: {
+                            columnVisibilityModel: {
                                 motorId: false
                             }
                         }

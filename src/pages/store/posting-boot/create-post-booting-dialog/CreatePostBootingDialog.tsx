@@ -55,7 +55,7 @@ const CreatePostBootingDialog: React.FC<IPostingBootProps> = ({
 
     const form = useForm<IPostingBootField>({
         defaultValues: {
-            startTime: new Date(),
+            startTime: undefined,
             endTime: undefined,
             level: 1,
         },
@@ -91,6 +91,7 @@ const CreatePostBootingDialog: React.FC<IPostingBootProps> = ({
                         handleCloseDialog()
                     }, 1000)
                 })
+            console.log(data)
         }
     }
     return (
@@ -110,7 +111,7 @@ const CreatePostBootingDialog: React.FC<IPostingBootProps> = ({
                                         <TextField
                                             focused={true}
                                             label="Ngày bắt đầu"
-                                            type="datetime-local"
+                                            type="date"
                                             {...field}
                                             inputProps={{
                                                 min: new Date()
@@ -127,9 +128,6 @@ const CreatePostBootingDialog: React.FC<IPostingBootProps> = ({
                                             label="Ngày kết thúc"
                                             type="date"
                                             {...field}
-                                            inputProps={{
-                                                min: new Date(),
-                                            }}
                                         />
                                     )}
                                 />
