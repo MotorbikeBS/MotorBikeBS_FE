@@ -29,6 +29,23 @@ export interface IMotorPostBooting {
     motorType: IMotorType;
     motorbikeImages: IMotorImgPostBooting[];
 }
+export interface IPostBootingData {
+    boostId: number;
+    startTime: Date;
+    endTime: Date;
+    level: number;
+    historyId: number;
+    status: string;
+    pointDeducted: number;
+}
+export interface IPointHistory {
+    pHistoryId: number;
+    requestId: number;
+    qty: number;
+    pointUpdatedAt: Date;
+    storeId: number;
+    postBoostings: IPostBootingData[];
+}
 export interface IPostBooting {
     requestId: number;
     motorId: number;
@@ -38,4 +55,5 @@ export interface IPostBooting {
     requestTypeId: number;
     status: string;
     motor: IMotorPostBooting;
+    pointHistories: IPointHistory[];
 }
