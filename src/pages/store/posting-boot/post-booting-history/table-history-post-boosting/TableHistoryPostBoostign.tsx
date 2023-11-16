@@ -1,9 +1,9 @@
 import { Typography } from '@mui/material';
-import { GridColDef, GridColTypeDef } from '@mui/x-data-grid';
+import { GridColDef } from '@mui/x-data-grid';
 
 
 export const columns: GridColDef[] = [
-    { field: 'id', headerName: 'PostBoosting ID', width: 180, hideable: true },
+    { field: 'id', headerName: 'Motor ID', width: 180, hideable: true },
     {
         field: 'motorName',
         headerName: 'Tên Xe',
@@ -46,7 +46,7 @@ export const columns: GridColDef[] = [
     },
     {
         field: 'qty',
-        headerName: 'Số điểm đã trừ',
+        headerName: 'Số coin đã trừ',
         width: 150,
         hideable: true,
         renderCell: (params) =>

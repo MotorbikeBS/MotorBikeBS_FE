@@ -1,11 +1,28 @@
 import React from 'react'
-import { useAppDispatch, useAppSelector } from '../../../../services/store/store'
-import { clearPostBoostingHistory, getHistoryPostBoosting } from '../../../../services/features/posting/postBootingSlice'
-import { IPostBooting, ISelectRowPostingHistory } from '../../../../models/PostBooting/PostBooting'
-import { Container, Paper, Typography } from '@mui/material'
+import {
+    useAppDispatch,
+    useAppSelector
+} from '../../../../services/store/store'
+import {
+    clearPostBoostingHistory,
+    getHistoryPostBoosting
+} from '../../../../services/features/posting/postBootingSlice'
+import {
+    IPostBooting,
+    ISelectRowPostingHistory
+} from '../../../../models/PostBooting/PostBooting'
+import {
+    Container,
+    Paper,
+    Typography
+} from '@mui/material'
 import { columns } from './table-history-post-boosting/TableHistoryPostBoostign'
-import { DataGrid, GridRowParams } from '@mui/x-data-grid'
+import {
+    DataGrid,
+    GridRowParams
+} from '@mui/x-data-grid'
 import { format } from 'date-fns'
+import PostBoostingInforDialog from './post-boosting-info-dialog/PostBoostingInforDialog'
 
 
 const PostBootingHistoryComponent = () => {
@@ -28,14 +45,10 @@ const PostBootingHistoryComponent = () => {
         setSelectedRow(params.row as ISelectRowPostingHistory);
         setIsInforModalOpen(true);
     };
-    const closeDetailModal = () => {
-        setIsInforModalOpen(false);
-    };
-
 
     const rows = React.useMemo(() => {
         return postBootings?.map((postBoosting: IPostBooting) => ({
-            id: postBoosting?.pointHistories[0]?.postBoostings[0]?.boostId,
+            id: postBoosting?.motor?.motorId,
             motorName: postBoosting?.motor?.motorName,
             certificateNumber: postBoosting?.motor?.certificateNumber,
             startTime: format(new Date(postBoosting?.pointHistories[0]?.postBoostings[0]?.startTime), 'dd-MM-yyyy'),
@@ -61,17 +74,23 @@ const PostBootingHistoryComponent = () => {
                     <strong>Lưu ý: </strong>Vui lòng nhấn đúp vào 1 hàng để xem
                     thông tin và cập nhật trạng thái.
                 </Typography>
+                <DataGrid
+                    rows={rows ?? []}
+                    columns={columns}
+                    pageSizeOptions={[5, 10, 100]}
+                    disableRowSelectionOnClick
+                    onRowDoubleClick={handleRowDoubleClick}
+                    autoHeight
+                    localeText={{
+                        noRowsLabel: 'Không có dữ liệu',
+                    }}
+                />
             </Paper>
-            <DataGrid
-                rows={rows ?? []}
-                columns={columns}
-                pageSizeOptions={[5, 10, 100]}
-                disableRowSelectionOnClick
-                onRowDoubleClick={handleRowDoubleClick}
-                autoHeight
-                localeText={{
-                    noRowsLabel: 'Không có dữ liệu',
-                }}
+            <PostBoostingInforDialog
+                isOpen={isInforModalOpen}
+                onClose={() => setIsInforModalOpen(false)}
+                data={selectedRow}
+                loadData={loadData}
             />
         </Container>
     )
