@@ -1,0 +1,173 @@
+import React, { ReactNode } from 'react'
+import { ISelectRowPostingHistory } from '../../../../../models/PostBooting/PostBooting'
+import {
+    Button,
+    Grid,
+    Modal,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableRow,
+    Typography
+} from '@mui/material';
+import './style/_style.scss'
+import { ClearRounded } from '@mui/icons-material';
+import ExtensionPostBootingDialog from '../../extension-post-booting-dialog/ExtensionPostBootingDialog';
+
+interface IPostBootingInforDialog {
+    isOpen: boolean;
+    onClose: () => void
+    loadData: () => void
+    data: ISelectRowPostingHistory | null
+}
+
+const PostBoostingInforDialog: React.FC<IPostBootingInforDialog> = ({
+    isOpen,
+    onClose,
+    data,
+}) => {
+    const [motorIdDialog, setMotorIdDialog] = React.useState<number | null>(null)
+    const [isOpenExtendDialog, setIsOpenExtendDialog] = React.useState(false)
+    const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false)
+    const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false)
+
+    if (!data) {
+        return null;
+    }
+
+    const createData = (label: string, value: ReactNode) => ({ label, value });
+    const rows = [
+        createData("PostBoostingID", data.id),
+        createData('Tên Xe', data.motorName),
+        createData('Số đăng ký', data.certificateNumber),
+        createData('Ngày đẩy bài', data.startTime ? data.startTime.toLocaleString() : 'N/A'),
+        createData('Ngày hết hạn', data.endTime ? data.endTime.toLocaleString() : 'N/A'),
+        createData('Gói đẩy bài',
+            (
+                data?.level === 1 ? (
+                    <Typography color='#f7d71e' fontWeight='700'>Default</Typography>
+                ) : data?.level === 2 ? (
+                    <Typography color='#63f2ab' fontWeight='700'>Medium</Typography>
+                ) : data?.level === 3 ? (
+                    <Typography color='#057a40' fontWeight='700'>Premium</Typography>
+                )
+                    : (
+                        <></>
+                    )
+            )
+        ),
+        createData('Số coin đã trừ', (
+            <Typography color='red' fontWeight='700'>-{data.qty} BS-COIN</Typography>
+
+        )),
+        createData('Trạng thái đẩy bài', (
+            data?.status === 'ACCEPT' ? (
+                <Typography color='green' fontWeight='700'>ĐANG ĐẨY BÀI</Typography>
+            ) : data?.status === 'CANCEL' ? (
+                <Typography color='red' fontWeight='700'>Hết Hạn</Typography>
+            ) : (
+                <></>
+            )
+        ))
+    ]
+
+    const handleOpenExtendDialog = (motorId: number) => {
+        setMotorIdDialog(motorId)
+        setIsOpenExtendDialog(true)
+        console.log(motorId)
+    }
+    const handleOpenSubmitDialog = () => {
+        setIsOpenSubmitDialog(true);
+    };
+
+    const handleCloseSubmitDialog = () => {
+        setIsOpenSubmitDialog(false);
+    };
+    const handleOpenCancelDialog = () => {
+        setIsOpenCancelDialog(true);
+    };
+    const handleCloseCancelDialog = () => {
+        setIsOpenCancelDialog(false);
+    };
+    const handleCloseExtendDialog = () => {
+        setIsOpenExtendDialog(false)
+        setIsOpenSubmitDialog(false);
+        setIsOpenCancelDialog(false);
+    };
+    return (
+        <>
+            <Modal
+                open={isOpen}
+                onClose={onClose}
+            >
+                <div className='modal-container'>
+                    <div className='modal-header'>
+                        <Typography variant="h4" gutterBottom fontWeight='700'>
+                            Thông tin đẩy bài {data.motorName}
+                        </Typography>
+                        <div className='header-btn-close'>
+                            <Button onClick={onClose}>
+                                <ClearRounded />
+                            </Button>
+                        </div>
+                    </div>
+                    <TableContainer component={Paper}>
+                        <Table>
+                            <TableBody>
+                                {rows.map((row) => (
+                                    <TableRow key={row.label}>
+                                        <TableCell component="th" scope="row">
+                                            {row.label}
+                                        </TableCell>
+                                        <TableCell align="left">{row.value}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <div
+                        className='posting-history-action'>
+                        <Grid item>
+                            <Button
+                                variant="contained"
+                                color="success"
+                                onClick={(() => {
+                                    handleOpenExtendDialog(
+                                        data.id
+                                    )
+                                })}
+                            >
+                                Gia hạn
+                            </Button>
+                        </Grid>
+                        <Grid item>
+                            <Button
+                                variant="contained"
+                                color="error"
+                            // onClick={handleChangeLevelPostBooting}
+                            >
+                                Đổi gói
+                            </Button>
+                        </Grid>
+                    </div>
+                </div>
+            </Modal>
+            <ExtensionPostBootingDialog
+                open={isOpenExtendDialog}
+                openSubmit={isOpenSubmitDialog}
+                openCancle={isOpenCancelDialog}
+                onOpenSubmitDialog={handleOpenSubmitDialog}
+                onCloseSubmitDialog={handleCloseSubmitDialog}
+                onOpenCancelDialog={handleOpenCancelDialog}
+                onCloseCancelDialog={handleCloseCancelDialog}
+                onClose={handleCloseExtendDialog}
+                motorId={motorIdDialog}
+            />
+
+        </>
+    )
+}
+
+export default PostBoostingInforDialog

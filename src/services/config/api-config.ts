@@ -95,7 +95,7 @@ export const paymentHistoryEndPoint = `${BASE_URL}/api/Payment/GetPaymentHistory
 //Posting
 export const createPostBootingEndPoint = `${BASE_URL}/api/PostBoosting/Boosting`;
 export const getPostBootingHistoryEndPoint = `${BASE_URL}/api/PostBoosting/BoostingHistory`;
-export const extendPostBootingEndPoint = `${BASE_URL}/api/PostBooting/ExtendBoosting`;
+export const extendPostBootingEndPoint = `${BASE_URL}/api/PostBoosting/ExtendBoosting`;
 export const changeLevelPostBootingEndPoint = `${BASE_URL}/api/postboosting/changelevel`;
 
 //Comment

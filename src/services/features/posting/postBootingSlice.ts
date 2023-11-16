@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import {
     createPostBootingEndPoint,
+    extendPostBootingEndPoint,
     getPostBootingHistoryEndPoint,
 } from '../../config/api-config';
 
@@ -72,6 +73,32 @@ export const getHistoryPostBoosting = createAsyncThunk<IPostBooting[], void>(
         }
     },
 );
+export const extendPostBoosting = createAsyncThunk<
+    IPostBooting,
+    { motorId: number; data: Object }
+>('postBoosting/extendPostBoosting', async ({ motorId, data }, thunkAPI) => {
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.put(
+            `${extendPostBootingEndPoint}?motorId=${motorId}`,
+            data,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        toast.success(`${response.data.message}`);
+        return response.data;
+    } catch (error: any) {
+        if (error.response) {
+            toast.error(`${error.response.data?.errorMessages}`);
+            return thunkAPI.rejectWithValue({
+                error: error.response?.data?.errorMessages,
+            });
+        }
+    }
+});
 
 export const postBootingSlice = createSlice({
     name: 'postBooting',
@@ -103,6 +130,17 @@ export const postBootingSlice = createSlice({
             state.error = null;
         });
         builder.addCase(getHistoryPostBoosting.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(extendPostBoosting.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(extendPostBoosting.fulfilled, (state) => {
+            state.loading = false;
+            state.error = null;
+        });
+        builder.addCase(extendPostBoosting.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });
