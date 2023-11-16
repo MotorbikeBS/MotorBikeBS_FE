@@ -8,7 +8,7 @@ import {
     Rating,
     Typography,
 } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
     useAppDispatch,
     useAppSelector,
@@ -18,16 +18,41 @@ import { format } from 'date-fns';
 import '../style/style.scss';
 import MotorbikeForStoreComponent from './MotorbikeForStoreComponent';
 import CommentForStoreComponent from './CommentForStoreComponent';
+import { getCommentByStoreId } from '../../../../services/features/comment/commentSlice.';
 
 const StoreDetailByStoreComponent = () => {
     const dispatch = useAppDispatch();
     const { account } = useAppSelector((state) => state.account);
     const { user } = useAppSelector((state) => state.users);
+    const { commentStore } = useAppSelector((state) => state.comment);
+
+    const averageRating = useMemo(() => {
+        if (!commentStore) return undefined;
+
+        const totalRating = commentStore.reduce((total, comment) => {
+            if (comment?.rating) {
+                return total + comment.rating;
+            }
+            return total;
+        }, 0);
+
+        const numberOfRatings =
+            commentStore.filter((comment) => comment?.rating).length || 1;
+
+        return totalRating / numberOfRatings;
+    }, [commentStore]);
 
     useEffect(() => {
         dispatch(getUserByID({ id: Number(account?.userId) }));
     }, [dispatch, account]);
 
+    useEffect(() => {
+        dispatch(
+            getCommentByStoreId({
+                storeId: Number(user?.storeDesciptions[0]?.storeId),
+            }),
+        );
+    }, [dispatch, user]);
 
     return (
         <Box className="store-detail-container">
@@ -98,7 +123,7 @@ const StoreDetailByStoreComponent = () => {
                             <Button>
                                 <Rating
                                     name="read-only"
-                                    defaultValue={4}
+                                    defaultValue={averageRating}
                                     precision={0.5}
                                     readOnly
                                 />

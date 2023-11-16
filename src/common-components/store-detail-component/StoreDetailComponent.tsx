@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
     Avatar,
     Box,
@@ -31,24 +31,27 @@ const StoreDetailComponent = () => {
     const dispatch = useAppDispatch();
     const { stores } = useAppSelector((state) => state.store);
     const { commentStore } = useAppSelector((state) => state.comment);
-    
-    let averageRating: number | undefined;
-    
+
+    const averageRating = useMemo(() => {
+        if (!commentStore) return undefined;
+
+        const totalRating = commentStore.reduce((total, comment) => {
+            if (comment?.rating) {
+                return total + comment.rating;
+            }
+            return total;
+        }, 0);
+
+        const numberOfRatings =
+            commentStore.filter((comment) => comment?.rating).length || 1;
+
+        return totalRating / numberOfRatings;
+    }, [commentStore]);
+
     useEffect(() => {
         dispatch(clearComment());
         dispatch(getCommentByStoreId({ storeId: Number(storeId) }));
     }, [dispatch, storeId]);
-
-    if (commentStore) {
-        averageRating =
-            commentStore.reduce((total, comment) => {
-                if (comment?.rating) {
-                    return total + comment.rating;
-                }
-                return total;
-            }, 0) /
-            (commentStore.filter((comment) => comment?.rating).length || 1);
-    }
 
     if (!storeId) {
         return (
