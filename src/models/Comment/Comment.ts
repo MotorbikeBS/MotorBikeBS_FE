@@ -11,11 +11,21 @@ export interface IComment {
     updateAt: Date;
     status: string;
     replyId: number;
-    reply: {};
+    inverseReply: [
+        {
+            commentId: number;
+            userId: number;
+            content: string;
+            rating: number;
+            createAt: Date;
+            updateAt: Date;
+            status: string;
+        },
+    ];
     request: {
         requestId: number;
         motorId: number;
-        motor: IMotorbike
+        motor: IMotorbike;
         receiverId: number;
         senderId: number;
         time: Date;

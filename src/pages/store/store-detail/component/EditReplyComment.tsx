@@ -1,3 +1,14 @@
+import React, { useEffect } from 'react';
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../../../../services/store/store';
+import {
+    editComment,
+    getCommentByCommentId,
+} from '../../../../services/features/comment/commentSlice.';
+import { Controller, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import {
     Box,
     Button,
@@ -5,62 +16,48 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
-    Rating,
     TextareaAutosize,
     Typography,
 } from '@mui/material';
-import React, { useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '../../services/store/store';
-import {
-    editComment,
-    getCommentByCommentId,
-} from '../../services/features/comment/commentSlice.';
-import { toast } from 'react-toastify';
 
 interface ICommentProps {
     content: string;
     rating: number;
 }
 
-interface EditCommentProps {
-    commentId: number;
+interface EditReplyCommentProps {
+    replyCommentId: number;
+    replyContent: string;
     isOpenEditComment: boolean;
     onCloseEditComment: () => void;
     loadData: () => void;
 }
 
-const EditComment: React.FC<EditCommentProps> = ({
-    commentId,
+const EditReplyComment: React.FC<EditReplyCommentProps> = ({
+    replyCommentId,
+    replyContent,
     isOpenEditComment,
     onCloseEditComment,
     loadData,
 }) => {
     const dispatch = useAppDispatch();
-    const { comment } = useAppSelector((state) => state.comment);
-
-    useEffect(() => {
-        dispatch(getCommentByCommentId({ commentId: commentId }));
-    }, [dispatch, commentId]);
-
     const form = useForm<ICommentProps>({
         defaultValues: {
             content: '',
-            rating: undefined,
+            rating: 0,
         },
     });
 
     const { control, handleSubmit } = form;
 
     useEffect(() => {
-        if (comment) {
-            form.setValue('rating', comment?.rating);
-            form.setValue('content', comment?.content);
+        if (replyContent) {
+            form.setValue('content', replyContent);
         }
-    }, [comment, form]);
+    }, [replyContent, form]);
 
     const onSubmit = (data: ICommentProps) => {
-        dispatch(editComment({ commentId: commentId, data }))
+        dispatch(editComment({ commentId: replyCommentId, data }))
             .unwrap()
             .then(() => {
                 loadData();
@@ -88,17 +85,6 @@ const EditComment: React.FC<EditCommentProps> = ({
                     <Box sx={{ padding: 2 }}>
                         <form noValidate className="form-cmt">
                             <Controller
-                                name="rating"
-                                control={control}
-                                render={({ field }) => (
-                                    <Rating
-                                        {...field}
-                                        defaultValue={0}
-                                        precision={1}
-                                    />
-                                )}
-                            />
-                            <Controller
                                 name="content"
                                 control={control}
                                 render={({ field }) => (
@@ -106,7 +92,7 @@ const EditComment: React.FC<EditCommentProps> = ({
                                         {...field}
                                         placeholder="Viết bình luận ..."
                                         style={{
-                                            width: '85%',
+                                            width: '100%',
                                             height: '60px',
                                             resize: 'none',
                                         }}
@@ -133,4 +119,4 @@ const EditComment: React.FC<EditCommentProps> = ({
     );
 };
 
-export default EditComment;
+export default EditReplyComment;

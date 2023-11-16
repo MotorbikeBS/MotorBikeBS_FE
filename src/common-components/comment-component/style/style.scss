@@ -41,3 +41,20 @@
         }
     }
 }
+.reply-title {
+    padding-top: 6px;
+    padding-left: 6px;
+    font-weight: 700 !important;
+    color: rgb(32, 3, 3);
+}
+
+.comment-box-paper {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 24px;
+    padding-right: 24px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

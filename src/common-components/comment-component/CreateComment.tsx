@@ -31,7 +31,8 @@ const CreateComment: React.FC<createCommentProps> = ({
         },
     });
 
-    const { control, handleSubmit } = form;
+    const { control, handleSubmit, formState } = form;
+    const { isDirty } = formState;
 
     const onSubmit = (data: ICommentProps) => {
         dispatch(createComment({ requestId: Number(requestId), data }))
@@ -71,7 +72,11 @@ const CreateComment: React.FC<createCommentProps> = ({
                         />
                     )}
                 />
-                <Button type="submit" onClick={handleSubmit(onSubmit)}>
+                <Button
+                    type="submit"
+                    onClick={handleSubmit(onSubmit)}
+                    disabled={!isDirty}
+                >
                     <SendIcon />
                 </Button>
             </form>

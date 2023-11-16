@@ -32,6 +32,11 @@ export interface IMotorbike {
     };
     registrationImage: string;
     motorbikeImages: IMotorImages[];
+    boosting: {
+        startTime: Date;
+        endTime: Date;
+        level: number;
+    }
     postingAt: Date;
 }
 
