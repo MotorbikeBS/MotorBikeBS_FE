@@ -182,166 +182,359 @@ const CommentComponent = () => {
                                         <Paper
                                             key={comment?.commentId}
                                             elevation={3}
-                                            sx={{
-                                                paddingY: 2,
-                                                paddingX: 4,
-                                                marginBottom: 2,
-                                                display: 'flex',
-                                                justifyContent: 'space-between',
-                                                alignItems: 'center',
-                                            }}
                                         >
-                                            <Box className="cmt-box">
-                                                <Box className="user-date">
-                                                    {comment?.userId ===
-                                                    comment?.request?.receiver
-                                                        ?.userId ? (
-                                                        <Typography className="user-date-name">
-                                                            {
-                                                                comment?.request
-                                                                    ?.receiver
-                                                                    ?.userName
-                                                            }
-                                                        </Typography>
-                                                    ) : (
-                                                        <>
+                                            <Box className="comment-box-paper">
+                                                <Box className="cmt-box">
+                                                    <Box className="user-date">
+                                                        {comment?.userId ===
+                                                        comment?.request
+                                                            ?.receiver
+                                                            ?.userId ? (
                                                             <Typography className="user-date-name">
                                                                 {
                                                                     comment
                                                                         ?.request
-                                                                        ?.sender
+                                                                        ?.receiver
                                                                         ?.userName
                                                                 }
                                                             </Typography>
-                                                        </>
-                                                    )}
-                                                    {comment?.updateAt !==
-                                                        null &&
-                                                        comment?.userId ===
-                                                            account?.userId && (
-                                                            <Typography
+                                                        ) : (
+                                                            <>
+                                                                <Typography className="user-date-name">
+                                                                    {
+                                                                        comment
+                                                                            ?.request
+                                                                            ?.sender
+                                                                            ?.userName
+                                                                    }
+                                                                </Typography>
+                                                            </>
+                                                        )}
+                                                        {comment?.updateAt !==
+                                                            null &&
+                                                            comment?.userId ===
+                                                                account?.userId && (
+                                                                <Typography
+                                                                    sx={{
+                                                                        color: '#ccc',
+                                                                    }}
+                                                                >
+                                                                    Đã chỉnh sửa
+                                                                </Typography>
+                                                            )}
+                                                        <Typography variant="subtitle1">
+                                                            {comment?.createAt &&
+                                                                new Date(
+                                                                    comment.createAt,
+                                                                ).toLocaleString(
+                                                                    'vi-VN',
+                                                                    {
+                                                                        timeZone:
+                                                                            'Asia/Ho_Chi_Minh',
+                                                                        day: '2-digit',
+                                                                        month: '2-digit',
+                                                                        year: 'numeric',
+                                                                        hour: '2-digit',
+                                                                        minute: '2-digit',
+                                                                    },
+                                                                )}
+                                                        </Typography>
+                                                    </Box>
+                                                    <Box className="info-cmt">
+                                                        <Rating
+                                                            readOnly
+                                                            defaultValue={
+                                                                comment?.rating
+                                                            }
+                                                            precision={1}
+                                                        />
+                                                        <Typography>
+                                                            {comment?.content}
+                                                        </Typography>
+                                                        <Typography className="request-description">
+                                                            {
+                                                                comment?.request
+                                                                    ?.requestType
+                                                                    ?.description
+                                                            }{' '}
+                                                            -{' '}
+                                                            {
+                                                                comment?.request
+                                                                    ?.motor
+                                                                    ?.motorName
+                                                            }{' '}
+                                                            -{' '}
+                                                            {
+                                                                comment?.request
+                                                                    ?.status
+                                                            }
+                                                        </Typography>
+                                                    </Box>
+                                                </Box>
+                                                {account?.roleId === 3 &&
+                                                    comment?.request?.receiver
+                                                        ?.userId ===
+                                                        account?.userId && (
+                                                        <Box>
+                                                            <Button
                                                                 sx={{
-                                                                    color: '#ccc',
+                                                                    marginRight: 1,
+                                                                }}
+                                                                onClick={() =>
+                                                                    handleOpenEditComment(
+                                                                        comment?.commentId,
+                                                                    )
+                                                                }
+                                                                variant="outlined"
+                                                            >
+                                                                Chỉnh sửa
+                                                            </Button>
+                                                            <Button
+                                                                onClick={() =>
+                                                                    handleOpenSubmitDeleteComment(
+                                                                        comment?.commentId,
+                                                                    )
+                                                                }
+                                                                variant="outlined"
+                                                                color="error"
+                                                            >
+                                                                Xóa
+                                                            </Button>
+                                                        </Box>
+                                                    )}
+                                                {account?.roleId === 4 &&
+                                                    comment?.request?.sender
+                                                        ?.userId ===
+                                                        account?.userId && (
+                                                        <Box>
+                                                            <Button
+                                                                sx={{
+                                                                    marginRight: 1,
+                                                                }}
+                                                                onClick={() =>
+                                                                    handleOpenEditComment(
+                                                                        comment?.commentId,
+                                                                    )
+                                                                }
+                                                                variant="outlined"
+                                                            >
+                                                                Chỉnh sửa
+                                                            </Button>
+                                                            <Button
+                                                                onClick={() =>
+                                                                    handleOpenSubmitDeleteComment(
+                                                                        comment?.commentId,
+                                                                    )
+                                                                }
+                                                                variant="outlined"
+                                                                color="error"
+                                                            >
+                                                                Xóa
+                                                            </Button>
+                                                        </Box>
+                                                    )}
+                                            </Box>
+                                        </Paper>
+                                        {comment?.inverseReply &&
+                                            comment?.inverseReply.map(
+                                                (replyCmt) => (
+                                                    <>
+                                                        {replyCmt?.status !==
+                                                            'DELETE' && (
+                                                            <Paper
+                                                                key={
+                                                                    replyCmt?.commentId
+                                                                }
+                                                                elevation={3}
+                                                                sx={{
+                                                                    marginLeft: 6,
                                                                 }}
                                                             >
-                                                                Đã chỉnh sửa
-                                                            </Typography>
-                                                        )}
-                                                    <Typography variant="subtitle1">
-                                                        {comment?.createAt &&
-                                                            new Date(
-                                                                comment.createAt,
-                                                            ).toLocaleString(
-                                                                'vi-VN',
-                                                                {
-                                                                    timeZone:
-                                                                        'Asia/Ho_Chi_Minh',
-                                                                    day: '2-digit',
-                                                                    month: '2-digit',
-                                                                    year: 'numeric',
-                                                                    hour: '2-digit',
-                                                                    minute: '2-digit',
-                                                                },
+                                                                <Typography className="reply-title">
+                                                                    Trả lời:
+                                                                </Typography>
+                                                                <Box className="comment-box-paper">
+                                                                    <Box className="cmt-box">
+                                                                        <Box className="user-date">
+                                                                            {comment
+                                                                                ?.request
+                                                                                ?.receiver
+                                                                                ?.roleId ===
+                                                                                2 && (
+                                                                                <Typography className="user-date-name">
+                                                                                    {
+                                                                                        comment
+                                                                                            ?.request
+                                                                                            ?.receiver
+                                                                                            ?.userName
+                                                                                    }{' '}
+                                                                                    -{' '}
+                                                                                    {
+                                                                                        comment
+                                                                                            ?.request
+                                                                                            ?.receiver
+                                                                                            ?.storeDesciptions[0]
+                                                                                            ?.storeName
+                                                                                    }
+                                                                                </Typography>
+                                                                            )}
+                                                                            {comment
+                                                                                ?.request
+                                                                                ?.sender
+                                                                                ?.roleId ===
+                                                                                2 && (
+                                                                                <Typography className="user-date-name">
+                                                                                    {
+                                                                                        comment
+                                                                                            ?.request
+                                                                                            ?.sender
+                                                                                            ?.userName
+                                                                                    }{' '}
+                                                                                    -{' '}
+                                                                                    {
+                                                                                        comment
+                                                                                            ?.request
+                                                                                            ?.sender
+                                                                                            ?.storeDesciptions[0]
+                                                                                            ?.storeName
+                                                                                    }
+                                                                                </Typography>
+                                                                            )}
+                                                                            {/* 
+                                                                {comment
+                                                                    ?.inverseReply[0]
+                                                                    ?.status ===
+                                                                    'UPDATE' && (
+                                                                    <Typography
+                                                                        sx={{
+                                                                            color: '#ccc',
+                                                                        }}
+                                                                    >
+                                                                        Đã chỉnh
+                                                                        sửa
+                                                                    </Typography>
+                                                                )} */}
+                                                                            <Typography variant="subtitle1">
+                                                                                {replyCmt.createAt &&
+                                                                                    new Date(
+                                                                                        replyCmt.createAt,
+                                                                                    ).toLocaleString(
+                                                                                        'vi-VN',
+                                                                                        {
+                                                                                            timeZone:
+                                                                                                'Asia/Ho_Chi_Minh',
+                                                                                            day: '2-digit',
+                                                                                            month: '2-digit',
+                                                                                            year: 'numeric',
+                                                                                            hour: '2-digit',
+                                                                                            minute: '2-digit',
+                                                                                        },
+                                                                                    )}
+                                                                            </Typography>
+                                                                        </Box>
+                                                                        <Box className="info-cmt">
+                                                                            <Typography>
+                                                                                {
+                                                                                    replyCmt?.content
+                                                                                }
+                                                                            </Typography>
+                                                                            {/* <Typography className="request-description">
+                                                                    {
+                                                                        comment
+                                                                            ?.request
+                                                                            ?.requestType
+                                                                            ?.description
+                                                                    }{' '}
+                                                                    -{' '}
+                                                                    {
+                                                                        comment
+                                                                            ?.request
+                                                                            ?.motor
+                                                                            ?.motorName
+                                                                    }{' '}
+                                                                    -{' '}
+                                                                    {
+                                                                        comment
+                                                                            ?.request
+                                                                            ?.status
+                                                                    }
+                                                                </Typography> */}
+                                                                        </Box>
+                                                                    </Box>
+                                                                    {/* {account?.roleId ===
+                                                            3 &&
+                                                            comment?.request
+                                                                ?.receiver
+                                                                ?.userId ===
+                                                                account?.userId && (
+                                                                <Box>
+                                                                    <Button
+                                                                        sx={{
+                                                                            marginRight: 1,
+                                                                        }}
+                                                                        onClick={() =>
+                                                                            handleOpenEditComment(
+                                                                                comment?.commentId,
+                                                                            )
+                                                                        }
+                                                                        variant="outlined"
+                                                                    >
+                                                                        Chỉnh
+                                                                        sửa
+                                                                    </Button>
+                                                                    <Button
+                                                                        onClick={() =>
+                                                                            handleOpenSubmitDeleteComment(
+                                                                                comment?.commentId,
+                                                                            )
+                                                                        }
+                                                                        variant="outlined"
+                                                                        color="error"
+                                                                    >
+                                                                        Xóa
+                                                                    </Button>
+                                                                </Box>
                                                             )}
-                                                    </Typography>
-                                                </Box>
-                                                <Box className="info-cmt">
-                                                    <Rating
-                                                        readOnly
-                                                        defaultValue={
-                                                            comment?.rating
-                                                        }
-                                                        precision={1}
-                                                    />
-                                                    <Typography>
-                                                        {comment?.content}
-                                                    </Typography>
-                                                    <Typography className="request-description">
-                                                        {
+                                                        {account?.roleId ===
+                                                            4 &&
                                                             comment?.request
-                                                                ?.requestType
-                                                                ?.description
-                                                        }{' '}
-                                                        -{' '}
-                                                        {
-                                                            comment?.request
-                                                                ?.motor
-                                                                ?.motorName
-                                                        }{' '}
-                                                        -{' '}
-                                                        {
-                                                            comment?.request
-                                                                ?.status
-                                                        }
-                                                    </Typography>
-                                                </Box>
-                                            </Box>
-                                            {account?.roleId === 3 &&
-                                                comment?.request?.receiver
-                                                    ?.userId ===
-                                                    account?.userId && (
-                                                    <Box>
-                                                        <Button
-                                                            sx={{
-                                                                marginRight: 1,
-                                                            }}
-                                                            onClick={() =>
-                                                                handleOpenEditComment(
-                                                                    comment?.commentId,
-                                                                )
-                                                            }
-                                                            variant="outlined"
-                                                        >
-                                                            Chỉnh sửa
-                                                        </Button>
-                                                        <Button
-                                                            onClick={() =>
-                                                                handleOpenSubmitDeleteComment(
-                                                                    comment?.commentId,
-                                                                )
-                                                            }
-                                                            variant="outlined"
-                                                            color="error"
-                                                        >
-                                                            Xóa
-                                                        </Button>
-                                                    </Box>
-                                                )}
-                                            {account?.roleId === 4 &&
-                                                comment?.request?.sender
-                                                    ?.userId ===
-                                                    account?.userId && (
-                                                    <Box>
-                                                        <Button
-                                                            sx={{
-                                                                marginRight: 1,
-                                                            }}
-                                                            onClick={() =>
-                                                                handleOpenEditComment(
-                                                                    comment?.commentId,
-                                                                )
-                                                            }
-                                                            variant="outlined"
-                                                        >
-                                                            Chỉnh sửa
-                                                        </Button>
-                                                        <Button
-                                                            onClick={() =>
-                                                                handleOpenSubmitDeleteComment(
-                                                                    comment?.commentId,
-                                                                )
-                                                            }
-                                                            variant="outlined"
-                                                            color="error"
-                                                        >
-                                                            Xóa
-                                                        </Button>
-                                                    </Box>
-                                                )}
-                                            {/* <Box> */}
-
-                                            {/* </Box> */}
-                                        </Paper>
+                                                                ?.sender
+                                                                ?.userId ===
+                                                                account?.userId && (
+                                                                <Box>
+                                                                    <Button
+                                                                        sx={{
+                                                                            marginRight: 1,
+                                                                        }}
+                                                                        onClick={() =>
+                                                                            handleOpenEditComment(
+                                                                                comment?.commentId,
+                                                                            )
+                                                                        }
+                                                                        variant="outlined"
+                                                                    >
+                                                                        Chỉnh
+                                                                        sửa
+                                                                    </Button>
+                                                                    <Button
+                                                                        onClick={() =>
+                                                                            handleOpenSubmitDeleteComment(
+                                                                                comment?.commentId,
+                                                                            )
+                                                                        }
+                                                                        variant="outlined"
+                                                                        color="error"
+                                                                    >
+                                                                        Xóa
+                                                                    </Button>
+                                                                </Box>
+                                                            )} */}
+                                                                </Box>
+                                                            </Paper>
+                                                        )}
+                                                    </>
+                                                ),
+                                            )}
                                     </>
                                 ))}
                         </>

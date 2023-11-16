@@ -30,14 +30,16 @@ const StoreDetailByStoreComponent = () => {
         if (!commentStore) return undefined;
 
         const totalRating = commentStore.reduce((total, comment) => {
-            if (comment?.rating) {
+            if (comment?.rating && comment?.replyId === null) {
                 return total + comment.rating;
             }
             return total;
         }, 0);
 
         const numberOfRatings =
-            commentStore.filter((comment) => comment?.rating).length || 1;
+            commentStore.filter(
+                (comment) => comment?.rating && comment?.replyId === null,
+            ).length || 1;
 
         return totalRating / numberOfRatings;
     }, [commentStore]);
