@@ -271,68 +271,80 @@ const CommentComponent = () => {
                                                         </Typography>
                                                     </Box>
                                                 </Box>
-                                                {account?.roleId === 3 &&
-                                                    comment?.request?.receiver
-                                                        ?.userId ===
-                                                        account?.userId && (
-                                                        <Box>
-                                                            <Button
-                                                                sx={{
-                                                                    marginRight: 1,
-                                                                }}
-                                                                onClick={() =>
-                                                                    handleOpenEditComment(
-                                                                        comment?.commentId,
-                                                                    )
-                                                                }
-                                                                variant="outlined"
-                                                            >
-                                                                Chỉnh sửa
-                                                            </Button>
-                                                            <Button
-                                                                onClick={() =>
-                                                                    handleOpenSubmitDeleteComment(
-                                                                        comment?.commentId,
-                                                                    )
-                                                                }
-                                                                variant="outlined"
-                                                                color="error"
-                                                            >
-                                                                Xóa
-                                                            </Button>
-                                                        </Box>
-                                                    )}
-                                                {account?.roleId === 4 &&
-                                                    comment?.request?.sender
-                                                        ?.userId ===
-                                                        account?.userId && (
-                                                        <Box>
-                                                            <Button
-                                                                sx={{
-                                                                    marginRight: 1,
-                                                                }}
-                                                                onClick={() =>
-                                                                    handleOpenEditComment(
-                                                                        comment?.commentId,
-                                                                    )
-                                                                }
-                                                                variant="outlined"
-                                                            >
-                                                                Chỉnh sửa
-                                                            </Button>
-                                                            <Button
-                                                                onClick={() =>
-                                                                    handleOpenSubmitDeleteComment(
-                                                                        comment?.commentId,
-                                                                    )
-                                                                }
-                                                                variant="outlined"
-                                                                color="error"
-                                                            >
-                                                                Xóa
-                                                            </Button>
-                                                        </Box>
-                                                    )}
+                                                {comment?.inverseReply && (comment.inverseReply as any[]).length !== 0 ? (
+                                                    <Typography></Typography>
+                                                ) : (
+                                                    <>
+                                                        {account?.roleId ===
+                                                            3 &&
+                                                            comment?.request
+                                                                ?.receiver
+                                                                ?.userId ===
+                                                                account?.userId && (
+                                                                <Box>
+                                                                    <Button
+                                                                        sx={{
+                                                                            marginRight: 1,
+                                                                        }}
+                                                                        onClick={() =>
+                                                                            handleOpenEditComment(
+                                                                                comment?.commentId,
+                                                                            )
+                                                                        }
+                                                                        variant="outlined"
+                                                                    >
+                                                                        Chỉnh
+                                                                        sửa
+                                                                    </Button>
+                                                                    <Button
+                                                                        onClick={() =>
+                                                                            handleOpenSubmitDeleteComment(
+                                                                                comment?.commentId,
+                                                                            )
+                                                                        }
+                                                                        variant="outlined"
+                                                                        color="error"
+                                                                    >
+                                                                        Xóa
+                                                                    </Button>
+                                                                </Box>
+                                                            )}
+                                                        {account?.roleId ===
+                                                            4 &&
+                                                            comment?.request
+                                                                ?.sender
+                                                                ?.userId ===
+                                                                account?.userId && (
+                                                                <Box>
+                                                                    <Button
+                                                                        sx={{
+                                                                            marginRight: 1,
+                                                                        }}
+                                                                        onClick={() =>
+                                                                            handleOpenEditComment(
+                                                                                comment?.commentId,
+                                                                            )
+                                                                        }
+                                                                        variant="outlined"
+                                                                    >
+                                                                        Chỉnh
+                                                                        sửa
+                                                                    </Button>
+                                                                    <Button
+                                                                        onClick={() =>
+                                                                            handleOpenSubmitDeleteComment(
+                                                                                comment?.commentId,
+                                                                            )
+                                                                        }
+                                                                        variant="outlined"
+                                                                        color="error"
+                                                                    >
+                                                                        Xóa
+                                                                    </Button>
+                                                                </Box>
+                                                            )}
+                                                    </>
+                                                )}
                                             </Box>
                                         </Paper>
                                         {comment?.inverseReply &&

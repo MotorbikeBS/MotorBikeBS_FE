@@ -50,6 +50,15 @@ const StoreDetailComponent = () => {
         return totalRating / numberOfRatings;
     }, [commentStore]);
 
+    const averageFeedback = useMemo(() => {
+        if (!commentStore) return undefined;
+
+        const numberOfRatings =
+            commentStore.filter((comment) => comment?.rating).length || 1;
+
+        return numberOfRatings;
+    }, [commentStore]);
+
     useEffect(() => {
         dispatch(clearComment());
         dispatch(getCommentByStoreId({ storeId: Number(storeId) }));
@@ -150,14 +159,21 @@ const StoreDetailComponent = () => {
                                     }}
                                 />
                             </Button>
-                            <Button>
-                                <Rating
-                                    name="read-only"
-                                    defaultValue={averageRating}
-                                    precision={0.5}
-                                    readOnly
-                                />
-                            </Button>
+                            <Box>
+                                <Button>
+                                    <Rating
+                                        name="read-only"
+                                        defaultValue={averageRating}
+                                        precision={0.5}
+                                        readOnly
+                                    />
+                                </Button>
+                                <Typography
+                                    sx={{ marginLeft: 2, fontSize: 20 }}
+                                >
+                                    Tổng đánh giá: {averageFeedback}
+                                </Typography>
+                            </Box>
                         </div>
                     </Grid>
                 </Grid>

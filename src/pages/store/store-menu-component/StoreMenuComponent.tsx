@@ -53,7 +53,7 @@ const pages = [
     },
     {
         to: '/my-store',
-        name: 'Thông tin cửa hàng',
+        name: 'Đáng giá',
     },
 ];
 
