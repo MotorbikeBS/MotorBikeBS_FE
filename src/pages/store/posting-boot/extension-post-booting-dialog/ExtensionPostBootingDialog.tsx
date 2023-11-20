@@ -7,9 +7,10 @@ import { extendPostBoosting } from '../../../../services/features/posting/postBo
 
 interface IExtendPostBoostingDialogProps {
     open: boolean;
-    motorId: number | null
+    boostingId: number | null
     openSubmit: boolean;
     openCancle: boolean;
+    loadingData: () => void;
     onOpenSubmitDialog: () => void;
     onCloseSubmitDialog: () => void;
     onOpenCancelDialog: () => void;
@@ -21,8 +22,9 @@ interface IExtensionPostBootingField {
 
 }
 const ExtensionPostBootingDialog: React.FC<IExtendPostBoostingDialogProps> = ({
-    motorId,
+    boostingId,
     open,
+    loadingData,
     onClose,
     openSubmit,
     openCancle,
@@ -49,12 +51,13 @@ const ExtensionPostBootingDialog: React.FC<IExtendPostBoostingDialogProps> = ({
         onOpenCancelDialog();
     };
     const onSubmit = (data: IExtensionPostBootingField) => {
-        if (motorId !== null) {
+        if (boostingId !== null) {
             dispatch(extendPostBoosting({
-                motorId: motorId,
+                boostingId: boostingId,
                 data,
             }))
                 .then(() => {
+                    loadingData()
                     setTimeout(() => {
                         handleCloseDialog()
                     }, 1000)

@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import {
     useAppDispatch,
-    useAppSelector,
 } from '../../../../services/store/store';
 import {
     editComment,
-    getCommentByCommentId,
 } from '../../../../services/features/comment/commentSlice.';
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';

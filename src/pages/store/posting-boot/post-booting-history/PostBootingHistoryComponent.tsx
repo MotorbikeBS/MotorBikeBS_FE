@@ -26,20 +26,19 @@ import PostBoostingInforDialog from './post-boosting-info-dialog/PostBoostingInf
 
 
 const PostBootingHistoryComponent = () => {
-    const distpatch = useAppDispatch()
-    const { postBootings } = useAppSelector((state) => state.postBooting)
+    const dispatch = useAppDispatch()
+    const { postBootings, loading } = useAppSelector((state) => state.postBooting)
 
     const [selectedRow, setSelectedRow] = React.useState<ISelectRowPostingHistory | null>(null);
     const [isInforModalOpen, setIsInforModalOpen] = React.useState(false);
 
     const loadData = () => {
-        distpatch(clearPostBoostingHistory())
-        distpatch(getHistoryPostBoosting())
-    }
+        dispatch(clearPostBoostingHistory());
+        dispatch(getHistoryPostBoosting());
+    };
     React.useEffect(() => {
-        distpatch(clearPostBoostingHistory())
-        distpatch(getHistoryPostBoosting())
-    }, [distpatch])
+        loadData();
+    }, [dispatch]);
 
     const handleRowDoubleClick = (params: GridRowParams) => {
         setSelectedRow(params.row as ISelectRowPostingHistory);
@@ -48,7 +47,7 @@ const PostBootingHistoryComponent = () => {
 
     const rows = React.useMemo(() => {
         return postBootings?.map((postBoosting: IPostBooting) => ({
-            id: postBoosting?.motor?.motorId,
+            id: postBoosting?.pointHistories[0]?.postBoostings[0]?.boostId,
             motorName: postBoosting?.motor?.motorName,
             certificateNumber: postBoosting?.motor?.certificateNumber,
             startTime: format(new Date(postBoosting?.pointHistories[0]?.postBoostings[0]?.startTime), 'dd-MM-yyyy'),
@@ -84,6 +83,7 @@ const PostBootingHistoryComponent = () => {
                     localeText={{
                         noRowsLabel: 'Không có dữ liệu',
                     }}
+                    loading={loading}
                 />
             </Paper>
             <PostBoostingInforDialog

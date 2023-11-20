@@ -27,8 +27,9 @@ const PostBoostingInforDialog: React.FC<IPostBootingInforDialog> = ({
     isOpen,
     onClose,
     data,
+    loadData
 }) => {
-    const [motorIdDialog, setMotorIdDialog] = React.useState<number | null>(null)
+    const [boostingIdIdDialog, setBoostingIdDialog] = React.useState<number | null>(null)
     const [isOpenExtendDialog, setIsOpenExtendDialog] = React.useState(false)
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false)
     const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false)
@@ -73,10 +74,10 @@ const PostBoostingInforDialog: React.FC<IPostBootingInforDialog> = ({
         ))
     ]
 
-    const handleOpenExtendDialog = (motorId: number) => {
-        setMotorIdDialog(motorId)
+    const handleOpenExtendDialog = (boostingId: number) => {
+        setBoostingIdDialog(boostingId)
         setIsOpenExtendDialog(true)
-        console.log(motorId)
+        console.log(boostingId)
     }
     const handleOpenSubmitDialog = () => {
         setIsOpenSubmitDialog(true);
@@ -163,7 +164,8 @@ const PostBoostingInforDialog: React.FC<IPostBootingInforDialog> = ({
                 onOpenCancelDialog={handleOpenCancelDialog}
                 onCloseCancelDialog={handleCloseCancelDialog}
                 onClose={handleCloseExtendDialog}
-                motorId={motorIdDialog}
+                boostingId={boostingIdIdDialog}
+                loadingData={loadData}
             />
 
         </>

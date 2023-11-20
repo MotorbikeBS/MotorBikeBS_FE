@@ -75,12 +75,12 @@ export const getHistoryPostBoosting = createAsyncThunk<IPostBooting[], void>(
 );
 export const extendPostBoosting = createAsyncThunk<
     IPostBooting,
-    { motorId: number; data: Object }
->('postBoosting/extendPostBoosting', async ({ motorId, data }, thunkAPI) => {
+    { boostingId: number; data: Object }
+>('postBoosting/extendPostBoosting', async ({ boostingId, data }, thunkAPI) => {
     try {
         const token = localStorage.getItem('motorbike_bs');
         const response = await axios.put(
-            `${extendPostBootingEndPoint}?motorId=${motorId}`,
+            `${extendPostBootingEndPoint}?boostingId=${boostingId}`,
             data,
             {
                 headers: {
