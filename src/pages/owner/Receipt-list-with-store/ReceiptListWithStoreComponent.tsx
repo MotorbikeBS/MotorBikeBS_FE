@@ -216,36 +216,6 @@ const ReceiptListWithStoreComponent = () => {
                                                             )}
                                                         </Typography>
                                                     </div>
-                                                    {/* <div className="tag-motorbike-status">
-                                                        <Typography variant="subtitle1">
-                                                            {contractOwner?.motor
-                                                                ?.motorStatus?.title ===
-                                                                'CONSIGNMENT' &&
-                                                                contractOwner.negotiations[0]
-                                                                    ?.contracts[0]
-                                                                    ?.status === 'ACCEPT'
-                                                                ? 'ĐÃ THỎA THUẬN'
-                                                                : contractOwner?.motor
-                                                                    ?.motorStatus
-                                                                    ?.title ===
-                                                                    'LIVELIHOOD' &&
-                                                                    contractOwner
-                                                                        .negotiations[0]
-                                                                        ?.contracts[0]
-                                                                        ?.status === 'ACCEPT'
-                                                                    ? 'ĐÃ THỎA THUẬN'
-                                                                    : contractOwner?.motor
-                                                                        ?.motorStatus
-                                                                        ?.title ===
-                                                                        'STORAGE' &&
-                                                                        contractOwner
-                                                                            .negotiations[0]
-                                                                            ?.contracts[0]
-                                                                            ?.status === 'ACCEPT'
-                                                                        ? 'ĐÃ THỎA THUẬN'
-                                                                        : 'CHƯA XÁC ĐỊNH'}
-                                                        </Typography>
-                                                    </div> */}
                                                 </div>
                                             </Box>
                                             <Box
