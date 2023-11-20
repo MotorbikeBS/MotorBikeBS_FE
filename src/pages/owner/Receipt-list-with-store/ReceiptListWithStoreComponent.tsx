@@ -385,27 +385,27 @@ const ReceiptListWithStoreComponent = () => {
                                                                     ?.valuations[0]
                                                                     ?.negotiations[0]
                                                                     ?.status ===
-                                                                'PENDING'
+                                                                    'PENDING'
                                                                     ? 'CHỜ ĐỢI'
                                                                     : negoInfo
-                                                                          ?.valuations[0]
-                                                                          ?.negotiations[0]
-                                                                          ?.status ===
-                                                                      'ACCEPT'
-                                                                    ? 'CHẤP NHẬN'
-                                                                    : negoInfo
-                                                                          ?.valuations[0]
-                                                                          ?.negotiations[0]
-                                                                          ?.status ===
-                                                                      'CANCEL'
-                                                                    ? 'SAI'
-                                                                    : negoInfo
-                                                                          ?.valuations[0]
-                                                                          ?.negotiations[0]
-                                                                          ?.status ===
-                                                                      'REJECT'
-                                                                    ? 'TỪ CHỐI'
-                                                                    : 'CHƯA XÁC ĐỊNH'}
+                                                                        ?.valuations[0]
+                                                                        ?.negotiations[0]
+                                                                        ?.status ===
+                                                                        'ACCEPT'
+                                                                        ? 'CHẤP NHẬN'
+                                                                        : negoInfo
+                                                                            ?.valuations[0]
+                                                                            ?.negotiations[0]
+                                                                            ?.status ===
+                                                                            'CANCEL'
+                                                                            ? 'SAI'
+                                                                            : negoInfo
+                                                                                ?.valuations[0]
+                                                                                ?.negotiations[0]
+                                                                                ?.status ===
+                                                                                'REJECT'
+                                                                                ? 'TỪ CHỐI'
+                                                                                : 'CHƯA XÁC ĐỊNH'}
                                                             </Typography>
                                                         </div>
                                                     </div>
@@ -419,7 +419,7 @@ const ReceiptListWithStoreComponent = () => {
                                                         {negoInfo?.valuations[0]
                                                             ?.negotiations[0]
                                                             ?.status ===
-                                                        'PENDING' ? (
+                                                            'PENDING' ? (
                                                             <>
                                                                 <div
                                                                     className="booking-owner-btn-contract"
