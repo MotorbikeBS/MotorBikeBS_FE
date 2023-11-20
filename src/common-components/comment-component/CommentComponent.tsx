@@ -223,21 +223,34 @@ const CommentComponent = () => {
                                                                 </Typography>
                                                             )}
                                                         <Typography variant="subtitle1">
-                                                            {comment?.createAt &&
-                                                                new Date(
-                                                                    comment.createAt,
-                                                                ).toLocaleString(
-                                                                    'vi-VN',
-                                                                    {
-                                                                        timeZone:
-                                                                            'Asia/Ho_Chi_Minh',
-                                                                        day: '2-digit',
-                                                                        month: '2-digit',
-                                                                        year: 'numeric',
-                                                                        hour: '2-digit',
-                                                                        minute: '2-digit',
-                                                                    },
-                                                                )}
+                                                            {comment.createAt &&
+                                                                (() => {
+                                                                    const originalDate =
+                                                                        new Date(
+                                                                            comment.createAt,
+                                                                        );
+                                                                    const newDate =
+                                                                        new Date(
+                                                                            originalDate.getTime() +
+                                                                                7 *
+                                                                                    60 *
+                                                                                    60 *
+                                                                                    1000,
+                                                                        );
+
+                                                                    return newDate.toLocaleString(
+                                                                        'vi-VN',
+                                                                        {
+                                                                            timeZone:
+                                                                                'Asia/Ho_Chi_Minh',
+                                                                            day: '2-digit',
+                                                                            month: '2-digit',
+                                                                            year: 'numeric',
+                                                                            hour: '2-digit',
+                                                                            minute: '2-digit',
+                                                                        },
+                                                                    );
+                                                                })()}
                                                         </Typography>
                                                     </Box>
                                                     <Box className="info-cmt">
@@ -271,7 +284,9 @@ const CommentComponent = () => {
                                                         </Typography>
                                                     </Box>
                                                 </Box>
-                                                {comment?.inverseReply && (comment.inverseReply as any[]).length !== 0 ? (
+                                                {comment?.inverseReply &&
+                                                (comment.inverseReply as any[])
+                                                    .length !== 0 ? (
                                                     <Typography></Typography>
                                                 ) : (
                                                     <>
@@ -412,36 +427,36 @@ const CommentComponent = () => {
                                                                                     }
                                                                                 </Typography>
                                                                             )}
-                                                                            {/* 
-                                                                {comment
-                                                                    ?.inverseReply[0]
-                                                                    ?.status ===
-                                                                    'UPDATE' && (
-                                                                    <Typography
-                                                                        sx={{
-                                                                            color: '#ccc',
-                                                                        }}
-                                                                    >
-                                                                        Đã chỉnh
-                                                                        sửa
-                                                                    </Typography>
-                                                                )} */}
+
                                                                             <Typography variant="subtitle1">
                                                                                 {replyCmt.createAt &&
-                                                                                    new Date(
-                                                                                        replyCmt.createAt,
-                                                                                    ).toLocaleString(
-                                                                                        'vi-VN',
-                                                                                        {
-                                                                                            timeZone:
-                                                                                                'Asia/Ho_Chi_Minh',
-                                                                                            day: '2-digit',
-                                                                                            month: '2-digit',
-                                                                                            year: 'numeric',
-                                                                                            hour: '2-digit',
-                                                                                            minute: '2-digit',
-                                                                                        },
-                                                                                    )}
+                                                                                    (() => {
+                                                                                        const originalDate =
+                                                                                            new Date(
+                                                                                                replyCmt.createAt,
+                                                                                            );
+                                                                                        const newDate =
+                                                                                            new Date(
+                                                                                                originalDate.getTime() +
+                                                                                                    7 *
+                                                                                                        60 *
+                                                                                                        60 *
+                                                                                                        1000,
+                                                                                            );
+
+                                                                                        return newDate.toLocaleString(
+                                                                                            'vi-VN',
+                                                                                            {
+                                                                                                timeZone:
+                                                                                                    'Asia/Ho_Chi_Minh',
+                                                                                                day: '2-digit',
+                                                                                                month: '2-digit',
+                                                                                                year: 'numeric',
+                                                                                                hour: '2-digit',
+                                                                                                minute: '2-digit',
+                                                                                            },
+                                                                                        );
+                                                                                    })()}
                                                                             </Typography>
                                                                         </Box>
                                                                         <Box className="info-cmt">
@@ -450,97 +465,8 @@ const CommentComponent = () => {
                                                                                     replyCmt?.content
                                                                                 }
                                                                             </Typography>
-                                                                            {/* <Typography className="request-description">
-                                                                    {
-                                                                        comment
-                                                                            ?.request
-                                                                            ?.requestType
-                                                                            ?.description
-                                                                    }{' '}
-                                                                    -{' '}
-                                                                    {
-                                                                        comment
-                                                                            ?.request
-                                                                            ?.motor
-                                                                            ?.motorName
-                                                                    }{' '}
-                                                                    -{' '}
-                                                                    {
-                                                                        comment
-                                                                            ?.request
-                                                                            ?.status
-                                                                    }
-                                                                </Typography> */}
                                                                         </Box>
                                                                     </Box>
-                                                                    {/* {account?.roleId ===
-                                                            3 &&
-                                                            comment?.request
-                                                                ?.receiver
-                                                                ?.userId ===
-                                                                account?.userId && (
-                                                                <Box>
-                                                                    <Button
-                                                                        sx={{
-                                                                            marginRight: 1,
-                                                                        }}
-                                                                        onClick={() =>
-                                                                            handleOpenEditComment(
-                                                                                comment?.commentId,
-                                                                            )
-                                                                        }
-                                                                        variant="outlined"
-                                                                    >
-                                                                        Chỉnh
-                                                                        sửa
-                                                                    </Button>
-                                                                    <Button
-                                                                        onClick={() =>
-                                                                            handleOpenSubmitDeleteComment(
-                                                                                comment?.commentId,
-                                                                            )
-                                                                        }
-                                                                        variant="outlined"
-                                                                        color="error"
-                                                                    >
-                                                                        Xóa
-                                                                    </Button>
-                                                                </Box>
-                                                            )}
-                                                        {account?.roleId ===
-                                                            4 &&
-                                                            comment?.request
-                                                                ?.sender
-                                                                ?.userId ===
-                                                                account?.userId && (
-                                                                <Box>
-                                                                    <Button
-                                                                        sx={{
-                                                                            marginRight: 1,
-                                                                        }}
-                                                                        onClick={() =>
-                                                                            handleOpenEditComment(
-                                                                                comment?.commentId,
-                                                                            )
-                                                                        }
-                                                                        variant="outlined"
-                                                                    >
-                                                                        Chỉnh
-                                                                        sửa
-                                                                    </Button>
-                                                                    <Button
-                                                                        onClick={() =>
-                                                                            handleOpenSubmitDeleteComment(
-                                                                                comment?.commentId,
-                                                                            )
-                                                                        }
-                                                                        variant="outlined"
-                                                                        color="error"
-                                                                    >
-                                                                        Xóa
-                                                                    </Button>
-                                                                </Box>
-                                                            )} */}
                                                                 </Box>
                                                             </Paper>
                                                         )}

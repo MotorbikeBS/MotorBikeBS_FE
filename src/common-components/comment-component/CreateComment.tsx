@@ -27,7 +27,7 @@ const CreateComment: React.FC<createCommentProps> = ({
     const form = useForm<ICommentProps>({
         defaultValues: {
             content: '',
-            rating: undefined,
+            rating: 0,
         },
     });
 

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-    IModelTable,
-} from '../../../../../models/Motorbike/Motorbike';
+import { IModelTable } from '../../../../../models/Motorbike/Motorbike';
 import { useForm } from 'react-hook-form';
 import {
     Box,
@@ -97,8 +95,14 @@ const EditModelModal: React.FC<EditDialogProps> = ({
             form.setValue('modelName', motorModel?.modelName);
             form.setValue('description', motorModel?.description || '');
             form.setValue('status', motorModel?.status);
+            setStatus(selectedRow?.status || '');
         }
     }, [motorModel, form]);
+
+    const [status, setStatus] = useState('');
+    const handleChangeStatus = (event: SelectChangeEvent) => {
+        setStatus(event.target.value);
+    };
 
     const { formState, handleSubmit, register } = form;
     const { errors } = formState;
@@ -123,14 +127,15 @@ const EditModelModal: React.FC<EditDialogProps> = ({
                 description: data?.description,
                 status: data?.status,
                 brandId: data?.brandId,
+            }),
+        )
+            .unwrap()
+            .then(() => {
+                loadData();
+                toast.success('Chỉnh sửa thành công!');
+                handleCloseDialog();
             })
-        ).unwrap().then(()=>{
-            loadData()
-            toast.success('Chỉnh sửa thành công!');
-            handleCloseDialog()
-        }).catch(e => {
-
-        })
+            .catch((e) => {});
     };
     return (
         <div>
@@ -253,16 +258,31 @@ const EditModelModal: React.FC<EditDialogProps> = ({
                                                         Trạng thái
                                                     </TableCell>
                                                     <TableCell>
-                                                        <TextField
+                                                        <InputLabel id="demo-simple-select-label">
+                                                            Trạng thái
+                                                        </InputLabel>
+                                                        <Select
+                                                            labelId="demo-simple-select-label"
                                                             label="Trạng thái"
-                                                            type="text"
+                                                            value={status}
                                                             {...register(
                                                                 'status',
                                                             )}
-                                                            variant="outlined"
-                                                            // disabled
+                                                            onChange={
+                                                                handleChangeStatus
+                                                            }
                                                             fullWidth
-                                                        />
+                                                            defaultValue={
+                                                                status
+                                                            }
+                                                        >
+                                                            <MenuItem value="PENDING">
+                                                                PENDING
+                                                            </MenuItem>
+                                                            <MenuItem value="ACTIVE">
+                                                                ACTIVE
+                                                            </MenuItem>
+                                                        </Select>
                                                     </TableCell>
                                                 </TableRow>
                                             </TableBody>

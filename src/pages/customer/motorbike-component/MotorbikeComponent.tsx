@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router';
 import {
     Box,
@@ -38,12 +38,8 @@ const MotorbikeComponent = () => {
         number | null
     >(null);
 
-    const [currentMotorbikes, setCurrentMotorbikes] = React.useState<
-        IMotorbike[]
-    >([]);
-
     const [currentPage, setCurrentPage] = React.useState(1);
-    const [itemsPerPage, setItemsPerPage] = React.useState(10);
+    const [itemsPerPage, setItemsPerPage] = React.useState(12);
 
     const formatCurrency = useFormatCurrency();
 
@@ -58,18 +54,17 @@ const MotorbikeComponent = () => {
                 pageNumber: currentPage,
                 pageSize: itemsPerPage,
             }),
-        ).then((data) => {
-            const result = data.payload as any[];
-            if (currentMotorbikes.length === 0) {
-                setCurrentMotorbikes(result);
-            } else {
-                setCurrentMotorbikes([...currentMotorbikes, ...result]);
-            }
-        });
+        );
     }, [dispatch, currentPage, itemsPerPage]);
 
-    const handleLoadMore = () => {
+    const handleNextPage = () => {
         setCurrentPage(currentPage + 1);
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
     };
 
     const handleOpenDialog = (motorId: number) => {
@@ -100,7 +95,6 @@ const MotorbikeComponent = () => {
     const handleCloseCancelDialog = () => {
         setIsOpenCancelDialog(false);
     };
-
     return (
         <Box
             sx={{
@@ -138,8 +132,8 @@ const MotorbikeComponent = () => {
                                 spacing={2}
                                 className="product-grid"
                             >
-                                {currentMotorbikes &&
-                                    currentMotorbikes.map((motor) => (
+                                {motorbikes &&
+                                    motorbikes.map((motor) => (
                                         <Grid
                                             item
                                             xs={12}
@@ -181,22 +175,26 @@ const MotorbikeComponent = () => {
                                                     )}
                                                 </div>
 
-                                                <div className="tag-motor-status">
-                                                    <Typography variant="subtitle1">
-                                                        {motor?.motorStatus
-                                                            ?.motorStatusId ===
-                                                        1
-                                                            ? 'CÓ SẴN'
-                                                            : motor?.motorStatus
-                                                                  ?.motorStatusId ===
-                                                              4
-                                                            ? 'KÍ GỬI'
-                                                            : motor?.motorStatus
-                                                                  ?.motorStatusId ===
-                                                              5
-                                                            ? 'KHÔNG KÍ GỬI'
-                                                            : 'CHƯA XÁC ĐỊNH'}
-                                                    </Typography>
+                                                <div className="tag-motor-box">
+                                                    <div className="tag-motor-status">
+                                                        <Typography variant="subtitle1">
+                                                            {motor?.motorStatus
+                                                                ?.motorStatusId ===
+                                                            1
+                                                                ? 'CÓ SẴN'
+                                                                : motor
+                                                                      ?.motorStatus
+                                                                      ?.motorStatusId ===
+                                                                  4
+                                                                ? 'KÍ GỬI'
+                                                                : motor
+                                                                      ?.motorStatus
+                                                                      ?.motorStatusId ===
+                                                                  5
+                                                                ? 'KHÔNG KÍ GỬI'
+                                                                : 'CHƯA XÁC ĐỊNH'}
+                                                        </Typography>
+                                                    </div>
                                                 </div>
 
                                                 <div className="product-information">
@@ -309,23 +307,49 @@ const MotorbikeComponent = () => {
                                         </Grid>
                                     ))}
                             </Grid>
-                            {currentMotorbikes &&
-                            currentMotorbikes.length < itemsPerPage ? null : (
-                                <Box
-                                    sx={{
-                                        textAlign: 'center',
-                                        marginTop: 2,
-                                        marginBottom: 2,
-                                    }}
-                                >
-                                    <Button
-                                        variant="outlined"
-                                        onClick={handleLoadMore}
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'flex-end',
+                                    gap: '8px',
+                                }}
+                            >
+                                {currentPage > 1 && (
+                                    <Box
+                                        sx={{
+                                            textAlign: 'center',
+                                            marginTop: 2,
+                                            marginBottom: 2,
+                                        }}
                                     >
-                                        Xem thêm
-                                    </Button>
-                                </Box>
-                            )}
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={handlePreviousPage}
+                                        >
+                                            Trang trước
+                                        </Button>
+                                    </Box>
+                                )}
+                                {motorbikes &&
+                                    motorbikes?.length === itemsPerPage && (
+                                        <Box
+                                            sx={{
+                                                textAlign: 'center',
+                                                marginTop: 2,
+                                                marginBottom: 2,
+                                            }}
+                                        >
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={handleNextPage}
+                                            >
+                                                Trang sau
+                                            </Button>
+                                        </Box>
+                                    )}
+                            </Box>
                         </>
                     )}
                 </>
