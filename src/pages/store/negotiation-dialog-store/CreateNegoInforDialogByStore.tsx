@@ -17,6 +17,7 @@ import './style/_style.scss';
 import { useAppDispatch } from '../../../services/store/store';
 import { createNegotiationInfor } from '../../../services/features/negotiation/negotiationSlice';
 import { format } from 'date-fns';
+import { NumericFormat } from 'react-number-format';
 
 interface CreateNegotiationInforDialogProps {
     open: boolean;
@@ -50,6 +51,7 @@ const CreateNegoInforDialogByStore: React.FC<CreateNegotiationInforDialogProps> 
     onClose
 }) => {
     const dispatch = useAppDispatch()
+    const [formattedDeposit, setFormattedDeposit] = React.useState<string>('');
 
     const form = useForm<ICreateNegoInforForm>({
         defaultValues: {
@@ -85,6 +87,8 @@ const CreateNegoInforDialogByStore: React.FC<CreateNegotiationInforDialogProps> 
                 deposit: data.deposit
             }))
             handleCloseDialog()
+            console.log(data);
+
         }
         else {
         }
@@ -134,9 +138,10 @@ const CreateNegoInforDialogByStore: React.FC<CreateNegotiationInforDialogProps> 
                                     name="finalPrice"
                                     control={control}
                                     render={({ field }) => (
-                                        <TextField
-                                            label="Giá đã chốt"
-                                            type="number"
+                                        <NumericFormat
+                                            thousandsGroupStyle="lakh"
+                                            thousandSeparator=","
+                                            customInput={TextField}
                                             {...field}
                                         />
                                     )}
@@ -171,18 +176,20 @@ const CreateNegoInforDialogByStore: React.FC<CreateNegotiationInforDialogProps> 
                                         />
                                     )}
                                 />
+
                                 <Controller
+                                    name="deposit"
                                     control={control}
-                                    name='deposit'
                                     render={({ field }) => (
-                                        <TextField
-                                            label="Đã cọc"
-                                            type="number"
+                                        <NumericFormat
+                                            thousandsGroupStyle="lakh"
+                                            thousandSeparator=","
+                                            customInput={TextField}
                                             {...field}
                                         />
                                     )}
-
                                 />
+
                                 <TextareaAutosize
                                     placeholder='Nhập mô tả của bạn.....'
                                     className="aria-note custom-textarea"
