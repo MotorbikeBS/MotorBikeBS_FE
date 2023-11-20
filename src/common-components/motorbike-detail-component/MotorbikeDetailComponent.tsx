@@ -203,7 +203,11 @@ const MotorBikeDetailComponent = () => {
                         >
                             Mô tả chi tiết:
                         </Typography>
-                        <Typography>{motorbike.description}</Typography>
+                        <Typography>
+                            {motorbike.description !== null
+                                ? motorbike.description
+                                : 'Chưa có mô tả chi tiết.'}
+                        </Typography>
                     </Box>
                 </Box>
 

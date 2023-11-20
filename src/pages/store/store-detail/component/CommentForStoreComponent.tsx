@@ -165,20 +165,33 @@ const CommentForStoreComponent = () => {
                                                         )}
                                                         <Typography variant="subtitle1">
                                                             {comment.createAt &&
-                                                                new Date(
-                                                                    comment.createAt,
-                                                                ).toLocaleString(
-                                                                    'vi-VN',
-                                                                    {
-                                                                        timeZone:
-                                                                            'Asia/Ho_Chi_Minh',
-                                                                        day: '2-digit',
-                                                                        month: '2-digit',
-                                                                        year: 'numeric',
-                                                                        hour: '2-digit',
-                                                                        minute: '2-digit',
-                                                                    },
-                                                                )}
+                                                                (() => {
+                                                                    const originalDate =
+                                                                        new Date(
+                                                                            comment.createAt,
+                                                                        );
+                                                                    const newDate =
+                                                                        new Date(
+                                                                            originalDate.getTime() +
+                                                                                7 *
+                                                                                    60 *
+                                                                                    60 *
+                                                                                    1000,
+                                                                        );
+
+                                                                    return newDate.toLocaleString(
+                                                                        'vi-VN',
+                                                                        {
+                                                                            timeZone:
+                                                                                'Asia/Ho_Chi_Minh',
+                                                                            day: '2-digit',
+                                                                            month: '2-digit',
+                                                                            year: 'numeric',
+                                                                            hour: '2-digit',
+                                                                            minute: '2-digit',
+                                                                        },
+                                                                    );
+                                                                })()}
                                                         </Typography>
                                                     </Box>
                                                     <Box className="info-cmt">
@@ -306,20 +319,33 @@ const CommentForStoreComponent = () => {
                                                                             )}
                                                                             <Typography variant="subtitle1">
                                                                                 {replyCmt.createAt &&
-                                                                                    new Date(
-                                                                                        replyCmt.createAt,
-                                                                                    ).toLocaleString(
-                                                                                        'vi-VN',
-                                                                                        {
-                                                                                            timeZone:
-                                                                                                'Asia/Ho_Chi_Minh',
-                                                                                            day: '2-digit',
-                                                                                            month: '2-digit',
-                                                                                            year: 'numeric',
-                                                                                            hour: '2-digit',
-                                                                                            minute: '2-digit',
-                                                                                        },
-                                                                                    )}
+                                                                                    (() => {
+                                                                                        const originalDate =
+                                                                                            new Date(
+                                                                                                replyCmt.createAt,
+                                                                                            );
+                                                                                        const newDate =
+                                                                                            new Date(
+                                                                                                originalDate.getTime() +
+                                                                                                    7 *
+                                                                                                        60 *
+                                                                                                        60 *
+                                                                                                        1000,
+                                                                                            );
+
+                                                                                        return newDate.toLocaleString(
+                                                                                            'vi-VN',
+                                                                                            {
+                                                                                                timeZone:
+                                                                                                    'Asia/Ho_Chi_Minh',
+                                                                                                day: '2-digit',
+                                                                                                month: '2-digit',
+                                                                                                year: 'numeric',
+                                                                                                hour: '2-digit',
+                                                                                                minute: '2-digit',
+                                                                                            },
+                                                                                        );
+                                                                                    })()}
                                                                             </Typography>
                                                                         </Box>
                                                                         <Box className="info-cmt">

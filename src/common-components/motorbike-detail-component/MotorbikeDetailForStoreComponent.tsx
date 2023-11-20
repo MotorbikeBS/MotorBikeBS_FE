@@ -35,11 +35,15 @@ const MotorbikeDetailForStoreComponent = () => {
 
     const { motorbikeId } = useParams<motorbikeParams | any>();
     const { account } = useAppSelector((state) => state.account);
-    const { motorbikes, motorbikeByStoreId } = useAppSelector((state) => state.motorbikes);
+    const { motorbikes, motorbikeByStoreId } = useAppSelector(
+        (state) => state.motorbikes,
+    );
     const [isOpenDialog, setOpenDialog] = useState(false);
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = useState(false);
     const [isOpenCancelDialog, setIsOpenCancelDialog] = useState(false);
-    const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<number | null>(null)
+    const [motorbikeIdForDialog, setMotorbikeIdForDialog] = React.useState<
+        number | null
+    >(null);
 
     const formatPrice = useFormatCurrency();
 
@@ -47,11 +51,10 @@ const MotorbikeDetailForStoreComponent = () => {
         navigate(`/store/${storeId}`);
     };
 
-
     const handleOpenDialog = (motorbikeId: number) => {
         setMotorbikeIdForDialog(motorbikeId);
         setOpenDialog(true);
-        console.log(motorbikeId)
+        console.log(motorbikeId);
     };
 
     const handleCloseDialog = () => {
@@ -74,8 +77,8 @@ const MotorbikeDetailForStoreComponent = () => {
     };
 
     const handleAddToWishList = (motorId: number) => {
-        dispatch(addToWishList({ motorId: motorId }))
-    }
+        dispatch(addToWishList({ motorId: motorId }));
+    };
 
     if (!motorbikeId) {
         return (
@@ -99,7 +102,6 @@ const MotorbikeDetailForStoreComponent = () => {
     const motorbike = motorbikeByStoreId?.find(
         (mt: IMotorbike) => mt.motorId === Number(motorbikeId),
     );
-    
 
     if (!motorbike) {
         return (
@@ -127,7 +129,7 @@ const MotorbikeDetailForStoreComponent = () => {
                     <Box flexGrow={4} marginBottom="30px">
                         <Carousel>
                             {motorbike.motorbikeImages &&
-                                motorbike.motorbikeImages.length > 0 ? (
+                            motorbike.motorbikeImages.length > 0 ? (
                                 motorbike.motorbikeImages.map((image) => (
                                     <div
                                         className="motorbike-detail-images"
@@ -174,7 +176,7 @@ const MotorbikeDetailForStoreComponent = () => {
                             <div className="icon-infomation">
                                 <StoreOutlined />
                                 <div
-                                    className='store-detail-navigate'
+                                    className="store-detail-navigate"
                                     onClick={() =>
                                         handleNavigatedDetailStoreId(
                                             motorbike.storeId,
@@ -202,7 +204,11 @@ const MotorbikeDetailForStoreComponent = () => {
                         >
                             Mô tả chi tiết:
                         </Typography>
-                        <Typography>{motorbike.description}</Typography>
+                        <Typography>
+                            {motorbike.description !== null
+                                ? motorbike.description
+                                : 'Chưa có mô tả chi tiết.'}
+                        </Typography>
                     </Box>
                 </Box>
 
@@ -320,64 +326,64 @@ const MotorbikeDetailForStoreComponent = () => {
                         //     </Button>
                         // </Box>
                         <>
-                        {motorbike?.motorStatus?.motorStatusId === 5 ? (
-                            <Box
-                                flexGrow={2}
-                                marginTop="10%"
-                                maxWidth="50%"
-                                marginLeft="26%"
-                            >
-                                <Button
-                                    onClick={() =>
-                                        handleOpenDialog(motorbike.motorId)
-                                    }
-                                    variant="outlined"
-                                    sx={{
-                                        '&:hover': {
-                                            background: '#ccd6e6',
-                                            color: '#fff',
-                                        },
-                                    }}
+                            {motorbike?.motorStatus?.motorStatusId === 5 ? (
+                                <Box
+                                    flexGrow={2}
+                                    marginTop="10%"
+                                    maxWidth="50%"
+                                    marginLeft="26%"
                                 >
-                                    Đặt lịch xem xe
-                                </Button>
-                                <Button
-                                    className="btn-favorite"
-                                    sx={{
-                                        color: 'red',
-                                    }}
-                                    onClick={() =>
-                                        handleAddToWishList(
-                                            motorbike.motorId,
-                                        )
-                                    }
+                                    <Button
+                                        onClick={() =>
+                                            handleOpenDialog(motorbike.motorId)
+                                        }
+                                        variant="outlined"
+                                        sx={{
+                                            '&:hover': {
+                                                background: '#ccd6e6',
+                                                color: '#fff',
+                                            },
+                                        }}
+                                    >
+                                        Đặt lịch xem xe
+                                    </Button>
+                                    <Button
+                                        className="btn-favorite"
+                                        sx={{
+                                            color: 'red',
+                                        }}
+                                        onClick={() =>
+                                            handleAddToWishList(
+                                                motorbike.motorId,
+                                            )
+                                        }
+                                    >
+                                        <FavoriteBorderOutlined />
+                                    </Button>
+                                </Box>
+                            ) : (
+                                <Box
+                                    flexGrow={2}
+                                    marginTop="10%"
+                                    maxWidth="50%"
+                                    // marginLeft="26%"
                                 >
-                                    <FavoriteBorderOutlined />
-                                </Button>
-                            </Box>
-                        ) : (
-                            <Box
-                                flexGrow={2}
-                                marginTop="10%"
-                                maxWidth="50%"
-                                // marginLeft="26%"
-                            >
-                                <Button
-                                    className="btn-favorite"
-                                    sx={{
-                                        color: 'red',
-                                    }}
-                                    onClick={() =>
-                                        handleAddToWishList(
-                                            motorbike.motorId,
-                                        )
-                                    }
-                                >
-                                    <FavoriteBorderOutlined />
-                                </Button>
-                            </Box>
-                        )}
-                    </>
+                                    <Button
+                                        className="btn-favorite"
+                                        sx={{
+                                            color: 'red',
+                                        }}
+                                        onClick={() =>
+                                            handleAddToWishList(
+                                                motorbike.motorId,
+                                            )
+                                        }
+                                    >
+                                        <FavoriteBorderOutlined />
+                                    </Button>
+                                </Box>
+                            )}
+                        </>
                     )}
                 </Box>
             </Box>
@@ -396,4 +402,4 @@ const MotorbikeDetailForStoreComponent = () => {
     );
 };
 
-export default MotorbikeDetailForStoreComponent
+export default MotorbikeDetailForStoreComponent;

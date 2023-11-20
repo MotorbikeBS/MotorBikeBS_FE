@@ -50,20 +50,21 @@ $primary-favorite: #f76157;
         }
     }
 }
-
-.tag-motor-status {
-    max-width: 50%;
-    font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(127, 243, 132, 0.89);
-    color: #f09205;
-    border: 2px solid #ffaa2b;
-    border-radius: 10%;
-    position: absolute;
-    // top: 0;
-    // left: 0;
-    justify-content: flex-start;
-    transform: translateX(0);
-    background-color: rgba(250, 238, 97, 0.89);
+.tag-motor-box {
+    position: relative;
+    right: 12px;
+    .tag-motor-status {
+        max-width: 50%;
+        font-weight: 700;
+        text-shadow: 2px 2px 4px rgba(127, 243, 132, 0.89);
+        color: #f09205;
+        border: 2px solid #ffaa2b;
+        border-radius: 10%;
+        position: absolute;
+        justify-content: flex-start;
+        transform: translateX(0);
+        background-color: rgba(250, 238, 97, 0.89);
+    }
 }
 
 .tag-motor-status-1 {

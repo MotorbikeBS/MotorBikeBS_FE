@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IBrandTable } from '../../../../../models/Motorbike/Motorbike';
 import { useForm } from 'react-hook-form';
 import {
@@ -9,7 +9,11 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
+    InputLabel,
+    MenuItem,
     Paper,
+    Select,
+    SelectChangeEvent,
     Table,
     TableBody,
     TableCell,
@@ -68,8 +72,14 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
             form.setValue('brandName', selectedRow?.brandName);
             form.setValue('description', selectedRow?.description || '');
             form.setValue('status', selectedRow?.status);
+            setStatus(selectedRow?.status || '');
         }
     }, [selectedRow, form]);
+
+    const [status, setStatus] = useState('');
+    const handleChangeStatus = (event: SelectChangeEvent) => {
+        setStatus(event.target.value);
+    };
 
     const { formState, handleSubmit, register } = form;
     const { errors } = formState;
@@ -162,22 +172,35 @@ const EditBrandModal: React.FC<EditDialogProps> = ({
                                                             }}
                                                         />
                                                     </TableCell>
-                                                </TableRow>
+                                                </TableRow>                                           
                                                 <TableRow>
                                                     <TableCell className="header-table">
                                                         Trạng thái
                                                     </TableCell>
                                                     <TableCell>
-                                                        <TextField
+                                                        <InputLabel id="demo-simple-select-label">
+                                                            Trạng thái
+                                                        </InputLabel>
+                                                        <Select
+                                                            labelId="demo-simple-select-label"
                                                             label="Trạng thái"
-                                                            type="text"
+                                                            value={status}
                                                             {...register(
                                                                 'status',
                                                             )}
-                                                            variant="outlined"
-                                                            // disabled
+                                                            onChange={
+                                                                handleChangeStatus
+                                                            }
                                                             fullWidth
-                                                        />
+                                                            defaultValue={status}
+                                                        >
+                                                            <MenuItem value="PENDING">
+                                                                PENDING
+                                                            </MenuItem>
+                                                            <MenuItem value="ACTIVE">
+                                                                ACTIVE
+                                                            </MenuItem>
+                                                        </Select>
                                                     </TableCell>
                                                 </TableRow>
                                             </TableBody>
