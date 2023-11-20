@@ -53,7 +53,7 @@ const pages = [
     },
     {
         to: '/my-store',
-        name: 'Đáng giá',
+        name: 'Đánh giá',
     },
 ];
 

@@ -305,8 +305,8 @@ const CommentForStoreComponent = () => {
                                                                                 </Typography>
                                                                             )}
 
-                                                                            {replyCmt?.status ===
-                                                                                'UPDATE' && (
+                                                                            {replyCmt?.updateAt !==
+                                                                                null && (
                                                                                 <Typography
                                                                                     sx={{
                                                                                         color: '#ccc',
