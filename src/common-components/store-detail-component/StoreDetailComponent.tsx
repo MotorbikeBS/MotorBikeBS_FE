@@ -19,7 +19,7 @@ import { format } from 'date-fns';
 import CommentComponent from '../comment-component/CommentComponent';
 import {
     clearComment,
-    getCommentByStoreId,
+    getAverageStar,
 } from '../../services/features/comment/commentSlice.';
 
 type storeParams = {
@@ -30,38 +30,11 @@ const StoreDetailComponent = () => {
     const { storeId } = useParams<storeParams | any>();
     const dispatch = useAppDispatch();
     const { stores } = useAppSelector((state) => state.store);
-    const { commentStore } = useAppSelector((state) => state.comment);
-
-    const averageRating = useMemo(() => {
-        if (!commentStore) return undefined;
-
-        const totalRating = commentStore.reduce((total, comment) => {
-            if (comment?.rating && comment?.replyId === null) {
-                return total + comment.rating;
-            }
-            return total;
-        }, 0);
-
-        const numberOfRatings =
-            commentStore.filter(
-                (comment) => comment?.rating && comment?.replyId === null,
-            ).length || 1;
-
-        return totalRating / numberOfRatings;
-    }, [commentStore]);
-
-    const averageFeedback = useMemo(() => {
-        if (!commentStore) return undefined;
-
-        const numberOfRatings =
-            commentStore.filter((comment) => comment?.rating).length || 1;
-
-        return numberOfRatings;
-    }, [commentStore]);
+    const { averageStarCmt } = useAppSelector((state) => state.comment);
 
     useEffect(() => {
         dispatch(clearComment());
-        dispatch(getCommentByStoreId({ storeId: Number(storeId) }));
+        dispatch(getAverageStar({ storeId: Number(storeId) }));
     }, [dispatch, storeId]);
 
     if (!storeId) {
@@ -160,19 +133,28 @@ const StoreDetailComponent = () => {
                                 />
                             </Button>
                             <Box>
-                                <Button>
-                                    <Rating
-                                        name="read-only"
-                                        defaultValue={averageRating}
-                                        precision={0.5}
-                                        readOnly
-                                    />
-                                </Button>
-                                <Typography
-                                    sx={{ marginLeft: 2, fontSize: 20 }}
-                                >
-                                    Tổng đánh giá: {averageFeedback}
-                                </Typography>
+                                {averageStarCmt?.averageRating !==
+                                    undefined && (
+                                    <Button>
+                                        <Rating
+                                            name="read-only"
+                                            defaultValue={
+                                                averageStarCmt.averageRating
+                                            }
+                                            precision={0.5}
+                                            readOnly
+                                        />
+                                    </Button>
+                                )}
+                                {averageStarCmt?.totalComment !== undefined && (
+                                    <Typography
+                                        sx={{ marginLeft: 2, fontSize: 20 }}
+                                    >
+                                        Tổng đánh giá:{' '}
+                                        {averageStarCmt?.totalComment &&
+                                            averageStarCmt.totalComment}
+                                    </Typography>
+                                )}
                             </Box>
                         </div>
                     </Grid>

@@ -8,7 +8,7 @@ import {
     Rating,
     Typography,
 } from '@mui/material';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import {
     useAppDispatch,
     useAppSelector,
@@ -18,40 +18,13 @@ import { format } from 'date-fns';
 import '../style/style.scss';
 // import MotorbikeForStoreComponent from './MotorbikeForStoreComponent';
 import CommentForStoreComponent from './CommentForStoreComponent';
-import { getCommentByStoreId } from '../../../../services/features/comment/commentSlice.';
+import { getAverageStar } from '../../../../services/features/comment/commentSlice.';
 
 const StoreDetailByStoreComponent = () => {
     const dispatch = useAppDispatch();
     const { account } = useAppSelector((state) => state.account);
     const { user } = useAppSelector((state) => state.users);
-    const { commentStore } = useAppSelector((state) => state.comment);
-
-    const averageRating = useMemo(() => {
-        if (!commentStore) return undefined;
-
-        const totalRating = commentStore.reduce((total, comment) => {
-            if (comment?.rating && comment?.replyId === null) {
-                return total + comment.rating;
-            }
-            return total;
-        }, 0);
-
-        const numberOfRatings =
-            commentStore.filter(
-                (comment) => comment?.rating && comment?.replyId === null,
-            ).length || 1;
-
-        return totalRating / numberOfRatings;
-    }, [commentStore]);
-
-    const averageFeedback = useMemo(() => {
-        if (!commentStore) return undefined;
-
-        const numberOfRatings =
-            commentStore.filter((comment) => comment?.rating).length || 1;
-
-        return numberOfRatings;
-    }, [commentStore]);
+    const { averageStarCmt } = useAppSelector((state) => state.comment);
 
     useEffect(() => {
         dispatch(getUserByID({ id: Number(account?.userId) }));
@@ -59,7 +32,7 @@ const StoreDetailByStoreComponent = () => {
 
     useEffect(() => {
         dispatch(
-            getCommentByStoreId({
+            getAverageStar({
                 storeId: Number(user?.storeDesciptions[0]?.storeId),
             }),
         );
@@ -132,19 +105,28 @@ const StoreDetailByStoreComponent = () => {
                                 />
                             </Button>
                             <Box>
-                                <Button>
-                                    <Rating
-                                        name="read-only"
-                                        defaultValue={averageRating}
-                                        precision={0.5}
-                                        readOnly
-                                    />
-                                </Button>
-                                <Typography
-                                    sx={{ marginLeft: 2, fontSize: 20 }}
-                                >
-                                    Tổng đánh giá: {averageFeedback}
-                                </Typography>
+                                {averageStarCmt?.averageRating !==
+                                    undefined && (
+                                    <Button>
+                                        <Rating
+                                            name="read-only"
+                                            defaultValue={
+                                                averageStarCmt.averageRating
+                                            }
+                                            precision={0.5}
+                                            readOnly
+                                        />
+                                    </Button>
+                                )}
+                                {averageStarCmt?.totalComment !== undefined && (
+                                    <Typography
+                                        sx={{ marginLeft: 2, fontSize: 20 }}
+                                    >
+                                        Tổng đánh giá:{' '}
+                                        {averageStarCmt?.totalComment &&
+                                            averageStarCmt.totalComment}
+                                    </Typography>
+                                )}
                             </Box>
                         </div>
                     </Grid>
@@ -152,10 +134,6 @@ const StoreDetailByStoreComponent = () => {
             </Box>
 
             <hr />
-            {/* 
-            <Box>
-                <MotorbikeForStoreComponent />
-            </Box> */}
 
             <Container maxWidth="lg">
                 <CommentForStoreComponent />

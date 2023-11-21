@@ -42,4 +42,5 @@ export interface IComment {
 
 export interface IAverStarAndCmt {
     averageRating: number
+    totalComment: number
 }
