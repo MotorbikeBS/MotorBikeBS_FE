@@ -39,3 +39,7 @@ export interface IComment {
         sender: IUser;
     };
 }
+
+export interface IAverStarAndCmt {
+    averageRating: number
+}

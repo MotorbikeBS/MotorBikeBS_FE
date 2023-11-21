@@ -21,24 +21,49 @@ const formatDate = (dateString: string) => {
 };
 
 export const columns: GridColDef[] = [
-    { field: 'id', headerName: 'Bill Id', width: 480, hideable: true },
+    { field: 'id', headerName: 'Bill Id', width: 180, hideable: true },
     {
         field: 'motorId',
         headerName: 'Motor Id',
-        width: 400,
+        width: 200,
         hideable: true,
+    },
+    {
+        field: 'motorName',
+        headerName: 'Tên xe',
+        width: 250,
+        hideable: true,
+    },
+    {
+        field: 'certificateNumber',
+        headerName: 'Số đăng ký xe',
+        width: 220,
+        hideable: true,
+    },
+
+    {
+        field: 'buyer',
+        headerName: 'Người mua',
+        width: 230,
+        hideable: true,
+    },
+    {
+        field: 'consignor',
+        headerName: 'Người kí gửi',
+        hideable: true,
+        width: 230,
     },
     {
         field: 'price',
         headerName: 'Giá',
-        width: 600,
+        width: 300,
         ...vndPrice,
     },
     {
         field: 'createAt',
         headerName: 'Ngày tạo hóa đơn',
         editable: false,
-        width: 400,
+        width: 300,
         valueFormatter: ({ value }) => formatDate(value),
     },
 ];

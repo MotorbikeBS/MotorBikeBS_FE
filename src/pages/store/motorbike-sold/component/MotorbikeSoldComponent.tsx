@@ -85,6 +85,9 @@ const MotorbikeSoldComponent = () => {
         return (billStores ?? []).map((bill: IBill) => ({
             id: bill.billConfirmId,
             motorId: bill?.motorId,
+            motorName: bill?.request?.motor?.motorName,
+            certificateNumber: bill?.request?.motor?.certificateNumber,
+            buyer: bill?.request?.receiver?.userName,
             price: bill?.price,
             createAt: bill?.createAt,
         }));
@@ -111,9 +114,10 @@ const MotorbikeSoldComponent = () => {
                         },
                         columns: {
                             columnVisibilityModel: {
-                                motorId: false
-                            }
-                        }
+                                motorId: false,
+                                consignor: false
+                            },
+                        },
                     }}
                     pageSizeOptions={[10, 20, 100]}
                     disableRowSelectionOnClick

@@ -1,3 +1,6 @@
+import { IMotorbike } from '../Motorbike/Motorbike';
+import { IUser } from '../User/UserInterface';
+
 export interface IBill {
     billConfirmId: number;
     motorId: number;
@@ -7,8 +10,8 @@ export interface IBill {
     status: string;
     createAt: Date;
     request: {
-        receiver : {
-            roleId: number
-        }
-    }
+        motor: IMotorbike;
+        receiver: IUser;
+        sender: IUser;
+    };
 }

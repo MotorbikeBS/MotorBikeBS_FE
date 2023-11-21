@@ -80,6 +80,9 @@ const MotorbikeSoldOwnerComponent = () => {
         return (billStoreOwner ?? []).map((bill: IBill) => ({
             id: bill.billConfirmId,
             motorId: bill?.motorId,
+            motorName: bill?.request?.motor?.motorName,
+            certificateNumber: bill?.request?.motor?.certificateNumber,
+            consignor: bill?.request?.receiver?.userName,
             price: bill?.price,
             createAt: bill?.createAt,
         }));
@@ -104,11 +107,12 @@ const MotorbikeSoldOwnerComponent = () => {
                         pagination: {
                             paginationModel: { page: 0, pageSize: 10 },
                         },
-                        columns:{
-                            columnVisibilityModel:{
-                                motorId: false
-                            }
-                        }
+                        columns: {
+                            columnVisibilityModel: {
+                                motorId: false,
+                                buyer:false
+                            },
+                        },
                     }}
                     pageSizeOptions={[10, 20, 100]}
                     disableRowSelectionOnClick

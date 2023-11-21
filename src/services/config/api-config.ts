@@ -31,7 +31,6 @@ export const getStoreByIDEndPoint = `${BASE_URL}/api/storedescription`;
 export const ownerRegisterEndPoint = `${BASE_URL}/api/owner/ownerregister`;
 
 //motorbike endpoint
-export const getAllWithSpecificStatusEndPoint = `${BASE_URL}/api/motorbike/getallwithspecificstatus`;
 export const getAllOnExChangeEndPoint = `${BASE_URL}/api/motorbike/getallonexchange`;
 export const getAllOnStoreExChangeEndPoint = `${BASE_URL}/api/motorbike/getallonstoreexchange`;
 export const getMotorByStoreIdEndPoint = `${BASE_URL}/api/motorbike/getmotorbystoreid`;
@@ -87,6 +86,7 @@ export const getBillByIdEndPoint = `${BASE_URL}/api/bill/getBillId`;
 export const createBillInStockEndPoint = `${BASE_URL}/api/Bill/CreateBill-InStock`;
 export const createBillConsignmentEndPoint = `${BASE_URL}/api/bill/CreateBill-Consignment`;
 export const createBillNonConsignmentEndPoint = `${BASE_URL}/api/bill/CreateBill-nonConsignment`;
+export const getIncomeMonthYearEndPoint = `${BASE_URL}/api/Bill/GetIncome_MonthYear`;
 
 //Payment Endpoint
 export const paymentRequestEndPoint = `${BASE_URL}/api/Payment/CreatePaymentUrl`;
@@ -106,6 +106,7 @@ export const createCommentEndPoint = `${BASE_URL}/api/Comment/CommentRegister`;
 export const replyCommentEndPoint = `${BASE_URL}/api/Comment/ReplyComment`;
 export const editCommentEndPoint = `${BASE_URL}/api/Comment/UpdateComment`;
 export const deleteCommentEndPoint = `${BASE_URL}/api/Comment/DeleteComment`;
+export const averageStarAndCommentEndPoint = `${BASE_URL}/api/Comment/AverageStar`;
 
 //Request
 export const getRequestAssociatedWithStoreEndPoint = `${BASE_URL}/api/Request/GetRequestAssociated_WithStore`;
