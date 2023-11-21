@@ -96,7 +96,7 @@ const ValuationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                 <Typography color='#E6A160' fontWeight='700'>
                     KÝ GỞI
                 </Typography>
-            ) : data?.motorStatus === 'LIVELIHOOD' || data?.motorStatus === 5 ? (
+            ) : data?.motorStatus === 'NON-CONSIGNMENT' || data?.motorStatus === 5 ? (
                 <Typography color='green' fontWeight='700' >KHÔNG KÍ GỞI</Typography>
             ) : (
                 <Typography sx={{ color: '#3D609A' }}>CHƯA XÁC ĐỊNH</Typography>
@@ -177,7 +177,7 @@ const ValuationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                                     data.id
                                 ))}
                             >
-                                Tạo thông tin thương lượng
+                                Tạo thông tin biên nhận
                             </Button>
                         </Box>
                     )}

@@ -88,7 +88,7 @@ const CustomerBookingStoreList = () => {
                                 <div className='tag-motorbike-status'>
                                     <Typography variant='subtitle1'>
                                         {cusBooking?.motor?.motorStatus?.title === 'CONSIGNMENT' ? 'KÝ GỬI' :
-                                            cusBooking?.motor?.motorStatus?.title === 'LIVELIHOOD' ? 'KHÔNG KÝ GỬI' : 'KHÔNG XÁC ĐỊNH'}
+                                            cusBooking?.motor?.motorStatus?.title === 'NON-CONSIGNMENT' ? 'KHÔNG KÝ GỬI' : 'KHÔNG XÁC ĐỊNH'}
                                     </Typography>
                                 </div>
                             </div>

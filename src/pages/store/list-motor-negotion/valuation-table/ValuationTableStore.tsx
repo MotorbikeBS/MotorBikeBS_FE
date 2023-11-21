@@ -122,7 +122,7 @@ export const columns: GridColDef[] = [
         width: 150,
         editable: false,
         renderCell: (params) =>
-            params.row.motorStatus === 'LIVELIHOOD' ? (
+            params.row.motorStatus === 'NON-CONSIGNMENT' ? (
                 <Typography sx={{ color: 'green' }}>KHÔNG KÍ GỞI</Typography>
             ) : params.row.motorStatus === 'POSTING' ? (
                 <Typography sx={{ color: 'green' }}>POSTING</Typography>
