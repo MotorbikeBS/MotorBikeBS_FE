@@ -92,7 +92,6 @@ const CreatePostBootingDialog: React.FC<IPostingBootProps> = ({
                         handleCloseDialog()
                     }, 1000)
                 })
-            console.log(data)
         }
     }
     return (
