@@ -379,7 +379,7 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                             </Button>
                         )}
                     {selectedRow &&
-                        selectedRow?.motorStatuss === 'LIVELIHOOD' && (
+                        selectedRow?.motorStatuss === 'NON-CONSIGNMENT' && (
                             <Button
                                 onClick={openSelectBookingModal}
                                 color="secondary"

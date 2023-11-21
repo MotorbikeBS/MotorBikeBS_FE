@@ -63,9 +63,12 @@ const HistoryTransactionComponent = () => {
 
     const rows = useMemo(() => {
         return (billUser ?? []).map((bill: IBill) => ({
-            id: bill?.billConfirmId,
+            id: bill.billConfirmId,
             motorId: bill?.motorId,
+            motorName: bill?.request?.motor?.motorName,
+            certificateNumber: bill?.request?.motor?.certificateNumber,
             price: bill?.price,
+            storeName: bill?.request?.sender?.storeDesciptions[0]?.storeName,
             createAt: bill?.createAt,
         }));
     }, [billUser]);
@@ -90,11 +93,11 @@ const HistoryTransactionComponent = () => {
                         pagination: {
                             paginationModel: { page: 0, pageSize: 5 },
                         },
-                        columns:{
-                            columnVisibilityModel:{
-                                motorId: false
-                            }
-                        }
+                        columns: {
+                            columnVisibilityModel: {
+                                motorId: false,
+                            },
+                        },
                     }}
                     pageSizeOptions={[5, 10, 100]}
                     disableRowSelectionOnClick
