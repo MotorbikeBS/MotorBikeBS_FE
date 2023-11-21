@@ -17,6 +17,7 @@ import './style/_style.scss';
 import { useAppDispatch } from '../../../services/store/store';
 import { reupNegotiationInfor } from '../../../services/features/negotiation/negotiationSlice';
 import { format } from 'date-fns';
+import { NumericFormat } from 'react-number-format';
 
 interface ReupdateNegoInfoDialogProps {
     open: boolean;
@@ -127,12 +128,14 @@ const ReUpdateNegoInfoDialogByStore: React.FC<ReupdateNegoInfoDialogProps> = ({
                                 }}
                             >
                                 <Controller
+                                    name="finalPrice"
                                     control={control}
-                                    name='finalPrice'
                                     render={({ field }) => (
-                                        <TextField
-                                            label='Giá đã chốt '
-                                            type='number'
+                                        <NumericFormat
+                                            label='Giá đã chốt'
+                                            allowLeadingZeros
+                                            thousandSeparator=","
+                                            customInput={TextField}
                                             {...field}
                                         />
                                     )}
@@ -168,16 +171,17 @@ const ReUpdateNegoInfoDialogByStore: React.FC<ReupdateNegoInfoDialogProps> = ({
                                     )}
                                 />
                                 <Controller
+                                    name="deposit"
                                     control={control}
-                                    name='deposit'
                                     render={({ field }) => (
-                                        <TextField
-                                            label="Đã cọc"
-                                            type="number"
+                                        <NumericFormat
+                                            label='Đã cọc'
+                                            allowLeadingZeros
+                                            thousandSeparator=","
+                                            customInput={TextField}
                                             {...field}
                                         />
                                     )}
-
                                 />
                                 <TextareaAutosize
                                     placeholder='Nhập mô tả của bạn.....'
