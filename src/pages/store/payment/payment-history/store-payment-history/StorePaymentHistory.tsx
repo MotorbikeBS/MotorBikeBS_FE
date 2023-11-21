@@ -21,12 +21,17 @@ const StorePaymentHistory = () => {
         loadingData();
     }, [loadingData]);
 
+    const addSevenHours = (date: Date, hours: number) => {
+        date.setHours(date.getHours() + hours);
+        return date;
+    }
+
     const row = useMemo(() => {
         return paymentHistory?.map((history: IPaymentHistory) => ({
             id: history.payments[0]?.paymentId,
             vnpayOrderId: history?.payments[0]?.vnpayOrderId,
-            dateCreated: format(new Date(history.payments[0]?.dateCreated), 'dd-MM-yyy HH:mm:ss'),
-            paymentTime: format(new Date(history.payments[0]?.paymentTime), 'dd-MM-yyyy HH:mm:ss'),
+            dateCreated: format(addSevenHours(new Date(history.payments[0]?.dateCreated), 7), 'dd-MM-yyyy HH:mm:ss'),
+            paymentTime: format(addSevenHours(new Date(history.payments[0]?.paymentTime), 7), 'dd-MM-yyyy HH:mm:ss'),
             content: history?.payments[0]?.content,
             paymentStatus: history?.status
         }));
@@ -52,7 +57,6 @@ const StorePaymentHistory = () => {
                 pageSizeOptions={[5, 10, 100]}
                 disableRowSelectionOnClick
                 // onRowDoubleClick={handleRowDoubleClick}
-                // loading={loading}
                 autoHeight
                 localeText={{
                     noRowsLabel: 'Không có dữ liệu',

@@ -76,8 +76,6 @@ const ValuationDialog: React.FC<NegotiationDialogProps> = ({
                 storePrice: data.storePrice,
                 description: data.description
             }))
-            console.log(data);
-
             handleCloseDialogValuation();
         } else {
         }
@@ -93,7 +91,8 @@ const ValuationDialog: React.FC<NegotiationDialogProps> = ({
                         <div>
                             <strong>Chú ý:</strong>
                             <Typography>
-                                Bạn nên thể hiện sự nghiêm túc trong quá trình đàm phán giá, để tránh tình trạng bị báo cáo về tài khoản                            </Typography>
+                                Bạn nên thể hiện sự nghiêm túc trong quá trình đàm phán giá, để tránh tình trạng bị báo cáo về tài khoản
+                            </Typography>
                         </div>
                     </DialogContentText>
 
