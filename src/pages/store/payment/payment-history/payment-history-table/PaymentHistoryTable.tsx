@@ -15,6 +15,7 @@ export const columns: GridColDef[] = [
         headerName: 'Thời gian thanh toán',
         editable: false,
         width: 200,
+
     },
     {
         field: 'content',

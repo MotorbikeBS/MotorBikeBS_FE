@@ -18,6 +18,7 @@ import {
 } from '@mui/material';
 import { createPostBooting } from '../../../../services/features/posting/postBootingSlice';
 import './style/_createPostBooting.scss'
+import { format } from 'date-fns';
 interface IPostingBootProps {
     open: boolean;
     motorId: number | null;
@@ -109,12 +110,12 @@ const CreatePostBootingDialog: React.FC<IPostingBootProps> = ({
                                     control={control}
                                     render={({ field }) => (
                                         <TextField
-                                            focused={true}
+                                            focused
                                             label="Ngày bắt đầu"
                                             type="date"
                                             {...field}
                                             inputProps={{
-                                                min: new Date()
+                                                min: format(new Date(), "yyyy-MM-dd"),
                                             }}
                                         />
                                     )}
@@ -124,10 +125,13 @@ const CreatePostBootingDialog: React.FC<IPostingBootProps> = ({
                                     control={control}
                                     render={({ field }) => (
                                         <TextField
-                                            focused={true}
+                                            focused
                                             label="Ngày kết thúc"
                                             type="date"
                                             {...field}
+                                            inputProps={{
+                                                min: format(new Date(), "yyyy-MM-dd"),
+                                            }}
                                         />
                                     )}
                                 />

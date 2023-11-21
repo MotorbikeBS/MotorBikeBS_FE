@@ -23,6 +23,7 @@ const PaymentPointComponent = () => {
         defaultValues: {
             amount: null,
         },
+
     });
 
     const { paymentRequest } = useAppSelector((state) => state.payment)
@@ -34,10 +35,12 @@ const PaymentPointComponent = () => {
     const onSubmit = async (data: ICreateRequestPayment) => {
         try {
             await dispatch(paymentPointRequest(data))
-            // if (url) {
-            //     window.open(`${url}`)
-            //     // navigate(`${url}`)
-            // }
+            if (url) {
+                window.open(`${url}`)
+                // navigate(`${url}`)
+            }
+            console.log(data);
+
         } catch (error) {
 
         }
@@ -88,11 +91,6 @@ const PaymentPointComponent = () => {
                                 )}
                             />
                             <Button
-                                onClick={() => {
-                                    if (url) {
-                                        window.open(`${url}`);
-                                    }
-                                }}
                                 type='submit'
                                 variant="contained"
                                 color="primary"
