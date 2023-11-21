@@ -51,7 +51,6 @@ const CreateNegoInforDialogByStore: React.FC<CreateNegotiationInforDialogProps> 
     onClose
 }) => {
     const dispatch = useAppDispatch()
-    const [formattedDeposit, setFormattedDeposit] = React.useState<string>('');
 
     const form = useForm<ICreateNegoInforForm>({
         defaultValues: {
@@ -87,8 +86,6 @@ const CreateNegoInforDialogByStore: React.FC<CreateNegotiationInforDialogProps> 
                 deposit: data.deposit
             }))
             handleCloseDialog()
-            console.log(data);
-
         }
         else {
         }
@@ -105,7 +102,7 @@ const CreateNegoInforDialogByStore: React.FC<CreateNegotiationInforDialogProps> 
                     <Typography
                         variant='h4'
                     >
-                        Tạo thông tin thương lượng
+                        Tạo thông tin biên nhận
                     </Typography>
                 </DialogTitle>
                 <DialogContent>
@@ -118,7 +115,7 @@ const CreateNegoInforDialogByStore: React.FC<CreateNegotiationInforDialogProps> 
                                 Chú ý:
                             </Typography>
                             <Typography>
-                                Vui lòng tạo thông tin đã thương lượng 1 cách chính xác, để quản lí giao dịch tốt hơn.
+                                Vui lòng tạo thông tin biên nhận 1 cách chính xác, để quản lí giao dịch tốt hơn.
                             </Typography>
                         </div>
                     </DialogContentText>
@@ -139,7 +136,8 @@ const CreateNegoInforDialogByStore: React.FC<CreateNegotiationInforDialogProps> 
                                     control={control}
                                     render={({ field }) => (
                                         <NumericFormat
-                                            thousandsGroupStyle="lakh"
+                                            label='Giá đã chốt'
+                                            allowLeadingZeros
                                             thousandSeparator=","
                                             customInput={TextField}
                                             {...field}
@@ -182,7 +180,8 @@ const CreateNegoInforDialogByStore: React.FC<CreateNegotiationInforDialogProps> 
                                     control={control}
                                     render={({ field }) => (
                                         <NumericFormat
-                                            thousandsGroupStyle="lakh"
+                                            label='Đã cọc'
+                                            allowLeadingZeros
                                             thousandSeparator=","
                                             customInput={TextField}
                                             {...field}
@@ -223,7 +222,7 @@ const CreateNegoInforDialogByStore: React.FC<CreateNegotiationInforDialogProps> 
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        <Typography>Bạn có chắc chắn muốn tạo thông tin đã thương lượng ?</Typography>
+                        <Typography>Bạn có chắc chắn muốn tạo thông tin biên nhận ?</Typography>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

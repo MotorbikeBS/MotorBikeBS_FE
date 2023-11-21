@@ -6,9 +6,10 @@ import {
     Typography
 } from '@mui/material';
 import './css/_payment-point.scss';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../../../services/store/store';
 import { paymentPointRequest } from '../../../../../services/features/payment/paymentSlice';
+import { NumericFormat } from 'react-number-format';
 
 interface ICreateRequestPayment {
     amount: number | null
@@ -27,7 +28,7 @@ const PaymentPointComponent = () => {
     const { paymentRequest } = useAppSelector((state) => state.payment)
     const url = paymentRequest
 
-    const { register, handleSubmit, formState } = form;
+    const { register, handleSubmit, formState, control } = form;
     const { errors } = formState;
 
     const onSubmit = async (data: ICreateRequestPayment) => {
@@ -62,7 +63,7 @@ const PaymentPointComponent = () => {
                             onSubmit={handleSubmit(onSubmit)}
                             noValidate
                             style={{ display: 'flex', flexDirection: 'column' }}>
-                            <TextField
+                            {/* <TextField
                                 size='small'
                                 label="Nhập số tiền"
                                 type="text"
@@ -72,6 +73,19 @@ const PaymentPointComponent = () => {
                                 style={{ marginBottom: '20px' }}
                                 error={!!errors.amount}
                                 helperText={errors.amount?.message}
+                            /> */}
+                            <Controller
+                                name="amount"
+                                control={control}
+                                render={({ field }) => (
+                                    <NumericFormat
+                                        label='Nhập số tiền'
+                                        allowLeadingZeros
+                                        thousandSeparator=","
+                                        customInput={TextField}
+                                        {...field}
+                                    />
+                                )}
                             />
                             <Button
                                 onClick={() => {

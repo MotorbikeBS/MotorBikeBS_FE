@@ -17,6 +17,8 @@ import {
     from '@mui/material';
 import './style/_style.scss'
 import { startValuation } from '../../../services/features/valuation/valuationSlice';
+import { NumericFormat } from 'react-number-format';
+
 interface NegotiationDialogProps {
     openValuation: boolean
     motorIdValuation: number | null
@@ -74,6 +76,8 @@ const ValuationDialog: React.FC<NegotiationDialogProps> = ({
                 storePrice: data.storePrice,
                 description: data.description
             }))
+            console.log(data);
+
             handleCloseDialogValuation();
         } else {
         }
@@ -100,10 +104,11 @@ const ValuationDialog: React.FC<NegotiationDialogProps> = ({
                                     name="storePrice"
                                     control={control}
                                     render={({ field }) => (
-                                        <TextField
-                                            focused
-                                            label="Giá đưa ra"
-                                            type="number"
+                                        <NumericFormat
+                                            label='Giá đề xuất'
+                                            allowLeadingZeros
+                                            thousandSeparator=","
+                                            customInput={TextField}
                                             {...field}
                                         />
                                     )}
