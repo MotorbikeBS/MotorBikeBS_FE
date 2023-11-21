@@ -1,9 +1,10 @@
 import {
+    averageStarAndCommentEndPoint,
     getCommentByCommentIdEndPoint,
     getHistoryCommentByRequestIdEndPoint,
 } from './../../config/api-config';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IComment } from '../../../models/Comment/Comment';
+import { IAverStarAndCmt, IComment } from '../../../models/Comment/Comment';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import {
@@ -22,6 +23,7 @@ interface CommentState {
     comment: IComment | null;
     commentStore: IComment[] | null;
     requestsWithStore: IRequest[] | null;
+    averageStarCmt: IAverStarAndCmt | null;
 }
 
 const initialState: CommentState = {
@@ -30,6 +32,7 @@ const initialState: CommentState = {
     comment: null,
     commentStore: null,
     requestsWithStore: null,
+    averageStarCmt: null,
 };
 
 export const getCommentByCommentId = createAsyncThunk<
@@ -71,7 +74,7 @@ export const getCommentByStoreId = createAsyncThunk<
         );
         return response.data.result;
     } catch (error: any) {
-        toast.error(`${error.response.data?.errorMessages}`);
+        // toast.error(`${error.response.data?.errorMessages}`);
         return thunkAPI.rejectWithValue({
             error: error.response?.data?.errorMessages,
         });
@@ -223,6 +226,28 @@ export const getRequestAssociatedWithStore = createAsyncThunk<
     }
 });
 
+export const getAverageStar = createAsyncThunk<
+    IAverStarAndCmt,
+    { storeId: number }
+>('getAverageStar', async ({ storeId }, thunkAPI) => {
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.get(
+            `${averageStarAndCommentEndPoint}?StoreID=${storeId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return response.data.result;
+    } catch (error: any) {
+        return thunkAPI.rejectWithValue({
+            error: error.response?.data?.errorMessages,
+        });
+    }
+});
+
 export const commentSlice = createSlice({
     name: 'comment',
     initialState,
@@ -230,6 +255,7 @@ export const commentSlice = createSlice({
         clearComment: (state) => {
             state.comment = null;
             state.commentStore = null;
+            state.averageStarCmt = null;
         },
         clearRequest: (state) => {
             state.requestsWithStore = null;
@@ -327,6 +353,18 @@ export const commentSlice = createSlice({
                 state.error = action.payload;
             },
         );
+        builder.addCase(getAverageStar.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(getAverageStar.fulfilled, (state, action) => {
+            state.loading = false;
+            state.averageStarCmt = action.payload;
+            state.error = null;
+        });
+        builder.addCase(getAverageStar.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
     },
 });
 

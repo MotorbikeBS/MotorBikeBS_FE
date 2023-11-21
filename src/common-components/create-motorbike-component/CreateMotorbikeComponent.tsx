@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import {
     Box,
     Button,
@@ -35,6 +35,7 @@ import {
 } from '../../services/features/motorbike/motorFields';
 import { createMotorbike } from '../../services/features/motorbike/motorbikeSlice';
 import { toast } from 'react-toastify';
+import { NumericFormat } from 'react-number-format';
 
 interface CreateDialogProps {
     open: boolean;
@@ -116,7 +117,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
         },
     });
 
-    const { formState, handleSubmit, register } = form;
+    const { formState, handleSubmit, register, control } = form;
     const { errors } = formState;
 
     const handleCloseDialog = () => {
@@ -141,7 +142,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
         formData.append('modelId', data.modelId.toString());
         formData.append('odo', data.odo.toString());
         formData.append('year', year.toISOString());
-        formData.append('price', data.price.toString());
+        formData.append('price', data?.price.toString());
         formData.append('description', data.description);
         formData.append('motorTypeId', data.motorTypeId.toString());
         if (data.images && data.images.length > 0) {
@@ -157,12 +158,12 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                 loadData();
                 toast.success('Thêm xe thành công.');
                 handleCloseDialog();
-                form.reset()
-            }).catch(error => {
-                onCloseSubmitDialog()
+                form.reset();
             })
+            .catch((error) => {
+                onCloseSubmitDialog();
+            });
     };
-
 
     const motorBrandFilter =
         motorBrands &&
@@ -410,8 +411,9 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                             error={!!errors.odo}
                                                             helperText={
                                                                 errors?.odo
-                                                                    ? errors?.odo
-                                                                        ?.message
+                                                                    ? errors
+                                                                          ?.odo
+                                                                          ?.message
                                                                     : ''
                                                             }
                                                             variant="outlined"
@@ -421,10 +423,11 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                 </TableRow>
                                                 <TableRow>
                                                     <TableCell className="header-table">
-                                                        Đăng ký mới
+                                                        Ngày đăng ký
                                                     </TableCell>
                                                     <TableCell className="header-table-content">
                                                         <TextField
+                                                            focused
                                                             label="Đăng ký mới"
                                                             type="date"
                                                             {...register(
@@ -451,43 +454,23 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                         Giá
                                                     </TableCell>
                                                     <TableCell className="header-table-content">
-                                                        <TextField
-                                                            label="Giá"
-                                                            type="text"
-                                                            {...register(
-                                                                'price',
-                                                                {
-                                                                    validate: (
-                                                                        value,
-                                                                    ) => {
-                                                                        if (
-                                                                            !value
-                                                                        ) {
-                                                                            return 'Bạn chưa nhập giá xe';
-                                                                        }
-                                                                        if (
-                                                                            isNaN(
-                                                                                value,
-                                                                            )
-                                                                        ) {
-                                                                            return 'Giá phải là một số';
-                                                                        }
-                                                                        return true;
-                                                                    },
-                                                                },
+                                                        <Controller
+                                                            name="price"
+                                                            control={control}
+                                                            render={({
+                                                                field,
+                                                            }) => (
+                                                                <NumericFormat
+                                                                    label="Giá"
+                                                                    allowLeadingZeros
+                                                                    thousandSeparator=","
+                                                                    customInput={
+                                                                        TextField
+                                                                    }
+                                                                    {...field}
+                                                                    fullWidth
+                                                                />
                                                             )}
-                                                            error={
-                                                                !!errors?.price
-                                                            }
-                                                            helperText={
-                                                                errors?.price
-                                                                    ? errors
-                                                                        ?.price
-                                                                        ?.message
-                                                                    : ''
-                                                            }
-                                                            variant="outlined"
-                                                            fullWidth
                                                         />
                                                     </TableCell>
                                                 </TableRow>
