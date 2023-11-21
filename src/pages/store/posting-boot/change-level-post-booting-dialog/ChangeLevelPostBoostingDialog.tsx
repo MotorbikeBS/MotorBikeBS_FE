@@ -49,15 +49,22 @@ const ChangeLevelPostBoostingDialog: React.FC<IChangeLevelPostBoostingDialogProp
     const dispatch = useAppDispatch()
 
     const [level, setLevel] = React.useState<number>(1);
+
     const handleChangeValue = (event: SelectChangeEvent<number>) => {
         setLevel(event.target.value as number);
     };
+
     const form = useForm<IChangeLevelPostBoostingField>({
         defaultValues: {
             level: 1,
         }
     })
-    const { control, handleSubmit } = form
+    const { control, handleSubmit, setValue } = form
+
+    React.useEffect(() => {
+        setValue('level', level);
+    }, [level, setValue]);
+
     const handleCloseDialog = () => {
         onClose();
     };
@@ -72,7 +79,7 @@ const ChangeLevelPostBoostingDialog: React.FC<IChangeLevelPostBoostingDialogProp
         if (boostingId !== null) {
             dispatch(changeLevelPostBoosting({
                 boostingId: boostingId,
-                data,
+                data
             }))
                 .then(() => {
                     loadingData()
@@ -80,6 +87,7 @@ const ChangeLevelPostBoostingDialog: React.FC<IChangeLevelPostBoostingDialogProp
                         handleCloseDialog()
                     }, 1000)
                 })
+            console.log(data)
         }
     }
 
@@ -111,7 +119,6 @@ const ChangeLevelPostBoostingDialog: React.FC<IChangeLevelPostBoostingDialogProp
                                         </>
                                     )}
                                 />
-
                             </Stack>
                             <Button
                                 variant="contained"
