@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import {
     Box,
     Button,
@@ -40,6 +40,7 @@ import {
     getMotorId,
     updateMotorById,
 } from '../../../../services/features/motorbike/motorbikeSlice';
+import { NumericFormat } from 'react-number-format';
 
 interface EditDialogProps {
     open: boolean;
@@ -154,7 +155,7 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
         }
     }, [motorbike, form, user]);
 
-    const { formState, handleSubmit, register } = form;
+    const { formState, handleSubmit, register, control } = form;
     const { errors } = formState;
 
     const handleCloseDialog = () => {
@@ -317,7 +318,8 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                                 !!errors?.motorName
                                                             }
                                                             helperText={
-                                                                errors?.motorName
+                                                                errors
+                                                                    ?.motorName
                                                                     ?.message
                                                             }
                                                             variant="outlined"
@@ -406,7 +408,9 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                                         'Bạn chưa nhập số km đã đi',
                                                                 },
                                                             )}
-                                                            error={!!errors?.odo}
+                                                            error={
+                                                                !!errors?.odo
+                                                            }
                                                             helperText={
                                                                 errors?.odo
                                                                     ?.message
@@ -448,25 +452,23 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                         Giá
                                                     </TableCell>
                                                     <TableCell className="header-table-content">
-                                                        <TextField
-                                                            label="Giá"
-                                                            type="text"
-                                                            {...register(
-                                                                'price',
-                                                                {
-                                                                    required:
-                                                                        'Bạn chưa nhập giá xe',
-                                                                },
+                                                        <Controller
+                                                            name="price"
+                                                            control={control}
+                                                            render={({
+                                                                field,
+                                                            }) => (
+                                                                <NumericFormat
+                                                                    label="Giá"
+                                                                    allowLeadingZeros
+                                                                    thousandSeparator=","
+                                                                    customInput={
+                                                                        TextField
+                                                                    }
+                                                                    {...field}
+                                                                    fullWidth
+                                                                />
                                                             )}
-                                                            error={
-                                                                !!errors?.price
-                                                            }
-                                                            helperText={
-                                                                errors?.price
-                                                                    ?.message
-                                                            }
-                                                            variant="outlined"
-                                                            fullWidth
                                                         />
                                                     </TableCell>
                                                 </TableRow>
