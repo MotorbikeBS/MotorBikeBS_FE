@@ -6,6 +6,7 @@ import {
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import {
+    changeLevelPostBootingEndPoint,
     createPostBootingEndPoint,
     extendPostBootingEndPoint,
     getPostBootingHistoryEndPoint,
@@ -99,7 +100,35 @@ export const extendPostBoosting = createAsyncThunk<
         }
     }
 });
-
+export const changeLevelPostBoosting = createAsyncThunk<
+    IPostBooting,
+    { boostingId: number; data: Object }
+>(
+    'postBoosting/changLevelPostBoostring',
+    async ({ boostingId, data }, thunkAPI) => {
+        try {
+            const token = localStorage.getItem('motorbike_bs');
+            const response = await axios.put(
+                `${changeLevelPostBootingEndPoint}?boostingId=${boostingId}`,
+                data,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+            );
+            toast.success(`${response.data.message}`);
+            return response.data;
+        } catch (error: any) {
+            if (error.response) {
+                toast.error(`${error.response.data?.errorMessages}`);
+                return thunkAPI.rejectWithValue({
+                    error: error.response?.data?.errorMessage,
+                });
+            }
+        }
+    },
+);
 export const postBootingSlice = createSlice({
     name: 'postBooting',
     initialState,
@@ -141,6 +170,17 @@ export const postBootingSlice = createSlice({
             state.error = null;
         });
         builder.addCase(extendPostBoosting.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(changeLevelPostBoosting.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(changeLevelPostBoosting.fulfilled, (state) => {
+            state.loading = false;
+            state.error = null;
+        });
+        builder.addCase(changeLevelPostBoosting.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });
