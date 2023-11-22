@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
     BarElement,
     CategoryScale,
@@ -16,7 +16,19 @@ import {
     clearRevenue,
     getRevenue,
 } from '../../../../../services/features/bill/billSlice';
-import { Box, Select, TextField, Typography } from '@mui/material';
+import {
+    Box,
+    Button,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    SelectChangeEvent,
+    TextField,
+    Typography,
+} from '@mui/material';
+import { format } from 'date-fns';
+import { unstable_gridTabIndexColumnGroupHeaderSelector } from '@mui/x-data-grid';
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
@@ -24,18 +36,33 @@ const RevenueChart = () => {
     const dispatch = useAppDispatch();
     const { revenue } = useAppSelector((state) => state.bill);
 
+    const [startDateInput, setStartDateInput] = useState<Date>(
+        new Date('01/02/2023'),
+    );
+    const [endDateInput, setEndDateInput] = useState<Date>(new Date());
+    const [incomeTypeSelect, setIncomeTypeSelect] = useState<string>('Month');
+
+    const handleChangeIncomeTypeSelect = (event: SelectChangeEvent) => {
+        setIncomeTypeSelect(event.target.value);
+    };
+
+    const currentDate = new Date().toISOString().split('T')[0];
+    const pastDate = new Date('01/02/2022').toISOString().split('T')[0];
+
     useEffect(() => {
         dispatch(clearRevenue());
+        handleSubmit();
+    }, [dispatch]);
+
+    const handleSubmit = useCallback(() => {
         dispatch(
             getRevenue({
-                startDate: '01/01/2023',
-                endDate: '12/01/2023',
-                // startDate: new Date(2023, 0, 1), 
-                // endDate: new Date(2023, 11, 1),
-                incomeType: 'Month',
+                startDate: format(new Date(startDateInput), 'MM/dd/yyyy'),
+                endDate: format(new Date(endDateInput), 'MM/dd/yyyy'),
+                incomeType: incomeTypeSelect,
             }),
         );
-    }, [dispatch]);
+    }, [dispatch, startDateInput, endDateInput, incomeTypeSelect]);
 
     const data = {
         labels:
@@ -69,12 +96,60 @@ const RevenueChart = () => {
             </Typography>
             <Box
                 sx={{
+                    margin: 2,
                     display: 'flex',
+                    alignItems: 'center',
+                    gap: 2,
                 }}
             >
-                <TextField />
-                <TextField />
-                <Select></Select>
+                <TextField
+                    type="date"
+                    value={
+                        startDateInput
+                            ? startDateInput.toISOString().split('T')[0]
+                            : ''
+                    }
+                    onChange={(e) =>
+                        setStartDateInput(new Date(e.target.value))
+                    }
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    inputProps={{
+                        min: pastDate,
+                        max: currentDate,
+                    }}
+                />
+                <TextField
+                    type="date"
+                    value={
+                        endDateInput
+                            ? endDateInput.toISOString().split('T')[0]
+                            : ''
+                    }
+                    onChange={(e) => setEndDateInput(new Date(e.target.value))}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    inputProps={{
+                        max: currentDate,
+                    }}
+                />
+                <FormControl sx={{ width: '40%' }}>
+                    <InputLabel id="incomeType">Loại thu nhập</InputLabel>
+                    <Select
+                        labelId="incomeType"
+                        value={incomeTypeSelect}
+                        label="Loại thu nhập"
+                        onChange={handleChangeIncomeTypeSelect}
+                    >
+                        <MenuItem value="Month">Month</MenuItem>
+                        <MenuItem value="Year">Year</MenuItem>
+                    </Select>
+                </FormControl>
+                <Button variant="outlined" onClick={handleSubmit}>
+                    Áp dụng
+                </Button>
             </Box>
             <Bar
                 style={{
