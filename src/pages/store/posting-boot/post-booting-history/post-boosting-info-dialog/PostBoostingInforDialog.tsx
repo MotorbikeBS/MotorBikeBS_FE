@@ -30,11 +30,17 @@ const PostBoostingInforDialog: React.FC<IPostBootingInforDialog> = ({
     data,
     loadData
 }) => {
-    const [boostingIdIdDialog, setBoostingIdDialog] = React.useState<number | null>(null)
-    const [isOpenExtendDialog, setIsOpenExtendDialog] = React.useState(false)
+
+    const [boostingIdChanglevelDialog, setBoostingIdChanglevelDialog] = React.useState<number | null>(null)
     const [isOpenChangeLevelDialog, setIsOpenChangeLevelDialog] = React.useState(false)
     const [isOpenSubmitDialog, setIsOpenSubmitDialog] = React.useState(false)
     const [isOpenCancelDialog, setIsOpenCancelDialog] = React.useState(false)
+
+    const [boostingIdDialog, setBoostingIdDialog] = React.useState<number | null>(null)
+    const [isOpenExtendDialog, setIsOpenExtendDialog] = React.useState(false)
+    const [isOpenSubmitExtendDialog, setIsOpenSubmitExtendDialog] = React.useState(false)
+    const [isOpenCancelExtendDialog, setIsOpenCancelExtendDialog] = React.useState(false)
+
 
     if (!data) {
         return null;
@@ -76,14 +82,16 @@ const PostBoostingInforDialog: React.FC<IPostBootingInforDialog> = ({
         ))
     ]
 
-    const handleOpenExtendDialog = (boostingId: number) => {
-        setBoostingIdDialog(boostingId)
-        setIsOpenExtendDialog(true)
-    }
+
     const handleOpenChangeLevelDialog = (boostingId: number) => {
-        setBoostingIdDialog(boostingId)
+        setBoostingIdChanglevelDialog(boostingId)
         setIsOpenChangeLevelDialog(true)
         console.log(boostingId)
+    }
+    const handleCloseChangLevelDialog = () => {
+        setIsOpenChangeLevelDialog(false)
+        setIsOpenSubmitDialog(false)
+        setIsOpenCancelDialog(false)
     }
     const handleOpenSubmitDialog = () => {
         setIsOpenSubmitDialog(true);
@@ -99,16 +107,29 @@ const PostBoostingInforDialog: React.FC<IPostBootingInforDialog> = ({
         setIsOpenCancelDialog(false);
     };
 
+    const handleOpenExtendDialog = (boostingId: number) => {
+        setBoostingIdDialog(boostingId)
+        setIsOpenExtendDialog(true)
+    }
     const handleCloseExtendDialog = () => {
         setIsOpenExtendDialog(false)
-        setIsOpenSubmitDialog(false);
-        setIsOpenCancelDialog(false);
+        setIsOpenSubmitExtendDialog(false);
+        setIsOpenCancelExtendDialog(false);
     };
-    const handleCloseChangLevelDialog = () => {
-        setIsOpenChangeLevelDialog(false)
-        setIsOpenSubmitDialog(false)
-        setIsOpenCancelDialog(false)
-    }
+    const handleOpenSubmitExtendDialog = () => {
+        setIsOpenSubmitExtendDialog(true);
+    };
+
+    const handleCloseSubmitExtendDialog = () => {
+        setIsOpenSubmitExtendDialog(false);
+    };
+    const handleOpenCancelExtendDialog = () => {
+        setIsOpenCancelExtendDialog(true);
+    };
+    const handleCloseCancelExtendDialog = () => {
+        setIsOpenCancelExtendDialog(false);
+    };
+
     return (
         <>
             <Modal
@@ -173,14 +194,14 @@ const PostBoostingInforDialog: React.FC<IPostBootingInforDialog> = ({
             </Modal>
             <ExtensionPostBootingDialog
                 open={isOpenExtendDialog}
-                openSubmit={isOpenSubmitDialog}
-                openCancle={isOpenCancelDialog}
-                onOpenSubmitDialog={handleOpenSubmitDialog}
-                onCloseSubmitDialog={handleCloseSubmitDialog}
-                onOpenCancelDialog={handleOpenCancelDialog}
-                onCloseCancelDialog={handleCloseCancelDialog}
                 onClose={handleCloseExtendDialog}
-                boostingId={boostingIdIdDialog}
+                openSubmit={isOpenSubmitExtendDialog}
+                openCancle={isOpenCancelExtendDialog}
+                onOpenSubmitDialog={handleOpenSubmitExtendDialog}
+                onCloseSubmitDialog={handleCloseSubmitExtendDialog}
+                onOpenCancelDialog={handleOpenCancelExtendDialog}
+                onCloseCancelDialog={handleCloseCancelExtendDialog}
+                boostingId={boostingIdDialog}
                 loadingData={loadData}
             />
 
@@ -193,7 +214,7 @@ const PostBoostingInforDialog: React.FC<IPostBootingInforDialog> = ({
                 onCloseSubmitDialog={handleCloseSubmitDialog}
                 onOpenCancelDialog={handleOpenCancelDialog}
                 onCloseCancelDialog={handleCloseCancelDialog}
-                boostingId={boostingIdIdDialog}
+                boostingId={boostingIdChanglevelDialog}
                 loadingData={loadData}
             />
         </>

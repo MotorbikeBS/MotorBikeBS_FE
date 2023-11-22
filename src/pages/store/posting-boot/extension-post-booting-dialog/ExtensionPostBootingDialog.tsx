@@ -40,6 +40,7 @@ const ExtensionPostBootingDialog: React.FC<IExtendPostBoostingDialogProps> = ({
         }
     })
     const { control, handleSubmit } = form
+
     const handleCloseDialog = () => {
         onClose();
     };
