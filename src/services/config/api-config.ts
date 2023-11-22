@@ -110,3 +110,6 @@ export const averageStarAndCommentEndPoint = `${BASE_URL}/api/Comment/AverageSta
 
 //Request
 export const getRequestAssociatedWithStoreEndPoint = `${BASE_URL}/api/Request/GetRequestAssociated_WithStore`;
+
+//Revenue statistics for admin
+export const revenueStatisticsAdminEndPoint = `${BASE_URL}/api/PaymentStatistic/GetToalByAdmin`;

@@ -1,0 +1,22 @@
+.chart-bar {
+    margin-bottom: 2rem;
+    .chart-bar-title {
+        :nth-child(1) {
+            margin-top: 2%;
+            margin-bottom: 1rem;
+        }
+    }
+    .year-bar {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-content: space-between;
+        justify-content: space-between;
+        .chart-bar-revenue {
+            max-width: 40%;
+        }
+        .paper-form-year {
+            max-width: 12%;
+        }
+    }
+}
