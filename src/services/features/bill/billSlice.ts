@@ -2,7 +2,7 @@ import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { toast } from 'react-toastify';
-import { IBill } from '../../../models/Bill/Bill';
+import { IBill, IRevenue } from '../../../models/Bill/Bill';
 import {
     createBillConsignmentEndPoint,
     createBillInStockEndPoint,
@@ -10,6 +10,7 @@ import {
     getBillByIdEndPoint,
     getBillByStoreIdEndPoint,
     getBillByUserIDEndPoint,
+    getIncomeMonthYearEndPoint,
 } from '../../config/api-config';
 
 interface BillState {
@@ -17,6 +18,7 @@ interface BillState {
     error: string[] | unknown;
     billStore: IBill[] | null;
     billUser: IBill[] | null;
+    revenue: IRevenue | null;
 }
 
 const initialState: BillState = {
@@ -24,6 +26,7 @@ const initialState: BillState = {
     error: null,
     billStore: null,
     billUser: null,
+    revenue: null,
 };
 
 export const getBillByStoreId = createAsyncThunk<
@@ -170,6 +173,32 @@ export const createBillNonConsignment = createAsyncThunk<
     },
 );
 
+export const getRevenue = createAsyncThunk<
+    IRevenue,
+    {
+        startDate: string;
+        endDate: string;
+        incomeType: string;
+    }
+>('bill/getIncome', async ({ startDate, endDate, incomeType }, thunkAPI) => {
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.get(
+            `${getIncomeMonthYearEndPoint}?startDate=${startDate}&endDate=${endDate}&IncomeType=${incomeType}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return response.data.result;
+    } catch (error: any) {
+        return thunkAPI.rejectWithValue({
+            error: error.response?.data?.errorMessages,
+        });
+    }
+});
+
 export const billSlice = createSlice({
     name: 'bookingOwerExchange',
     initialState,
@@ -177,6 +206,9 @@ export const billSlice = createSlice({
         clearBill: (state) => {
             state.billStore = null;
             state.billUser = null;
+        },
+        clearRevenue: (state) => {
+            state.revenue = null;
         },
     },
     extraReducers: (builder) => {
@@ -248,8 +280,20 @@ export const billSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         });
+        builder.addCase(getRevenue.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(getRevenue.fulfilled, (state, action) => {
+            state.loading = false;
+            state.revenue = action.payload;
+            state.error = null;
+        });
+        builder.addCase(getRevenue.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
     },
 });
 
-export const { clearBill } = billSlice.actions;
+export const { clearBill, clearRevenue } = billSlice.actions;
 export default billSlice.reducer;

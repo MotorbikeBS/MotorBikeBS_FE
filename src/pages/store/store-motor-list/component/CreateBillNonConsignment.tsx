@@ -86,7 +86,7 @@ const CreateBillNonConsignment: React.FC<
         )
             .unwrap()
             .then(() => {
-                toast.success('Đã chuyển qua xe đã bán!');
+                toast.success('Xe đã bán. Thông tin hóa đơn được thêm vào lịch sử giao dịch của bạn.');
                 loadData();
                 handleCloseDialog();
             })
