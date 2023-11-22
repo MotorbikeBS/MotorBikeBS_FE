@@ -96,7 +96,7 @@ const AdminMenuComponent = () => {
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
                         <Link
-                            to="/admin-home"
+                            to="/dashboard"
                             style={{ textDecoration: 'none' }}
                         >
                             <Typography
@@ -193,7 +193,7 @@ const AdminMenuComponent = () => {
                         </Box>
 
                         <Link
-                            to="/admin-home"
+                            to="/dashboard"
                             style={{
                                 textDecoration: 'none',
                                 flexGrow: 1,

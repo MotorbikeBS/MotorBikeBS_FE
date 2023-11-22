@@ -7,7 +7,6 @@ import UserProfile from '../pages/user-profile/UserProfile';
 import EditUserProfile from '../pages/user-profile/EditUserProfile';
 import ForgotPassword from '../pages/forgot-password/ForgotPassword';
 import StoreList from '../pages/customer/store-list/StoreList';
-import AdminHome from '../pages/admin/admin-home/AdminHome';
 import CustomerHome from '../pages/customer/customer-home/CustomerHome';
 import StoreHome from '../pages/store/store-home-component/StoreHome';
 import OwnerHome from '../pages/owner/owner-home/OwnerHome';
@@ -42,6 +41,7 @@ import PaymentHistoryComponent from '../pages/store/payment/payment-history/Paym
 import NegotiationHistoryList from '../pages/store/receipt-list-with-owner/NegotiationHistoryList';
 import ReceiptHistoryWithStore from '../pages/owner/receipt-list-with-store/ReceiptHistoryWithStore';
 import StoreDetailByStore from '../pages/store/store-detail/StoreDetailByStore';
+import AdminDashboard from '../pages/admin/admin-home/AdminHome';
 
 const AppRoutes = () => {
     const { account } = useAppSelector((state) => state.account);
@@ -87,9 +87,9 @@ const AppRoutes = () => {
                     {/* Admin Router */}
                     <Route
                         path="/"
-                        element={<Navigate to="/admin-home" replace />}
+                        element={<Navigate to="/dashboard" replace />}
                     />
-                    <Route path="/admin-home" element={<AdminHome />} />
+                    <Route path="/dashboard" element={<AdminDashboard />} />
                     <Route path="/list-user" element={<ListUser />} />
                     <Route
                         path="/store-list-admin"
