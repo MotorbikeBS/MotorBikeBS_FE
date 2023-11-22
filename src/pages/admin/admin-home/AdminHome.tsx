@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import AdminMenuComponent from "../admin-menu-component/AdminMenuComponent";
 
-const AdminHome = () => {
+const AdminDashboard = () => {
   return (
     <Box display="flex" flexDirection="column" height="100vh" width="100%">
       <AdminMenuComponent />
@@ -14,4 +14,4 @@ const AdminHome = () => {
   );
 };
 
-export default AdminHome;
+export default AdminDashboard;

@@ -47,7 +47,7 @@ const LoginComponent = () => {
             .unwrap()
             .then((user) => {
                 if (user?.roleId === 1) {
-                    navigave('/admin-home');
+                    navigave('/dashboard');
                 } else if (user?.roleId === 2) {
                     navigave('/dashboard')
                 } else if (user?.roleId === 3) {
