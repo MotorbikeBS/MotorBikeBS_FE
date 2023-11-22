@@ -49,7 +49,7 @@ const StoreListActive = () => {
         <Container maxWidth="xl">
             <Paper style={{ marginBottom: '20px', padding: '20px' }}>
                 <Typography variant="h4" gutterBottom>
-                    Danh sách lịch hẹn của cửa hàng chờ
+                    Danh sách cửa hàng đang hoạt động
                 </Typography>
                 <DataGrid
                     rows={rows}

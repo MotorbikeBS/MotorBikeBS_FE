@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
 import { clearRevenue, getRevenueStatisticAdmin } from '../../../../services/features/admin/adminSlice';
-import { Box, Container, Grid, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, Stack, Typography } from '@mui/material';
+import { Container, Grid, MenuItem, Paper, Select, SelectChangeEvent, Typography } from '@mui/material';
 import { Bar } from 'react-chartjs-2';
 import './style/_style.scss'
 import useFormatCurrency from '../../../../hooks/useFormatCurrency';
@@ -33,7 +33,7 @@ const Dashboard = () => {
             year: 2023
         }
     })
-    const { control, handleSubmit, setValue } = form
+    const { control, setValue } = form
 
     React.useEffect(() => {
         setValue('year', year);
