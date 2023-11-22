@@ -15,3 +15,23 @@ export interface IBill {
         sender: IUser;
     };
 }
+export interface IRevenue {
+    incomeType: string
+    storeId: number
+    storeName: string
+    bills: [{
+        incomeTime: string
+        income: number
+        expense: number
+        total: number
+        incomeType: string
+    }]
+    total: {
+        incomeTime: string
+        income: number
+        expense: number
+        total: number
+        incomeType: string
+    }
+}
+
