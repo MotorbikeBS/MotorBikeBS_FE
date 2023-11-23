@@ -16,8 +16,9 @@ const Dashboard = () => {
     const { revenue } = useAppSelector((state) => state.revenueAdmin);
     const [year, setYear] = React.useState<number>(2023)
 
+
+
     const handleChangeYear = (event: SelectChangeEvent<number>) => {
-        // setYear(event.target.value as number)
         const selectedyear = event.target.value as number
         setYear(selectedyear)
 
@@ -25,8 +26,12 @@ const Dashboard = () => {
         dispatch(getRevenueStatisticAdmin({
             year: selectedyear
         }))
-        console.log(year)
+
     }
+
+    React.useEffect(() => {
+        dispatch(getRevenueStatisticAdmin({ year: year }));
+    }, [dispatch]);
 
     const form = useForm<ISelectYearField>({
         defaultValues: {
