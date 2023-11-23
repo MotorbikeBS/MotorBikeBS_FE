@@ -28,7 +28,6 @@ import {
     Typography,
 } from '@mui/material';
 import { format } from 'date-fns';
-import { unstable_gridTabIndexColumnGroupHeaderSelector } from '@mui/x-data-grid';
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 

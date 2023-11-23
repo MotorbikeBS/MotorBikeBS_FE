@@ -28,11 +28,13 @@ import useFormatCurrency from '../../hooks/useFormatCurrency';
 interface FilterComponentProps {
     anchorElFilter: HTMLElement | null;
     handleCloseFilter: () => void;
+    loadDataBrandModelType: boolean;
 }
 
 const FilterComponent: React.FC<FilterComponentProps> = ({
     anchorElFilter,
     handleCloseFilter,
+    loadDataBrandModelType,
 }) => {
     const dispatch = useAppDispatch();
     const { motorBrands, motorTypes, motorModels } = useAppSelector(
@@ -91,11 +93,13 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
     };
 
     useEffect(() => {
-        dispatch(clearMotorFields());
-        dispatch(getMotorBrand());
-        dispatch(getMotorType());
-        dispatch(getMotorModel());
-    }, [dispatch]);
+        if (loadDataBrandModelType === true) {
+            dispatch(clearMotorFields());
+            dispatch(getMotorBrand());
+            dispatch(getMotorType());
+            dispatch(getMotorModel());
+        }
+    }, [dispatch, loadDataBrandModelType]);
 
     const handleFilter = () => {
         const filterParams = {
@@ -202,7 +206,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                                     {motorModelsFilter &&
                                         motorModelsFilter.map((option) => (
                                             <FormControlLabel
-                                                key={option.modelId}
+                                                key={option?.modelId}
                                                 control={
                                                     <Checkbox
                                                         checked={selectedFiltersModel.includes(
