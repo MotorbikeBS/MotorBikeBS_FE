@@ -101,7 +101,7 @@ const CreateReplyComment: React.FC<createReplyCommentProps> = ({
                                 <Box className="cmt-box">
                                     <Box className="user-date">
                                         {comment?.userId ===
-                                        comment?.request?.receiver?.userId ? (
+                                            comment?.request?.receiver?.userId ? (
                                             <Typography className="user-date-name">
                                                 {
                                                     comment?.request?.receiver

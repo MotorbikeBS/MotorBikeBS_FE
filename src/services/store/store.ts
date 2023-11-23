@@ -18,6 +18,7 @@ import negotiationSlice from '../features/negotiation/negotiationSlice';
 import postBootingSlice from '../features/posting/postBootingSlice';
 import commentSlice from '../features/comment/commentSlice.';
 import revenueAdminSlice from '../features/admin/adminSlice';
+import reportSlice from '../features/report/reportSlice';
 
 // Định nghĩa cấu hình persist
 const persistConfig = {
@@ -37,6 +38,7 @@ const persistConfig = {
         'payment',
         'postBooting',
         'revenueAdmin',
+        'report',
     ],
 };
 
@@ -56,6 +58,7 @@ const rootReducer = combineReducers({
     payment: paymentSlice,
     comment: commentSlice,
     revenueAdmin: revenueAdminSlice,
+    report: reportSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

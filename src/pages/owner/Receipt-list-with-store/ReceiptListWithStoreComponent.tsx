@@ -206,7 +206,7 @@ const ReceiptListWithStoreComponent = () => {
                                                     </Typography>
                                                     <div className="register-date">
                                                         <Typography>
-                                                            Ngày Đăng Ký:
+                                                            <strong>Ngày đăng ký:</strong>
                                                         </Typography>
                                                         <Typography>
                                                             {new Date(
