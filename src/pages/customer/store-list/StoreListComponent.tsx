@@ -8,9 +8,15 @@ import { useAppDispatch, useAppSelector } from "../../../services/store/store";
 import { clearStore, getAllStore } from "../../../services/features/store/storeSlice";
 import { IStore } from "../../../models/Store/Store";
 import { Report } from "@mui/icons-material";
+import ReportStoreDialog from "../../../common-components/report-store-dialog/ReportStoreDialog";
 
 const StoreListComponent = () => {
   const navigate = useNavigate();
+
+  const [isOpenReportDialog, setIsOpenReportDialog] = React.useState(false);
+  const [isOpenSubmitReportDialog, setIsOpenSubmitReportDialog] = React.useState(false)
+  const [isOpenCancelReportDialog, setIsOpenCancelReportDialog] = React.useState(false)
+  const [storeIdForDialog, setStoreIdForDialog] = React.useState<number | null>(null)
 
   const handleNavigateDetail = (storeId: number) => {
     navigate(`/store/${storeId}`);
@@ -22,6 +28,31 @@ const StoreListComponent = () => {
     dispatch(clearStore())
     dispatch(getAllStore());
   }, [dispatch]);
+
+  const handleOpenReportDialog = (storeId: number) => {
+    setStoreIdForDialog(storeId);
+    setIsOpenReportDialog(true)
+    console.log(storeId)
+  }
+  const handleCloseReportDialog = () => {
+    setIsOpenReportDialog(false)
+    setIsOpenSubmitReportDialog(false)
+    setIsOpenCancelReportDialog(false)
+  }
+
+  const handleOpenSubmitReportDialog = () => {
+    setIsOpenSubmitReportDialog(true)
+  }
+  const handleCloseSubmitReportDialog = () => {
+    setIsOpenSubmitReportDialog(false)
+  }
+
+  const handleOpenCancelReportDialog = () => {
+    setIsOpenCancelReportDialog(true)
+  }
+  const handleCloseCancelReportDialog = () => {
+    setIsOpenCancelReportDialog(false)
+  }
 
   return (
     <Box
@@ -86,6 +117,9 @@ const StoreListComponent = () => {
                 </Button>
                 <Button
                   variant="text"
+                  onClick={() => handleOpenReportDialog(
+                    store.storeId
+                  )}
                 >
                   <Report />
                 </Button>
@@ -96,7 +130,17 @@ const StoreListComponent = () => {
         ))}
       </Grid>
 
-
+      <ReportStoreDialog
+        open={isOpenReportDialog}
+        onClose={handleCloseReportDialog}
+        openSubmit={isOpenSubmitReportDialog}
+        openCancel={isOpenCancelReportDialog}
+        onOpenSubmitDialog={handleOpenSubmitReportDialog}
+        onCloseSubmitDialog={handleCloseSubmitReportDialog}
+        onOpenCancelDialog={handleOpenCancelReportDialog}
+        onCloseCancelDialog={handleCloseCancelReportDialog}
+        storeId={storeIdForDialog}
+      />
     </Box >
 
   );

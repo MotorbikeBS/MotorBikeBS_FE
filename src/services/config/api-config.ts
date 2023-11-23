@@ -108,6 +108,8 @@ export const editCommentEndPoint = `${BASE_URL}/api/Comment/UpdateComment`;
 export const deleteCommentEndPoint = `${BASE_URL}/api/Comment/DeleteComment`;
 export const averageStarAndCommentEndPoint = `${BASE_URL}/api/Comment/AverageStar`;
 
+//Create Report
+export const createReportStoreEndPoint = `${BASE_URL}/api/Report/CreateReport`;
 //Request
 export const getRequestAssociatedWithStoreEndPoint = `${BASE_URL}/api/Request/GetRequestAssociated_WithStore`;
 
