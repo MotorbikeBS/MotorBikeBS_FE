@@ -26,13 +26,16 @@ import {
     BusinessCenter,
     FavoriteBorderOutlined,
     DirectionsBike,
-    Clear
+    Clear,
 } from '@mui/icons-material';
 import './style/style.scss';
 import MenuComponent from '../../../common-components/notify-component/NotifyComponent';
 import { useAppDispatch } from '../../../services/store/store';
 import { logoutUser } from '../../../services/features/auth/accountSlice';
-import { getAllOnExchange, searchMotorByName } from '../../../services/features/motorbike/motorbikeSlice';
+import {
+    getAllOnExchange,
+    searchMotorByName,
+} from '../../../services/features/motorbike/motorbikeSlice';
 import FilterComponent from '../../../common-components/filter-component/FilterComponent';
 
 const pages = [
@@ -66,18 +69,17 @@ const CustomerMenuComponent = () => {
         dispatch(searchMotorByName({ motorName: searchTerm }));
     };
 
-    const handleClearSearch = () =>{
+    const handleClearSearch = () => {
         dispatch(getAllOnExchange({ pageNumber: 1, pageSize: 6 }));
         setSearchTerm('');
         setIsButtonDisabled(true);
-    }
+    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = e.target.value;
         setSearchTerm(newValue);
         setIsButtonDisabled(newValue.trim() === '');
     };
-
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null,
@@ -86,18 +88,19 @@ const CustomerMenuComponent = () => {
         null,
     );
 
+    const [loadDataBrandModelType, setLoadDataBrandModelType] =
+        React.useState(false);
     const [anchorElFilter, setAnchorElFilter] =
         React.useState<null | HTMLElement>(null);
 
-
     const handleOpenFilterBox = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElFilter(event.currentTarget);
+        setLoadDataBrandModelType(true);
     };
 
     const handleCloseFilterBox = () => {
         setAnchorElFilter(null);
     };
-
 
     const [anchorElNotify, setAnchorElNotify] =
         React.useState<null | HTMLElement>(null);
@@ -285,12 +288,15 @@ const CustomerMenuComponent = () => {
                                 onChange={handleInputChange}
                                 InputProps={{
                                     endAdornment: searchTerm && (
-                                      <Clear
-                                        onClick={handleClearSearch}
-                                        sx={{ cursor: 'pointer', color: 'white' }}
-                                      />
+                                        <Clear
+                                            onClick={handleClearSearch}
+                                            sx={{
+                                                cursor: 'pointer',
+                                                color: 'white',
+                                            }}
+                                        />
                                     ),
-                                  }}
+                                }}
                             />
                             <Button
                                 variant="text"
@@ -323,6 +329,7 @@ const CustomerMenuComponent = () => {
                             <FilterComponent
                                 anchorElFilter={anchorElFilter}
                                 handleCloseFilter={handleCloseFilterBox}
+                                loadDataBrandModelType={loadDataBrandModelType}
                             />
                         </Box>
 
@@ -434,10 +441,11 @@ const CustomerMenuComponent = () => {
                                 <Link
                                     key={page.to}
                                     to={page.to}
-                                    className={`link-customer ${isMenuItemActive(page.to)
+                                    className={`link-customer ${
+                                        isMenuItemActive(page.to)
                                             ? 'active'
                                             : ''
-                                        }`}
+                                    }`}
                                 >
                                     {page.name}
                                 </Link>
@@ -543,12 +551,15 @@ const CustomerMenuComponent = () => {
                             onChange={handleInputChange}
                             InputProps={{
                                 endAdornment: searchTerm && (
-                                  <Clear
-                                    onClick={handleClearSearch}
-                                    sx={{ cursor: 'pointer', color: 'white' }}
-                                  />
+                                    <Clear
+                                        onClick={handleClearSearch}
+                                        sx={{
+                                            cursor: 'pointer',
+                                            color: 'white',
+                                        }}
+                                    />
                                 ),
-                              }}
+                            }}
                         />
                         <Button
                             variant="text"
