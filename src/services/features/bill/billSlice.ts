@@ -193,6 +193,7 @@ export const getRevenue = createAsyncThunk<
         );
         return response.data.result;
     } catch (error: any) {
+        toast.error(`${error.response.data?.errorMessages}`);
         return thunkAPI.rejectWithValue({
             error: error.response?.data?.errorMessages,
         });
