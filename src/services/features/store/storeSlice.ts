@@ -5,6 +5,7 @@ import {
     getAllStoreEndPoint,
     getStoreByIDEndPoint,
     inActiveStoreEndPoint,
+    paymentStatisticStoreEndPoint,
     reActiveStoreEndPoint,
     refuseStoreEndPoint,
     registerStoreEndPoint,
@@ -12,12 +13,14 @@ import {
 } from '../../config/api-config';
 import { toast } from 'react-toastify';
 import { IStore } from '../../../models/Store/Store';
+import { IPaymentStatisticStore } from '../../../models/StoreStatictis/StoreStatistic';
 
 interface StoreState {
     loading: boolean;
     storeRegister: IRegisterStore | null;
     stores: IStore[] | null;
     store: IStore | null;
+    paymentStatistic: IPaymentStatisticStore | null;
     error: string[] | unknown;
 }
 
@@ -26,6 +29,7 @@ const initialState: StoreState = {
     storeRegister: null,
     stores: null,
     store: null,
+    paymentStatistic: null,
     error: null,
 };
 
@@ -206,6 +210,28 @@ export const getStoreByID = createAsyncThunk<IStore, { id: number }>(
         }
     },
 );
+export const getPaymentStatisticStore = createAsyncThunk<
+    IPaymentStatisticStore,
+    { year: number }
+>('store/getPaymentStatisticStore', async ({ year }, thunkAPI) => {
+    try {
+        const token = localStorage.getItem('motorbike_bs');
+        const response = await axios.get(
+            `${paymentStatisticStoreEndPoint}?year=${year}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return response.data.result;
+    } catch (error: any) {
+        toast.error(`${error.response.data?.errorMessages}`);
+        return thunkAPI.rejectWithValue({
+            error: error.response?.data?.errorMessages,
+        });
+    }
+});
 
 export const storeSlice = createSlice({
     name: 'store',
@@ -217,6 +243,7 @@ export const storeSlice = createSlice({
         clearStore: (state) => {
             state.stores = null;
             state.store = null;
+            state.paymentStatistic = null;
         },
     },
     extraReducers: (builder) => {
@@ -300,6 +327,18 @@ export const storeSlice = createSlice({
             state.error = null;
         });
         builder.addCase(reActiveStore.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+
+        builder.addCase(getPaymentStatisticStore.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(getPaymentStatisticStore.fulfilled, (state, action) => {
+            state.loading = false;
+            state.paymentStatistic = action.payload;
+        });
+        builder.addCase(getPaymentStatisticStore.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });

@@ -38,12 +38,17 @@ const ExtensionPostBootingDialog: React.FC<IExtendPostBoostingDialogProps> = ({
         defaultValues: {
             endTime: undefined
         }
-    })
-    const { control, handleSubmit } = form
 
+    })
+    const { control, handleSubmit, reset } = form
+    const clearForm = () => {
+        form.reset();
+    };
     const handleCloseDialog = () => {
+        clearForm();
         onClose();
     };
+
     const handleOpenSubmitDialog = () => {
         onOpenSubmitDialog();
     };
@@ -63,6 +68,7 @@ const ExtensionPostBootingDialog: React.FC<IExtendPostBoostingDialogProps> = ({
                         handleCloseDialog()
                     }, 1000)
                 })
+            console.log(data)
         }
     }
 

@@ -164,8 +164,8 @@ const RevenueChart = () => {
                         label="Loại thu nhập"
                         onChange={handleChangeIncomeTypeSelect}
                     >
-                        <MenuItem value="Month">Month</MenuItem>
-                        <MenuItem value="Year">Year</MenuItem>
+                        <MenuItem value="Month">Tháng</MenuItem>
+                        <MenuItem value="Year">Năm</MenuItem>
                     </Select>
                 </FormControl>
                 <Button variant="outlined" onClick={handleSubmit}>
