@@ -28,6 +28,7 @@ import {
     Typography,
 } from '@mui/material';
 import { format } from 'date-fns';
+import { toast } from 'react-toastify';
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
@@ -45,7 +46,6 @@ const RevenueChart = () => {
         setIncomeTypeSelect(event.target.value);
     };
 
-    const currentDate = new Date().toISOString().split('T')[0];
     const pastDate = new Date('01/02/2022').toISOString().split('T')[0];
 
     useEffect(() => {
@@ -102,36 +102,58 @@ const RevenueChart = () => {
                 }}
             >
                 <TextField
+                    label="Ngày bắt đầu"
                     type="date"
                     value={
                         startDateInput
                             ? startDateInput.toISOString().split('T')[0]
                             : ''
                     }
-                    onChange={(e) =>
-                        setStartDateInput(new Date(e.target.value))
-                    }
+                    onChange={(e) => {
+                        const enteredDate = e.target.value;
+                        const isValidDate = /^\d{4}-\d{2}-\d{2}$/.test(
+                            enteredDate,
+                        );
+
+                        if (isValidDate) {
+                            setStartDateInput(new Date(enteredDate));
+                        } else {
+                            toast.error(
+                                'Ngày không hợp lệ. Vui lòng không nhập số 0 đầu.',
+                            );
+                        }
+                    }}
                     InputLabelProps={{
                         shrink: true,
                     }}
                     inputProps={{
                         min: pastDate,
-                        max: currentDate,
                     }}
                 />
                 <TextField
+                    label="Ngày kết thúc"
                     type="date"
                     value={
                         endDateInput
                             ? endDateInput.toISOString().split('T')[0]
                             : ''
                     }
-                    onChange={(e) => setEndDateInput(new Date(e.target.value))}
+                    onChange={(e) => {
+                        const enteredDate = e.target.value;
+                        const isValidDate = /^\d{4}-\d{2}-\d{2}$/.test(
+                            enteredDate,
+                        );
+
+                        if (isValidDate) {
+                            setEndDateInput(new Date(enteredDate));
+                        } else {
+                            toast.error(
+                                'Ngày không hợp lệ. Vui lòng không nhập số 0 đầu.',
+                            );
+                        }
+                    }}
                     InputLabelProps={{
                         shrink: true,
-                    }}
-                    inputProps={{
-                        max: currentDate,
                     }}
                 />
                 <FormControl sx={{ width: '40%' }}>
