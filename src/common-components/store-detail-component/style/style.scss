@@ -48,21 +48,50 @@
     }
 }
 
-.tag-motor-status-1 {
+.tag-motor-status-hot {
     position: absolute;
     .hot-motor {
         width: 100%;
         position: relative;
-        bottom: 35px;
-        right: 20px;
+        bottom: 50px !important;
+        right: 30px !important;
     }
     .hot-motor img {
         width: 100%;
-        height: 100px;
+        height: 110px !important;
         cursor: pointer;
-        border-radius: 100px;
     }
 }
+.tag-motor-status-popular {
+    position: absolute;
+    .popular-motor {
+        width: 100%;
+        position: relative;
+        bottom: 28px !important;
+        right: 25px !important;
+    }
+    .popular-motor img {
+        width: 100%;
+        height: 70px;
+        cursor: pointer;
+    }
+}
+
+.tag-motor-status-trending {
+    position: absolute;
+    .trending-motor {
+        width: 100% !important;
+        position: relative;
+        bottom: 25px !important;
+        right: 25px !important;
+    }
+    .trending-motor img {
+        width: 100%;
+        height: 60px !important;
+        cursor: pointer;
+    }
+}
+
 
 @media (max-width: 960px) {
     .store-detail-container {

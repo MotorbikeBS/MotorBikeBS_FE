@@ -19,7 +19,7 @@ import {
 import useFormatCurrency from '../../hooks/useFormatCurrency';
 import BookingDialog from '../../pages/customer/booking-dialog-component/BookingDialog';
 import { addToWishList } from '../../services/features/motorbike/wishListSlice';
-import './style/style.scss'
+import './style/style.scss';
 
 type storeParams = {
     storeId: number;
@@ -130,17 +130,57 @@ const MotorbikeByStoreIdComponent = () => {
                                                 key={motor.motorId}
                                             >
                                                 <Item className="product-item">
-                                                    <div className="tag-motor-status-1">
-                                                        {motor?.boosting !==
-                                                            null && (
-                                                            <div className="hot-motor">
-                                                                <img
-                                                                    src="https://scontent.fsgn5-11.fna.fbcdn.net/v/t1.15752-9/398331304_2086111068454316_3541516034995382466_n.png?_nc_cat=110&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=_GXm7FbS37sAX8DWH1R&_nc_oc=AQnYCrGFVnbzb39PacSm2_eTbLufK7qU6ku3svin-HsIGPM0TzTlX3XpYm1piDSqlLs&_nc_ht=scontent.fsgn5-11.fna&oh=03_AdTWvBDeXg2a5c5c1Ckm7z9zRJmkUFCv6F-k7K8PXQvtIA&oe=657D3503"
-                                                                    alt="hot"
-                                                                />
+                                                    {motor?.boosting !== null &&
+                                                        motor?.boosting
+                                                            .level === 1 && (
+                                                            <div className="tag-motor-status-hot">
+                                                                <div className="hot-motor">
+                                                                    <img
+                                                                        src={
+                                                                            process
+                                                                                .env
+                                                                                .PUBLIC_URL +
+                                                                            '/hotitem.png'
+                                                                        }
+                                                                        alt="hot"
+                                                                    />
+                                                                </div>
                                                             </div>
                                                         )}
-                                                    </div>
+                                                    {motor?.boosting !== null &&
+                                                        motor?.boosting
+                                                            .level === 2 && (
+                                                            <div className="tag-motor-status-trending">
+                                                                <div className="trending-motor">
+                                                                    <img
+                                                                        src={
+                                                                            process
+                                                                                .env
+                                                                                .PUBLIC_URL +
+                                                                            '/trending.png'
+                                                                        }
+                                                                        alt="trending"
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                    {motor?.boosting !== null &&
+                                                        motor?.boosting
+                                                            .level === 3 && (
+                                                            <div className="tag-motor-status-popular">
+                                                                <div className="popular-motor">
+                                                                    <img
+                                                                        src={
+                                                                            process
+                                                                                .env
+                                                                                .PUBLIC_URL +
+                                                                            '/popular.png'
+                                                                        }
+                                                                        alt="popular"
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        )}
                                                     <div
                                                         className="product-image"
                                                         onClick={() =>
