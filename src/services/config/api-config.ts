@@ -42,6 +42,7 @@ export const updateMotorStatusEndPoint = `${BASE_URL}/api/motorbike/updatemotor-
 export const searchMotorNameEndPoint = `${BASE_URL}/api/motorbike/search-MotorName`;
 export const filterMotorbikeEndPoint = `${BASE_URL}/api/MotorBike/filter`;
 export const cancelPostingEndPoint = `${BASE_URL}/api/MotorBike/CancelPosting`;
+export const returnMotorbikeEndPoint = `${BASE_URL}/api/MotorBike/DetermineNegotiation_ReturnMotor`;
 
 //motorbikeField endpoint
 export const getMotorBrandEndPoint = `${BASE_URL}/api/motorbrand`;

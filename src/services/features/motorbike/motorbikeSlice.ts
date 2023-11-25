@@ -10,6 +10,7 @@ import {
     getMotorByOwnerIdEndPoint,
     getMotorByStoreIdEndPoint,
     postMotorRegisterEndPoint,
+    returnMotorbikeEndPoint,
     searchMotorNameEndPoint,
     updateMotorByIdEndPoint,
     updateMotorStatusEndPoint,
@@ -188,7 +189,7 @@ export const updateMotorById = createAsyncThunk<
         );
         return response.data;
     } catch (error: any) {
-        // toast.error(`${error.response.data?.errorMessages}`);
+        toast.error(`${error.response.data?.errorMessages}`);
         return thunkAPI.rejectWithValue({
             error: error.response?.data?.errorMessages,
         });
@@ -322,6 +323,25 @@ export const cancelPosting = createAsyncThunk<IMotorbike, { motorId: number }>(
             return response.data.result;
         } catch (error: any) {
             toast.error(`${error.response.data?.errorMessages}`);
+            return thunkAPI.rejectWithValue({
+                error: error.response?.data?.errorMessages,
+            });
+        }
+    },
+);
+
+export const returnMotorbike = createAsyncThunk<IMotorbike>(
+    'motorbike/returnMotorbike',
+    async (_, thunkAPI) => {
+        try {
+            const token = localStorage.getItem('motorbike_bs');
+            const response = await axios.get(returnMotorbikeEndPoint, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data.result;
+        } catch (error: any) {
             return thunkAPI.rejectWithValue({
                 error: error.response?.data?.errorMessages,
             });
@@ -470,6 +490,18 @@ export const motorbikeSlice = createSlice({
             state.error = null;
         });
         builder.addCase(cancelPosting.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+        builder.addCase(returnMotorbike.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(returnMotorbike.fulfilled, (state, action) => {
+            state.loading = false;
+            state.motorbike = action.payload;
+            state.error = null;
+        });
+        builder.addCase(returnMotorbike.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });

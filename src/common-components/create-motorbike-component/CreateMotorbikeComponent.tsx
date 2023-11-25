@@ -404,6 +404,9 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                                         ) {
                                                                             return 'Số Km đã đi phải là một số';
                                                                         }
+                                                                        if(value > 2147483647){
+                                                                            return 'Giá trị đồng hồ không hợp lệ!'
+                                                                        }
                                                                         return true;
                                                                     },
                                                                 },
