@@ -214,7 +214,7 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
             })
             .catch((error) => {
                 // console.log(error);
-                toast.error(error?.error[0]);
+                // toast.error(error?.error[0]);
             });
     };
 
@@ -404,8 +404,26 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                             {...register(
                                                                 'odo',
                                                                 {
-                                                                    required:
-                                                                        'Bạn chưa nhập số km đã đi',
+                                                                    validate: (
+                                                                        value,
+                                                                    ) => {
+                                                                        if (
+                                                                            !value
+                                                                        ) {
+                                                                            return 'Bạn chưa nhập số Km đã đi';
+                                                                        }
+                                                                        if (
+                                                                            isNaN(
+                                                                                value,
+                                                                            )
+                                                                        ) {
+                                                                            return 'Số Km đã đi phải là một số';
+                                                                        }
+                                                                        if(value > 2147483647){
+                                                                            return 'Giá trị đồng hồ không hợp lệ!'
+                                                                        }
+                                                                        return true;
+                                                                    },
                                                                 },
                                                             )}
                                                             error={
