@@ -325,28 +325,6 @@ const StoreMenuComponent = () => {
                                     </Link>
                                 </MenuItem>
                             </Menu>
-                            <Button
-                                sx={{
-                                    display: { xs: 'none', md: 'flex' },
-                                    color: 'white',
-                                    backgroundColor: 'orange',
-                                    '&:hover': {
-                                        background: '#cf9025',
-                                    },
-                                }}
-                            >
-                                <DriveFileRenameOutline />
-                                <Typography>Đẩy Bài</Typography>
-                            </Button>
-
-                            <Tooltip
-                                title="Đăng tin"
-                                sx={{ display: { xs: 'flex', md: 'none' } }}
-                            >
-                                <IconButton size="large" color="inherit">
-                                    <DriveFileRenameOutline />
-                                </IconButton>
-                            </Tooltip>
                         </Box>
                     </Toolbar>
                 </Container>

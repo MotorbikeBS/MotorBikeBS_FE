@@ -97,13 +97,6 @@ const StoreDetailByStoreComponent = () => {
                     </Grid>
                     <Grid xs={6} md={4}>
                         <div className="btn-action-container">
-                            <Button variant="text" color="error">
-                                <Report
-                                    sx={{
-                                        fontSize: '35px',
-                                    }}
-                                />
-                            </Button>
                             <Box>
                                 {averageStarCmt?.averageRating !==
                                     undefined && (
