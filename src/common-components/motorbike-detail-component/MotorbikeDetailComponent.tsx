@@ -128,7 +128,7 @@ const MotorBikeDetailComponent = () => {
                     <Box flexGrow={4} marginBottom="30px">
                         <Carousel>
                             {motorbike.motorbikeImages &&
-                            motorbike.motorbikeImages.length > 0 ? (
+                                motorbike.motorbikeImages.length > 0 ? (
                                 motorbike.motorbikeImages.map((image) => (
                                     <div
                                         className="motorbike-detail-images"
@@ -245,22 +245,6 @@ const MotorBikeDetailComponent = () => {
                                             ).toLocaleDateString()}
                                         </TableCell>
                                     </TableRow>
-                                    {/* <TableRow>
-                                        <TableCell className="header-table">
-                                            Tình trạng
-                                        </TableCell>
-                                        <TableCell>
-                                            {motorbike.status}
-                                        </TableCell>
-                                    </TableRow> */}
-                                    {/* <TableRow>
-                                        <TableCell className="header-table">
-                                            Dung tích
-                                        </TableCell>
-                                        <TableCell>
-                                            {motorbike.vehicleCapacity} cc
-                                        </TableCell>
-                                    </TableRow> */}
                                     <TableRow>
                                         <TableCell className="header-table">
                                             Model
@@ -335,7 +319,7 @@ const MotorBikeDetailComponent = () => {
                                     flexGrow={2}
                                     marginTop="10%"
                                     maxWidth="50%"
-                                    // marginLeft="26%"
+                                // marginLeft="26%"
                                 >
                                     <Button
                                         className="btn-favorite"

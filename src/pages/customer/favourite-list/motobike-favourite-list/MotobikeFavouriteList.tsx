@@ -195,12 +195,12 @@ const MotobikeFavouriteList = () => {
                                                 ?.motorStatusId === 1
                                                 ? 'CÓ SẴN'
                                                 : wishlist.motor?.motorStatus
-                                                      ?.motorStatusId === 4
-                                                ? 'KÍ GỬI'
-                                                : wishlist.motor?.motorStatus
-                                                      ?.motorStatusId === 5
-                                                ? 'KHÔNG KÍ GỬI'
-                                                : 'CHƯA XÁC ĐỊNH'}
+                                                    ?.motorStatusId === 4
+                                                    ? 'KÍ GỬI'
+                                                    : wishlist.motor?.motorStatus
+                                                        ?.motorStatusId === 5
+                                                        ? 'KHÔNG KÍ GỬI'
+                                                        : 'CHƯA XÁC ĐỊNH'}
                                         </Typography>
                                     </div>
                                 </div>
@@ -237,18 +237,18 @@ const MotobikeFavouriteList = () => {
                                             ).toLocaleDateString() || ''}
                                         </Typography>
                                         <Typography>
-                                        <strong>
-                                            Ngày đăng bài:
-                                        </strong>
-                                        {new Date(
-                                            wishlist.motor.postingAt
-                                        ).toLocaleDateString() || ''}
-                                    </Typography>
+                                            <strong>
+                                                Ngày đăng bài:
+                                            </strong>
+                                            {new Date(
+                                                wishlist.motor.postingAt
+                                            ).toLocaleDateString() || ''}
+                                        </Typography>
                                     </div>
                                 </div>
 
                                 {wishlist.motor.motorStatus?.motorStatusId ===
-                                5 ? (
+                                    5 ? (
                                     <div className="btn-style">
                                         <Button variant="outlined">
                                             Đặt lịch xem xe
