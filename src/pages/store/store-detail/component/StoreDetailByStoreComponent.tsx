@@ -1,4 +1,3 @@
-import { Report } from '@mui/icons-material';
 import {
     Avatar,
     Box,
@@ -100,17 +99,17 @@ const StoreDetailByStoreComponent = () => {
                             <Box>
                                 {averageStarCmt?.averageRating !==
                                     undefined && (
-                                    <Button>
-                                        <Rating
-                                            name="read-only"
-                                            defaultValue={
-                                                averageStarCmt.averageRating
-                                            }
-                                            precision={0.5}
-                                            readOnly
-                                        />
-                                    </Button>
-                                )}
+                                        <Button>
+                                            <Rating
+                                                name="read-only"
+                                                defaultValue={
+                                                    averageStarCmt.averageRating
+                                                }
+                                                precision={0.5}
+                                                readOnly
+                                            />
+                                        </Button>
+                                    )}
                                 {averageStarCmt?.totalComment !== undefined && (
                                     <Typography
                                         sx={{ marginLeft: 2, fontSize: 20 }}

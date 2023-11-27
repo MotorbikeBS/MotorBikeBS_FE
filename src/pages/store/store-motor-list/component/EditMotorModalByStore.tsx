@@ -93,14 +93,7 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
     const [model, setModel] = useState('');
     const [motorType, setMotorType] = useState('');
 
-    const formatDate = (dateString: string) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('vi-VN', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-        });
-    };
+
 
     const handleChangeModel = (event: SelectChangeEvent) => {
         setModel(event.target.value);
@@ -419,7 +412,7 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                                         ) {
                                                                             return 'Số Km đã đi phải là một số';
                                                                         }
-                                                                        if(value > 2147483647){
+                                                                        if (value > 2147483647) {
                                                                             return 'Giá trị đồng hồ không hợp lệ!'
                                                                         }
                                                                         return true;
@@ -521,12 +514,12 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                                 label="Trạng thái"
                                                                 value={
                                                                     motorbike?.motorStatus &&
-                                                                    motorbike
-                                                                        ?.motorStatus
-                                                                        ?.motorStatusId
+                                                                        motorbike
+                                                                            ?.motorStatus
+                                                                            ?.motorStatusId
                                                                         ? motorbike
-                                                                              .motorStatus
-                                                                              .motorStatusId
+                                                                            .motorStatus
+                                                                            .motorStatusId
                                                                         : ''
                                                                 }
                                                                 {...register(
@@ -537,22 +530,22 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                                                                 <MenuItem
                                                                     value={
                                                                         motorbike?.motorStatus &&
-                                                                        motorbike
-                                                                            ?.motorStatus
-                                                                            ?.motorStatusId
+                                                                            motorbike
+                                                                                ?.motorStatus
+                                                                                ?.motorStatusId
                                                                             ? motorbike
-                                                                                  ?.motorStatus
-                                                                                  ?.motorStatusId
+                                                                                ?.motorStatus
+                                                                                ?.motorStatusId
                                                                             : ''
                                                                     }
                                                                 >
                                                                     {motorbike?.motorStatus &&
-                                                                    motorbike
-                                                                        ?.motorStatus
-                                                                        ?.title
+                                                                        motorbike
+                                                                            ?.motorStatus
+                                                                            ?.title
                                                                         ? motorbike
-                                                                              ?.motorStatus
-                                                                              ?.title
+                                                                            ?.motorStatus
+                                                                            ?.title
                                                                         : ''}
                                                                 </MenuItem>
                                                             </Select>

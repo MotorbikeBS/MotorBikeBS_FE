@@ -4,7 +4,6 @@ import {
     editNotificationMarkReadEndPoint,
     getNotificationByUserIDEndPoint,
 } from '../../config/api-config';
-import { toast } from 'react-toastify';
 import { INotify } from '../../../models/Notify/Notify';
 
 interface NotificationState {

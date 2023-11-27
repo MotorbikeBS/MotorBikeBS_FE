@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Avatar,
     Box,
@@ -21,6 +21,7 @@ import {
     clearComment,
     getAverageStar,
 } from '../../services/features/comment/commentSlice.';
+import ReportStoreDialog from '../report-store-dialog/ReportStoreDialog';
 
 type storeParams = {
     storeId: number;
@@ -31,6 +32,13 @@ const StoreDetailComponent = () => {
     const dispatch = useAppDispatch();
     const { stores } = useAppSelector((state) => state.store);
     const { averageStarCmt } = useAppSelector((state) => state.comment);
+
+    const [isOpenReportDialog, setIsOpenReportDialog] = useState(false)
+    const [isOpenSubmitReportDialog, setIsOpenSubmitReportDialog] = useState(false);
+    const [isOpenCancelReportDialog, setIsOpenCancelReportDialog] = useState(false);
+    const [storeIdForDialog, setStoreIdForDialog] = React.useState<
+        number | null
+    >(null);
 
     useEffect(() => {
         dispatch(clearComment());
@@ -69,108 +77,152 @@ const StoreDetailComponent = () => {
         );
     }
 
+    const handleOpenReportDialog = (storeId: number) => {
+        setStoreIdForDialog(storeId)
+        setIsOpenReportDialog(true)
+        console.log(storeId)
+    }
+    const handleCloseReportDialog = () => {
+        setIsOpenReportDialog(false)
+        setIsOpenSubmitReportDialog(false)
+        setIsOpenCancelReportDialog(false)
+    }
+    const handleOpenSubmitReportDialog = () => {
+        setIsOpenSubmitReportDialog(true)
+    }
+    const handleCloseSubmitReportDialog = () => {
+        setIsOpenSubmitReportDialog(false)
+    }
+
+    const handleOpenCancelReportDialog = () => {
+        setIsOpenCancelReportDialog(true)
+    }
+    const handleCloseCancelReportDialog = () => {
+        setIsOpenCancelReportDialog(false)
+    }
+
     return (
-        <Box className="store-detail-container">
-            <Box className="store-detail-header">
-                <Grid container spacing={2}>
-                    <Grid xs={6} md={4}>
-                        <div className="store-info-header">
-                            <Avatar
-                                sx={{
-                                    width: 60,
-                                    height: 60,
-                                    bgcolor: 'orange',
-                                }}
-                            >
-                                Hi
-                            </Avatar>
-                            <div>
-                                <Typography variant="h5">
-                                    {store?.storeName}
-                                </Typography>
-                                <Typography>
-                                    Ngày tham gia:{' '}
-                                    <strong>
-                                        {store?.storeCreatedAt &&
-                                            format(
-                                                new Date(store.storeCreatedAt),
-                                                'dd-MM-yyyy HH:mm',
-                                            )}
-                                    </strong>
-                                </Typography>
-                            </div>
-                        </div>
-                    </Grid>
-                    <Grid xs={6} md={4}>
-                        <Box>
-                            <div className="store-info">
-                                <Typography className="store-info-txt">
-                                    <strong>Email : </strong>
-                                    {store?.storeEmail}
-                                </Typography>
-                            </div>
-                            <div className="store-info">
-                                <Typography className="store-info-txt">
-                                    <strong>Điện thoại: </strong>
-                                    {store?.storePhone}
-                                </Typography>
-                            </div>
-                            <div className="store-info">
-                                <Typography className="store-info-txt">
-                                    <strong>Địa chỉ:</strong>
-                                    {store?.address}
-                                </Typography>
-                            </div>
-                        </Box>
-                    </Grid>
-                    <Grid xs={6} md={4}>
-                        <div className="btn-action-container">
-                            <Button variant="text" color="error">
-                                <Report
+        <>
+            <Box className="store-detail-container">
+                <Box className="store-detail-header">
+                    <Grid container spacing={2}>
+                        <Grid xs={6} md={4}>
+                            <div className="store-info-header">
+                                <Avatar
                                     sx={{
-                                        fontSize: '35px',
+                                        width: 60,
+                                        height: 60,
+                                        bgcolor: 'orange',
                                     }}
-                                />
-                            </Button>
-                            <Box>
-                                {averageStarCmt?.averageRating !==
-                                    undefined && (
-                                    <Button>
-                                        <Rating
-                                            name="read-only"
-                                            defaultValue={
-                                                averageStarCmt.averageRating
-                                            }
-                                            precision={0.5}
-                                            readOnly
-                                        />
-                                    </Button>
-                                )}
-                                {averageStarCmt?.totalComment !== undefined && (
-                                    <Typography
-                                        sx={{ marginLeft: 2, fontSize: 20 }}
-                                    >
-                                        Tổng đánh giá:{' '}
-                                        {averageStarCmt?.totalComment &&
-                                            averageStarCmt.totalComment}
+                                >
+                                    Hi
+                                </Avatar>
+                                <div>
+                                    <Typography variant="h5">
+                                        {store?.storeName}
                                     </Typography>
-                                )}
+                                    <Typography>
+                                        Ngày tham gia:{' '}
+                                        <strong>
+                                            {store?.storeCreatedAt &&
+                                                format(
+                                                    new Date(store.storeCreatedAt),
+                                                    'dd-MM-yyyy HH:mm',
+                                                )}
+                                        </strong>
+                                    </Typography>
+                                </div>
+                            </div>
+                        </Grid>
+                        <Grid xs={6} md={4}>
+                            <Box>
+                                <div className="store-info">
+                                    <Typography className="store-info-txt">
+                                        <strong>Email : </strong>
+                                        {store?.storeEmail}
+                                    </Typography>
+                                </div>
+                                <div className="store-info">
+                                    <Typography className="store-info-txt">
+                                        <strong>Điện thoại: </strong>
+                                        {store?.storePhone}
+                                    </Typography>
+                                </div>
+                                <div className="store-info">
+                                    <Typography className="store-info-txt">
+                                        <strong>Địa chỉ:</strong>
+                                        {store?.address}
+                                    </Typography>
+                                </div>
                             </Box>
-                        </div>
+                        </Grid>
+                        <Grid xs={6} md={4}>
+                            <div className="btn-action-container">
+                                <Button
+                                    color="error"
+                                    onClick={() => {
+                                        if (store?.storeId !== undefined) {
+                                            handleOpenReportDialog(store.storeId);
+                                        }
+                                    }}
+                                >
+                                    <Report
+                                        sx={{
+                                            fontSize: '35px',
+                                        }}
+                                    />
+                                </Button>
+                                <Box>
+                                    {averageStarCmt?.averageRating !==
+                                        undefined && (
+                                            <Button>
+                                                <Rating
+                                                    name="read-only"
+                                                    defaultValue={
+                                                        averageStarCmt.averageRating
+                                                    }
+                                                    precision={0.5}
+                                                    readOnly
+                                                />
+                                            </Button>
+                                        )}
+                                    {averageStarCmt?.totalComment !== undefined && (
+                                        <Typography
+                                            sx={{ marginLeft: 2, fontSize: 20 }}
+                                        >
+                                            Tổng đánh giá:{' '}
+                                            {averageStarCmt?.totalComment &&
+                                                averageStarCmt.totalComment}
+                                        </Typography>
+                                    )}
+                                </Box>
+                            </div>
+                        </Grid>
                     </Grid>
-                </Grid>
+                </Box>
+
+                <hr />
+
+                <Box>
+                    <MotorbikeByStoreIdComponent />
+                </Box>
+
+                <Container maxWidth="lg">
+                    <CommentComponent />
+                </Container>
             </Box>
-
-            <hr />
-
-            <Box>
-                <MotorbikeByStoreIdComponent />
-            </Box>
-
-            <Container maxWidth="lg">
-                <CommentComponent />
-            </Container>
-        </Box>
+            <ReportStoreDialog
+                open={isOpenReportDialog}
+                onClose={handleCloseReportDialog}
+                openSubmit={isOpenSubmitReportDialog}
+                openCancel={isOpenCancelReportDialog}
+                onOpenSubmitDialog={handleOpenSubmitReportDialog}
+                onCloseSubmitDialog={handleCloseSubmitReportDialog}
+                onOpenCancelDialog={handleOpenCancelReportDialog}
+                onCloseCancelDialog={handleCloseCancelReportDialog}
+                storeId={storeIdForDialog}
+            />
+        </>
     );
 };
 
