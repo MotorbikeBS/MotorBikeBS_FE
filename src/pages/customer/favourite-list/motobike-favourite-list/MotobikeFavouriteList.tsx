@@ -130,6 +130,48 @@ const MotobikeFavouriteList = () => {
                             key={wishlist.motorId}
                         >
                             <Item className="product-item">
+                                {wishlist?.motor.boosting !== null &&
+                                    wishlist?.motor.boosting.level === 1 && (
+                                        <div className="tag-motor-status-hot">
+                                            <div className="hot-motor">
+                                                <img
+                                                    src={
+                                                        process.env.PUBLIC_URL +
+                                                        '/hotitem.png'
+                                                    }
+                                                    alt="hot"
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
+                                {wishlist?.motor.boosting !== null &&
+                                    wishlist?.motor.boosting.level === 2 && (
+                                        <div className="tag-motor-status-trending">
+                                            <div className="trending-motor">
+                                                <img
+                                                    src={
+                                                        process.env.PUBLIC_URL +
+                                                        '/trending.png'
+                                                    }
+                                                    alt="trending"
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
+                                {wishlist?.motor.boosting !== null &&
+                                    wishlist?.motor.boosting.level === 3 && (
+                                        <div className="tag-motor-status-popular">
+                                            <div className="popular-motor">
+                                                <img
+                                                    src={
+                                                        process.env.PUBLIC_URL +
+                                                        '/popular.png'
+                                                    }
+                                                    alt="popular"
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
                                 <div
                                     className="product-image"
                                     onClick={() =>
@@ -146,18 +188,21 @@ const MotobikeFavouriteList = () => {
                                         alt="Đây là ảnh sản phẩm"
                                     />
                                 </div>
-                                <div className="tag-motor-status">
-                                    <Typography variant="subtitle1">
-                                        {wishlist.motor?.motorStatus?.motorStatusId === 1
-                                            ? 'CÓ SẴN'
-                                            : wishlist.motor?.motorStatus
-                                                ?.motorStatusId === 4
+                                <div className="tag-motor-box">
+                                    <div className="tag-motor-status">
+                                        <Typography variant="subtitle1">
+                                            {wishlist.motor?.motorStatus
+                                                ?.motorStatusId === 1
+                                                ? 'CÓ SẴN'
+                                                : wishlist.motor?.motorStatus
+                                                      ?.motorStatusId === 4
                                                 ? 'KÍ GỬI'
                                                 : wishlist.motor?.motorStatus
-                                                    ?.motorStatusId === 5
-                                                    ? 'KHÔNG KÍ GỬI'
-                                                    : 'CHƯA XÁC ĐỊNH'}
-                                    </Typography>
+                                                      ?.motorStatusId === 5
+                                                ? 'KHÔNG KÍ GỬI'
+                                                : 'CHƯA XÁC ĐỊNH'}
+                                        </Typography>
+                                    </div>
                                 </div>
                                 <div className="product-information">
                                     <Typography variant="h6">
@@ -191,19 +236,19 @@ const MotobikeFavouriteList = () => {
                                                 wishlist.motor.year,
                                             ).toLocaleDateString() || ''}
                                         </Typography>
-                                        {/* <Typography>
+                                        <Typography>
                                         <strong>
                                             Ngày đăng bài:
                                         </strong>
                                         {new Date(
-                                            wishlist.motor.year
+                                            wishlist.motor.postingAt
                                         ).toLocaleDateString() || ''}
-                                    </Typography> */}
+                                    </Typography>
                                     </div>
                                 </div>
 
                                 {wishlist.motor.motorStatus?.motorStatusId ===
-                                    5 ? (
+                                5 ? (
                                     <div className="btn-style">
                                         <Button variant="outlined">
                                             Đặt lịch xem xe

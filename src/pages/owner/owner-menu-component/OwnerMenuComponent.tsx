@@ -12,7 +12,7 @@ import {
     useTheme,
 } from '@mui/material';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-// import { Search, SearchIconWrapper, StyledInputBase } from './styleMUI/styled';
+import MenuComponent from '../../../common-components/notify-component/NotifyComponent';
 import { AccountCircle, Notifications } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAppDispatch } from '../../../services/store/store';
@@ -59,7 +59,8 @@ const OwnerMenuComponent = () => {
         null,
     );
 
-    // const [searchOpen, setSearchOpen] = React.useState(false);
+    const [anchorElNotify, setAnchorElNotify] =
+        React.useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -76,9 +77,13 @@ const OwnerMenuComponent = () => {
         setAnchorElUser(null);
     };
 
-    // const toggleSearch = () => {
-    //     setSearchOpen(!searchOpen);
-    // };
+    const handleOpenNotifyMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElNotify(event.currentTarget);
+    };
+
+    const handleCloseNotifyMenu = () => {
+        setAnchorElNotify(null);
+    };
     const isMenuItemActive = (to: string) => {
         return location.pathname === to;
     };
@@ -120,16 +125,6 @@ const OwnerMenuComponent = () => {
                                 Motorbike BS
                             </Typography>
                         </Link>
-                        {/* <Search
-                            sx={{
-                                display: { xs: 'none', md: 'flex' },
-                            }}
-                        >
-                            <SearchIconWrapper>
-                                <SearchOutlined />
-                            </SearchIconWrapper>
-                            <StyledInputBase placeholder="Tìm Kiếm…" inputProps={{ 'aria-label': 'search' }} />
-                        </Search> */}
 
                         <Box
                             sx={{
@@ -184,16 +179,6 @@ const OwnerMenuComponent = () => {
                                     </Link>
                                 ))}
                             </Menu>
-                            {/* <IconButton
-                                size="large"
-                                aria-label="account of current user"
-                                aria-controls="menu-appbar"
-                                aria-haspopup="true"
-                                onClick={toggleSearch}
-                                color="inherit"
-                            >
-                                <SearchOutlined />
-                            </IconButton> */}
                         </Box>
 
                         <Link
@@ -229,10 +214,11 @@ const OwnerMenuComponent = () => {
                                 <Link
                                     key={page.to}
                                     to={page.to}
-                                    className={`link-customer ${isMenuItemActive(page.to)
-                                        ? 'active'
-                                        : ''
-                                        }`}
+                                    className={`link-customer ${
+                                        isMenuItemActive(page.to)
+                                            ? 'active'
+                                            : ''
+                                    }`}
                                 >
                                     {page.name}
                                 </Link>
@@ -241,10 +227,21 @@ const OwnerMenuComponent = () => {
 
                         <Box sx={{ display: 'flex', flexGrow: 0 }}>
                             <Tooltip title="Thông báo">
-                                <IconButton size="large" color="inherit">
+                                <IconButton
+                                    onClick={handleOpenNotifyMenu}
+                                    size="large"
+                                    color="inherit"
+                                    aria-label="notifications"
+                                    aria-controls="menu-notify"
+                                    aria-haspopup="true"
+                                >
                                     <Notifications />
                                 </IconButton>
                             </Tooltip>
+                            <MenuComponent
+                                anchorElNotify={anchorElNotify}
+                                handleCloseNotifyMenu={handleCloseNotifyMenu}
+                            />
                             <Tooltip title="Tài khoản">
                                 <IconButton
                                     onClick={handleOpenUserMenu}
@@ -295,16 +292,6 @@ const OwnerMenuComponent = () => {
                     </Toolbar>
                 </Container>
             </AppBar>
-            {/* {searchOpen && (
-                <Box sx={{ flexGrow: 1, display: 'flex', backgroundColor: '#04618f' }}>
-                    <Search sx={{ display: 'flex', flexGrow: 1 }}>
-                        <SearchIconWrapper>
-                            <SearchOutlined />
-                        </SearchIconWrapper>
-                        <StyledInputBase placeholder="Tìm Kiếm…" inputProps={{ 'aria-label': 'search' }} />
-                    </Search>
-                </Box>
-            )} */}
         </>
     );
 };

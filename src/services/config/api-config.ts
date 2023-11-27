@@ -117,3 +117,8 @@ export const getRequestAssociatedWithStoreEndPoint = `${BASE_URL}/api/Request/Ge
 //Revenue statistics for admin
 export const revenueStatisticsAdminEndPoint = `${BASE_URL}/api/PaymentStatistic/GetToalByAdmin`;
 export const paymentStatisticStoreEndPoint = `${BASE_URL}/api/PaymentStatistic/GetToalByStore`;
+
+//Notification
+export const getNotificationByUserIDEndPoint = `${BASE_URL}/api/Notification/GetByUserID`;
+export const editNotificationMarkReadEndPoint = `${BASE_URL}/api/Notification/markRead`;
+
