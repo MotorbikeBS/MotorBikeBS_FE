@@ -8,19 +8,17 @@ import {
     Typography,
     Menu,
     Container,
-    Button,
     Tooltip,
     MenuItem,
     useTheme,
 } from '@mui/material';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
+import MenuComponent from '../../../common-components/notify-component/NotifyComponent';
 
 import {
     AccountCircle,
-    DriveFileRenameOutline,
     Notifications,
-    // SearchOutlined,
 } from '@mui/icons-material';
 import './style/style.scss';
 import { useAppDispatch } from '../../../services/store/store';
@@ -70,7 +68,12 @@ const StoreMenuComponent = () => {
         null,
     );
 
-    // const [searchOpen, setSearchOpen] = React.useState(false);
+    const [anchorElNotify, setAnchorElNotify] =
+        React.useState<null | HTMLElement>(null);
+
+    const handleCloseNotifyMenu = () => {
+        setAnchorElNotify(null);
+    };
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -87,9 +90,9 @@ const StoreMenuComponent = () => {
         setAnchorElUser(null);
     };
 
-    // const toggleSearch = () => {
-    //     setSearchOpen(!searchOpen);
-    // };
+    const handleOpenNotifyMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElNotify(event.currentTarget);
+    };
     const isMenuItemActive = (to: string) => {
         return location.pathname === to;
     };
@@ -131,19 +134,6 @@ const StoreMenuComponent = () => {
                                 Motorbike BS
                             </Typography>
                         </Link>
-                        {/* <Search
-                            sx={{
-                                display: { xs: 'none', md: 'flex' },
-                            }}
-                        >
-                            <SearchIconWrapper>
-                                <SearchOutlined />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="Tìm Kiếm…"
-                                inputProps={{ 'aria-label': 'search' }}
-                            />
-                        </Search> */}
 
                         <Box
                             sx={{
@@ -199,16 +189,6 @@ const StoreMenuComponent = () => {
                                     </Link>
                                 ))}
                             </Menu>
-                            {/* <IconButton
-                                size="large"
-                                aria-label="account of current user"
-                                aria-controls="menu-appbar"
-                                aria-haspopup="true"
-                                onClick={toggleSearch}
-                                color="inherit"
-                            >
-                                <SearchOutlined />
-                            </IconButton> */}
                         </Box>
 
                         <Link
@@ -257,10 +237,21 @@ const StoreMenuComponent = () => {
 
                         <Box sx={{ display: 'flex', flexGrow: 0 }}>
                             <Tooltip title="Thông báo">
-                                <IconButton size="large" color="inherit">
+                                <IconButton
+                                    onClick={handleOpenNotifyMenu}
+                                    size="large"
+                                    color="inherit"
+                                    aria-label="notifications"
+                                    aria-controls="menu-notify"
+                                    aria-haspopup="true"
+                                >
                                     <Notifications />
                                 </IconButton>
                             </Tooltip>
+                            <MenuComponent
+                                anchorElNotify={anchorElNotify}
+                                handleCloseNotifyMenu={handleCloseNotifyMenu}
+                            />
                             <Tooltip title="Tài khoản">
                                 <IconButton
                                     onClick={handleOpenUserMenu}
@@ -329,25 +320,6 @@ const StoreMenuComponent = () => {
                     </Toolbar>
                 </Container>
             </AppBar>
-            {/* {searchOpen && (
-                <Box
-                    sx={{
-                        flexGrow: 1,
-                        display: 'flex',
-                        backgroundColor: '#04618f',
-                    }}
-                >
-                    <Search sx={{ display: 'flex', flexGrow: 1 }}>
-                        <SearchIconWrapper>
-                            <SearchOutlined />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Tìm Kiếm…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
-                </Box>
-            )} */}
         </>
     );
 };
