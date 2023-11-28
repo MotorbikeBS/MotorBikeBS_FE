@@ -109,8 +109,9 @@ export const editCommentEndPoint = `${BASE_URL}/api/Comment/UpdateComment`;
 export const deleteCommentEndPoint = `${BASE_URL}/api/Comment/DeleteComment`;
 export const averageStarAndCommentEndPoint = `${BASE_URL}/api/Comment/AverageStar`;
 
-//Create Report
+// Report
 export const createReportStoreEndPoint = `${BASE_URL}/api/Report/CreateReport`;
+export const getListReportStoreEndPoint = `${BASE_URL}/api/Report/GetReportList`;
 //Request
 export const getRequestAssociatedWithStoreEndPoint = `${BASE_URL}/api/Request/GetRequestAssociated_WithStore`;
 
@@ -121,4 +122,3 @@ export const paymentStatisticStoreEndPoint = `${BASE_URL}/api/PaymentStatistic/G
 //Notification
 export const getNotificationByUserIDEndPoint = `${BASE_URL}/api/Notification/GetByUserID`;
 export const editNotificationMarkReadEndPoint = `${BASE_URL}/api/Notification/markRead`;
-

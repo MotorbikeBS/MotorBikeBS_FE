@@ -5,6 +5,7 @@ import FooterComponent from '../../../common-components/footer-component/FooterC
 import StoreListNotVerify from './store-list-component/StoreListNotVerify';
 import StoreListActive from './store-list-component/StoreListActive';
 import StoreListInActive from './store-list-component/StoreListInActive';
+import ReportStoreListComponent from './report-list/ReportStoreListComponent';
 
 const StoreListAdmin: React.FC = () => {
     const [value, setValue] = useState<number>(0);
@@ -40,12 +41,15 @@ const StoreListAdmin: React.FC = () => {
                         <Tab label="Chưa Xác Thực" />
                         <Tab label="Đã Xác Minh" />
                         <Tab label="Đang Bị Khóa" />
+                        <Tab label="Danh sách báo cáo" />
+
                     </Tabs>
 
                     <Box flexGrow={4} marginTop='3rem'>
                         {value === 0 && <StoreListNotVerify />}
                         {value === 1 && <StoreListActive />}
                         {value === 2 && <StoreListInActive />}
+                        {value === 3 && <ReportStoreListComponent />}
                     </Box>
 
 
