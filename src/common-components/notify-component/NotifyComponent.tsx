@@ -117,141 +117,279 @@ const NotifyComponent: React.FC<MenuComponentProps> = ({
                                         {notificationByUserId &&
                                             notificationByUserId.map(
                                                 (notification) => (
-                                                    <MenuItem
-                                                        key={
-                                                            notification.notificationId
-                                                        }
-                                                        sx={{
-                                                            display: 'flex',
-                                                            alignItems:
-                                                                'center',
-                                                            gap: '4px',
-                                                        }}
-                                                        onClick={() =>
-                                                            handleIsRead(
-                                                                notification?.notificationId,
-                                                            )
-                                                        }
-                                                    >
-                                                        <Accordion
-                                                            sx={{
-                                                                width: '100%',
-                                                                ...(notification.isRead
-                                                                    ? {}
-                                                                    : unreadNotificationStyles),
-                                                            }}
-                                                        >
-                                                            <AccordionSummary
-                                                                expandIcon={
-                                                                    <ExpandMoreIcon />
+                                                    <>
+                                                        {notification?.isRead ===
+                                                        false ? (
+                                                            <MenuItem
+                                                                key={
+                                                                    notification.notificationId
                                                                 }
-                                                                aria-controls="notification"
-                                                                id="notification"
+                                                                sx={{
+                                                                    display:
+                                                                        'flex',
+                                                                    alignItems:
+                                                                        'center',
+                                                                    gap: '4px',
+                                                                }}
+                                                                onClick={() =>
+                                                                    handleIsRead(
+                                                                        notification?.notificationId,
+                                                                    )
+                                                                }
                                                             >
-                                                                <div
-                                                                    style={{
-                                                                        display:
-                                                                            'flex',
-                                                                        gap: '12px',
-                                                                        alignItems:
-                                                                            'center',
-                                                                    }}
-                                                                >
-                                                                    <Avatar
-                                                                        alt="store"
-                                                                        sx={{
-                                                                            width: 30,
-                                                                            height: 30,
-                                                                            bgcolor:
-                                                                                'orange',
-                                                                        }}
-                                                                    ></Avatar>
-                                                                    {notification
-                                                                        ?.title
-                                                                        .length >
-                                                                    30 ? (
-                                                                        <Tooltip
-                                                                            title={
-                                                                                notification?.title
-                                                                            }
-                                                                        >
-                                                                            <Box>
-                                                                                <Typography
-                                                                                    textAlign="left"
-                                                                                    sx={{
-                                                                                        color: 'black',
-                                                                                    }}
-                                                                                >
-                                                                                    {notification
-                                                                                        .title
-                                                                                        .length >
-                                                                                    30
-                                                                                        ? `${notification.title.slice(
-                                                                                              0,
-                                                                                              30,
-                                                                                          )}...`
-                                                                                        : notification.title}
-                                                                                </Typography>
-                                                                                <Typography
-                                                                                    sx={{
-                                                                                        color: 'black',
-                                                                                    }}
-                                                                                >
-                                                                                    {new Date(
-                                                                                        notification?.time,
-                                                                                    ).toLocaleDateString(
-                                                                                        'vi-VN',
-                                                                                    )}
-                                                                                </Typography>{' '}
-                                                                            </Box>
-                                                                        </Tooltip>
-                                                                    ) : (
-                                                                        <Box>
-                                                                            <Typography
-                                                                                textAlign="left"
-                                                                                sx={{
-                                                                                    color: 'black',
-                                                                                }}
-                                                                            >
-                                                                                {notification
-                                                                                    .title
-                                                                                    .length >
-                                                                                30
-                                                                                    ? `${notification.title.slice(
-                                                                                          0,
-                                                                                          30,
-                                                                                      )}...`
-                                                                                    : notification.title}
-                                                                            </Typography>
-                                                                            <Typography
-                                                                                sx={{
-                                                                                    color: 'black',
-                                                                                }}
-                                                                            >
-                                                                                {new Date(
-                                                                                    notification?.time,
-                                                                                ).toLocaleDateString(
-                                                                                    'vi-VN',
-                                                                                )}
-                                                                            </Typography>{' '}
-                                                                        </Box>
-                                                                    )}
-                                                                </div>
-                                                            </AccordionSummary>
-                                                            <AccordionDetails>
-                                                                <Typography
+                                                                <Accordion
                                                                     sx={{
-                                                                        whiteSpace:
-                                                                            'pre-line',
+                                                                        width: '100%',
+                                                                        ...(notification.isRead
+                                                                            ? {}
+                                                                            : unreadNotificationStyles),
                                                                     }}
                                                                 >
-                                                                    {
-                                                                        notification?.content
-                                                                    }
-                                                                </Typography>
-                                                            </AccordionDetails>
-                                                        </Accordion>
-                                                    </MenuItem>
+                                                                    <AccordionSummary
+                                                                        expandIcon={
+                                                                            <ExpandMoreIcon />
+                                                                        }
+                                                                        aria-controls="notification"
+                                                                        id="notification"
+                                                                    >
+                                                                        <div
+                                                                            style={{
+                                                                                display:
+                                                                                    'flex',
+                                                                                gap: '12px',
+                                                                                alignItems:
+                                                                                    'center',
+                                                                            }}
+                                                                        >
+                                                                            <Avatar
+                                                                                alt="store"
+                                                                                sx={{
+                                                                                    width: 30,
+                                                                                    height: 30,
+                                                                                    bgcolor:
+                                                                                        'orange',
+                                                                                }}
+                                                                            ></Avatar>
+                                                                            {notification
+                                                                                ?.title
+                                                                                .length >
+                                                                            30 ? (
+                                                                                <Tooltip
+                                                                                    title={
+                                                                                        notification?.title
+                                                                                    }
+                                                                                >
+                                                                                    <Box>
+                                                                                        <Typography
+                                                                                            textAlign="left"
+                                                                                            sx={{
+                                                                                                color: 'black',
+                                                                                            }}
+                                                                                        >
+                                                                                            {notification
+                                                                                                .title
+                                                                                                .length >
+                                                                                            30
+                                                                                                ? `${notification.title.slice(
+                                                                                                      0,
+                                                                                                      30,
+                                                                                                  )}...`
+                                                                                                : notification.title}
+                                                                                        </Typography>
+                                                                                        <Typography
+                                                                                            sx={{
+                                                                                                color: 'black',
+                                                                                            }}
+                                                                                        >
+                                                                                            {new Date(
+                                                                                                notification?.time,
+                                                                                            ).toLocaleDateString(
+                                                                                                'vi-VN',
+                                                                                            )}
+                                                                                        </Typography>{' '}
+                                                                                    </Box>
+                                                                                </Tooltip>
+                                                                            ) : (
+                                                                                <Box>
+                                                                                    <Typography
+                                                                                        textAlign="left"
+                                                                                        sx={{
+                                                                                            color: 'black',
+                                                                                        }}
+                                                                                    >
+                                                                                        {notification
+                                                                                            .title
+                                                                                            .length >
+                                                                                        30
+                                                                                            ? `${notification.title.slice(
+                                                                                                  0,
+                                                                                                  30,
+                                                                                              )}...`
+                                                                                            : notification.title}
+                                                                                    </Typography>
+                                                                                    <Typography
+                                                                                        sx={{
+                                                                                            color: 'black',
+                                                                                        }}
+                                                                                    >
+                                                                                        {new Date(
+                                                                                            notification?.time,
+                                                                                        ).toLocaleDateString(
+                                                                                            'vi-VN',
+                                                                                        )}
+                                                                                    </Typography>{' '}
+                                                                                </Box>
+                                                                            )}
+                                                                        </div>
+                                                                    </AccordionSummary>
+                                                                    <AccordionDetails>
+                                                                        <Typography
+                                                                            sx={{
+                                                                                whiteSpace:
+                                                                                    'pre-line',
+                                                                            }}
+                                                                        >
+                                                                            {
+                                                                                notification?.content
+                                                                            }
+                                                                        </Typography>
+                                                                    </AccordionDetails>
+                                                                </Accordion>
+                                                            </MenuItem>
+                                                        ) : (
+                                                            <MenuItem
+                                                                key={
+                                                                    notification.notificationId
+                                                                }
+                                                                sx={{
+                                                                    display:
+                                                                        'flex',
+                                                                    alignItems:
+                                                                        'center',
+                                                                    gap: '4px',
+                                                                }}
+                                                            >
+                                                                <Accordion
+                                                                    sx={{
+                                                                        width: '100%',
+                                                                        ...(notification.isRead
+                                                                            ? {}
+                                                                            : unreadNotificationStyles),
+                                                                    }}
+                                                                >
+                                                                    <AccordionSummary
+                                                                        expandIcon={
+                                                                            <ExpandMoreIcon />
+                                                                        }
+                                                                        aria-controls="notification"
+                                                                        id="notification"
+                                                                    >
+                                                                        <div
+                                                                            style={{
+                                                                                display:
+                                                                                    'flex',
+                                                                                gap: '12px',
+                                                                                alignItems:
+                                                                                    'center',
+                                                                            }}
+                                                                        >
+                                                                            <Avatar
+                                                                                alt="store"
+                                                                                sx={{
+                                                                                    width: 30,
+                                                                                    height: 30,
+                                                                                    bgcolor:
+                                                                                        'orange',
+                                                                                }}
+                                                                            ></Avatar>
+                                                                            {notification
+                                                                                ?.title
+                                                                                .length >
+                                                                            30 ? (
+                                                                                <Tooltip
+                                                                                    title={
+                                                                                        notification?.title
+                                                                                    }
+                                                                                >
+                                                                                    <Box>
+                                                                                        <Typography
+                                                                                            textAlign="left"
+                                                                                            sx={{
+                                                                                                color: 'black',
+                                                                                            }}
+                                                                                        >
+                                                                                            {notification
+                                                                                                .title
+                                                                                                .length >
+                                                                                            30
+                                                                                                ? `${notification.title.slice(
+                                                                                                      0,
+                                                                                                      30,
+                                                                                                  )}...`
+                                                                                                : notification.title}
+                                                                                        </Typography>
+                                                                                        <Typography
+                                                                                            sx={{
+                                                                                                color: 'black',
+                                                                                            }}
+                                                                                        >
+                                                                                            {new Date(
+                                                                                                notification?.time,
+                                                                                            ).toLocaleDateString(
+                                                                                                'vi-VN',
+                                                                                            )}
+                                                                                        </Typography>{' '}
+                                                                                    </Box>
+                                                                                </Tooltip>
+                                                                            ) : (
+                                                                                <Box>
+                                                                                    <Typography
+                                                                                        textAlign="left"
+                                                                                        sx={{
+                                                                                            color: 'black',
+                                                                                        }}
+                                                                                    >
+                                                                                        {notification
+                                                                                            .title
+                                                                                            .length >
+                                                                                        30
+                                                                                            ? `${notification.title.slice(
+                                                                                                  0,
+                                                                                                  30,
+                                                                                              )}...`
+                                                                                            : notification.title}
+                                                                                    </Typography>
+                                                                                    <Typography
+                                                                                        sx={{
+                                                                                            color: 'black',
+                                                                                        }}
+                                                                                    >
+                                                                                        {new Date(
+                                                                                            notification?.time,
+                                                                                        ).toLocaleDateString(
+                                                                                            'vi-VN',
+                                                                                        )}
+                                                                                    </Typography>{' '}
+                                                                                </Box>
+                                                                            )}
+                                                                        </div>
+                                                                    </AccordionSummary>
+                                                                    <AccordionDetails>
+                                                                        <Typography
+                                                                            sx={{
+                                                                                whiteSpace:
+                                                                                    'pre-line',
+                                                                            }}
+                                                                        >
+                                                                            {
+                                                                                notification?.content
+                                                                            }
+                                                                        </Typography>
+                                                                    </AccordionDetails>
+                                                                </Accordion>
+                                                            </MenuItem>
+                                                        )}
+                                                    </>
                                                 ),
                                             )}
                                     </>
