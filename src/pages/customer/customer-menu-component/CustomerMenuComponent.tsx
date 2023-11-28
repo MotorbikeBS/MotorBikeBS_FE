@@ -12,6 +12,7 @@ import {
     MenuItem,
     useTheme,
     TextField,
+    Badge,
 } from '@mui/material';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -30,7 +31,7 @@ import {
 } from '@mui/icons-material';
 import './style/style.scss';
 import MenuComponent from '../../../common-components/notify-component/NotifyComponent';
-import { useAppDispatch } from '../../../services/store/store';
+import { useAppDispatch, useAppSelector } from '../../../services/store/store';
 import { logoutUser } from '../../../services/features/auth/accountSlice';
 import {
     getAllOnExchange,
@@ -62,6 +63,9 @@ const CustomerMenuComponent = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useAppDispatch();
+    const { notificationByUserId } = useAppSelector(
+        (state) => state.notification,
+    );
     const [searchTerm, setSearchTerm] = React.useState('');
     const [isButtonDisabled, setIsButtonDisabled] = React.useState(true);
 
@@ -80,6 +84,10 @@ const CustomerMenuComponent = () => {
         setSearchTerm(newValue);
         setIsButtonDisabled(newValue.trim() === '');
     };
+
+    const unReadNotification =
+        notificationByUserId &&
+        notificationByUserId.filter((notify) => notify?.isRead === false);
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null,
@@ -470,7 +478,11 @@ const CustomerMenuComponent = () => {
                                     aria-controls="menu-notify"
                                     aria-haspopup="true"
                                 >
-                                    <Notifications />
+                                    {unReadNotification && (
+                                        <Badge badgeContent={unReadNotification?.length} color="error">
+                                            <Notifications />
+                                        </Badge>
+                                    )}
                                 </IconButton>
                             </Tooltip>
                             <MenuComponent

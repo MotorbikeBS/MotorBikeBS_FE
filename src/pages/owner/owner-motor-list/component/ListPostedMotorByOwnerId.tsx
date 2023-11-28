@@ -54,7 +54,7 @@ const ListPostedMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
     };
 
     const openEditModal = () => {
-        setIsDetailModalOpen(false);
+        // setIsDetailModalOpen(false);
         setIsConfirmCancelPost(true);
         setSelectedRow(selectedRow);
     };
