@@ -1,6 +1,7 @@
 import React from 'react';
 import {
     AppBar,
+    Badge,
     Box,
     Container,
     IconButton,
@@ -15,7 +16,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import MenuComponent from '../../../common-components/notify-component/NotifyComponent';
 import { AccountCircle, Notifications } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useAppDispatch } from '../../../services/store/store';
+import { useAppDispatch, useAppSelector } from '../../../services/store/store';
 import { logoutUser } from '../../../services/features/auth/accountSlice';
 
 const pages = [
@@ -51,7 +52,13 @@ const OwnerMenuComponent = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const { notificationByUserId } = useAppSelector(
+        (state) => state.notification,
+    );
 
+    const unReadNotification =
+    notificationByUserId &&
+    notificationByUserId.filter((notify) => notify?.isRead === false);
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null,
     );
@@ -235,7 +242,11 @@ const OwnerMenuComponent = () => {
                                     aria-controls="menu-notify"
                                     aria-haspopup="true"
                                 >
-                                    <Notifications />
+                                  {unReadNotification && (
+                                        <Badge badgeContent={unReadNotification?.length} color="error">
+                                            <Notifications />
+                                        </Badge>
+                                    )}
                                 </IconButton>
                             </Tooltip>
                             <MenuComponent

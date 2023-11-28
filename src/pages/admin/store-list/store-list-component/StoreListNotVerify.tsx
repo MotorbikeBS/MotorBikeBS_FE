@@ -1,7 +1,13 @@
 // StoreListNotVerify.js
 import React, { useEffect, useMemo, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../services/store/store';
-import { clearStore, getAllStore } from '../../../../services/features/store/storeSlice';
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../../../../services/store/store';
+import {
+    clearStore,
+    getAllStore,
+} from '../../../../services/features/store/storeSlice';
 import { IStore } from '../../../../models/Store/Store';
 import { Container, Typography, Paper } from '@mui/material';
 import { DataGrid, GridRowParams } from '@mui/x-data-grid';
@@ -10,22 +16,23 @@ import { columns } from './table/TableStoreList';
 
 const StoreListNotVerify = () => {
     const dispatch = useAppDispatch();
-    const { stores } = useAppSelector((state) => state.store);
+    const { stores, loading } = useAppSelector((state) => state.store);
     const [selectedRow, setSelectedRow] = useState<IStore | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const loadData = () => {
-        dispatch(clearStore())
-        dispatch(getAllStore())
-    }
+        dispatch(clearStore());
+        dispatch(getAllStore());
+    };
 
     useEffect(() => {
-        loadData()
+        loadData();
     }, [dispatch]);
 
-
     const notVerifiedStores = useMemo(() => {
-        return (stores ?? []).filter((store: IStore) => store.status === 'NOT VERIFY');
+        return (stores ?? []).filter(
+            (store: IStore) => store.status === 'NOT VERIFY',
+        );
     }, [stores]);
 
     const rows = useMemo(() => {
@@ -60,9 +67,19 @@ const StoreListNotVerify = () => {
                     pageSizeOptions={[5, 10, 100]}
                     disableRowSelectionOnClick
                     onRowDoubleClick={handleRowDoubleClick}
+                    autoHeight
+                    localeText={{
+                        noRowsLabel: 'Không có dữ liệu',
+                    }}
+                    loading={loading}
                 />
             </Paper>
-            <StoreModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} data={selectedRow} loadData={loadData} />
+            <StoreModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                data={selectedRow}
+                loadData={loadData}
+            />
         </Container>
     );
 };

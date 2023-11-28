@@ -9,7 +9,7 @@ import StoreModal from '../ModalComponent/StoreModalComponent';
 
 const StoreListActive = () => {
     const dispatch = useAppDispatch();
-    const { stores } = useAppSelector((state) => state.store);
+    const { stores, loading } = useAppSelector((state) => state.store);
     const [selectedRow, setSelectedRow] = useState<IStore | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -57,6 +57,11 @@ const StoreListActive = () => {
                     pageSizeOptions={[5, 10, 100]}
                     disableRowSelectionOnClick
                     onRowDoubleClick={handleRowDoubleClick}
+                    autoHeight
+                    localeText={{
+                        noRowsLabel: 'Không có dữ liệu',
+                    }}
+                    loading={loading}
                 />
             </Paper>
             <StoreModal
