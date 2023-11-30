@@ -21,7 +21,9 @@ const Dashboard = () => {
                 <Grid container spacing={3}>
                     <Grid item sm={6} md={4} xs={12}>
                         <Paper elevation={3} className="paper-total-revenue">
-                            <Typography variant="h5">Tổng doanh thu của cửa hàng</Typography>
+                            <Typography variant="h5">
+                                Tổng doanh thu của cửa hàng
+                            </Typography>
                             <Typography variant="h4">
                                 {formatCurrency(
                                     Number(revenue && revenue?.total?.income),
@@ -29,10 +31,20 @@ const Dashboard = () => {
                             </Typography>
                         </Paper>
                         <Paper elevation={3} className="paper-total-revenue">
-                            <Typography variant="h5">Tổng tiền thanh toán cho chủ xe </Typography>
+                            <Typography variant="h5">
+                                Tổng tiền thanh toán cho chủ xe{' '}
+                            </Typography>
                             <Typography variant="h4">
                                 {formatCurrency(
                                     Number(revenue && revenue?.total?.expense),
+                                )}
+                            </Typography>
+                        </Paper>
+                        <Paper elevation={3} className="paper-total-revenue">
+                            <Typography variant="h5">Tổng lợi nhuận (Chưa trừ tiền đã nạp)</Typography>
+                            <Typography variant="h4">
+                                {formatCurrency(
+                                    Number(revenue && revenue?.total?.total),
                                 )}
                             </Typography>
                         </Paper>

@@ -37,7 +37,7 @@ const RevenueChart = () => {
     const { revenue } = useAppSelector((state) => state.bill);
 
     const [startDateInput, setStartDateInput] = useState<Date>(
-        new Date('01/02/2023'),
+        new Date('08/02/2023'),
     );
     const [endDateInput, setEndDateInput] = useState<Date>(new Date());
     const [incomeTypeSelect, setIncomeTypeSelect] = useState<string>('Month');
@@ -46,7 +46,7 @@ const RevenueChart = () => {
         setIncomeTypeSelect(event.target.value);
     };
 
-    const pastDate = new Date('01/02/2022').toISOString().split('T')[0];
+    const pastDate = new Date('01/02/2023').toISOString().split('T')[0];
 
     useEffect(() => {
         dispatch(clearRevenue());
@@ -68,7 +68,7 @@ const RevenueChart = () => {
             (revenue && revenue?.bills.map((bill) => bill?.incomeTime)) || [],
         datasets: [
             {
-                label: 'Chi tiêu',
+                label: 'Thanh toán cho chủ xe',
                 data:
                     (revenue && revenue?.bills.map((bill) => bill?.expense)) ||
                     [],
@@ -91,7 +91,8 @@ const RevenueChart = () => {
     return (
         <div>
             <Typography sx={{ textAlign: 'center' }} variant="h5">
-                Biểu đồ theo {revenue?.incomeType === 'Month' ? 'Tháng' : 'Năm'}
+                Thống kê doanh thu theo{' '}
+                {incomeTypeSelect === 'Month' ? 'Tháng' : 'Năm'}
             </Typography>
             <Box
                 sx={{
