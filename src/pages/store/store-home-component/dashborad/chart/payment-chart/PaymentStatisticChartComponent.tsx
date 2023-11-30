@@ -66,8 +66,8 @@ const PaymentStatisticChartComponent = () => {
             {
                 data: chartData,
                 label: 'Tháng',
-                backgroundColor: 'rgba(109, 247, 94, 3)',
-                borderColor: 'rgba(109, 247, 94, 2)',
+                backgroundColor: 'rgba(235, 100, 73, 3)',
+                borderColor: 'rgba(235, 100, 73, 2)',
                 borderWidth: 2,
             },
         ],
