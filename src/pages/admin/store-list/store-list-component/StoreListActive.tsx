@@ -46,7 +46,7 @@ const StoreListActive = () => {
         setIsModalOpen(true);
     };
     return (
-        <Container maxWidth="md">
+        <Container maxWidth="xl">
             <Paper style={{ marginBottom: '20px', padding: '20px' }}>
                 <Typography variant="h4" gutterBottom>
                     Danh sách cửa hàng đang hoạt động

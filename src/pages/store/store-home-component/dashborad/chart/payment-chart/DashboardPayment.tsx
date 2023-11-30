@@ -18,7 +18,7 @@ const DashboardPayment = () => {
             <Grid container spacing={3}>
                 <Grid item sm={6} md={4} xs={12}>
                     <Paper elevation={3} className="paper-total-revenue">
-                        <Typography variant="h5">Tổng Số tiền đã nạp</Typography>
+                        <Typography variant="h5">Tổng số tiền đã nạp</Typography>
                         <Typography variant="h4">
                             {formatCurrency(
                                 Number(paymentStatistic && paymentStatistic?.total),
