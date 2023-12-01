@@ -108,12 +108,10 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
         setIsCreateBillNonConsignmentSelected(true);
         setSelectedRow(selectedRow);
     };
-
     const openCancelPostModal = () => {
         setIsConfirmCancelPost(true);
         setSelectedRow(selectedRow);
     };
-
     const openSaleModal = () => {
         setIsConfirmSale(true);
         setSelectedRow(selectedRow);
