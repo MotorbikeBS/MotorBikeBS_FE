@@ -20,15 +20,16 @@ const initialState: ReportStoreState = {
     createReport: null,
     reportStores: null,
 };
-export const createReportStore = createAsyncThunk<IReport, ICreateReport>(
+export const createReportStore = createAsyncThunk<void, FormData>(
     'report/createReportStore',
-    async (data: ICreateReport, thunkAPI) => {
-        const { storeId, title, description, images } = data;
+    async (formData: FormData, thunkAPI) => {
         try {
             const token = localStorage.getItem('motorbike_bs');
             const response = await axios.post(
-                `${createReportStoreEndPoint}?storeId=${storeId}`,
-                { title, description, images },
+                `${createReportStoreEndPoint}?storeId=${formData.get(
+                    'storeId',
+                )}`,
+                formData,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
