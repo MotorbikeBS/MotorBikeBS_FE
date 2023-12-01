@@ -32,8 +32,8 @@ const ReportStoreListComponent = () => {
             imageReport: report?.reports[0]?.reportImages[0]?.imageLink,
             title: report?.reports[0]?.title,
             description: report?.reports[0]?.description,
-            reportStore: report?.receiver?.storeDesciptions[0]?.storeName,
-            storePhone: report?.receiver.storeDesciptions[0]?.storePhone,
+            reportStore: report?.receiver?.storeDescriptions[0]?.storeName,
+            storePhone: report?.receiver.storeDescriptions[0]?.storePhone,
             sender: report?.sender?.userName
         }));
     }, [reportStores]);

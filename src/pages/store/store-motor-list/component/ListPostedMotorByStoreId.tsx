@@ -215,7 +215,7 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
         dispatch(clearMotor());
         dispatch(
             getMotorByStoreId({
-                storeId: Number(user?.storeDesciptions[0]?.storeId),
+                storeId: Number(user?.storeDescriptions[0]?.storeId),
             }),
         );
     }, [dispatch, user]);

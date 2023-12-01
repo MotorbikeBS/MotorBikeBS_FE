@@ -18,7 +18,7 @@ export interface IUser {
     status: string;
     userVerifyAt: Date;
     userUpdatedAt: Date;
-    storeDesciptions: IStore[];
+    storeDescriptions: IStore[];
 }
 
 export interface IEditUser {

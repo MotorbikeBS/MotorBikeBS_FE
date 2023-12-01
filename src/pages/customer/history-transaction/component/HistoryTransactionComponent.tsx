@@ -68,7 +68,7 @@ const HistoryTransactionComponent = () => {
             motorName: bill?.request?.motor?.motorName,
             certificateNumber: bill?.request?.motor?.certificateNumber,
             price: bill?.price,
-            storeName: bill?.request?.sender?.storeDesciptions[0]?.storeName,
+            storeName: bill?.request?.sender?.storeDescriptions[0]?.storeName,
             createAt: bill?.createAt,
         }));
     }, [billUser]);

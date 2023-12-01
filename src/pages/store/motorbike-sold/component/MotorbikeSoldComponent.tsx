@@ -66,7 +66,7 @@ const MotorbikeSoldComponent = () => {
         if (user) {
             dispatch(
                 getBillByStoreId({
-                    receiverId: Number(user?.storeDesciptions[0]?.storeId),
+                    receiverId: Number(user?.storeDescriptions[0]?.storeId),
                 }),
             );
         }

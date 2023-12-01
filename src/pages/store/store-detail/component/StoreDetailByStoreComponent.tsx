@@ -32,7 +32,7 @@ const StoreDetailByStoreComponent = () => {
     useEffect(() => {
         dispatch(
             getAverageStar({
-                storeId: Number(user?.storeDesciptions[0]?.storeId),
+                storeId: Number(user?.storeDescriptions[0]?.storeId),
             }),
         );
     }, [dispatch, user]);
@@ -54,16 +54,16 @@ const StoreDetailByStoreComponent = () => {
                             </Avatar>
                             <div>
                                 <Typography variant="h5">
-                                    {user?.storeDesciptions[0]?.storeName}
+                                    {user?.storeDescriptions[0]?.storeName}
                                 </Typography>
                                 <Typography>
                                     Ngày tham gia:{' '}
                                     <strong>
-                                        {user?.storeDesciptions[0]
+                                        {user?.storeDescriptions[0]
                                             ?.storeCreatedAt &&
                                             format(
                                                 new Date(
-                                                    user?.storeDesciptions[0]?.storeCreatedAt,
+                                                    user?.storeDescriptions[0]?.storeCreatedAt,
                                                 ),
                                                 'dd-MM-yyyy HH:mm',
                                             )}
@@ -77,19 +77,19 @@ const StoreDetailByStoreComponent = () => {
                             <div className="store-info">
                                 <Typography className="store-info-txt">
                                     <strong>Email : </strong>
-                                    {user?.storeDesciptions[0]?.storeEmail}
+                                    {user?.storeDescriptions[0]?.storeEmail}
                                 </Typography>
                             </div>
                             <div className="store-info">
                                 <Typography className="store-info-txt">
                                     <strong>Điện thoại: </strong>
-                                    {user?.storeDesciptions[0]?.storePhone}
+                                    {user?.storeDescriptions[0]?.storePhone}
                                 </Typography>
                             </div>
                             <div className="store-info">
                                 <Typography className="store-info-txt">
                                     <strong>Địa chỉ:</strong>
-                                    {user?.storeDesciptions[0]?.address}
+                                    {user?.storeDescriptions[0]?.address}
                                 </Typography>
                             </div>
                         </Box>

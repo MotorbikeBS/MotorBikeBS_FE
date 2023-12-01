@@ -238,7 +238,7 @@ const ReceiptListWithStoreComponent = () => {
                                                             <StoreOutlined />{' '}
                                                             {
                                                                 negoInfo?.sender
-                                                                    ?.storeDesciptions[0]
+                                                                    ?.storeDescriptions[0]
                                                                     ?.storeName
                                                             }
                                                         </Typography>
@@ -246,7 +246,7 @@ const ReceiptListWithStoreComponent = () => {
                                                             <PhoneIphoneOutlined />{' '}
                                                             {
                                                                 negoInfo?.sender
-                                                                    ?.storeDesciptions[0]
+                                                                    ?.storeDescriptions[0]
                                                                     .storePhone
                                                             }
                                                         </Typography>
@@ -254,7 +254,7 @@ const ReceiptListWithStoreComponent = () => {
                                                             <EmailOutlined />{' '}
                                                             {
                                                                 negoInfo?.sender
-                                                                    ?.storeDesciptions[0]
+                                                                    ?.storeDescriptions[0]
                                                                     ?.storeEmail
                                                             }
                                                         </Typography>
@@ -262,7 +262,7 @@ const ReceiptListWithStoreComponent = () => {
                                                             <PlaceOutlined />{' '}
                                                             {
                                                                 negoInfo?.sender
-                                                                    ?.storeDesciptions[0]
+                                                                    ?.storeDescriptions[0]
                                                                     .address
                                                             }
                                                         </Typography>

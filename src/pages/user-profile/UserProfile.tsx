@@ -105,7 +105,7 @@ const UserProfile = () => {
                                             fontWeight: '700',
                                         }}
                                     >
-                                        {user?.storeDesciptions[0]?.point} COINS
+                                        {user?.storeDescriptions[0]?.point} COINS
                                     </Typography>
                                 </Box>
                             )}
@@ -135,7 +135,7 @@ const UserProfile = () => {
                                 {account?.roleId === 2 && (
                                     <TextField
                                         label="Email Cửa hàng"
-                                        value={user?.storeDesciptions?.[0]?.storeEmail || ''}
+                                        value={user?.storeDescriptions?.[0]?.storeEmail || ''}
                                         type="email"
                                         variant="outlined"
                                         disabled
@@ -151,7 +151,7 @@ const UserProfile = () => {
                                 {account?.roleId === 2 && (
                                     <TextField
                                         label="Tên cửa hàng"
-                                        value={user?.storeDesciptions?.[0]?.storeName || ''}
+                                        value={user?.storeDescriptions?.[0]?.storeName || ''}
                                         type="text"
                                         variant="outlined"
                                         disabled
@@ -203,8 +203,8 @@ const UserProfile = () => {
                                         label="Điện thoại cửa hàng"
                                         value={
 
-                                            user?.storeDesciptions[0]?.storePhone || ''
-                                                ? user?.storeDesciptions[0]?.storePhone || ''
+                                            user?.storeDescriptions[0]?.storePhone || ''
+                                                ? user?.storeDescriptions[0]?.storePhone || ''
                                                 : 'Bạn chưa có số điện thoại.'
                                         }
                                         type="text"
@@ -227,8 +227,8 @@ const UserProfile = () => {
                                     <TextField
                                         label="Địa chỉ cửa hàng"
                                         value={
-                                            user?.storeDesciptions[0]?.address || ''
-                                                ? user?.storeDesciptions[0].address || ''
+                                            user?.storeDescriptions[0]?.address || ''
+                                                ? user?.storeDescriptions[0].address || ''
                                                 : 'Bạn chưa có địa chỉ.'
                                         }
                                         type="text"
@@ -261,8 +261,8 @@ const UserProfile = () => {
                                     <TextField
                                         label="Mã số thuế"
                                         value={
-                                            user?.storeDesciptions[0]?.taxCode || ''
-                                                ? user?.storeDesciptions[0].taxCode || ''
+                                            user?.storeDescriptions[0]?.taxCode || ''
+                                                ? user?.storeDescriptions[0].taxCode || ''
                                                 : 'Bạn chưa cập nhật mã số thuế.'
                                         }
                                         type="text"
@@ -274,8 +274,8 @@ const UserProfile = () => {
                                     <TextField
                                         label="Ngày xác minh cửa hàng"
                                         value={
-                                            user?.storeDesciptions[0]?.storeCreatedAt || ''
-                                                ? format(new Date(user?.storeDesciptions[0].storeCreatedAt || ''), 'MM-dd-yyyy HH:mm:ss')
+                                            user?.storeDescriptions[0]?.storeCreatedAt || ''
+                                                ? format(new Date(user?.storeDescriptions[0].storeCreatedAt || ''), 'MM-dd-yyyy HH:mm:ss')
                                                 : 'mm-dd-yyyy'
                                         }
                                         type="text"

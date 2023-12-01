@@ -33,7 +33,7 @@ const MotorbikeForStoreComponent = () => {
         dispatch(clearMotor());
         dispatch(
             getMotorByStoreId({
-                storeId: Number(user?.storeDesciptions[0]?.storeId),
+                storeId: Number(user?.storeDescriptions[0]?.storeId),
             }),
         );
     }, [dispatch, user]);
@@ -61,7 +61,7 @@ const MotorbikeForStoreComponent = () => {
             ) : (
                 <>
                     {motorbikeByStoreIdFIlter &&
-                    motorbikeByStoreIdFIlter.length === 0 ? (
+                        motorbikeByStoreIdFIlter.length === 0 ? (
                         <>
                             <Container>
                                 <Paper elevation={3} sx={{ padding: 2 }}>
@@ -91,8 +91,8 @@ const MotorbikeForStoreComponent = () => {
                                                 <Item className="product-item">
                                                     <div className="product-image">
                                                         {motor.motorbikeImages &&
-                                                        motor.motorbikeImages
-                                                            .length === 0 ? (
+                                                            motor.motorbikeImages
+                                                                .length === 0 ? (
                                                             <>
                                                                 <img
                                                                     src="https://png.pngtree.com/element_origin_min_pic/16/10/21/277448a877a33e8d0efc778025291c86.jpg"
@@ -116,19 +116,19 @@ const MotorbikeForStoreComponent = () => {
                                                         <Typography variant="subtitle1">
                                                             {motor?.motorStatus
                                                                 ?.motorStatusId ===
-                                                            1
+                                                                1
                                                                 ? 'CÓ SẴN'
                                                                 : motor
-                                                                      ?.motorStatus
-                                                                      ?.motorStatusId ===
-                                                                  4
-                                                                ? 'KÍ GỬI'
-                                                                : motor
-                                                                      ?.motorStatus
-                                                                      ?.motorStatusId ===
-                                                                  5
-                                                                ? 'KHÔNG KÍ GỬI'
-                                                                : 'CHƯA XÁC ĐỊNH'}
+                                                                    ?.motorStatus
+                                                                    ?.motorStatusId ===
+                                                                    4
+                                                                    ? 'KÍ GỬI'
+                                                                    : motor
+                                                                        ?.motorStatus
+                                                                        ?.motorStatusId ===
+                                                                        5
+                                                                        ? 'KHÔNG KÍ GỬI'
+                                                                        : 'CHƯA XÁC ĐỊNH'}
                                                         </Typography>
                                                     </div>
                                                     <div className="product-information">

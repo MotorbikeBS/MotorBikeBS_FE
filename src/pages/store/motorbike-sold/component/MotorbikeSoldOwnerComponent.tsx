@@ -66,7 +66,7 @@ const MotorbikeSoldOwnerComponent = () => {
         if (user) {
             dispatch(
                 getBillByStoreId({
-                    receiverId: Number(user?.storeDesciptions[0]?.storeId),
+                    receiverId: Number(user?.storeDescriptions[0]?.storeId),
                 }),
             );
         }
@@ -110,7 +110,7 @@ const MotorbikeSoldOwnerComponent = () => {
                         columns: {
                             columnVisibilityModel: {
                                 motorId: false,
-                                buyer:false
+                                buyer: false
                             },
                         },
                     }}

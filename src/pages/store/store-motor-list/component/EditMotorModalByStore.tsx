@@ -142,7 +142,7 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
             );
             form.setValue(
                 'storeId',
-                Number(user?.storeDesciptions[0]?.storeId),
+                Number(user?.storeDescriptions[0]?.storeId),
             );
             form.setValue('motorTypeId', motorbike?.motorType?.motorTypeId);
         }

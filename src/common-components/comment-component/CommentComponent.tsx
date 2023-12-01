@@ -187,9 +187,9 @@ const CommentComponent = () => {
                                                 <Box className="cmt-box">
                                                     <Box className="user-date">
                                                         {comment?.userId ===
-                                                        comment?.request
-                                                            ?.receiver
-                                                            ?.userId ? (
+                                                            comment?.request
+                                                                ?.receiver
+                                                                ?.userId ? (
                                                             <Typography className="user-date-name">
                                                                 {
                                                                     comment
@@ -213,7 +213,7 @@ const CommentComponent = () => {
                                                         {comment?.updateAt !==
                                                             null &&
                                                             comment?.userId ===
-                                                                account?.userId && (
+                                                            account?.userId && (
                                                                 <Typography
                                                                     sx={{
                                                                         color: '#ccc',
@@ -232,10 +232,10 @@ const CommentComponent = () => {
                                                                     const newDate =
                                                                         new Date(
                                                                             originalDate.getTime() +
-                                                                                7 *
-                                                                                    60 *
-                                                                                    60 *
-                                                                                    1000,
+                                                                            7 *
+                                                                            60 *
+                                                                            60 *
+                                                                            1000,
                                                                         );
 
                                                                     return newDate.toLocaleString(
@@ -285,8 +285,8 @@ const CommentComponent = () => {
                                                     </Box>
                                                 </Box>
                                                 {comment?.inverseReply &&
-                                                (comment.inverseReply as any[])
-                                                    .length !== 0 ? (
+                                                    (comment.inverseReply as any[])
+                                                        .length !== 0 ? (
                                                     <Typography></Typography>
                                                 ) : (
                                                     <>
@@ -295,7 +295,7 @@ const CommentComponent = () => {
                                                             comment?.request
                                                                 ?.receiver
                                                                 ?.userId ===
-                                                                account?.userId && (
+                                                            account?.userId && (
                                                                 <Box>
                                                                     <Button
                                                                         sx={{
@@ -329,7 +329,7 @@ const CommentComponent = () => {
                                                             comment?.request
                                                                 ?.sender
                                                                 ?.userId ===
-                                                                account?.userId && (
+                                                            account?.userId && (
                                                                 <Box>
                                                                     <Button
                                                                         sx={{
@@ -368,108 +368,108 @@ const CommentComponent = () => {
                                                     <>
                                                         {replyCmt?.status !==
                                                             'DELETE' && (
-                                                            <Paper
-                                                                key={
-                                                                    replyCmt?.commentId
-                                                                }
-                                                                elevation={3}
-                                                                sx={{
-                                                                    marginLeft: 6,
-                                                                }}
-                                                            >
-                                                                <Typography className="reply-title">
-                                                                    Trả lời:
-                                                                </Typography>
-                                                                <Box className="comment-box-paper">
-                                                                    <Box className="cmt-box">
-                                                                        <Box className="user-date">
-                                                                            {comment
-                                                                                ?.request
-                                                                                ?.receiver
-                                                                                ?.roleId ===
-                                                                                2 && (
-                                                                                <Typography className="user-date-name">
-                                                                                    {
-                                                                                        comment
-                                                                                            ?.request
-                                                                                            ?.receiver
-                                                                                            ?.userName
-                                                                                    }{' '}
-                                                                                    -{' '}
-                                                                                    {
-                                                                                        comment
-                                                                                            ?.request
-                                                                                            ?.receiver
-                                                                                            ?.storeDesciptions[0]
-                                                                                            ?.storeName
-                                                                                    }
-                                                                                </Typography>
-                                                                            )}
-                                                                            {comment
-                                                                                ?.request
-                                                                                ?.sender
-                                                                                ?.roleId ===
-                                                                                2 && (
-                                                                                <Typography className="user-date-name">
-                                                                                    {
-                                                                                        comment
-                                                                                            ?.request
-                                                                                            ?.sender
-                                                                                            ?.userName
-                                                                                    }{' '}
-                                                                                    -{' '}
-                                                                                    {
-                                                                                        comment
-                                                                                            ?.request
-                                                                                            ?.sender
-                                                                                            ?.storeDesciptions[0]
-                                                                                            ?.storeName
-                                                                                    }
-                                                                                </Typography>
-                                                                            )}
-
-                                                                            <Typography variant="subtitle1">
-                                                                                {replyCmt.createAt &&
-                                                                                    (() => {
-                                                                                        const originalDate =
-                                                                                            new Date(
-                                                                                                replyCmt.createAt,
-                                                                                            );
-                                                                                        const newDate =
-                                                                                            new Date(
-                                                                                                originalDate.getTime() +
-                                                                                                    7 *
-                                                                                                        60 *
-                                                                                                        60 *
-                                                                                                        1000,
-                                                                                            );
-
-                                                                                        return newDate.toLocaleString(
-                                                                                            'vi-VN',
+                                                                <Paper
+                                                                    key={
+                                                                        replyCmt?.commentId
+                                                                    }
+                                                                    elevation={3}
+                                                                    sx={{
+                                                                        marginLeft: 6,
+                                                                    }}
+                                                                >
+                                                                    <Typography className="reply-title">
+                                                                        Trả lời:
+                                                                    </Typography>
+                                                                    <Box className="comment-box-paper">
+                                                                        <Box className="cmt-box">
+                                                                            <Box className="user-date">
+                                                                                {comment
+                                                                                    ?.request
+                                                                                    ?.receiver
+                                                                                    ?.roleId ===
+                                                                                    2 && (
+                                                                                        <Typography className="user-date-name">
                                                                                             {
-                                                                                                timeZone:
-                                                                                                    'Asia/Ho_Chi_Minh',
-                                                                                                day: '2-digit',
-                                                                                                month: '2-digit',
-                                                                                                year: 'numeric',
-                                                                                                hour: '2-digit',
-                                                                                                minute: '2-digit',
-                                                                                            },
-                                                                                        );
-                                                                                    })()}
-                                                                            </Typography>
-                                                                        </Box>
-                                                                        <Box className="info-cmt">
-                                                                            <Typography>
-                                                                                {
-                                                                                    replyCmt?.content
-                                                                                }
-                                                                            </Typography>
+                                                                                                comment
+                                                                                                    ?.request
+                                                                                                    ?.receiver
+                                                                                                    ?.userName
+                                                                                            }{' '}
+                                                                                            -{' '}
+                                                                                            {
+                                                                                                comment
+                                                                                                    ?.request
+                                                                                                    ?.receiver
+                                                                                                    ?.storeDescriptions[0]
+                                                                                                    ?.storeName
+                                                                                            }
+                                                                                        </Typography>
+                                                                                    )}
+                                                                                {comment
+                                                                                    ?.request
+                                                                                    ?.sender
+                                                                                    ?.roleId ===
+                                                                                    2 && (
+                                                                                        <Typography className="user-date-name">
+                                                                                            {
+                                                                                                comment
+                                                                                                    ?.request
+                                                                                                    ?.sender
+                                                                                                    ?.userName
+                                                                                            }{' '}
+                                                                                            -{' '}
+                                                                                            {
+                                                                                                comment
+                                                                                                    ?.request
+                                                                                                    ?.sender
+                                                                                                    ?.storeDescriptions[0]
+                                                                                                    ?.storeName
+                                                                                            }
+                                                                                        </Typography>
+                                                                                    )}
+
+                                                                                <Typography variant="subtitle1">
+                                                                                    {replyCmt.createAt &&
+                                                                                        (() => {
+                                                                                            const originalDate =
+                                                                                                new Date(
+                                                                                                    replyCmt.createAt,
+                                                                                                );
+                                                                                            const newDate =
+                                                                                                new Date(
+                                                                                                    originalDate.getTime() +
+                                                                                                    7 *
+                                                                                                    60 *
+                                                                                                    60 *
+                                                                                                    1000,
+                                                                                                );
+
+                                                                                            return newDate.toLocaleString(
+                                                                                                'vi-VN',
+                                                                                                {
+                                                                                                    timeZone:
+                                                                                                        'Asia/Ho_Chi_Minh',
+                                                                                                    day: '2-digit',
+                                                                                                    month: '2-digit',
+                                                                                                    year: 'numeric',
+                                                                                                    hour: '2-digit',
+                                                                                                    minute: '2-digit',
+                                                                                                },
+                                                                                            );
+                                                                                        })()}
+                                                                                </Typography>
+                                                                            </Box>
+                                                                            <Box className="info-cmt">
+                                                                                <Typography>
+                                                                                    {
+                                                                                        replyCmt?.content
+                                                                                    }
+                                                                                </Typography>
+                                                                            </Box>
                                                                         </Box>
                                                                     </Box>
-                                                                </Box>
-                                                            </Paper>
-                                                        )}
+                                                                </Paper>
+                                                            )}
                                                     </>
                                                 ),
                                             )}

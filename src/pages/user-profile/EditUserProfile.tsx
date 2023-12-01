@@ -151,7 +151,7 @@ const EditUserProfile = () => {
                                 {account?.roleId === 2 ? (
                                     <>
                                         <Typography className="edit-profile-name">
-                                            {user?.storeDesciptions?.[0]?.storeName || user?.userName}
+                                            {user?.storeDescriptions?.[0]?.storeName || user?.userName}
                                         </Typography>
                                     </>
                                 ) : (
@@ -187,7 +187,7 @@ const EditUserProfile = () => {
 
                                             <TextField
                                                 label="Tên cửa hàng"
-                                                value={user?.storeDesciptions[0]?.storeName}
+                                                value={user?.storeDescriptions[0]?.storeName}
                                                 type="text"
                                                 variant="outlined"
                                                 disabled

@@ -49,7 +49,7 @@ const StoreMotorListComponent = () => {
         dispatch(clearMotor());
         dispatch(
             getMotorByStoreId({
-                storeId: Number(user?.storeDesciptions[0]?.storeId),
+                storeId: Number(user?.storeDescriptions[0]?.storeId),
             }),
         );
     };

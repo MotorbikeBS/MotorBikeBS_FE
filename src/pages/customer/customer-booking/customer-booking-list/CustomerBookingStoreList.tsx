@@ -101,17 +101,17 @@ const CustomerBookingStoreList = () => {
                                 <div className="motorbike-owner-info-content">
                                     <Typography display='flex'>
                                         <StoreOutlined />{' '}
-                                        {cusBooking?.receiver?.storeDesciptions[0]?.storeName}
+                                        {cusBooking?.receiver?.storeDescriptions[0]?.storeName}
                                     </Typography>
                                     <Typography display='flex'>
                                         <PhoneIphoneOutlined />{' '}
-                                        {cusBooking?.receiver?.storeDesciptions[0]?.storePhone}</Typography>
+                                        {cusBooking?.receiver?.storeDescriptions[0]?.storePhone}</Typography>
                                     <Typography display='flex'>
                                         <EmailOutlined />{' '}
-                                        {cusBooking?.receiver?.storeDesciptions[0]?.storeEmail}</Typography>
+                                        {cusBooking?.receiver?.storeDescriptions[0]?.storeEmail}</Typography>
                                     <Typography display='flex'>
                                         <PlaceOutlined />{' '}
-                                        {cusBooking?.receiver?.storeDesciptions[0]?.address}</Typography>
+                                        {cusBooking?.receiver?.storeDescriptions[0]?.address}</Typography>
                                 </div>
                             </div>
                             <div className="booking-store-info">
