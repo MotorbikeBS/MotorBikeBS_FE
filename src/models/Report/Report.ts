@@ -36,5 +36,5 @@ export interface ICreateReport {
     storeId: number;
     description: string;
     title: string;
-    images: File;
+    images: FileList;
 }

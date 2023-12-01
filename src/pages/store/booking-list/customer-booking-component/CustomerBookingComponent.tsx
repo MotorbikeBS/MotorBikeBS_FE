@@ -105,12 +105,6 @@ const CustomerBookingComponent = () => {
                                         {new Date(booking?.motor?.year).toLocaleDateString('vi-VN')}
                                     </Typography>
                                 </div>
-                                <div className='tag-motorbike-status'>
-                                    <Typography variant='subtitle1'>
-                                        {booking?.motor?.motorStatus?.title === 'CONSIGNMENT' ? 'KÝ GỬI' :
-                                            booking?.motor?.motorStatus?.title === 'NON-CONSIGNMENT' ? 'KHÔNG KÝ GỬI' : 'KHÔNG XÁC ĐỊNH'}
-                                    </Typography>
-                                </div>
                             </div>
                         </Box>
                         <Box className="right-box" flexGrow={9}>

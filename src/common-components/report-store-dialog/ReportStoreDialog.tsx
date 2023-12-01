@@ -58,12 +58,13 @@ const ReportStoreDialog: React.FC<ReportDialogProps> = ({
     const handleOpenCancelDialog = () => {
         onOpenCancelDialog()
     }
-
     const onSubmit = (data: IReportFormField) => {
         const formData = new FormData();
 
-        formData.append('title', data.title)
-        formData.append('description', data.description)
+        formData.append('storeId', String(storeId));
+        formData.append('title', data.title);
+        formData.append('description', data.description);
+
         if (data.images && data.images.length > 0) {
             for (let i = 0; i < data.images.length; i++) {
                 formData.append('images', data.images[i]);
@@ -71,18 +72,12 @@ const ReportStoreDialog: React.FC<ReportDialogProps> = ({
         }
 
         if (storeId !== null) {
-            dispatch(createReportStore({
-                storeId: storeId,
-                title: data.title,
-                description: data.description,
-                images: data.images[0]
-            }))
+            dispatch(createReportStore(formData))
                 .then(() => {
-
                     setTimeout(() => {
-                        handleCloseDialog()
-                    }, 1000)
-                })
+                        handleCloseDialog();
+                    }, 1000);
+                });
         }
     };
 

@@ -87,6 +87,7 @@ const PaymentPointComponent = () => {
                                         thousandSeparator=","
                                         customInput={TextField}
                                         {...field}
+
                                     />
                                 )}
                             />
@@ -96,6 +97,9 @@ const PaymentPointComponent = () => {
                                 color="primary"
                                 size="medium"
                                 fullWidth
+                                sx={{
+                                    marginTop: '20px'
+                                }}
                             >
                                 Nap tiền
                             </Button>
