@@ -27,14 +27,20 @@ const StorePaymentHistory = () => {
     }
 
     const row = useMemo(() => {
-        return paymentHistory?.map((history: IPaymentHistory) => ({
-            id: history.payments[0]?.paymentId,
-            vnpayOrderId: history?.payments[0]?.vnpayOrderId,
-            dateCreated: format(addSevenHours(new Date(history.payments[0]?.dateCreated), 7), 'dd-MM-yyyy HH:mm:ss'),
-            paymentTime: format(addSevenHours(new Date(history.payments[0]?.paymentTime), 7), 'dd-MM-yyyy HH:mm:ss'),
-            content: history?.payments[0]?.content,
-            paymentStatus: history?.status
-        }));
+        return paymentHistory?.map((history: IPaymentHistory) => {
+            const paymentTime = history.payments[0]?.paymentTime;
+            const formattedPaymentTime = paymentTime
+                ? format(addSevenHours(new Date(paymentTime), 7), 'dd-MM-yyyy HH:mm:ss')
+                : 'Chưa xác định';
+            return {
+                id: history.payments[0]?.paymentId,
+                vnpayOrderId: history.payments[0]?.vnpayOrderId,
+                dateCreated: format(addSevenHours(new Date(history.payments[0]?.dateCreated), 7), 'dd-MM-yyyy HH:mm:ss'),
+                paymentTime: formattedPaymentTime,
+                content: history.payments[0]?.content,
+                paymentStatus: history.status
+            };
+        });
     }, [paymentHistory]);
 
     return (
