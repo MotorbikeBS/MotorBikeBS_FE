@@ -27,9 +27,11 @@ import {
     getNegotiationInfo,
     rejectNegotiationInfor,
 } from '../../../services/features/negotiation/negotiationSlice';
+import { useNavigate } from 'react-router';
 
 const ReceiptListWithStoreComponent = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const { negotiations, loading } = useAppSelector(
         (state) => state.negotiation,
@@ -54,6 +56,10 @@ const ReceiptListWithStoreComponent = () => {
     React.useEffect(() => {
         loadData();
     }, [loadData]);
+
+    const handleNavigateStoreDetail = (storeId: number) => {
+        navigate(`/store/${storeId}`)
+    }
 
     const handleAcceptNegoInfor = (negotiationId: number) => {
         setNegotiationIdDialog(negotiationId);
@@ -234,14 +240,22 @@ const ReceiptListWithStoreComponent = () => {
                                                         </Typography>
                                                     </div>
                                                     <div className="motorbike-owner-info-content">
-                                                        <Typography display="flex">
-                                                            <StoreOutlined />{' '}
-                                                            {
-                                                                negoInfo?.sender
-                                                                    ?.storeDescriptions[0]
-                                                                    ?.storeName
-                                                            }
-                                                        </Typography>
+                                                        <div onClick={
+                                                            () => handleNavigateStoreDetail(
+                                                                negoInfo?.sender?.storeDescriptions[0]?.storeId
+                                                            )}>
+                                                            <Typography sx={{
+                                                                display: "flex",
+                                                                cursor: "pointer"
+                                                            }}>
+                                                                <StoreOutlined />{' '}
+                                                                {
+                                                                    negoInfo?.sender
+                                                                        ?.storeDescriptions[0]
+                                                                        ?.storeName
+                                                                }
+                                                            </Typography>
+                                                        </div>
                                                         <Typography display="flex">
                                                             <PhoneIphoneOutlined />{' '}
                                                             {

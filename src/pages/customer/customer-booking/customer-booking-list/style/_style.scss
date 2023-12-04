@@ -64,6 +64,13 @@ container-xl {
                     max-width: 50%;
                     text-align: left;
                 }
+                .motorbike-owner-info-content {
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                    .info-item {
+                        margin-bottom: 10px;
+                    }
+                }
                 .store-info,
                 .booking-store-info {
                     flex: 1;

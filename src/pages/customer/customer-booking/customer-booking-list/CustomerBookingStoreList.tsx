@@ -5,9 +5,11 @@ import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogTit
 import { cancelBookingByCustomer, clearCustomerBooking, getAllBookingByCustomer } from '../../../../services/features/booking/customerBookingSlice'
 import './style/_style.scss'
 import { EmailOutlined, PhoneIphoneOutlined, PlaceOutlined, StoreOutlined } from '@mui/icons-material'
+import { useNavigate } from 'react-router'
 
 const CustomerBookingStoreList = () => {
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const formattedCurrency = useFormatCurrency()
     const { getAllCustomerBooking } = useAppSelector((state) => state.customerBooking)
 
@@ -31,6 +33,11 @@ const CustomerBookingStoreList = () => {
     const handleCloseCancelBookingDialog = () => {
         setIsOpenCancelBookingDialog(false)
     }
+
+    const handleNavigateStoreDetail = (storeId: number) => {
+        navigate(`/store/${storeId}`)
+    }
+
     const handleConfirmCancelBooking = (bookingId: number | null) => {
         if (bookingId !== null) {
             dispatch(cancelBookingByCustomer({ bookingId }))
@@ -85,12 +92,6 @@ const CustomerBookingStoreList = () => {
                                         {new Date(cusBooking?.motor?.year).toLocaleDateString('vi-VN')}
                                     </Typography>
                                 </div>
-                                <div className='tag-motorbike-status'>
-                                    <Typography variant='subtitle1'>
-                                        {cusBooking?.motor?.motorStatus?.title === 'CONSIGNMENT' ? 'KÝ GỬI' :
-                                            cusBooking?.motor?.motorStatus?.title === 'NON-CONSIGNMENT' ? 'KHÔNG KÝ GỬI' : 'KHÔNG XÁC ĐỊNH'}
-                                    </Typography>
-                                </div>
                             </div>
                         </Box>
                         <Box className="right-box" flexGrow={8}>
@@ -99,19 +100,36 @@ const CustomerBookingStoreList = () => {
                                     <Typography variant='h5' sx={{ color: '#f0c413' }}>Thông tin cửa hàng:</Typography>
                                 </div>
                                 <div className="motorbike-owner-info-content">
-                                    <Typography display='flex'>
-                                        <StoreOutlined />{' '}
-                                        {cusBooking?.receiver?.storeDescriptions[0]?.storeName}
-                                    </Typography>
-                                    <Typography display='flex'>
-                                        <PhoneIphoneOutlined />{' '}
-                                        {cusBooking?.receiver?.storeDescriptions[0]?.storePhone}</Typography>
-                                    <Typography display='flex'>
-                                        <EmailOutlined />{' '}
-                                        {cusBooking?.receiver?.storeDescriptions[0]?.storeEmail}</Typography>
-                                    <Typography display='flex'>
-                                        <PlaceOutlined />{' '}
-                                        {cusBooking?.receiver?.storeDescriptions[0]?.address}</Typography>
+                                    <div className="info-item"
+                                        onClick={() => handleNavigateStoreDetail(
+                                            cusBooking?.receiver?.storeDescriptions[0]?.storeId
+                                        )}>
+                                        <Typography display='flex' sx={{
+                                            cursor: 'pointer',
+                                            marginBottom: '4px'
+                                        }}>
+                                            <StoreOutlined />{' '}
+                                            {cusBooking?.receiver?.storeDescriptions[0]?.storeName}
+                                        </Typography>
+                                    </div>
+                                    <div className="info-item">
+                                        <Typography display='flex' marginBottom='4px'>
+                                            <PhoneIphoneOutlined />{' '}
+                                            {cusBooking?.receiver?.storeDescriptions[0]?.storePhone}
+                                        </Typography>
+                                    </div>
+                                    <div className="info-item">
+                                        <Typography display='flex' marginBottom='4px'>
+                                            <EmailOutlined />{' '}
+                                            {cusBooking?.receiver?.storeDescriptions[0]?.storeEmail}
+                                        </Typography>
+                                    </div>
+                                    <div className="info-item">
+                                        <Typography display='flex' marginBottom='4px'>
+                                            <PlaceOutlined />{' '}
+                                            {cusBooking?.receiver?.storeDescriptions[0]?.address}
+                                        </Typography>
+                                    </div>
                                 </div>
                             </div>
                             <div className="booking-store-info">
@@ -169,7 +187,8 @@ const CustomerBookingStoreList = () => {
                     </Box>
 
                 </Paper>
-            ))}
+            ))
+            }
             <Dialog
                 open={isOpenCancelBookingDialog}
                 onClose={handleCloseCancelBookingDialog}
@@ -200,7 +219,7 @@ const CustomerBookingStoreList = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
-        </Container>
+        </Container >
     )
 }
 

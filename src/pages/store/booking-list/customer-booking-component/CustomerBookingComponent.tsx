@@ -5,6 +5,7 @@ import { acceptCustomerBookingByStore, clearCustomerBooking, getAllBookingByCust
 import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, Paper, Typography } from '@mui/material'
 import { EmailOutlined, PhoneIphoneOutlined, PlaceOutlined, StoreOutlined } from '@mui/icons-material'
 import './style/_customer-booking.scss'
+import { useNavigate } from 'react-router'
 
 const CustomerBookingComponent = () => {
     const dispatch = useAppDispatch()
@@ -38,7 +39,6 @@ const CustomerBookingComponent = () => {
     const handleCloseAcceptBookingDialog = () => {
         setIsOpenAcceptBookingDialog(false)
     }
-
     const handleConfirmRejectBooking = (bookingId: number | null) => {
         if (bookingId !== null) {
             dispatch(rejectCustomerBookingByStore({ bookingId }))
