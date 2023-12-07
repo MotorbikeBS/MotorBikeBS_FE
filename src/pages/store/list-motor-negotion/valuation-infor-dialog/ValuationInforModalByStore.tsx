@@ -32,7 +32,6 @@ const ValuationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
     const handleOpenCreateContractDialog = (valuationId: number) => {
         setValuationIdDialog(valuationId)
         setIsOpenContractDialog(true)
-        console.log(valuationId)
     }
     const handleOpenSubmitDialog = () => {
         setIsOpenSubmitDialog(true);
@@ -120,7 +119,6 @@ const ValuationInforModalByStore: React.FC<NegotiationInforModalProps> = ({
                     }, 1000);
                 });
         }
-        console.log(data?.id)
         setConfirmationModalOpen(false)
     };
 

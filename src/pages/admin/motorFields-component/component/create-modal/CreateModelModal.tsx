@@ -58,13 +58,13 @@ const CreateModelModal: React.FC<CreateDialogProps> = ({
     loadData,
 }) => {
     const dispatch = useAppDispatch();
-    const { motorBrands} = useAppSelector((state) => state.motorFields)
+    const { motorBrands } = useAppSelector((state) => state.motorFields)
 
-    const [brand, setBrand ] = useState('')
+    const [brand, setBrand] = useState('')
 
     const handleChangeBrand = (event: SelectChangeEvent) => {
         setBrand(event.target.value)
-    }    
+    }
 
     const form = useForm<ICreateModel>({
         defaultValues: {
@@ -103,10 +103,9 @@ const CreateModelModal: React.FC<CreateDialogProps> = ({
                 loadData();
                 toast.success('Thêm Model thành công!');
                 handleCloseDialog();
-            }).catch((e)=>{
-                
+            }).catch((e) => {
+
             })
-        console.log(data);
     };
 
     return (
@@ -125,7 +124,7 @@ const CreateModelModal: React.FC<CreateDialogProps> = ({
                                     <TableContainer component={Paper}>
                                         <Table>
                                             <TableBody>
-                                            <TableRow>
+                                                <TableRow>
                                                     <TableCell className="header-table">
                                                         Brand
                                                     </TableCell>
@@ -209,7 +208,7 @@ const CreateModelModal: React.FC<CreateDialogProps> = ({
                                                         />
                                                     </TableCell>
                                                 </TableRow>
-                                           
+
                                                 <TableRow>
                                                     <TableCell className="header-table">
                                                         Mô tả

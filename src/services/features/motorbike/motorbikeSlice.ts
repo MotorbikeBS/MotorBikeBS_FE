@@ -99,7 +99,6 @@ export const getMotorByStoreId = createAsyncThunk<
         );
         return response.data.result;
     } catch (error: any) {
-        console.log(error);
         return thunkAPI.rejectWithValue({
             error: error.response?.data?.errorMessages,
         });

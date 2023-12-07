@@ -69,7 +69,6 @@ const MotorbikeComponent = () => {
     const handleOpenDialog = (motorId: number) => {
         setMotorbikeIdForDialog(motorId);
         setOpenDialog(true);
-        console.log(motorId);
     };
 
     const handleAddToWishList = (motorId: number) => {
@@ -144,7 +143,7 @@ const MotorbikeComponent = () => {
                                             <Item className="product-item">
                                                 {motor?.boosting !== null &&
                                                     motor?.boosting.level ===
-                                                        1 && (
+                                                    1 && (
                                                         <div className="tag-motor-status-hot">
                                                             <div className="hot-motor">
                                                                 <img
@@ -161,7 +160,7 @@ const MotorbikeComponent = () => {
                                                     )}
                                                 {motor?.boosting !== null &&
                                                     motor?.boosting.level ===
-                                                        2 && (
+                                                    2 && (
                                                         <div className="tag-motor-status-trending">
                                                             <div className="trending-motor">
                                                                 <img
@@ -178,7 +177,7 @@ const MotorbikeComponent = () => {
                                                     )}
                                                 {motor?.boosting !== null &&
                                                     motor?.boosting.level ===
-                                                        3 && (
+                                                    3 && (
                                                         <div className="tag-motor-status-popular">
                                                             <div className="popular-motor">
                                                                 <img
@@ -219,19 +218,19 @@ const MotorbikeComponent = () => {
                                                         <Typography variant="subtitle1">
                                                             {motor?.motorStatus
                                                                 ?.motorStatusId ===
-                                                            1
+                                                                1
                                                                 ? 'CÓ SẴN'
                                                                 : motor
-                                                                      ?.motorStatus
-                                                                      ?.motorStatusId ===
-                                                                  4
-                                                                ? 'KÍ GỬI'
-                                                                : motor
-                                                                      ?.motorStatus
-                                                                      ?.motorStatusId ===
-                                                                  5
-                                                                ? 'KHÔNG KÍ GỬI'
-                                                                : 'CHƯA XÁC ĐỊNH'}
+                                                                    ?.motorStatus
+                                                                    ?.motorStatusId ===
+                                                                    4
+                                                                    ? 'KÍ GỬI'
+                                                                    : motor
+                                                                        ?.motorStatus
+                                                                        ?.motorStatusId ===
+                                                                        5
+                                                                        ? 'KHÔNG KÍ GỬI'
+                                                                        : 'CHƯA XÁC ĐỊNH'}
                                                         </Typography>
                                                     </div>
                                                 </div>
@@ -302,7 +301,7 @@ const MotorbikeComponent = () => {
                                                     <>
                                                         {motor?.motorStatus
                                                             ?.motorStatusId ===
-                                                        5 ? (
+                                                            5 ? (
                                                             <div className="btn-style">
                                                                 <Button
                                                                     variant="outlined"

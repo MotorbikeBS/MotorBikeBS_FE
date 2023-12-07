@@ -76,7 +76,6 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
     const handleOpenPostingBootDialog = (motorId: number) => {
         setMotorbikeIdForDialog(motorId);
         setIOpenPostingBootDialog(true);
-        console.log(motorId);
     };
 
     const handleClosePostingBootDialog = () => {
@@ -168,7 +167,6 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                 handleCloseDialog();
             })
             .catch((error) => {
-                console.log(error);
             });
     };
 
@@ -188,7 +186,6 @@ const ListPostedMotorByStoreId: React.FC<ListMotorProps> = ({ loadData }) => {
                 handleCloseDialog();
             })
             .catch((error) => {
-                console.log(error);
             });
     };
 

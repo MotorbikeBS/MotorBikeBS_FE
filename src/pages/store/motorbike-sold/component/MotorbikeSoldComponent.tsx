@@ -71,7 +71,6 @@ const MotorbikeSoldComponent = () => {
             );
         }
     }, [dispatch, user]);
-    console.log(billStore);
 
     const billStores =
         billStore &&

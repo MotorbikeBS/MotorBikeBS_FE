@@ -77,7 +77,6 @@ const CreateReplyComment: React.FC<createReplyCommentProps> = ({
                 toast.success('Bình luận thành công.');
             })
             .catch((error) => {
-                console.log(error);
             });
     };
 

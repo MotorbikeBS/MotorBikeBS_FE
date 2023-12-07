@@ -63,7 +63,6 @@ const EditReplyComment: React.FC<EditReplyCommentProps> = ({
                 onCloseEditComment();
             })
             .catch((error) => {
-                console.log(error);
             });
     };
     return (

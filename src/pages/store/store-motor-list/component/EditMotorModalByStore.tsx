@@ -99,7 +99,6 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
         setModel(event.target.value);
     };
 
-    console.log(model);
     const handleChangeType = (event: SelectChangeEvent) => {
         setMotorType(event.target.value);
     };
@@ -190,8 +189,6 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                 formData.append('images', data.images[i]);
             }
         }
-        console.log(data);
-        // handleCloseDialog();
 
         dispatch(
             updateMotorById({
@@ -206,8 +203,7 @@ const EditMotorModalByStore: React.FC<EditDialogProps> = ({
                 handleCloseDialog();
             })
             .catch((error) => {
-                // console.log(error);
-                // toast.error(error?.error[0]);
+
             });
     };
 

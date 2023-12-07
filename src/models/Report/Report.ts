@@ -4,7 +4,7 @@ export interface ISelectRowReportStore {
     imageReport: string;
     title: string;
     description: string;
-    reportStore: string;
+    reportStore: string[];
     storePhone: string;
     sender: string;
 }
@@ -29,7 +29,7 @@ export interface IReport {
     requestTypeId: number;
     status: string;
     reports: IReportField[];
-    receiver: IUser;
+    receiver: IUser | null;
     sender: IUser;
 }
 export interface ICreateReport {

@@ -60,7 +60,6 @@ const LoginComponent = () => {
                 }
             })
             .catch((err) => {
-                console.log(err);
             });
     };
 

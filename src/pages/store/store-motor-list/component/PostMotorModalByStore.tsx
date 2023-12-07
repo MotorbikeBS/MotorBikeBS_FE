@@ -97,8 +97,6 @@ const PostMotorModalByStore: React.FC<PostDialogProps> = ({
                 handleCloseDialog();
             })
             .catch((error) => {
-                // toast.error(error?.error[0]);
-                console.log(error);
             });
     };
 
@@ -268,31 +266,31 @@ const PostMotorModalByStore: React.FC<PostDialogProps> = ({
                                                                     ?.owner
                                                                     ?.roleId ===
                                                                     2 && (
-                                                                    <MenuItem value="1">
-                                                                        Xe có
-                                                                        sẵn
-                                                                    </MenuItem>
-                                                                )}
+                                                                        <MenuItem value="1">
+                                                                            Xe có
+                                                                            sẵn
+                                                                        </MenuItem>
+                                                                    )}
                                                                 {motorbike
                                                                     ?.owner
                                                                     ?.roleId !==
                                                                     2 && (
-                                                                    <MenuItem value="4">
-                                                                        Xe có
-                                                                        sẵn - Kí
-                                                                        gửi
-                                                                    </MenuItem>
-                                                                )}
+                                                                        <MenuItem value="4">
+                                                                            Xe có
+                                                                            sẵn - Kí
+                                                                            gửi
+                                                                        </MenuItem>
+                                                                    )}
                                                                 {motorbike
                                                                     ?.owner
                                                                     ?.roleId !==
                                                                     2 && (
-                                                                    <MenuItem value="5">
-                                                                        Xe không
-                                                                        có ở cửa
-                                                                        hàng
-                                                                    </MenuItem>
-                                                                )}
+                                                                        <MenuItem value="5">
+                                                                            Xe không
+                                                                            có ở cửa
+                                                                            hàng
+                                                                        </MenuItem>
+                                                                    )}
                                                             </Select>
                                                         </FormControl>
                                                     </TableCell>

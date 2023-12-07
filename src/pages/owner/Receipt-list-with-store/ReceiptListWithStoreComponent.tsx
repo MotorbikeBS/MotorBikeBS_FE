@@ -82,7 +82,6 @@ const ReceiptListWithStoreComponent = () => {
     const handleErrorNegoInfor = (negotiationId: number) => {
         setNegotiationIdDialog(negotiationId);
         setIsOpenErrorReceiptDialog(true);
-        console.log(negotiationId);
     };
     const handleCloseNegoInfoErrorDialog = () => {
         setIsOpenErrorReceiptDialog(false);
@@ -103,7 +102,6 @@ const ReceiptListWithStoreComponent = () => {
     const handleRejectNegoInfor = (negotiationId: number) => {
         setNegotiationIdDialog(negotiationId);
         setIsOpenRejectReceiptDialog(true);
-        console.log(negotiationId);
     };
     const handleCloseRejectNegoInfoDialog = () => {
         setIsOpenRejectReceiptDialog(false);

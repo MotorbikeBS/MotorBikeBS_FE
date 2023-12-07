@@ -39,7 +39,6 @@ const PaymentPointComponent = () => {
                 window.open(`${url}`)
                 // navigate(`${url}`)
             }
-            console.log(data);
 
         } catch (error) {
 

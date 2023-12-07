@@ -94,7 +94,6 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
         setModel(event.target.value);
     };
 
-    // console.log(model);
     const handleChangeType = (event: SelectChangeEvent) => {
         setMotorType(event.target.value);
     };
@@ -176,8 +175,6 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
                 formData.append('images', data.images[i]);
             }
         }
-        console.log(data);
-        // handleCloseDialog();
 
         dispatch(
             updateMotorById({
@@ -499,12 +496,12 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
                                                                 label="Trạng thái"
                                                                 value={
                                                                     motorbike?.motorStatus &&
-                                                                    motorbike
-                                                                        .motorStatus
-                                                                        .motorStatusId
+                                                                        motorbike
+                                                                            .motorStatus
+                                                                            .motorStatusId
                                                                         ? motorbike
-                                                                              .motorStatus
-                                                                              .motorStatusId
+                                                                            .motorStatus
+                                                                            .motorStatusId
                                                                         : ''
                                                                 }
                                                                 {...register(
@@ -515,22 +512,22 @@ const EditMotorModal: React.FC<EditDialogProps> = ({
                                                                 <MenuItem
                                                                     value={
                                                                         motorbike?.motorStatus &&
-                                                                        motorbike
-                                                                            .motorStatus
-                                                                            .motorStatusId
+                                                                            motorbike
+                                                                                .motorStatus
+                                                                                .motorStatusId
                                                                             ? motorbike
-                                                                                  .motorStatus
-                                                                                  .motorStatusId
+                                                                                .motorStatus
+                                                                                .motorStatusId
                                                                             : ''
                                                                     }
                                                                 >
                                                                     {motorbike?.motorStatus &&
-                                                                    motorbike
-                                                                        .motorStatus
-                                                                        .title
+                                                                        motorbike
+                                                                            .motorStatus
+                                                                            .title
                                                                         ? motorbike
-                                                                              .motorStatus
-                                                                              .title
+                                                                            .motorStatus
+                                                                            .title
                                                                         : ''}
                                                                 </MenuItem>
                                                             </Select>

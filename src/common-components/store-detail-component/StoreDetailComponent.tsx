@@ -80,7 +80,6 @@ const StoreDetailComponent = () => {
     const handleOpenReportDialog = (storeId: number) => {
         setStoreIdForDialog(storeId)
         setIsOpenReportDialog(true)
-        console.log(storeId)
     }
     const handleCloseReportDialog = () => {
         setIsOpenReportDialog(false)

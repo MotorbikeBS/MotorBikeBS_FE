@@ -11,7 +11,7 @@ import {
 import { IStore } from '../../../../models/Store/Store';
 import { Container, Typography, Paper } from '@mui/material';
 import { DataGrid, GridRowParams } from '@mui/x-data-grid';
-import StoreModal from '../ModalComponent/StoreModalComponent';
+import StoreModal from '../modal-component/store-information-dialog/StoreModalComponent';
 import { columns } from './table/TableStoreList';
 
 const StoreListNotVerify = () => {

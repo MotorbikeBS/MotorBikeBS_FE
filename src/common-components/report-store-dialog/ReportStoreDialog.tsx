@@ -81,7 +81,6 @@ const ReportStoreDialog: React.FC<ReportDialogProps> = ({
         }
     };
 
-
     return (
         <div>
             <Dialog open={open} onClose={handleOpenCancelDialog}>

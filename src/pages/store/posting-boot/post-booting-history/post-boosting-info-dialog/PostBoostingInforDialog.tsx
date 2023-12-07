@@ -86,7 +86,6 @@ const PostBoostingInforDialog: React.FC<IPostBootingInforDialog> = ({
     const handleOpenChangeLevelDialog = (boostingId: number) => {
         setBoostingIdChanglevelDialog(boostingId)
         setIsOpenChangeLevelDialog(true)
-        console.log(boostingId)
     }
     const handleCloseChangLevelDialog = () => {
         setIsOpenChangeLevelDialog(false)

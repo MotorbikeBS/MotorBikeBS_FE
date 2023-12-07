@@ -154,7 +154,6 @@ const SignUpMotorbikeOwner = () => {
                                     })}
                                     onChange={(e) => {
                                         const inputValue = e.target.value;
-                                        console.log('Input changed:', inputValue);
                                         form.setValue('idCard', inputValue);
                                     }}
                                     error={!!errors.idCard}
