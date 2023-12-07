@@ -5,7 +5,7 @@ import { IReport, ISelectRowReportStore } from '../../../../models/Report/Report
 import { Container, Paper, Typography } from '@mui/material'
 import { DataGrid, GridRowParams } from '@mui/x-data-grid'
 import { columns } from './table/TableReport'
-import ReportInformationDialog from '../ModalComponent/report-information-dialog/ReportInformationDialog'
+import ReportInformationDialog from '../modal-component/report-information-dialog/ReportInformationDialog'
 
 const ReportStoreListComponent = () => {
     const dispatch = useAppDispatch()
@@ -27,15 +27,17 @@ const ReportStoreListComponent = () => {
         setIsInforModalOpen(true);
     };
     const rows = React.useMemo(() => {
-        return reportStores?.map((report: IReport) => ({
-            id: report?.reports[0]?.reportId,
-            imageReport: report?.reports[0]?.reportImages[0]?.imageLink,
-            title: report?.reports[0]?.title,
-            description: report?.reports[0]?.description,
-            reportStore: report?.receiver?.storeDescriptions[0]?.storeName,
-            storePhone: report?.receiver.storeDescriptions[0]?.storePhone,
-            sender: report?.sender?.userName
-        }));
+        return (
+            reportStores?.map((report: IReport) => ({
+                id: report?.reports?.[0]?.reportId || '',
+                imageReport: report?.reports?.[0]?.reportImages?.[0]?.imageLink || '',
+                title: report?.reports?.[0]?.title || '',
+                description: report?.reports?.[0]?.description || '',
+                reportStore: (report?.receiver?.storeDescriptions?.[0]?.storeName || []) || [],
+                storePhone: (report?.receiver?.storeDescriptions?.[0]?.storePhone || []) || [],
+                sender: report?.sender?.userName || '',
+            })) || []
+        );
     }, [reportStores]);
 
     return (

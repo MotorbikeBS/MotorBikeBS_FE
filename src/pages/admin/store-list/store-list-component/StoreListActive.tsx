@@ -5,7 +5,7 @@ import { DataGrid, GridRowParams } from '@mui/x-data-grid';
 import { columns } from './table/TableStoreList';
 import { clearStore, getAllStore } from '../../../../services/features/store/storeSlice';
 import { IStore } from '../../../../models/Store/Store';
-import StoreModal from '../ModalComponent/StoreModalComponent';
+import StoreModal from '../modal-component/store-information-dialog/StoreModalComponent';
 
 const StoreListActive = () => {
     const dispatch = useAppDispatch();

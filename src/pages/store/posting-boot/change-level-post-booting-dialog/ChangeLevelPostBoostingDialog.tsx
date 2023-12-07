@@ -87,7 +87,6 @@ const ChangeLevelPostBoostingDialog: React.FC<IChangeLevelPostBoostingDialogProp
                         handleCloseDialog()
                     }, 1000)
                 })
-            console.log(data)
         }
     }
 

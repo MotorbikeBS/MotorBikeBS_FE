@@ -48,122 +48,121 @@ const CreateBillNonConsignment: React.FC<
     loadData,
     selectedRow,
 }) => {
-    const dispatch = useAppDispatch();
-    const { getAllCustomerBooking } = useAppSelector(
-        (state) => state.customerBooking,
-    );
-    useEffect(() => {
-        dispatch(clearCustomerBooking());
-        dispatch(getAllBookingByCustomer());
-    }, [dispatch]);
-
-    const [buyerBookingId, setBuyerBookingId] = useState('');
-
-    const handleSelectBookingId = (event: SelectChangeEvent) => {
-        setBuyerBookingId(event.target.value);
-    };
-
-    const getCustomerBooking =
-        getAllCustomerBooking &&
-        getAllCustomerBooking?.filter(
-            (booking) => booking?.motorId === selectedRow?.id,
+        const dispatch = useAppDispatch();
+        const { getAllCustomerBooking } = useAppSelector(
+            (state) => state.customerBooking,
         );
+        useEffect(() => {
+            dispatch(clearCustomerBooking());
+            dispatch(getAllBookingByCustomer());
+        }, [dispatch]);
 
-    const handleCloseDialog = () => {
-        onClose();
+        const [buyerBookingId, setBuyerBookingId] = useState('');
+
+        const handleSelectBookingId = (event: SelectChangeEvent) => {
+            setBuyerBookingId(event.target.value);
+        };
+
+        const getCustomerBooking =
+            getAllCustomerBooking &&
+            getAllCustomerBooking?.filter(
+                (booking) => booking?.motorId === selectedRow?.id,
+            );
+
+        const handleCloseDialog = () => {
+            onClose();
+        };
+
+        const handleOpenSubmitDialog = () => {
+            onOpenSubmitDialog();
+        };
+
+        const handleSubmitConfirmSaleNonConsignmentMotor = () => {
+            dispatch(
+                createBillNonConsignment({
+                    motorId: Number(selectedRow?.id),
+                    buyerBookingId: Number(buyerBookingId),
+                }),
+            )
+                .unwrap()
+                .then(() => {
+                    toast.success('Xe đã bán. Thông tin hóa đơn được thêm vào lịch sử giao dịch của bạn.');
+                    loadData();
+                    handleCloseDialog();
+                })
+                .catch((error) => {
+                });
+        };
+
+        return (
+            <div>
+                <Dialog open={open}>
+                    <DialogTitle>
+                        <Typography variant="h5" textAlign="center">
+                            Xác nhận người mua xe không kí gởi
+                        </Typography>
+                    </DialogTitle>
+                    <DialogContent>
+                        <Box sx={{ padding: 2 }}>
+                            <FormControl fullWidth>
+                                <InputLabel id="buyer">Người mua</InputLabel>
+                                <Select
+                                    labelId="buyer"
+                                    label="Người mua"
+                                    value={buyerBookingId}
+                                    onChange={handleSelectBookingId}
+                                >
+                                    {getCustomerBooking &&
+                                        getCustomerBooking.map((booking) => (
+                                            <MenuItem
+                                                value={
+                                                    booking?.buyerBookings[0]
+                                                        ?.bookingId
+                                                }
+                                            >
+                                                {booking?.sender?.userName} -{' '}
+                                                {booking?.sender?.phone}
+                                            </MenuItem>
+                                        ))}
+                                </Select>
+                            </FormControl>
+                        </Box>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={onCloseSubmitDialog} color="error">
+                            Hủy bỏ
+                        </Button>
+                        <Button onClick={handleOpenSubmitDialog} color="info">
+                            Xác nhận
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+
+                <Dialog open={openSubmit}>
+                    <DialogTitle>
+                        <Typography variant="h4" textAlign="center">
+                            Xác nhận bán xe
+                        </Typography>
+                    </DialogTitle>
+                    <DialogContent>
+                        <Typography variant="subtitle1" textAlign="center">
+                            Bạn có chắc chắn đã bán xe này không?
+                        </Typography>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={onCloseCancelDialog} color="error">
+                            Hủy bỏ
+                        </Button>
+                        <Button
+                            onClick={handleSubmitConfirmSaleNonConsignmentMotor}
+                            color="info"
+                        >
+                            Xác nhận
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
+        );
     };
-
-    const handleOpenSubmitDialog = () => {
-        onOpenSubmitDialog();
-    };
-
-    const handleSubmitConfirmSaleNonConsignmentMotor = () => {
-        dispatch(
-            createBillNonConsignment({
-                motorId: Number(selectedRow?.id),
-                buyerBookingId: Number(buyerBookingId),
-            }),
-        )
-            .unwrap()
-            .then(() => {
-                toast.success('Xe đã bán. Thông tin hóa đơn được thêm vào lịch sử giao dịch của bạn.');
-                loadData();
-                handleCloseDialog();
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-
-    return (
-        <div>
-            <Dialog open={open}>
-                <DialogTitle>
-                    <Typography variant="h5" textAlign="center">
-                        Xác nhận người mua xe không kí gởi
-                    </Typography>
-                </DialogTitle>
-                <DialogContent>
-                    <Box sx={{ padding: 2 }}>
-                        <FormControl fullWidth>
-                            <InputLabel id="buyer">Người mua</InputLabel>
-                            <Select
-                                labelId="buyer"
-                                label="Người mua"
-                                value={buyerBookingId}
-                                onChange={handleSelectBookingId}
-                            >
-                                {getCustomerBooking &&
-                                    getCustomerBooking.map((booking) => (
-                                        <MenuItem
-                                            value={
-                                                booking?.buyerBookings[0]
-                                                    ?.bookingId
-                                            }
-                                        >
-                                            {booking?.sender?.userName} -{' '}
-                                            {booking?.sender?.phone}
-                                        </MenuItem>
-                                    ))}
-                            </Select>
-                        </FormControl>
-                    </Box>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={onCloseSubmitDialog} color="error">
-                        Hủy bỏ
-                    </Button>
-                    <Button onClick={handleOpenSubmitDialog} color="info">
-                        Xác nhận
-                    </Button>
-                </DialogActions>
-            </Dialog>
-
-            <Dialog open={openSubmit}>
-                <DialogTitle>
-                    <Typography variant="h4" textAlign="center">
-                        Xác nhận bán xe
-                    </Typography>
-                </DialogTitle>
-                <DialogContent>
-                    <Typography variant="subtitle1" textAlign="center">
-                        Bạn có chắc chắn đã bán xe này không?
-                    </Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={onCloseCancelDialog} color="error">
-                        Hủy bỏ
-                    </Button>
-                    <Button
-                        onClick={handleSubmitConfirmSaleNonConsignmentMotor}
-                        color="info"
-                    >
-                        Xác nhận
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </div>
-    );
-};
 
 export default CreateBillNonConsignment;

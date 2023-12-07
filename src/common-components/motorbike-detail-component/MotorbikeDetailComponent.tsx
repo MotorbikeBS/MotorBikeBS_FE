@@ -53,7 +53,6 @@ const MotorBikeDetailComponent = () => {
     const handleOpenDialog = (motorbikeId: number) => {
         setMotorbikeIdForDialog(motorbikeId);
         setOpenDialog(true);
-        console.log(motorbikeId);
     };
 
     const handleCloseDialog = () => {

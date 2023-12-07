@@ -68,7 +68,6 @@ const EditComment: React.FC<EditCommentProps> = ({
                 onCloseEditComment();
             })
             .catch((error) => {
-                console.log(error);
             });
     };
     return (

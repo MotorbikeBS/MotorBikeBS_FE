@@ -1,8 +1,9 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useState } from 'react'
 import { ISelectRowReportStore } from '../../../../../models/Report/Report';
 import { Button, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
 import { ClearRounded } from '@mui/icons-material';
 import './../style/style.scss'
+import FullScreenReportImage from './FullScreenReportImage';
 type IReportInforDialogProps = {
     isOpen: boolean
     onClose: () => void
@@ -15,6 +16,7 @@ const ReportInformationDialog: React.FC<IReportInforDialogProps> = ({
     data,
     loadData
 }) => {
+    const [fullscreenOpen, setFullscreenOpen] = useState(false)
 
     if (!data) {
         return null;
@@ -26,10 +28,10 @@ const ReportInformationDialog: React.FC<IReportInforDialogProps> = ({
             <div className='business-license-container'>
                 <img
                     src={data.imageReport}
-                    className='business-license-image'
+                    className='report image'
                     alt='image report'
                     style={{ width: '100px', height: 'auto' }}
-                // onClick={() => setFullscreenOpen(true)}
+                    onClick={() => setFullscreenOpen(true)}
                 />
             </div>
         )),
@@ -38,6 +40,7 @@ const ReportInformationDialog: React.FC<IReportInforDialogProps> = ({
         createData('Cửa hàng bị báo cáo', data.reportStore),
         createData('Số điện thoại cửa hàng', data.storePhone)
     ]
+
     return (
         <>
             <Modal
@@ -71,6 +74,11 @@ const ReportInformationDialog: React.FC<IReportInforDialogProps> = ({
                     </TableContainer>
                 </div>
             </Modal>
+            <FullScreenReportImage
+                isOpen={fullscreenOpen}
+                onClose={() => setFullscreenOpen(false)}
+                imageUrls={[data.imageReport]}
+            />
         </>
     )
 }

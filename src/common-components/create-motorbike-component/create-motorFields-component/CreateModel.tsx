@@ -106,8 +106,7 @@ const CreateModelModal: React.FC<CreateDialogProps> = ({
                 toast.warning('Bạn vui lòng chờ admin duyệt!');
                 handleCloseDialog();
             })
-            .catch((e) => {});
-        // console.log(data);
+            .catch((e) => { });
     };
 
     const motorBrandFilter =

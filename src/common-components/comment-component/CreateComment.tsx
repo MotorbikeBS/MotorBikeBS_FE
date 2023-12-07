@@ -43,7 +43,6 @@ const CreateComment: React.FC<createCommentProps> = ({
                 toast.success('Bình luận thành công.');
             })
             .catch((error) => {
-                console.log(error);
             });
     };
 

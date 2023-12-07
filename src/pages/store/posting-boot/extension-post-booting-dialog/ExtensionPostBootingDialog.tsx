@@ -68,7 +68,6 @@ const ExtensionPostBootingDialog: React.FC<IExtendPostBoostingDialogProps> = ({
                         handleCloseDialog()
                     }, 1000)
                 })
-            console.log(data)
         }
     }
 

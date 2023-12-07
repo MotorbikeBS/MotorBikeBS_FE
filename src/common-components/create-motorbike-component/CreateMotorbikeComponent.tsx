@@ -90,7 +90,6 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
         setModel(event.target.value);
     };
 
-    // console.log(model);
     const handleChangeType = (event: SelectChangeEvent) => {
         setMotorType(event.target.value);
     };
@@ -151,7 +150,6 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
             }
         }
 
-        console.log(data);
         dispatch(createMotorbike(formData))
             .unwrap()
             .then((data) => {
@@ -404,7 +402,7 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                                         ) {
                                                                             return 'Số Km đã đi phải là một số';
                                                                         }
-                                                                        if(value > 2147483647){
+                                                                        if (value > 2147483647) {
                                                                             return 'Giá trị đồng hồ không hợp lệ!'
                                                                         }
                                                                         return true;
@@ -415,8 +413,8 @@ const CreateMotorbikeComponent: React.FC<CreateDialogProps> = ({
                                                             helperText={
                                                                 errors?.odo
                                                                     ? errors
-                                                                          ?.odo
-                                                                          ?.message
+                                                                        ?.odo
+                                                                        ?.message
                                                                     : ''
                                                             }
                                                             variant="outlined"

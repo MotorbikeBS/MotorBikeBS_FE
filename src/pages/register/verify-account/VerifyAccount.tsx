@@ -19,7 +19,6 @@ const VerifyAccount = () => {
                     setValidUrl(true);
                 })
                 .catch((error) => {
-                    console.error('Xác minh không thành công:', error);
                     setValidUrl(false);
                 });
         }

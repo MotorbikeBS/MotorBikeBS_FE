@@ -54,7 +54,6 @@ const MotorbikeDetailForStoreComponent = () => {
     const handleOpenDialog = (motorbikeId: number) => {
         setMotorbikeIdForDialog(motorbikeId);
         setOpenDialog(true);
-        console.log(motorbikeId);
     };
 
     const handleCloseDialog = () => {
@@ -129,7 +128,7 @@ const MotorbikeDetailForStoreComponent = () => {
                     <Box flexGrow={4} marginBottom="30px">
                         <Carousel>
                             {motorbike.motorbikeImages &&
-                            motorbike.motorbikeImages.length > 0 ? (
+                                motorbike.motorbikeImages.length > 0 ? (
                                 motorbike.motorbikeImages.map((image) => (
                                     <div
                                         className="motorbike-detail-images"
@@ -366,7 +365,7 @@ const MotorbikeDetailForStoreComponent = () => {
                                     flexGrow={2}
                                     marginTop="10%"
                                     maxWidth="50%"
-                                    // marginLeft="26%"
+                                // marginLeft="26%"
                                 >
                                     <Button
                                         className="btn-favorite"

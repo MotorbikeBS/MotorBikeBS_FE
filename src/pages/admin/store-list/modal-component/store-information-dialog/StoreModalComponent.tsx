@@ -13,10 +13,10 @@ import {
     Box,
 } from '@mui/material';
 import { ClearRounded } from '@mui/icons-material';
-import { IStore } from '../../../../models/Store/Store';
-import { useAppDispatch } from '../../../../services/store/store';
-import { inActiveStore, reActiveStore, refuseStore, verifyStore } from '../../../../services/features/store/storeSlice';
-import './style/style.scss';
+import { IStore } from '../../../../../models/Store/Store';
+import { useAppDispatch } from '../../../../../services/store/store';
+import { inActiveStore, reActiveStore, refuseStore, verifyStore } from '../../../../../services/features/store/storeSlice';
+import '../style/style.scss';
 import FullScreenImageDialog from './FullScreenImageDialog';
 
 interface StoreModalProps {

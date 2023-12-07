@@ -76,8 +76,7 @@ const ListPostedMotorByOwnerId: React.FC<ListMotorProps> = ({ loadData }) => {
                 handleCloseDialog();
             })
             .catch((error) => {
-                // toast.error(error?.error[0]);
-                // console.log(error);
+
             });
     };
 

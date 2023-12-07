@@ -5,7 +5,7 @@ import { clearStore, getAllStore } from '../../../../services/features/store/sto
 import { DataGrid, GridRowParams } from '@mui/x-data-grid'
 import { Container, Paper, Typography } from '@mui/material'
 import { columns } from './table/TableStoreList'
-import StoreModal from '../ModalComponent/StoreModalComponent'
+import StoreModal from '../modal-component/store-information-dialog/StoreModalComponent';
 const StoreListInActive = () => {
     const dispatch = useAppDispatch()
     const { stores, loading } = useAppSelector((state) => state.store)

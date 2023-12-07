@@ -120,11 +120,9 @@ const EditUserProfile = () => {
                     navigate('/user/profile');
                 })
                 .catch((err) => {
-                    console.log(err.error[0]);
                     toast.error(err.error[0]);
                 });
         }
-        console.log(data);
     };
 
     return (

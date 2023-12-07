@@ -83,8 +83,7 @@ const PostMotorModal: React.FC<PostDialogProps> = ({
                 handleCloseDialog();
             })
             .catch((error) => {
-                // toast.error(error?.error[0]);
-                console.log(error);
+
             });
     };
 

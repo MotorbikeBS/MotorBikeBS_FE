@@ -86,7 +86,6 @@ const CommentForStoreComponent = () => {
                 handleCancelSubmitDeleteComment();
             })
             .catch((error) => {
-                console.log(error);
             });
     };
 
