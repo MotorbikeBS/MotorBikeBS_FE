@@ -29,8 +29,8 @@ const ReportStoreListComponent = () => {
     const rows = React.useMemo(() => {
         return (
             reportStores?.map((report: IReport) => ({
-                id: report?.reports?.[0]?.reportId || '',
-                imageReport: report?.reports?.[0]?.reportImages[0]?.imageLink || '',
+                id: report?.reports[0]?.reportId || '',
+                imageReport: report?.reports[0]?.reportImages[0]?.imageLink || '',
                 title: report?.reports[0]?.title || '',
                 description: report?.reports[0]?.description || '',
                 reportStore: (report?.receiver?.storeDescriptions[0]?.storeName || []) || [],
