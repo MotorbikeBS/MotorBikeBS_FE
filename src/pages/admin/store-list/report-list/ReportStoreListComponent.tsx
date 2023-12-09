@@ -30,16 +30,15 @@ const ReportStoreListComponent = () => {
         return (
             reportStores?.map((report: IReport) => ({
                 id: report?.reports?.[0]?.reportId || '',
-                imageReport: report?.reports?.[0]?.reportImages?.[0]?.imageLink || '',
-                title: report?.reports?.[0]?.title || '',
-                description: report?.reports?.[0]?.description || '',
-                reportStore: (report?.receiver?.storeDescriptions?.[0]?.storeName || []) || [],
-                storePhone: (report?.receiver?.storeDescriptions?.[0]?.storePhone || []) || [],
+                imageReport: report?.reports?.[0]?.reportImages[0]?.imageLink || '',
+                title: report?.reports[0]?.title || '',
+                description: report?.reports[0]?.description || '',
+                reportStore: (report?.receiver?.storeDescriptions[0]?.storeName || []) || [],
+                storePhone: (report?.receiver?.storeDescriptions[0]?.storePhone || []) || [],
                 sender: report?.sender?.userName || '',
             })) || []
         );
     }, [reportStores]);
-
     return (
         <Container maxWidth='xl'>
             <Paper
