@@ -24,15 +24,16 @@ const ReportInformationDialog: React.FC<IReportInforDialogProps> = ({
     const createData = (label: string, value: ReactNode) => ({ label, value });
     const rows = [
         createData('Report ID', data.id),
-        createData('Giấy phép kinh doanh', (
-            <div className='business-license-container'>
+        createData('Bằng chứng', (
+            <div className='report image'>
                 <img
-                    src={data.imageReport}
+                    src={data.imageReport[0]}
                     className='report image'
                     alt='image report'
-                    style={{ width: '100px', height: 'auto' }}
+                    style={{ width: '80px', height: 'auto' }}
                     onClick={() => setFullscreenOpen(true)}
                 />
+
             </div>
         )),
         createData('Tiêu đề', data.title),
@@ -40,7 +41,6 @@ const ReportInformationDialog: React.FC<IReportInforDialogProps> = ({
         createData('Cửa hàng bị báo cáo', data.reportStore),
         createData('Số điện thoại cửa hàng', data.storePhone)
     ]
-
     return (
         <>
             <Modal
@@ -74,10 +74,11 @@ const ReportInformationDialog: React.FC<IReportInforDialogProps> = ({
                     </TableContainer>
                 </div>
             </Modal>
+
             <FullScreenReportImage
                 isOpen={fullscreenOpen}
                 onClose={() => setFullscreenOpen(false)}
-                imageUrls={[data.imageReport]}
+                imageUrls={Array.isArray(data.imageReport) ? data.imageReport : []}
             />
         </>
     )

@@ -19,7 +19,6 @@ const FullScreenReportImage: React.FC<FullScreenReportImageProps> = ({
     onClose,
     imageUrls
 }) => {
-
     return (
         <Dialog open={isOpen} onClose={onClose} maxWidth="md" fullWidth>
             <DialogTitle>
@@ -31,6 +30,7 @@ const FullScreenReportImage: React.FC<FullScreenReportImageProps> = ({
                         key={index}
                         src={imageUrl}
                         alt={`Image ${index}`}
+                        style={{ width: '100%', height: 'auto', marginBottom: '10px' }}
                     />
                 ))}
             </DialogContent>

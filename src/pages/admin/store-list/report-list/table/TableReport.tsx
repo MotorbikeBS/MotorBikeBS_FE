@@ -15,9 +15,9 @@ export const columns: GridColDef[] = [
         hideable: true,
         renderCell: (params) => (
             <div>
-                {params.row.imageReport && (
+                {params.row.imageReport && params.row.imageReport.length > 0 && (
                     <img
-                        src={params.row.imageReport}
+                        src={params.row.imageReport[0]}
                         alt='Business License'
                         style={{ width: '30%', height: '30%', objectFit: 'cover' }}
                     />
