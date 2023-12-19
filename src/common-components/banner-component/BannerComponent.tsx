@@ -13,7 +13,7 @@ interface ItemData {
 const items: ItemData[] = [
     {
         id: 1,
-        image: 'https://allimages.sgp1.digitaloceanspaces.com/toplisteduvn/2023/03/Top-19-Cua-Hang-Xe-May-Cu-Ha-Noi-Uy.png',
+        image: 'https://thumuaxegiacao.vn/wp-content/uploads/2023/01/thu-mua-xe-may-cu-2.jpg',
     },
     {
         id: 2,
